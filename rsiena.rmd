@@ -1,0 +1,2283 @@
+---
+title: "Replication package-Figures"
+author: '[Jochem Tolsma](https://www.jochemtolsma.nl) - Radboud University / University of Groningen, the Netherlands'
+bibliography: references.bib
+date: "Last compiled on `r format(Sys.time(), '%B, %Y')`"
+output: 
+  html_document:
+    toc:  true
+    toc_float: true
+    number_sections: false
+    code_folding: hide
+    code_download: yes
+---
+
+```{r globalsettings, echo=FALSE, warning=FALSE}
+library(knitr)
+opts_chunk$set(tidy.opts=list(width.cutoff=100),tidy=TRUE, warning = FALSE, message = FALSE,comment = "#>", cache=TRUE, echo=FALSE, class.source=c("test"), class.output=c("test2"))
+options(width = 100)
+rgl::setupKnitr()
+```
+
+```{r colorize, echo=FALSE}
+colorize <- function(x, color) {
+  if (knitr::is_latex_output()) {
+    sprintf("\\textcolor{%s}{%s}", color, x)
+  } else if (knitr::is_html_output()) {
+    sprintf("<span style='color: %s;'>%s</span>", color, 
+            x)
+  } else x
+}
+
+```
+
+```{r klippy, echo=FALSE, include=TRUE}
+klippy::klippy(position = c('top', 'right'))
+#klippy::klippy(color = 'darkred')
+#klippy::klippy(tooltip_message = 'Click to copy', tooltip_success = 'Done')
+```
+
+```{css, echo=FALSE}
+pre.test {
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: auto;
+  margin: 0px;
+}
+
+pre.test2 {
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: auto;
+  margin: 0px;
+  background-color: white;
+  color: rgb(201, 76, 76);
+}
+
+
+h1, .h1, h2, .h2, h3, .h3 {
+  margin-top: 24px;
+}
+
+
+```
+
+
+
+------------------------------------------------------------------------
+
+<!---als figuurtjes goed zijn, zet dan eval=FALSE--->
+
+
+# Intro  
+
+
+This [website](https://jochemtolsma.github.io/Twitter/) is a replication package for the paper "Twitter" by @Tolsma2021.
+
+It contains R code to replicate all Tables/Figures/Results in the manuscript.
+
+To copy the code click the button in the upper right corner of the code-chunks.
+
+Use the top menu to navigate to the section of interest. 
+
+The source code of this website can be found on [Github](https://github.com/JochemTolsma/Twitter)
+
+Questions can be addressed to [Jochem Tolsma](mailto:jochem.tolsma@ru.nl).
+
+---  
+
+## Packages  
+
+```{r packages, echo=TRUE}
+#install if necessary 
+if (!require("dplyr", character.only = TRUE)) {install.packages("dplyr", dependencies=TRUE)}
+if (!require("foreign", character.only = TRUE)) {install.packages("foreign", dependencies=TRUE)}
+if (!require("RSiena", character.only = TRUE)) {install.packages("RSiena", dependencies=TRUE)}
+
+#load packages.
+library(tidyverse)
+library(dplyr)
+library(foreign)
+library(RSiena)
+library(knitr)
+library(kableExtra)
+
+```
+
+
+---   
+
+## Custom functions
+
+siena07ToConvergence: sie RSiena Manual p 69 
+
+```{r}
+siena07ToConvergence <- function(alg, dat, eff, ans0=NULL, ...){
+  numr <- 0
+  ans <- siena07(alg, data=dat, effects=eff, prevAns=ans0, ...) # the first run
+  repeat {
+    save(ans, file=paste("ans",numr,".RData",sep="")) # to be safe
+    numr <- numr+1 # count number of repeated runs
+    tm <- ans$tconv.max # convergence indicator
+    cat(numr, tm,"\n") # report how far we are
+    if (tm < 0.25) {break} # success
+    if (tm > 10) {break} # divergence without much hope of returning to good parameter values
+    if (numr > 30) {break} # now it has lasted too long
+    ans <- siena07(alg, data=dat, effects=eff, prevAns=ans, ...)
+    }
+  if (tm > 0.25)
+  {
+    cat("Warning: convergence inadequate.\n")
+  }
+  ans
+}
+```
+
+
+## Load data objects {.tabset .tabset-fade}  
+
+See ... for construction of data objects.  
+
+Data objects:  
+
+- key: information on all politicians on election list  
+- keyf: information on all 147 MPs with twitter handle  
+- mydata: RSiena object with all kind of goodies inside  
+- seats: seating coordinates of HoP (used for plotting)
+
+```{r data, echo=TRUE}
+#STAP 1: read in data
+key <- read.spss('data-processed\\key moederbestand 20171114.sav', use.value.labels=T, to.data.frame=T)
+
+
+load("data-processed\\twitter_20190919.RData")
+#str(twitter_20190919,1)
+keyf <- twitter_20190919[[1]]
+mydata <- twitter_20190919[[2]]
+seats <- twitter_20190919[[3]]
+
+
+```
+
+---  
+
+
+
+## Baseline model (structural effects only)
+
+Included effects:  
+
+- three dependent network variables  
+- degree (with or without time heterogeneity)  
+- reciprocity  
+- indegree-popularity (sqrt)  
+- outdegree-activity (sqrt)  
+- outdegree-popularity (sqrt)  
+- transitive triplets or GWESPP  
+
+We further test for two additional effects: 
+-   
+- shared popularity
+
+```{r structural model }
+print01Report( mydata, modelname="Twitter")
+#let us have a look at all possible effects
+#effectsDocumentation()
+```
+
+Define the model
+
+We will compare a model with *transTrip* versus *gwespFF* first. 
+
+### transTrip
+
+#### Effects. 
+
+```{r}
+myeff <- getEffects( mydata )
+myeff_m1 <- myeff
+
+#according to suggestion of rsiena manual
+myeff_m1 <- includeEffects( myeff_m1, inPopSqrt, name="fnet" )
+myeff_m1 <- includeEffects( myeff_m1, inPopSqrt, name="atmnet" )
+myeff_m1 <- includeEffects( myeff_m1, inPopSqrt, name="rtnet" )
+
+myeff_m1 <- includeEffects( myeff_m1, outActSqrt, name="fnet" )
+myeff_m1 <- includeEffects( myeff_m1, outActSqrt, name="atmnet" )
+myeff_m1 <- includeEffects( myeff_m1, outActSqrt, name="rtnet" )
+
+myeff_m1 <- includeEffects( myeff_m1, outPopSqrt, name="fnet" )
+myeff_m1 <- includeEffects( myeff_m1, outPopSqrt, name="atmnet" )
+myeff_m1 <- includeEffects( myeff_m1, outPopSqrt, name="rtnet" )
+
+myeff_m1 <- includeEffects( myeff_m1, transTrip, name="fnet" )
+myeff_m1 <- includeEffects( myeff_m1, transTrip, name="atmnet" )
+myeff_m1 <- includeEffects( myeff_m1, transTrip, name="rtnet" )
+
+#myeff_m1 <- includeEffects( myeff_m1, cycle3, name="fnet" )
+#myeff_m1 <- includeEffects( myeff_m1, cycle3, name="atmnet" )
+#myeff_m1 <- includeEffects( myeff_m1, cycle3, name="rtnet" )
+
+
+```
+
+#### Estimate. 
+
+Models:  
+
+- ansM1  
+- ansM1b  
+
+```{r, eval=FALSE}
+myalgorithm <- sienaAlgorithmCreate( projname = 'M1')
+ansM1 <- siena07( myalgorithm, data = mydata, effects = myeff_m1, useCluster=TRUE, nbrNodes=4, initC=TRUE, batch=TRUE)
+ansM1
+
+ansM1b <- siena07( myalgorithm, data = mydata, prevAns=ansM1, effects = myeff_m1, useCluster=TRUE, nbrNodes=8, initC=TRUE, batch=TRUE)
+
+ansM1b ##good fit. 
+
+save(ansM1b, file=paste("ansM1b",".RData",sep=""))
+
+```
+
+---  
+
+### time heterogeneity in outdegree. 
+
+#### Effects  
+
+
+```{r}
+
+myeff_m1 <- myeff
+
+meff_m1
+myeff_m1_td <- includeTimeDummy(myeff_m1, density, name="atmnet", timeDummy="2")
+myeff_m1_td <- includeTimeDummy(myeff_m1_td, density, name="rtnet", timeDummy="2")
+
+
+```
+
+#### Estimates
+```{r, eval=FALSE}
+
+ansM2 <- siena07( myalgorithm, data = mydata, prevAns=ansM1b, effects = myeff_m1_td, useCluster=TRUE, nbrNodes=8, initC=TRUE, batch=TRUE)
+ansM2 
+save(ansM2, file=paste("ansM2",".RData",sep=""))
+
+ansM2b <- siena07( myalgorithm, data = mydata, prevAns=ansM2, effects = myeff_m1_td, useCluster=TRUE, nbrNodes=8, initC=TRUE, batch=TRUE)
+ansM2b 
+save(ansM2b, file=paste("ansM2b",".RData",sep=""))
+
+```
+
+
+
+---  
+
+### gwespFF
+
+#### Effects  
+
+```{r, eval=FALSE}
+myeff <- getEffects( mydata )
+myeff_m1b <- myeff
+
+#according to suggestion of rsiena manual
+myeff_m1b <- includeEffects( myeff_m1b, inPopSqrt, name="fnet" )
+myeff_m1b <- includeEffects( myeff_m1b, inPopSqrt, name="atmnet" )
+myeff_m1b <- includeEffects( myeff_m1b, inPopSqrt, name="rtnet" )
+
+myeff_m1b <- includeEffects( myeff_m1b, outActSqrt, name="fnet" )
+myeff_m1b <- includeEffects( myeff_m1b, outActSqrt, name="atmnet" )
+myeff_m1b <- includeEffects( myeff_m1b, outActSqrt, name="rtnet" )
+
+myeff_m1b <- includeEffects( myeff_m1b, outPopSqrt, name="fnet" )
+myeff_m1b <- includeEffects( myeff_m1b, outPopSqrt, name="atmnet" )
+myeff_m1b <- includeEffects( myeff_m1b, outPopSqrt, name="rtnet" )
+
+myeff_m1b <- includeEffects( myeff_m1b, gwespFF, name="fnet" )
+myeff_m1b <- includeEffects( myeff_m1b, gwespFF, name="atmnet" )
+myeff_m1b <- includeEffects( myeff_m1b, gwespFF, name="rtnet" )
+
+myeff_m3 <- myeff_m1b
+
+``` 
+
+#### Estimate  
+
+Models:  
+
+- ansM3  
+- ansM3b  
+
+```{r}
+myalgorithm <- sienaAlgorithmCreate( projname = 'M1')
+ansM3 <- siena07( myalgorithm, data = mydata, effects = myeff_m3, useCluster=TRUE, nbrNodes=8, initC=TRUE, batch=TRUE)
+ansM3
+save(ansM3, file=paste("ansM3",".RData",sep=""))
+
+ansM3b <- siena07( myalgorithm, data = mydata, prevAns=ansM3, effects = myeff_m1, useCluster=TRUE, nbrNodes=8, initC=TRUE, batch=TRUE)
+ansM3b  
+save(ansM1d, file=paste("ansM3b",".RData",sep=""))
+
+```
+
+---  
+
+
+### include sharedPop (transTrip)
+
+#### Effects.  
+
+```{r}
+myeff <- getEffects( mydata )
+myeff_m1 <- myeff
+
+#according to suggestion of rsiena manual
+myeff_m1 <- includeEffects( myeff_m1, inPopSqrt, name="fnet" )
+myeff_m1 <- includeEffects( myeff_m1, inPopSqrt, name="atmnet" )
+myeff_m1 <- includeEffects( myeff_m1, inPopSqrt, name="rtnet" )
+
+myeff_m1 <- includeEffects( myeff_m1, outActSqrt, name="fnet" )
+myeff_m1 <- includeEffects( myeff_m1, outActSqrt, name="atmnet" )
+myeff_m1 <- includeEffects( myeff_m1, outActSqrt, name="rtnet" )
+
+myeff_m1 <- includeEffects( myeff_m1, outPopSqrt, name="fnet" )
+myeff_m1 <- includeEffects( myeff_m1, outPopSqrt, name="atmnet" )
+myeff_m1 <- includeEffects( myeff_m1, outPopSqrt, name="rtnet" )
+
+myeff_m1 <- includeEffects( myeff_m1, transTrip, name="fnet" )
+myeff_m1 <- includeEffects( myeff_m1, transTrip, name="atmnet" )
+myeff_m1 <- includeEffects( myeff_m1, transTrip, name="rtnet" )
+
+myeff_m1 <- includeEffects( myeff_m1, sharedPop, name="fnet" )
+myeff_m1 <- includeEffects( myeff_m1, sharedPop, name="atmnet" )
+myeff_m1 <- includeEffects( myeff_m1, sharedPop, name="rtnet" )
+
+```
+
+#### Estimate
+
+Models (build on ansM1b):  
+
+- ansM4  
+- ansM4b  
+
+```{r}
+
+load("ansM1b.RData")
+
+ansM4 <- siena07( myalgorithm, data = mydata, prevAns=ansM1b, effects = myeff_m1, useCluster=TRUE, nbrNodes=8, initC=TRUE, batch=TRUE)
+ansM4 
+save(ansM4, file=paste("ansM4",".RData",sep=""))
+
+ansM4b <- siena07( myalgorithm, data = mydata, prevAns=ansM4, effects = myeff_m1, useCluster=TRUE, nbrNodes=8, initC=TRUE, batch=TRUE)
+ansM4b
+save(ansM4b, file=paste("ansM4b",".RData",sep=""))
+
+```
+
+----  
+
+## Baseline model (with covariates)
+
+### All covariates
+
+#### Effects  
+
+We cannot include all party dummies as covariates for ego and alter. We will thus first check which party deviates significantly with respect to indegree and outdegree. 
+
+First the descriptives. 
+```{r}
+#check if we observe outdegree differences per partij
+fnet <- mydata$depvars$fnet
+atmnet <- mydata$depvars$atmnet
+rtnet <- mydata$depvars$rtnet
+testfnet <- fnet[,,1]
+testfnet[testfnet==10] <- NA
+testrtnet <- rtnet[,,1]
+testrtnet[testrtnet==10] <- NA
+testatmnet <- atmnet[,,1]
+testatmnet[testatmnet==10] <- NA
+
+keyf$outdegreesf <- rowSums(testfnet, na.rm=TRUE)
+keyf$indegreesf <- colSums(testfnet, na.rm=TRUE)
+
+keyf$outdegreesrt <- rowSums(testrtnet, na.rm=TRUE)
+keyf$indegreesrt <- colSums(testrtnet, na.rm=TRUE)
+
+keyf$outdegreesatm <- rowSums(testatmnet, na.rm=TRUE)
+keyf$indegreesatm <- colSums(testatmnet, na.rm=TRUE)
+
+
+degreesum <- keyf %>% 
+  group_by(Partij) %>%
+  summarize(mean_of= mean(outdegreesf, na.rm=T),
+            mean_if= mean(indegreesf, na.rm=T),
+            mean_irt= mean(outdegreesrt, na.rm=T),
+            mean_ort= mean(indegreesrt, na.rm=T),
+            mean_iat= mean(outdegreesatm, na.rm=T),
+            mean_oat= mean(indegreesatm, na.rm=T),
+            count= n()) %>%
+  arrange(desc(count)) %>%
+  select(!("count"))
+
+
+colnames(degreesum) <- c("Party", "outdegree friends", "indegree friends", "outdegree retweets", "indegree retweets", "outdegree atmentions", "indegree atmentions")
+
+
+write_csv(degreesum, "degreesum.csv")
+
+degreesum <- kbl(degreesum, booktabs=TRUE, digits=2, caption="mean degree by party", align = "c") %>%
+  kable_classic(full_width = F, html_font = "Cambria") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) 
+
+scroll_box(degreesum, width="100%", height="500px")
+
+```
+
+Let us use a simple OLS regression with deviation coding (grand mean is ref) to test for significance.
+```{r, results="hold"}
+
+keyf$Partij2 <- as.factor(as.character(keyf$Partij))
+levels(keyf$Partij2)
+contrasts(keyf$Partij2) <- contr.sum(13) #let us use VVD as omitted party
+
+summary(lm(outdegreesf~Partij2, keyf))
+print("which parties deviate significantly outdegreesf")
+levels(keyf$Partij2)[c(1, 6, 9, 10, 11)]
+
+summary(lm(indegreesf~Partij2, keyf))
+print("which parties deviate significantly indegreesf")
+levels(keyf$Partij2)[c(10, 11)]
+
+summary(lm(outdegreesatm~Partij2, keyf))
+print("which parties deviate significantly outdegreesatm")
+levels(keyf$Partij2)[c(4, 7, 10, 12)]
+
+summary(lm(indegreesatm~Partij2, keyf))
+print("which parties deviate significantly indegreesatm")
+levels(keyf$Partij2)[c(4, 7, 10)]
+
+summary(lm(outdegreesrt~Partij2, keyf))
+print("which parties deviate significantly outdegreesrt")
+levels(keyf$Partij2)[c(1, 4, 7, 10)]
+
+summary(lm(indegreesrt~Partij2, keyf))
+print("which parties deviate significantly indegreesrt")
+levels(keyf$Partij2)[c(4, 10)]
+
+```
+
+
+
+
+```{r}
+myeff <- getEffects( mydata )
+myeff_m1 <- myeff
+
+#according to suggestion of rsiena manual
+myeff_m1 <- includeEffects( myeff_m1, inPopSqrt, name="fnet" )
+myeff_m1 <- includeEffects( myeff_m1, inPopSqrt, name="atmnet" )
+myeff_m1 <- includeEffects( myeff_m1, inPopSqrt, name="rtnet" )
+
+myeff_m1 <- includeEffects( myeff_m1, outActSqrt, name="fnet" )
+myeff_m1 <- includeEffects( myeff_m1, outActSqrt, name="atmnet" )
+myeff_m1 <- includeEffects( myeff_m1, outActSqrt, name="rtnet" )
+
+myeff_m1 <- includeEffects( myeff_m1, outPopSqrt, name="fnet" )
+myeff_m1 <- includeEffects( myeff_m1, outPopSqrt, name="atmnet" )
+myeff_m1 <- includeEffects( myeff_m1, outPopSqrt, name="rtnet" )
+
+myeff_m1 <- includeEffects( myeff_m1, transTrip, name="fnet" )
+myeff_m1 <- includeEffects( myeff_m1, transTrip, name="atmnet" )
+myeff_m1 <- includeEffects( myeff_m1, transTrip, name="rtnet" )
+
+myeff_m1 <- includeEffects( myeff_m1, sharedPop, name="fnet" )
+myeff_m1 <- includeEffects( myeff_m1, sharedPop, name="atmnet" )
+myeff_m1 <- includeEffects( myeff_m1, sharedPop, name="rtnet" )
+
+myeff_m2 <- myeff_m1
+
+#"kamerlid2016" "pleklijst"    "pleklijst1"
+
+myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", altX, name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", altX, name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", altX, name="rtnet" )
+
+myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", egoX, name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", egoX, name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", egoX, name="rtnet" )
+
+myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", sameX, name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", sameX, name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", sameX, name="rtnet" )
+
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", altX, name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", altX, name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", altX, name="rtnet" )
+
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", egoX, name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", egoX, name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", egoX, name="rtnet" )
+
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", egoX, name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", egoX, name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", egoX, name="rtnet" )
+
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", altX, name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", altX, name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", altX, name="rtnet" )
+
+#these need to be dropped due to collinearity
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", diffX, name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", diffX, name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", diffX, name="rtnet" )
+
+#afstand
+myeff_m2 <- includeEffects( myeff_m2, X, interaction1="afstand", name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, X, interaction1="afstand", name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, X, interaction1="afstand", name="rtnet" )
+
+
+
+#myeff_m2 <- includeEffects(myeff_m2, sameX, interaction1 = "partij", name="fnnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "cda", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "cu", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "denk", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "d66", name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "fvd", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "gl", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvda", name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvdd", name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvv", name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "sgp", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "sp", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "vvd", name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "plus", name="fnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "cda", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "cu", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "denk", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "d66", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "fvd", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "gl", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvda", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvdd", name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvv", name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "sgp", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "sp", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "vvd", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "plus", name="fnet" )
+
+myeff_m2 <- includeEffects(myeff_m2, sameX, interaction1 = "partij", name="atmnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "cda", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "cu", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "denk", name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "d66", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "fvd", name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "gl", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvda", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvdd", name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvv", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "sgp", name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "sp", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "vvd", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "plus", name="atmnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "cda", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "cu", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "denk", name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "d66", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "fvd", name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "gl", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvda", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvdd", name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvv", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "sgp", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "sp", name="atmnet" )
+# myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "vvd", name="atmnet" ) #referentie
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "plus", name="atmnet" )
+
+myeff_m2 <- includeEffects(myeff_m2, sameX, interaction1 = "partij", name="rtnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "cda", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "cu", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "denk", name="rtnet" )
+myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "d66", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "fvd", name="rtnet" )
+myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "gl", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvda", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvdd", name="rtnet" )
+myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvv", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "sgp", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "sp", name="rtnet" )
+# myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "vvd", name="rtnet" ) #referentie
+myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "plus", name="rtnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "cda", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "cu", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "denk", name="rtnet" )
+myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "d66", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "fvd", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "gl", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvda", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvdd", name="rtnet" )
+myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvv", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "sgp", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "sp", name="rtnet" )
+# myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "vvd", name="rtnet" ) #referentie
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "plus", name="rtnet" )
+
+
+
+```
+
+#### Estimates
+
+```{r}
+load("ansM4b.RData")
+myalgorithm <- sienaAlgorithmCreate( projname = 'M2')
+ansM5 <- siena07( myalgorithm, data = mydata, prevAns=ansM4b, effects = myeff_m2, useCluster=TRUE, nbrNodes=8, initC=TRUE, batch=TRUE)
+ansM5 
+save(ansM5, file=paste("ansM5",".RData",sep=""))
+
+ansM5b <- siena07( myalgorithm, data = mydata, prevAns=ansM5, effects = myeff_m2, useCluster=TRUE, nbrNodes=8, initC=TRUE, batch=TRUE)
+ansM5b 
+save(ansM5b, file=paste("ansM5b",".RData",sep=""))
+```
+
+---  
+
+### lets trim
+
+I forgot to include sameX Party for fnet. will include now. 
+
+```{r}
+myeff <- getEffects( mydata )
+myeff_m1 <- myeff
+
+#according to suggestion of rsiena manual
+myeff_m1 <- includeEffects( myeff_m1, inPopSqrt, name="fnet" )
+myeff_m1 <- includeEffects( myeff_m1, inPopSqrt, name="atmnet" )
+myeff_m1 <- includeEffects( myeff_m1, inPopSqrt, name="rtnet" )
+
+myeff_m1 <- includeEffects( myeff_m1, outActSqrt, name="fnet" )
+myeff_m1 <- includeEffects( myeff_m1, outActSqrt, name="atmnet" )
+myeff_m1 <- includeEffects( myeff_m1, outActSqrt, name="rtnet" )
+
+myeff_m1 <- includeEffects( myeff_m1, outPopSqrt, name="fnet" )
+myeff_m1 <- includeEffects( myeff_m1, outPopSqrt, name="atmnet" )
+myeff_m1 <- includeEffects( myeff_m1, outPopSqrt, name="rtnet" )
+
+myeff_m1 <- includeEffects( myeff_m1, transTrip, name="fnet" )
+myeff_m1 <- includeEffects( myeff_m1, transTrip, name="atmnet" )
+myeff_m1 <- includeEffects( myeff_m1, transTrip, name="rtnet" )
+
+myeff_m1 <- includeEffects( myeff_m1, sharedPop, name="fnet" )
+myeff_m1 <- includeEffects( myeff_m1, sharedPop, name="atmnet" )
+myeff_m1 <- includeEffects( myeff_m1, sharedPop, name="rtnet" )
+
+myeff_m2 <- myeff_m1
+
+#"kamerlid2016" "pleklijst"    "pleklijst1"
+
+myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", altX, name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", altX, name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", altX, name="rtnet" )
+
+myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", egoX, name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", egoX, name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", egoX, name="rtnet" )
+
+myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", sameX, name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", sameX, name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", sameX, name="rtnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", altX, name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", altX, name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", altX, name="rtnet" )
+
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", egoX, name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", egoX, name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", egoX, name="rtnet" )
+
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", egoX, name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", egoX, name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", egoX, name="rtnet" )
+
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", altX, name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", altX, name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", altX, name="rtnet" )
+
+#these need to be dropped due to collinearity
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", diffX, name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", diffX, name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", diffX, name="rtnet" )
+
+#afstand
+myeff_m2 <- includeEffects( myeff_m2, X, interaction1="afstand", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, X, interaction1="afstand", name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, X, interaction1="afstand", name="rtnet" )
+
+
+
+myeff_m2 <- includeEffects(myeff_m2, sameX, interaction1 = "partij", name="fnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "cda", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "cu", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "denk", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "d66", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "fvd", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "gl", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvda", name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvdd", name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvv", name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "sgp", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "sp", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "vvd", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "plus", name="fnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "cda", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "cu", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "denk", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "d66", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "fvd", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "gl", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvda", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvdd", name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvv", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "sgp", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "sp", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "vvd", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "plus", name="fnet" )
+
+myeff_m2 <- includeEffects(myeff_m2, sameX, interaction1 = "partij", name="atmnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "cda", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "cu", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "denk", name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "d66", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "fvd", name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "gl", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvda", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvdd", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvv", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "sgp", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "sp", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "vvd", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "plus", name="atmnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "cda", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "cu", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "denk", name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "d66", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "fvd", name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "gl", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvda", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvdd", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvv", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "sgp", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "sp", name="atmnet" )
+# myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "vvd", name="atmnet" ) #referentie
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "plus", name="atmnet" )
+
+myeff_m2 <- includeEffects(myeff_m2, sameX, interaction1 = "partij", name="rtnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "cda", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "cu", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "denk", name="rtnet" )
+myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "d66", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "fvd", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "gl", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvda", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvdd", name="rtnet" )
+myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvv", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "sgp", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "sp", name="rtnet" )
+# myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "vvd", name="rtnet" ) #referentie
+myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "plus", name="rtnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "cda", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "cu", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "denk", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "d66", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "fvd", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "gl", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvda", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvdd", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvv", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "sgp", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "sp", name="rtnet" )
+# myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "vvd", name="rtnet" ) #referentie
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "plus", name="rtnet" )
+
+
+
+```
+
+#### Estimates
+
+```{r}
+load("ansM4b.RData") #start again from ansM4b
+myalgorithm <- sienaAlgorithmCreate( projname = 'M3')
+ansM6 <- siena07( myalgorithm, data = mydata, prevAns=ansM4b, effects = myeff_m2, useCluster=TRUE, nbrNodes=8, initC=TRUE, batch=TRUE)
+ansM6 
+save(ansM6, file=paste("ansM6",".RData",sep=""))
+
+ansM6b <- siena07( myalgorithm, data = mydata, prevAns=ansM6, effects = myeff_m2, useCluster=TRUE, nbrNodes=8, initC=TRUE, batch=TRUE)
+ansM6b 
+save(ansM6b, file=paste("ansM6b",".RData",sep=""))
+```
+
+
+
+### second trim
+
+
+```{r}
+myeff <- getEffects( mydata )
+myeff_m1 <- myeff
+
+#according to suggestion of rsiena manual
+myeff_m1 <- includeEffects( myeff_m1, inPopSqrt, name="fnet" )
+myeff_m1 <- includeEffects( myeff_m1, inPopSqrt, name="atmnet" )
+myeff_m1 <- includeEffects( myeff_m1, inPopSqrt, name="rtnet" )
+
+myeff_m1 <- includeEffects( myeff_m1, outActSqrt, name="fnet" )
+myeff_m1 <- includeEffects( myeff_m1, outActSqrt, name="atmnet" )
+myeff_m1 <- includeEffects( myeff_m1, outActSqrt, name="rtnet" )
+
+myeff_m1 <- includeEffects( myeff_m1, outPopSqrt, name="fnet" )
+myeff_m1 <- includeEffects( myeff_m1, outPopSqrt, name="atmnet" )
+myeff_m1 <- includeEffects( myeff_m1, outPopSqrt, name="rtnet" )
+
+myeff_m1 <- includeEffects( myeff_m1, transTrip, name="fnet" )
+myeff_m1 <- includeEffects( myeff_m1, transTrip, name="atmnet" )
+myeff_m1 <- includeEffects( myeff_m1, transTrip, name="rtnet" )
+
+myeff_m1 <- includeEffects( myeff_m1, sharedPop, name="fnet" )
+myeff_m1 <- includeEffects( myeff_m1, sharedPop, name="atmnet" )
+myeff_m1 <- includeEffects( myeff_m1, sharedPop, name="rtnet" )
+
+myeff_m2 <- myeff_m1
+
+#"kamerlid2016" "pleklijst"    "pleklijst1"
+
+myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", altX, name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", altX, name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", altX, name="rtnet" )
+
+myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", egoX, name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", egoX, name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", egoX, name="rtnet" )
+
+myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", sameX, name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", sameX, name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", sameX, name="rtnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", altX, name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", altX, name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", altX, name="rtnet" )
+
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", egoX, name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", egoX, name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", egoX, name="rtnet" )
+
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", egoX, name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", egoX, name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", egoX, name="rtnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", altX, name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", altX, name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", altX, name="rtnet" )
+
+#these need to be dropped due to collinearity
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", diffX, name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", diffX, name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", diffX, name="rtnet" )
+
+#afstand
+myeff_m2 <- includeEffects( myeff_m2, X, interaction1="afstand", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, X, interaction1="afstand", name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, X, interaction1="afstand", name="rtnet" )
+
+
+
+myeff_m2 <- includeEffects(myeff_m2, sameX, interaction1 = "partij", name="fnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "cda", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "cu", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "denk", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "d66", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "fvd", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "gl", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvda", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvdd", name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvv", name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "sgp", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "sp", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "vvd", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "plus", name="fnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "cda", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "cu", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "denk", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "d66", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "fvd", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "gl", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvda", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvdd", name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvv", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "sgp", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "sp", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "vvd", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "plus", name="fnet" )
+
+myeff_m2 <- includeEffects(myeff_m2, sameX, interaction1 = "partij", name="atmnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "cda", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "cu", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "denk", name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "d66", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "fvd", name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "gl", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvda", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvdd", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvv", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "sgp", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "sp", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "vvd", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "plus", name="atmnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "cda", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "cu", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "denk", name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "d66", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "fvd", name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "gl", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvda", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvdd", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvv", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "sgp", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "sp", name="atmnet" )
+# myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "vvd", name="atmnet" ) #referentie
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "plus", name="atmnet" )
+
+myeff_m2 <- includeEffects(myeff_m2, sameX, interaction1 = "partij", name="rtnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "cda", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "cu", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "denk", name="rtnet" )
+myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "d66", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "fvd", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "gl", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvda", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvdd", name="rtnet" )
+myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvv", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "sgp", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "sp", name="rtnet" )
+# myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "vvd", name="rtnet" ) #referentie
+myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "plus", name="rtnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "cda", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "cu", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "denk", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "d66", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "fvd", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "gl", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvda", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvdd", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvv", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "sgp", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "sp", name="rtnet" )
+# myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "vvd", name="rtnet" ) #referentie
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "plus", name="rtnet" )
+
+
+
+```
+
+#### Estimates
+
+```{r}
+load("ansM4b.RData") #start again from ansM4b
+myalgorithm <- sienaAlgorithmCreate( projname = 'M4')
+ansM7 <- siena07( myalgorithm, data = mydata, prevAns=ansM4b, effects = myeff_m2, useCluster=TRUE, nbrNodes=8, initC=TRUE, batch=TRUE)
+ansM7 # Overall maximum convergence ratio:    0.2501 
+save(ansM7, file=paste("ansM7",".RData",sep=""))
+
+ansM7b <- siena07( myalgorithm, data = mydata, prevAns=ansM7, effects = myeff_m2, useCluster=TRUE, nbrNodes=8, initC=TRUE, batch=TRUE)
+ansM7b # Overall maximum convergence ratio:    0.2422 
+save(ansM7b, file=paste("ansM7b",".RData",sep=""))
+
+load("ansM7b.RData")
+
+ansM7c <- siena07( myalgorithm, data = mydata, prevAns=ansM7, effects = myeff_m2, useCluster=TRUE, nbrNodes=8, initC=TRUE, batch=TRUE)
+ansM7c 
+save(ansM7c, file=paste("ansM7c",".RData",sep=""))
+```
+
+
+### third trim
+
+#### Effects  
+
+```{r}
+myeff <- getEffects( mydata )
+myeff_m1 <- myeff
+
+#according to suggestion of rsiena manual
+myeff_m1 <- includeEffects( myeff_m1, inPopSqrt, name="fnet" )
+myeff_m1 <- includeEffects( myeff_m1, inPopSqrt, name="atmnet" )
+myeff_m1 <- includeEffects( myeff_m1, inPopSqrt, name="rtnet" )
+
+myeff_m1 <- includeEffects( myeff_m1, outActSqrt, name="fnet" )
+myeff_m1 <- includeEffects( myeff_m1, outActSqrt, name="atmnet" )
+myeff_m1 <- includeEffects( myeff_m1, outActSqrt, name="rtnet" )
+
+myeff_m1 <- includeEffects( myeff_m1, outPopSqrt, name="fnet" )
+myeff_m1 <- includeEffects( myeff_m1, outPopSqrt, name="atmnet" )
+myeff_m1 <- includeEffects( myeff_m1, outPopSqrt, name="rtnet" )
+
+myeff_m1 <- includeEffects( myeff_m1, transTrip, name="fnet" )
+myeff_m1 <- includeEffects( myeff_m1, transTrip, name="atmnet" )
+myeff_m1 <- includeEffects( myeff_m1, transTrip, name="rtnet" )
+
+myeff_m1 <- includeEffects( myeff_m1, sharedPop, name="fnet" )
+myeff_m1 <- includeEffects( myeff_m1, sharedPop, name="atmnet" )
+myeff_m1 <- includeEffects( myeff_m1, sharedPop, name="rtnet" )
+
+myeff_m2 <- myeff_m1
+
+#"kamerlid2016" "pleklijst"    "pleklijst1"
+
+myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", altX, name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", altX, name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", altX, name="rtnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", egoX, name="fnet" )
+#myeff_m2 <- setEffect( myeff_m2, interaction1="kamerlid2016", egoX, name="fnet", fix=TRUE, initialValue = -3, test=TRUE )
+
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", egoX, name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", egoX, name="rtnet" )
+
+myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", sameX, name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", sameX, name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", sameX, name="rtnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", altX, name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", altX, name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", altX, name="rtnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", egoX, name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", egoX, name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", egoX, name="rtnet" )
+
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", egoX, name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", egoX, name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", egoX, name="rtnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", altX, name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", altX, name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", altX, name="rtnet" )
+
+#these need to be dropped due to collinearity
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", diffX, name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", diffX, name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", diffX, name="rtnet" )
+
+#afstand
+myeff_m2 <- includeEffects( myeff_m2, X, interaction1="afstand", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, X, interaction1="afstand", name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, X, interaction1="afstand", name="rtnet" )
+
+
+
+myeff_m2 <- includeEffects(myeff_m2, sameX, interaction1 = "partij", name="fnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "cda", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "cu", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "denk", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "d66", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "fvd", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "gl", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvda", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvdd", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvv", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "sgp", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "sp", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "vvd", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "plus", name="fnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "cda", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "cu", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "denk", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "d66", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "fvd", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "gl", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvda", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvdd", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvv", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "sgp", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "sp", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "vvd", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "plus", name="fnet" )
+
+myeff_m2 <- includeEffects(myeff_m2, sameX, interaction1 = "partij", name="atmnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "cda", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "cu", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "denk", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "d66", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "fvd", name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "gl", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvda", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvdd", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvv", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "sgp", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "sp", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "vvd", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "plus", name="atmnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "cda", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "cu", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "denk", name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "d66", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "fvd", name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "gl", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvda", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvdd", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvv", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "sgp", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "sp", name="atmnet" )
+# myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "vvd", name="atmnet" ) #referentie
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "plus", name="atmnet" )
+
+myeff_m2 <- includeEffects(myeff_m2, sameX, interaction1 = "partij", name="rtnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "cda", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "cu", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "denk", name="rtnet" )
+myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "d66", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "fvd", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "gl", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvda", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvdd", name="rtnet" )
+myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvv", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "sgp", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "sp", name="rtnet" )
+# myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "vvd", name="rtnet" ) #referentie
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "plus", name="rtnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "cda", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "cu", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "denk", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "d66", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "fvd", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "gl", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvda", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvdd", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvv", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "sgp", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "sp", name="rtnet" )
+# myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "vvd", name="rtnet" ) #referentie
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "plus", name="rtnet" )
+
+
+
+```
+
+#### Estimates
+
+```{r}
+load("ansM8c.RData") #start again from ansM4b
+ansM4b
+myalgorithm <- sienaAlgorithmCreate( projname = 'M5')
+ansM8 <- siena07( myalgorithm, data = mydata, prevAns=ansM4b, effects = myeff_m2, useCluster=TRUE, nbrNodes=8, initC=TRUE, batch=TRUE)
+ansM8 
+save(ansM8, file=paste("ansM8",".RData",sep=""))
+
+ansM8b <- siena07( myalgorithm, data = mydata, prevAns=ansM8, effects = myeff_m2, useCluster=TRUE, nbrNodes=8, initC=TRUE, batch=TRUE)
+ansM8b 
+save(ansM8b, file=paste("ansM8b",".RData",sep=""))
+
+ansM8c <- siena07( myalgorithm, data = mydata, prevAns=ansM8b, effects = myeff_m2, useCluster=TRUE, nbrNodes=8, initC=TRUE, batch=TRUE)
+ansM8c #Overall maximum convergence ratio:    0.2471 
+
+save(ansM8c, file=paste("ansM8c",".RData",sep=""))
+```
+
+## Social inbreeding homophily
+
+### Effects 
+
+
+```{r}
+myeff <- getEffects( mydata )
+myeff_m1 <- myeff
+
+#according to suggestion of rsiena manual
+myeff_m1 <- includeEffects( myeff_m1, inPopSqrt, name="fnet" )
+myeff_m1 <- includeEffects( myeff_m1, inPopSqrt, name="atmnet" )
+myeff_m1 <- includeEffects( myeff_m1, inPopSqrt, name="rtnet" )
+
+myeff_m1 <- includeEffects( myeff_m1, outActSqrt, name="fnet" )
+myeff_m1 <- includeEffects( myeff_m1, outActSqrt, name="atmnet" )
+myeff_m1 <- includeEffects( myeff_m1, outActSqrt, name="rtnet" )
+
+myeff_m1 <- includeEffects( myeff_m1, outPopSqrt, name="fnet" )
+myeff_m1 <- includeEffects( myeff_m1, outPopSqrt, name="atmnet" )
+myeff_m1 <- includeEffects( myeff_m1, outPopSqrt, name="rtnet" )
+
+myeff_m1 <- includeEffects( myeff_m1, transTrip, name="fnet" )
+myeff_m1 <- includeEffects( myeff_m1, transTrip, name="atmnet" )
+myeff_m1 <- includeEffects( myeff_m1, transTrip, name="rtnet" )
+
+myeff_m1 <- includeEffects( myeff_m1, sharedPop, name="fnet" )
+myeff_m1 <- includeEffects( myeff_m1, sharedPop, name="atmnet" )
+myeff_m1 <- includeEffects( myeff_m1, sharedPop, name="rtnet" )
+
+myeff_m2 <- myeff_m1
+
+#"kamerlid2016" "pleklijst"    "pleklijst1"
+
+myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", altX, name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", altX, name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", altX, name="rtnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", egoX, name="fnet" )
+#myeff_m2 <- setEffect( myeff_m2, interaction1="kamerlid2016", egoX, name="fnet", fix=TRUE, initialValue = -3, test=TRUE )
+
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", egoX, name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", egoX, name="rtnet" )
+
+myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", sameX, name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", sameX, name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", sameX, name="rtnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", altX, name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", altX, name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", altX, name="rtnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", egoX, name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", egoX, name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", egoX, name="rtnet" )
+
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", egoX, name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", egoX, name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", egoX, name="rtnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", altX, name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", altX, name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", altX, name="rtnet" )
+
+#these need to be dropped due to collinearity
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", diffX, name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", diffX, name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", diffX, name="rtnet" )
+
+#afstand
+myeff_m2 <- includeEffects( myeff_m2, X, interaction1="afstand", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, X, interaction1="afstand", name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, X, interaction1="afstand", name="rtnet" )
+
+
+
+myeff_m2 <- includeEffects(myeff_m2, sameX, interaction1 = "partij", name="fnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "cda", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "cu", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "denk", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "d66", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "fvd", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "gl", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvda", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvdd", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvv", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "sgp", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "sp", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "vvd", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "plus", name="fnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "cda", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "cu", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "denk", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "d66", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "fvd", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "gl", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvda", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvdd", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvv", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "sgp", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "sp", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "vvd", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "plus", name="fnet" )
+
+myeff_m2 <- includeEffects(myeff_m2, sameX, interaction1 = "partij", name="atmnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "cda", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "cu", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "denk", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "d66", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "fvd", name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "gl", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvda", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvdd", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvv", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "sgp", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "sp", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "vvd", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "plus", name="atmnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "cda", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "cu", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "denk", name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "d66", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "fvd", name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "gl", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvda", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvdd", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvv", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "sgp", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "sp", name="atmnet" )
+# myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "vvd", name="atmnet" ) #referentie
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "plus", name="atmnet" )
+
+myeff_m2 <- includeEffects(myeff_m2, sameX, interaction1 = "partij", name="rtnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "cda", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "cu", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "denk", name="rtnet" )
+myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "d66", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "fvd", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "gl", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvda", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvdd", name="rtnet" )
+myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvv", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "sgp", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "sp", name="rtnet" )
+# myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "vvd", name="rtnet" ) #referentie
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "plus", name="rtnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "cda", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "cu", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "denk", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "d66", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "fvd", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "gl", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvda", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvdd", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvv", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "sgp", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "sp", name="rtnet" )
+# myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "vvd", name="rtnet" ) #referentie
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "plus", name="rtnet" )
+
+myeff_m3 <- myeff_m2
+
+myeff_m3 <- includeEffects(myeff_m3, sameX, interaction1 = "vrouw", name="fnet" )
+myeff_m3 <- includeEffects(myeff_m3, egoX, interaction1 = "vrouw", name="fnet" )
+myeff_m3 <- includeEffects(myeff_m3, altX, interaction1 = "vrouw", name="fnet" )
+
+myeff_m3 <- includeEffects(myeff_m3, sameX, interaction1 = "vrouw", name="rtnet" )
+myeff_m3 <- includeEffects(myeff_m3, egoX, interaction1 = "vrouw", name="rtnet" )
+myeff_m3 <- includeEffects(myeff_m3, altX, interaction1 = "vrouw", name="rtnet" )
+
+myeff_m3 <- includeEffects(myeff_m3, sameX, interaction1 = "vrouw", name="atmnet" )
+myeff_m3 <- includeEffects(myeff_m3, egoX, interaction1 = "vrouw", name="atmnet" )
+myeff_m3 <- includeEffects(myeff_m3, altX, interaction1 = "vrouw", name="atmnet" )
+
+myeff_m3 <- includeEffects(myeff_m3, absDiffX , interaction1 = "lft", name="fnet" )
+myeff_m3 <- includeEffects(myeff_m3, egoX, interaction1 = "lft", name="fnet" )
+myeff_m3 <- includeEffects(myeff_m3, altX, interaction1 = "lft", name="fnet" )
+
+myeff_m3 <- includeEffects(myeff_m3, absDiffX , interaction1 = "lft", name="rtnet" )
+myeff_m3 <- includeEffects(myeff_m3, egoX, interaction1 = "lft", name="rtnet" )
+myeff_m3 <- includeEffects(myeff_m3, altX, interaction1 = "lft", name="rtnet" )
+
+myeff_m3 <- includeEffects(myeff_m3, absDiffX , interaction1 = "lft", name="atmnet" )
+myeff_m3 <- includeEffects(myeff_m3, egoX, interaction1 = "lft", name="atmnet" )
+myeff_m3 <- includeEffects(myeff_m3, altX, interaction1 = "lft", name="atmnet" )
+
+myeff_m3 <- includeEffects(myeff_m3, sameX, interaction1 = "ethminz", name="fnet" )
+myeff_m3 <- includeEffects(myeff_m3, egoX, interaction1 = "ethminz", name="fnet" )
+myeff_m3 <- includeEffects(myeff_m3, altX, interaction1 = "ethminz", name="fnet" )
+
+myeff_m3 <- includeEffects(myeff_m3, sameX, interaction1 = "ethminz", name="rtnet" )
+myeff_m3 <- includeEffects(myeff_m3, egoX, interaction1 = "ethminz", name="rtnet" )
+myeff_m3 <- includeEffects(myeff_m3, altX, interaction1 = "ethminz", name="rtnet" )
+
+myeff_m3 <- includeEffects(myeff_m3, sameX, interaction1 = "ethminz", name="atmnet" )
+myeff_m3 <- includeEffects(myeff_m3, egoX, interaction1 = "ethminz", name="atmnet" )
+myeff_m3 <- includeEffects(myeff_m3, altX, interaction1 = "ethminz", name="atmnet" )
+
+
+
+```
+
+### Estimates
+
+```{r}
+load("ansM8c.RData") 
+
+myalgorithm <- sienaAlgorithmCreate( projname = 'M9')
+ansM9 <- siena07( myalgorithm, data = mydata, prevAns=ansM8c, effects = myeff_m3, useCluster=TRUE, nbrNodes=8, initC=TRUE, batch=TRUE)
+ansM9 
+save(ansM9, file=paste("ansM9",".RData",sep=""))
+
+ansM9b <- siena07( myalgorithm, data = mydata, prevAns=ansM9, effects = myeff_m3, useCluster=TRUE, nbrNodes=8, initC=TRUE, batch=TRUE)
+ansM9b 
+save(ansM9b, file=paste("ansM9b",".RData",sep=""))
+
+ansM9c <- siena07( myalgorithm, data = mydata, prevAns=ansM9b, effects = myeff_m3, useCluster=TRUE, nbrNodes=8, initC=TRUE, batch=TRUE)
+ansM9c 
+
+save(ansM9c, file=paste("ansM9c",".RData",sep=""))
+```
+
+## Trim social inbreeding homophily 
+
+Only ego alter. we leave dyad in. 
+
+### Effects 
+
+
+```{r}
+myeff <- getEffects( mydata )
+myeff_m1 <- myeff
+
+#according to suggestion of rsiena manual
+myeff_m1 <- includeEffects( myeff_m1, inPopSqrt, name="fnet" )
+myeff_m1 <- includeEffects( myeff_m1, inPopSqrt, name="atmnet" )
+myeff_m1 <- includeEffects( myeff_m1, inPopSqrt, name="rtnet" )
+
+myeff_m1 <- includeEffects( myeff_m1, outActSqrt, name="fnet" )
+myeff_m1 <- includeEffects( myeff_m1, outActSqrt, name="atmnet" )
+myeff_m1 <- includeEffects( myeff_m1, outActSqrt, name="rtnet" )
+
+myeff_m1 <- includeEffects( myeff_m1, outPopSqrt, name="fnet" )
+myeff_m1 <- includeEffects( myeff_m1, outPopSqrt, name="atmnet" )
+myeff_m1 <- includeEffects( myeff_m1, outPopSqrt, name="rtnet" )
+
+myeff_m1 <- includeEffects( myeff_m1, transTrip, name="fnet" )
+myeff_m1 <- includeEffects( myeff_m1, transTrip, name="atmnet" )
+myeff_m1 <- includeEffects( myeff_m1, transTrip, name="rtnet" )
+
+myeff_m1 <- includeEffects( myeff_m1, sharedPop, name="fnet" )
+myeff_m1 <- includeEffects( myeff_m1, sharedPop, name="atmnet" )
+myeff_m1 <- includeEffects( myeff_m1, sharedPop, name="rtnet" )
+
+myeff_m2 <- myeff_m1
+
+#"kamerlid2016" "pleklijst"    "pleklijst1"
+
+myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", altX, name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", altX, name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", altX, name="rtnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", egoX, name="fnet" )
+#myeff_m2 <- setEffect( myeff_m2, interaction1="kamerlid2016", egoX, name="fnet", fix=TRUE, initialValue = -3, test=TRUE )
+
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", egoX, name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", egoX, name="rtnet" )
+
+myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", sameX, name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", sameX, name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", sameX, name="rtnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", altX, name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", altX, name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", altX, name="rtnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", egoX, name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", egoX, name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", egoX, name="rtnet" )
+
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", egoX, name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", egoX, name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", egoX, name="rtnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", altX, name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", altX, name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", altX, name="rtnet" )
+
+#these need to be dropped due to collinearity
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", diffX, name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", diffX, name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", diffX, name="rtnet" )
+
+#afstand
+myeff_m2 <- includeEffects( myeff_m2, X, interaction1="afstand", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, X, interaction1="afstand", name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, X, interaction1="afstand", name="rtnet" )
+
+
+
+myeff_m2 <- includeEffects(myeff_m2, sameX, interaction1 = "partij", name="fnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "cda", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "cu", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "denk", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "d66", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "fvd", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "gl", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvda", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvdd", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvv", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "sgp", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "sp", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "vvd", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "plus", name="fnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "cda", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "cu", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "denk", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "d66", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "fvd", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "gl", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvda", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvdd", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvv", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "sgp", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "sp", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "vvd", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "plus", name="fnet" )
+
+myeff_m2 <- includeEffects(myeff_m2, sameX, interaction1 = "partij", name="atmnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "cda", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "cu", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "denk", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "d66", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "fvd", name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "gl", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvda", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvdd", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvv", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "sgp", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "sp", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "vvd", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "plus", name="atmnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "cda", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "cu", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "denk", name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "d66", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "fvd", name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "gl", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvda", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvdd", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvv", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "sgp", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "sp", name="atmnet" )
+# myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "vvd", name="atmnet" ) #referentie
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "plus", name="atmnet" )
+
+myeff_m2 <- includeEffects(myeff_m2, sameX, interaction1 = "partij", name="rtnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "cda", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "cu", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "denk", name="rtnet" )
+myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "d66", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "fvd", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "gl", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvda", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvdd", name="rtnet" )
+myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvv", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "sgp", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "sp", name="rtnet" )
+# myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "vvd", name="rtnet" ) #referentie
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "plus", name="rtnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "cda", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "cu", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "denk", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "d66", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "fvd", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "gl", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvda", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvdd", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvv", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "sgp", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "sp", name="rtnet" )
+# myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "vvd", name="rtnet" ) #referentie
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "plus", name="rtnet" )
+
+myeff_m3 <- myeff_m2
+
+myeff_m3 <- includeEffects(myeff_m3, sameX, interaction1 = "vrouw", name="fnet" )
+#myeff_m3 <- includeEffects(myeff_m3, egoX, interaction1 = "vrouw", name="fnet" )
+myeff_m3 <- includeEffects(myeff_m3, altX, interaction1 = "vrouw", name="fnet" )
+
+myeff_m3 <- includeEffects(myeff_m3, sameX, interaction1 = "vrouw", name="rtnet" )
+myeff_m3 <- includeEffects(myeff_m3, egoX, interaction1 = "vrouw", name="rtnet" )
+myeff_m3 <- includeEffects(myeff_m3, altX, interaction1 = "vrouw", name="rtnet" )
+
+myeff_m3 <- includeEffects(myeff_m3, sameX, interaction1 = "vrouw", name="atmnet" )
+#myeff_m3 <- includeEffects(myeff_m3, egoX, interaction1 = "vrouw", name="atmnet" )
+#myeff_m3 <- includeEffects(myeff_m3, altX, interaction1 = "vrouw", name="atmnet" )
+
+myeff_m3 <- includeEffects(myeff_m3, absDiffX , interaction1 = "lft", name="fnet" )
+myeff_m3 <- includeEffects(myeff_m3, egoX, interaction1 = "lft", name="fnet" )
+myeff_m3 <- includeEffects(myeff_m3, altX, interaction1 = "lft", name="fnet" )
+
+myeff_m3 <- includeEffects(myeff_m3, absDiffX , interaction1 = "lft", name="rtnet" )
+#myeff_m3 <- includeEffects(myeff_m3, egoX, interaction1 = "lft", name="rtnet" )
+myeff_m3 <- includeEffects(myeff_m3, altX, interaction1 = "lft", name="rtnet" )
+
+myeff_m3 <- includeEffects(myeff_m3, absDiffX , interaction1 = "lft", name="atmnet" )
+#myeff_m3 <- includeEffects(myeff_m3, egoX, interaction1 = "lft", name="atmnet" )
+#myeff_m3 <- includeEffects(myeff_m3, altX, interaction1 = "lft", name="atmnet" )
+
+myeff_m3 <- includeEffects(myeff_m3, sameX, interaction1 = "ethminz", name="fnet" )
+#myeff_m3 <- includeEffects(myeff_m3, egoX, interaction1 = "ethminz", name="fnet" )
+#myeff_m3 <- includeEffects(myeff_m3, altX, interaction1 = "ethminz", name="fnet" )
+
+myeff_m3 <- includeEffects(myeff_m3, sameX, interaction1 = "ethminz", name="rtnet" )
+myeff_m3 <- includeEffects(myeff_m3, egoX, interaction1 = "ethminz", name="rtnet" )
+#myeff_m3 <- includeEffects(myeff_m3, altX, interaction1 = "ethminz", name="rtnet" )
+
+myeff_m3 <- includeEffects(myeff_m3, sameX, interaction1 = "ethminz", name="atmnet" )
+#myeff_m3 <- includeEffects(myeff_m3, egoX, interaction1 = "ethminz", name="atmnet" )
+#myeff_m3 <- includeEffects(myeff_m3, altX, interaction1 = "ethminz", name="atmnet" )
+
+
+
+```
+
+
+
+### Estimates
+
+```{r}
+load("ansM8c.RData") 
+
+myalgorithm <- sienaAlgorithmCreate( projname = 'M10')
+ansM10 <- siena07( myalgorithm, data = mydata, prevAns=ansM8c, effects = myeff_m3, useCluster=TRUE, nbrNodes=8, initC=TRUE, batch=TRUE)
+ansM10 
+save(ansM10, file=paste("ansM10",".RData",sep=""))
+
+ansM10b <- siena07( myalgorithm, data = mydata, prevAns=ansM10, effects = myeff_m3, useCluster=TRUE, nbrNodes=8, initC=TRUE, batch=TRUE)
+ansM10b 
+save(ansM10b, file=paste("ansM10b",".RData",sep=""))
+
+ansM10c <- siena07( myalgorithm, data = mydata, prevAns=ansM10b, effects = myeff_m3, useCluster=TRUE, nbrNodes=8, initC=TRUE, batch=TRUE)
+ansM10c 
+
+save(ansM9c, file=paste("ansM9c",".RData",sep=""))
+```
+
+
+
+<!---
+
+
+myeff_m2 <- includeEffects(myeff_m1, egoX, interaction1 = "cda", name="fnet" )
+
+save(myeff_m1, file="myeff_m1.Rdata")
+}
+#estimate model
+{
+# Estimate parameters
+myalgorithm <- sienaAlgorithmCreate( projname = 'test')
+load("myeff_m1.Rdata")
+ansM1 <- siena07( myalgorithm, data = mydata, effects = myeff_m1, useCluster=TRUE, nbrNodes=4, initC=TRUE, batch=TRUE)
+ansM1
+ansM1b <- siena07( myalgorithm, data = mydata, prevAns=ansM1, effects = myeff_m1, useCluster=TRUE, nbrNodes=4, initC=TRUE, batch=TRUE)
+ansM1b
+ansM1c <- siena07( myalgorithm, data = mydata, prevAns=ansM1b, effects = myeff_m1, useCluster=TRUE, nbrNodes=4, initC=TRUE, batch=TRUE)
+ansM1c
+save(ansM1c, file="ansM1c.Rdata")
+}
+```
+
+
+#print01Report( mydata, modelname="Reporttwitter_20190829")
+#let us have a look at all possible effects
+#effectsDocumentation()
+
+###model 1: define myeff_m1
+{
+
+#check if we observe outdegree differences per partij
+fnet <- mydata$depvars$fnet
+atmnet <- mydata$depvars$atmnet
+rtnet <- mydata$depvars$rtnet
+testfnet <- fnet[,,1]
+testfnet[testfnet==10] <- NA
+testrtnet <- rtnet[,,1]
+testrtnet[testrtnet==10] <- NA
+testatmnet <- atmnet[,,1]
+testatmnet[testatmnet==10] <- NA
+
+outdegreesf <- rowSums(testfnet, na.rm=TRUE)
+indegreesf <- colSums(testfnet, na.rm=TRUE)
+
+outdegreesrt <- rowSums(testrtnet, na.rm=TRUE)
+indegreesrt <- colSums(testrtnet, na.rm=TRUE)
+
+outdegreesatm <- rowSums(testatmnet, na.rm=TRUE)
+indegreesatm <- colSums(testatmnet, na.rm=TRUE)
+
+summary(lm(outdegreesf ~ as.factor(keyf$Partij)))
+summary(lm(indegreesf ~ as.factor(keyf$Partij)))
+#de enige grote partij die afwijkt is pvv.
+
+summary(lm(outdegreesrt ~ as.factor(keyf$Partij)))
+summary(lm(indegreesrt ~ as.factor(keyf$Partij)))
+#de enige grote partij die afwijkt is d66.
+#alter effect blijkt niet significant, dus weer geschrapt
+
+summary(lm(outdegreesatm ~ as.factor(keyf$Partij)))
+#de enige grote partij die afwijkt is d66 en GL.
+summary(lm(indegreesatm ~ as.factor(keyf$Partij)))
+# de enige grote partij die afwijkt is pvv
+
+myeff <- getEffects( mydata )
+
+#de enige grote partij die afwijkt is pvv.
+myeff_m1 <- myeff
+myeff_m1
+myeff_m1 <- includeEffects(myeff_m1, sameX, interaction1 = "partij", name="fnet" )
+
+# myeff_m1 <- includeEffects( myeff_m1, egoX, interaction1 = "cda", name="fnet" )
+# myeff_m1 <- includeEffects( myeff_m1, egoX, interaction1 = "cu", name="fnet" )
+# myeff_m1 <- includeEffects( myeff_m1, egoX, interaction1 = "denk", name="fnet" )
+# myeff_m1 <- includeEffects( myeff_m1, egoX, interaction1 = "d66", name="fnet" )
+# myeff_m1 <- includeEffects( myeff_m1, egoX, interaction1 = "fvd", name="fnet" )
+# myeff_m1 <- includeEffects( myeff_m1, egoX, interaction1 = "gl", name="fnet" )
+# myeff_m1 <- includeEffects( myeff_m1, egoX, interaction1 = "pvda", name="fnet" )
+# myeff_m1 <- includeEffects( myeff_m1, egoX, interaction1 = "pvdd", name="fnet" )
+ myeff_m1 <- includeEffects( myeff_m1, egoX, interaction1 = "pvv", name="fnet" )
+# myeff_m1 <- includeEffects( myeff_m1, egoX, interaction1 = "sgp", name="fnet" )
+# myeff_m1 <- includeEffects( myeff_m1, egoX, interaction1 = "sp", name="fnet" )
+# # myeff_m1 <- includeEffects( myeff_m1, egoX, interaction1 = "vvd", name="fnet" )
+# myeff_m1 <- includeEffects( myeff_m1, egoX, interaction1 = "plus", name="fnet" )
+
+# myeff_m1 <- includeEffects( myeff_m1, altX, interaction1 = "cda", name="fnet" )
+# myeff_m1 <- includeEffects( myeff_m1, altX, interaction1 = "cu", name="fnet" )
+# myeff_m1 <- includeEffects( myeff_m1, altX, interaction1 = "denk", name="fnet" )
+# myeff_m1 <- includeEffects( myeff_m1, altX, interaction1 = "d66", name="fnet" )
+# myeff_m1 <- includeEffects( myeff_m1, altX, interaction1 = "fvd", name="fnet" )
+# myeff_m1 <- includeEffects( myeff_m1, altX, interaction1 = "gl", name="fnet" )
+# myeff_m1 <- includeEffects( myeff_m1, altX, interaction1 = "pvda", name="fnet" )
+# myeff_m1 <- includeEffects( myeff_m1, altX, interaction1 = "pvdd", name="fnet" )
+ myeff_m1 <- includeEffects( myeff_m1, altX, interaction1 = "pvv", name="fnet" )
+# myeff_m1 <- includeEffects( myeff_m1, altX, interaction1 = "sgp", name="fnet" )
+# myeff_m1 <- includeEffects( myeff_m1, altX, interaction1 = "sp", name="fnet" )
+# myeff_m1 <- includeEffects( myeff_m1, altX, interaction1 = "vvd", name="fnet" )
+# myeff_m1 <- includeEffects( myeff_m1, altX, interaction1 = "plus", name="fnet" )
+
+myeff_m1 <- includeEffects(myeff_m1, sameX, interaction1 = "partij", name="atmnet" )
+
+# myeff_m1 <- includeEffects( myeff_m1, egoX, interaction1 = "cda", name="atmnet" )
+# myeff_m1 <- includeEffects( myeff_m1, egoX, interaction1 = "cu", name="atmnet" )
+# myeff_m1 <- includeEffects( myeff_m1, egoX, interaction1 = "denk", name="atmnet" )
+ myeff_m1 <- includeEffects( myeff_m1, egoX, interaction1 = "d66", name="atmnet" )
+# myeff_m1 <- includeEffects( myeff_m1, egoX, interaction1 = "fvd", name="atmnet" )
+ myeff_m1 <- includeEffects( myeff_m1, egoX, interaction1 = "gl", name="atmnet" )
+# myeff_m1 <- includeEffects( myeff_m1, egoX, interaction1 = "pvda", name="atmnet" )
+# myeff_m1 <- includeEffects( myeff_m1, egoX, interaction1 = "pvdd", name="atmnet" )
+# myeff_m1 <- includeEffects( myeff_m1, egoX, interaction1 = "pvv", name="atmnet" )
+# myeff_m1 <- includeEffects( myeff_m1, egoX, interaction1 = "sgp", name="atmnet" )
+# myeff_m1 <- includeEffects( myeff_m1, egoX, interaction1 = "sp", name="atmnet" )
+# # myeff_m1 <- includeEffects( myeff_m1, egoX, interaction1 = "vvd", name="atmnet" )
+# myeff_m1 <- includeEffects( myeff_m1, egoX, interaction1 = "plus", name="atmnet" )
+
+# myeff_m1 <- includeEffects( myeff_m1, altX, interaction1 = "cda", name="atmnet" )
+# myeff_m1 <- includeEffects( myeff_m1, altX, interaction1 = "cu", name="atmnet" )
+# myeff_m1 <- includeEffects( myeff_m1, altX, interaction1 = "denk", name="atmnet" )
+# myeff_m1 <- includeEffects( myeff_m1, altX, interaction1 = "d66", name="atmnet" )
+# myeff_m1 <- includeEffects( myeff_m1, altX, interaction1 = "fvd", name="atmnet" )
+# myeff_m1 <- includeEffects( myeff_m1, altX, interaction1 = "gl", name="atmnet" )
+# myeff_m1 <- includeEffects( myeff_m1, altX, interaction1 = "pvda", name="atmnet" )
+# myeff_m1 <- includeEffects( myeff_m1, altX, interaction1 = "pvdd", name="atmnet" )
+ myeff_m1 <- includeEffects( myeff_m1, altX, interaction1 = "pvv", name="atmnet" )
+# myeff_m1 <- includeEffects( myeff_m1, altX, interaction1 = "sgp", name="atmnet" )
+# myeff_m1 <- includeEffects( myeff_m1, altX, interaction1 = "sp", name="atmnet" )
+# # myeff_m1 <- includeEffects( myeff_m1, altX, interaction1 = "vvd", name="atmnet" )
+# myeff_m1 <- includeEffects( myeff_m1, altX, interaction1 = "plus", name="atmnet" )
+
+myeff_m1 <- includeEffects(myeff_m1, sameX, interaction1 = "partij", name="rtnet" )
+
+# myeff_m1 <- includeEffects( myeff_m1, egoX, interaction1 = "cda", name="rtnet" )
+# myeff_m1 <- includeEffects( myeff_m1, egoX, interaction1 = "cu", name="rtnet" )
+# myeff_m1 <- includeEffects( myeff_m1, egoX, interaction1 = "denk", name="rtnet" )
+ myeff_m1 <- includeEffects( myeff_m1, egoX, interaction1 = "d66", name="rtnet" )
+# myeff_m1 <- includeEffects( myeff_m1, egoX, interaction1 = "fvd", name="rtnet" )
+# myeff_m1 <- includeEffects( myeff_m1, egoX, interaction1 = "gl", name="rtnet" )
+# myeff_m1 <- includeEffects( myeff_m1, egoX, interaction1 = "pvda", name="rtnet" )
+# myeff_m1 <- includeEffects( myeff_m1, egoX, interaction1 = "pvdd", name="rtnet" )
+# myeff_m1 <- includeEffects( myeff_m1, egoX, interaction1 = "pvv", name="rtnet" )
+# myeff_m1 <- includeEffects( myeff_m1, egoX, interaction1 = "sgp", name="rtnet" )
+# myeff_m1 <- includeEffects( myeff_m1, egoX, interaction1 = "sp", name="rtnet" )
+# # myeff_m1 <- includeEffects( myeff_m1, egoX, interaction1 = "vvd", name="rtnet" )
+# myeff_m1 <- includeEffects( myeff_m1, egoX, interaction1 = "plus", name="rtnet" )
+
+# myeff_m1 <- includeEffects( myeff_m1, altX, interaction1 = "cda", name="rtnet" )
+# myeff_m1 <- includeEffects( myeff_m1, altX, interaction1 = "cu", name="rtnet" )
+# myeff_m1 <- includeEffects( myeff_m1, altX, interaction1 = "denk", name="rtnet" )
+# myeff_m1 <- includeEffects( myeff_m1, altX, interaction1 = "d66", name="rtnet" )
+# myeff_m1 <- includeEffects( myeff_m1, altX, interaction1 = "fvd", name="rtnet" )
+# myeff_m1 <- includeEffects( myeff_m1, altX, interaction1 = "gl", name="rtnet" )
+# myeff_m1 <- includeEffects( myeff_m1, altX, interaction1 = "pvda", name="rtnet" )
+# myeff_m1 <- includeEffects( myeff_m1, altX, interaction1 = "pvdd", name="rtnet" )
+# myeff_m1 <- includeEffects( myeff_m1, altX, interaction1 = "pvv", name="rtnet" )
+# myeff_m1 <- includeEffects( myeff_m1, altX, interaction1 = "sgp", name="rtnet" )
+# myeff_m1 <- includeEffects( myeff_m1, altX, interaction1 = "sp", name="rtnet" )
+# # myeff_m1 <- includeEffects( myeff_m1, altX, interaction1 = "vvd", name="rtnet" )
+# myeff_m1 <- includeEffects( myeff_m1, altX, interaction1 = "plus", name="rtnet" )
+
+myeff_m1
+save(myeff_m1, file="myeff_m1.Rdata")
+}
+#estimate model
+{
+# Estimate parameters
+myalgorithm <- sienaAlgorithmCreate( projname = 'test')
+load("myeff_m1.Rdata")
+ansM1 <- siena07( myalgorithm, data = mydata, effects = myeff_m1, useCluster=TRUE, nbrNodes=4, initC=TRUE, batch=TRUE)
+ansM1
+ansM1b <- siena07( myalgorithm, data = mydata, prevAns=ansM1, effects = myeff_m1, useCluster=TRUE, nbrNodes=4, initC=TRUE, batch=TRUE)
+ansM1b
+ansM1c <- siena07( myalgorithm, data = mydata, prevAns=ansM1b, effects = myeff_m1, useCluster=TRUE, nbrNodes=4, initC=TRUE, batch=TRUE)
+ansM1c
+save(ansM1c, file="ansM1c.Rdata")
+}
+
+###model 2: define myeff_m2 #structural effects
+{
+#effectsDocumentation(myeff)
+
+myeff_m2 <- myeff_m1
+
+#according to suggestion of rsiena manual
+myeff_m2 <- includeEffects( myeff_m2, inPopSqrt, name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, inPopSqrt, name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, inPopSqrt, name="rtnet" )
+
+myeff_m2 <- includeEffects( myeff_m2, outActSqrt, name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, outActSqrt, name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, outActSqrt, name="rtnet" )
+
+myeff_m2 <- includeEffects( myeff_m2, outPopSqrt, name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, outPopSqrt, name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, outPopSqrt, name="rtnet" )
+
+myeff_m2 <- includeEffects( myeff_m2, transTrip, name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, transTrip, name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, transTrip, name="rtnet" )
+
+#test for 3cycle if very significant, try transitive reciprocated triplets effects
+myeff_m2 <- includeEffects( myeff_m2, cycle3, name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, cycle3, name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, cycle3, name="rtnet" )
+
+#also for proximity
+myeff_m2 <- includeEffects( myeff_m2, X, interaction1="afstand", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, X, interaction1="afstand", name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, X, interaction1="afstand", name="rtnet" )
+
+#we additionally for sharedPop
+myeff_m2 <- includeEffects( myeff_m2, sharedPop, name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, sharedPop, name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, sharedPop, name="rtnet" )
+
+myeff_m2
+save(myeff_m2, file="myeff_m2.Rdata")
+
+}
+#estimate model #note myeff_m2 is updated
+{
+myalgorithm <- sienaAlgorithmCreate( projname = 'test')
+load("myeff_m2.Rdata")
+load("ansM1c.Rdata")
+ansM2 <- siena07( myalgorithm, data = mydata, prevAns=ansM1c, effects = myeff_m2, useCluster=TRUE, nbrNodes=4, initC=TRUE, batch=TRUE)
+ansM2
+ansM2b <- siena07( myalgorithm, data = mydata, prevAns=ansM2, effects = myeff_m2, useCluster=TRUE, nbrNodes=4, initC=TRUE, batch=TRUE)
+ansM2b
+ansM2c <- siena07( myalgorithm, data = mydata, prevAns=ansM2b, effects = myeff_m2, useCluster=TRUE, nbrNodes=4, initC=TRUE, batch=TRUE)
+ansM2c
+save(ansM2c, file="ansM2c.Rdata")
+#bij atm de ego/alter effecten er nog uit.
+
+myeff_m2 <- includeEffects( myeff_m2, egoX, name="atmnet", interaction1='d66' ,include=FALSE)
+myeff_m2 <- includeEffects( myeff_m2, egoX, name="atmnet", interaction1='gl' ,include=FALSE)
+myeff_m2 <- includeEffects( myeff_m2, altX, name="atmnet", interaction1='pvv' ,include=FALSE)
+myeff_m2
+ansM2d <- siena07( myalgorithm, data = mydata, prevAns=ansM2c, effects = myeff_m2, useCluster=TRUE, nbrNodes=4, initC=TRUE, batch=TRUE)
+myeff_m2 <- includeEffects( myeff_m2, altX, name="fnet", interaction1='pvv' ,include=FALSE)
+ansM2e <- siena07( myalgorithm, data = mydata, prevAns=ansM2d, effects = myeff_m2, useCluster=TRUE, nbrNodes=4, initC=TRUE, batch=TRUE)
+ansM2e
+ansM2f <- siena07( myalgorithm, data = mydata, prevAns=ansM2e, effects = myeff_m2, useCluster=TRUE, nbrNodes=4, initC=TRUE, batch=TRUE)
+ansM2f
+ansM2g <- siena07( myalgorithm, data = mydata, prevAns=ansM2f, effects = myeff_m2, useCluster=TRUE, nbrNodes=4, initC=TRUE, batch=TRUE)
+ansM2g
+save(ansM2g, file="ansM2g.Rdata")
+save(myeff_m2, file="myeff_m2.Rdata")
+}
+
+###model 3: define myeff_m3 #byproduct hypo
+{
+myeff_m3 <- myeff_m2
+#effectsDocumentation(myeff_m3)
+
+#initial checks for ego/alt effects
+summary(lm(outdegreesf ~ as.factor(keyf$Geslacht)))
+summary(lm(indegreesf ~ as.factor(keyf$Geslacht)))
+#geen geslacht effect
+
+summary(lm(outdegreesrt ~ as.factor(keyf$Geslacht)))
+summary(lm(indegreesrt ~ as.factor(keyf$Geslacht)))
+#ego geslacht effect
+
+summary(lm(outdegreesatm ~ as.factor(keyf$Geslacht)))
+summary(lm(indegreesatm ~ as.factor(keyf$Geslacht)))
+#geen geslacht effect
+
+names(keyf)
+summary(lm(outdegreesf ~ (keyf$GebJaar)))
+summary(lm(indegreesf ~ (keyf$GebJaar)))
+#ego lft effect
+
+summary(lm(outdegreesrt ~ keyf$GebJaar))
+summary(lm(indegreesrt ~ keyf$GebJaar))
+#ego / alt lft effect
+
+summary(lm(outdegreesatm ~ keyf$GebJaar))
+summary(lm(indegreesatm ~ keyf$GebJaar))
+#geen lft effect
+
+summary(lm(outdegreesf ~ as.factor(keyf$EthMinZ)))
+summary(lm(indegreesf ~ as.factor(keyf$EthMinZ)))
+#geen minority effect
+
+summary(lm(outdegreesrt ~ as.factor(keyf$EthMinZ)))
+summary(lm(indegreesrt ~ as.factor(keyf$EthMinZ)))
+#geen minority effect
+
+summary(lm(outdegreesatm ~ as.factor(keyf$EthMinZ)))
+summary(lm(indegreesatm ~ as.factor(keyf$EthMinZ)))
+#geen minority effect
+
+myeff_m3 <- includeEffects(myeff_m3, sameX, interaction1 = "vrouw", name="fnet" )
+#myeff_m3 <- includeEffects(myeff_m3, egoX, interaction1 = "vrouw", name="fnet" )
+#myeff_m3 <- includeEffects(myeff_m3, altX, interaction1 = "vrouw", name="fnet" )
+
+myeff_m3 <- includeEffects(myeff_m3, sameX, interaction1 = "vrouw", name="rtnet" )
+myeff_m3 <- includeEffects(myeff_m3, egoX, interaction1 = "vrouw", name="rtnet" )
+#myeff_m3 <- includeEffects(myeff_m3, altX, interaction1 = "vrouw", name="rtnet" )
+
+myeff_m3 <- includeEffects(myeff_m3, sameX, interaction1 = "vrouw", name="atmnet" )
+myeff_m3 <- includeEffects(myeff_m3, egoX, interaction1 = "vrouw", name="atmnet" )
+#myeff_m3 <- includeEffects(myeff_m3, altX, interaction1 = "vrouw", name="atmnet" )
+
+myeff_m3 <- includeEffects(myeff_m3, absDiffX , interaction1 = "lft", name="fnet" )
+myeff_m3 <- includeEffects(myeff_m3, egoX, interaction1 = "lft", name="fnet" )
+#myeff_m3 <- includeEffects(myeff_m3, altX, interaction1 = "lft", name="fnet" )
+
+myeff_m3 <- includeEffects(myeff_m3, absDiffX , interaction1 = "lft", name="rtnet" )
+myeff_m3 <- includeEffects(myeff_m3, egoX, interaction1 = "lft", name="rtnet" )
+myeff_m3 <- includeEffects(myeff_m3, altX, interaction1 = "lft", name="rtnet" )
+
+myeff_m3 <- includeEffects(myeff_m3, absDiffX , interaction1 = "lft", name="atmnet" )
+#myeff_m3 <- includeEffects(myeff_m3, egoX, interaction1 = "lft", name="atmnet" )
+#myeff_m3 <- includeEffects(myeff_m3, altX, interaction1 = "lft", name="atmnet" )
+
+myeff_m3 <- includeEffects(myeff_m3, sameX, interaction1 = "ethminz", name="fnet" )
+#myeff_m3 <- includeEffects(myeff_m3, egoX, interaction1 = "ethminz", name="fnet" )
+#myeff_m3 <- includeEffects(myeff_m3, altX, interaction1 = "ethminz", name="fnet" )
+
+myeff_m3 <- includeEffects(myeff_m3, sameX, interaction1 = "ethminz", name="rtnet" )
+#myeff_m3 <- includeEffects(myeff_m3, egoX, interaction1 = "ethminz", name="rtnet" )
+#myeff_m3 <- includeEffects(myeff_m3, altX, interaction1 = "ethminz", name="rtnet" )
+
+myeff_m3 <- includeEffects(myeff_m3, sameX, interaction1 = "ethminz", name="atmnet" )
+#myeff_m3 <- includeEffects(myeff_m3, egoX, interaction1 = "ethminz", name="atmnet" )
+#myeff_m3 <- includeEffects(myeff_m3, altX, interaction1 = "ethminz", name="atmnet" )
+
+myeff_m3
+save(myeff_m3, file="myeff_m3.Rdata")
+}
+
+#estimate parameters
+{
+myalgorithm <- sienaAlgorithmCreate( projname = 'test')
+load("myeff_m3.Rdata")
+load("ansM2g.Rdata")
+ansM3 <- siena07( myalgorithm, data = mydata, prevAns=ansM2g, effects = myeff_m3, useCluster=TRUE, nbrNodes=4, initC=TRUE, batch=TRUE)
+ansM3
+ansM3b <- siena07( myalgorithm, data = mydata, prevAns=ansM3, effects = myeff_m3, useCluster=TRUE, nbrNodes=4, initC=TRUE, batch=TRUE)
+ansM3b
+ansM3c <- siena07( myalgorithm, data = mydata, prevAns=ansM3b, effects = myeff_m3, useCluster=TRUE, nbrNodes=4, initC=TRUE, batch=TRUE)
+ansM3c
+ansM3d <- siena07( myalgorithm, data = mydata, prevAns=ansM3c, effects = myeff_m3, useCluster=TRUE, nbrNodes=4, initC=TRUE, batch=TRUE)
+ansM3d
+save(ansM3c, file="ansM3c.Rdata")
+}
+
+###model 4: define myeff_m2 include additional controls
+{
+load("myeff_m3.Rdata")
+
+myeff_m2 <- myeff_m3
+
+#"kamerlid2016" "kabinet2016"  "pleklijst"    "pleklijst1"
+
+myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", altX, name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", altX, name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", altX, name="rtnet" )
+
+myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", egoX, name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", egoX, name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", egoX, name="rtnet" )
+
+myeff_m2 <- includeEffects( myeff_m2, interaction1="kabinet2016", altX, name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="kabinet2016", altX, name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="kabinet2016", altX, name="rtnet" )
+
+myeff_m2 <- includeEffects( myeff_m2, interaction1="kabinet2016", egoX, name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="kabinet2016", egoX, name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="kabinet2016", egoX, name="rtnet" )
+
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", altX, name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", altX, name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", altX, name="rtnet" )
+
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", egoX, name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", egoX, name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", egoX, name="rtnet" )
+
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", diffX, name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", diffX, name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", diffX, name="rtnet" )
+
+myeff_m2
+save(myeff_m2, file="myeff_m2.Rdata")
+}
+
+# estimate parameters
+{
+
+myalgorithm <- sienaAlgorithmCreate( projname = 'test')
+load("myeff_m2.Rdata")
+load("ansM3c.Rdata")
+ansM4 <- siena07( myalgorithm, data = mydata, prevAns=ansM3c, effects = myeff_m2, useCluster=TRUE, nbrNodes=4, initC=TRUE, batch=TRUE)
+ansM4
+ansM4b <- siena07( myalgorithm, data = mydata, prevAns=ansM4, effects = myeff_m2, useCluster=TRUE, nbrNodes=4, initC=TRUE, batch=TRUE)
+ansM4b
+ansM4c <- siena07( myalgorithm, data = mydata, prevAns=ansM4b, effects = myeff_m2, useCluster=TRUE, nbrNodes=4, initC=TRUE, batch=TRUE)
+ansM4c
+ansM4d <- siena07( myalgorithm, data = mydata, prevAns=ansM4c, effects = myeff_m2, useCluster=TRUE, nbrNodes=4, initC=TRUE, batch=TRUE)
+ansM4d
+save(ansM4d, file="ansM4d.Rdata")
+}
+
+#update myeff_m2 #remove covariate variables with t-value <1
+{
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pvv", altX, include=FALSE, name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pvv", egoX, include=FALSE, name="fnet" )
+myeff_m2 <- includeEffects(myeff_m2, absDiffX , interaction1 = "lft" , include=FALSE, name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", altX, include=FALSE, name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", diffX, include=FALSE, name="atmnet" )
+myeff_m2 <- includeEffects(myeff_m2, sameX, interaction1 = "ethminz", include=FALSE, name="rtnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="lft", egoX, include=FALSE, name="rtnet" )
+myeff_m2 <- includeEffects(myeff_m2, absDiffX , interaction1 = "lft", include=FALSE, name="rtnet" )
+myeff_m2
+myeff_m2b <- myeff_m2
+save(myeff_m2b, file="myeff_m2b.Rdata")
+}
+
+# estimate parameters
+{
+myalgorithm <- sienaAlgorithmCreate( projname = 'test')
+load("myeff_m2b.Rdata")
+load("ansM4d.Rdata")
+ansM4e <- siena07( myalgorithm, data = mydata, prevAns=ansM4d, effects = myeff_m2b, useCluster=TRUE, nbrNodes=4, initC=TRUE, batch=TRUE)
+ansM4e
+ansM4f <- siena07( myalgorithm, data = mydata, prevAns=ansM4e, effects = myeff_m2b, useCluster=TRUE, nbrNodes=4, initC=TRUE, batch=TRUE)
+ansM4f
+ansM4g <- siena07( myalgorithm, data = mydata, prevAns=ansM4f, effects = myeff_m2b, useCluster=TRUE, nbrNodes=4, initC=TRUE, batch=TRUE)
+ansM4g
+ansM4h <- siena07( myalgorithm, data = mydata, prevAns=ansM4g, effects = myeff_m2b, useCluster=TRUE, nbrNodes=4, initC=TRUE, batch=TRUE)
+ansM4h
+save(ansM4h, file="ansM4h.Rdata")
+}
+#ansm4e is best!
+save(ansM4e, file="ansM4e.Rdata")
+#maar f heeft een t voor otudegree atmnet
+save(ansM4f, file="ansM4f.Rdata")
+#iets fout gedaan maar wel beter model
+save(ansM5, file="ansM4i.Rdata")
+ansM4i <- ansM5
+ansM4i
+###model 5: crossnetwork effects
+{
+load("myeff_m2b.Rdata")
+myeff5 <- myeff_m2b
+#ik doe het een, ik doe het ander
+myeff5 <- includeEffects( myeff5, crprod, interaction1="fnet", name="rtnet" )
+myeff5 <- includeEffects( myeff5, crprod, interaction1="fnet", name="atmnet" )
+myeff5 <- includeEffects( myeff5, crprod, interaction1="rtnet", name="fnet" )
+myeff5 <- includeEffects( myeff5, crprod, interaction1="rtnet", name="atmnet" )
+myeff5 <- includeEffects( myeff5, crprod, interaction1="atmnet", name="fnet" )
+myeff5 <- includeEffects( myeff5, crprod, interaction1="atmnet", name="rtnet" )
+
+#ik doe het een, jij doet het ander terug
+myeff5 <- includeEffects( myeff5, crprodRecip, interaction1="fnet", name="rtnet" )
+myeff5 <- includeEffects( myeff5, crprodRecip, interaction1="fnet", name="atmnet" )
+myeff5 <- includeEffects( myeff5, crprodRecip, interaction1="rtnet", name="fnet" )
+myeff5 <- includeEffects( myeff5, crprodRecip, interaction1="rtnet", name="atmnet" )
+myeff5 <- includeEffects( myeff5, crprodRecip, interaction1="atmnet", name="fnet" )
+myeff5 <- includeEffects( myeff5, crprodRecip, interaction1="atmnet", name="rtnet" )
+myeff5
+
+save(myeff5, file="myeff5.Rdata")
+}
+
+# model 5 estimate parameters
+{
+myalgorithm <- sienaAlgorithmCreate( projname = 'test')
+load("myeff5.Rdata")
+load("ansM4i.Rdata")
+ansM5 <- siena07( myalgorithm, data = mydata, prevAns=ansM4f, effects = myeff5, useCluster=TRUE, nbrNodes=4, initC=TRUE, batch=TRUE)
+ansM5
+save(ansM5, file="ansM5.Rdata")
+ansM5b <- siena07( myalgorithm, data = mydata, prevAns=ansM5, effects = myeff5, useCluster=TRUE, nbrNodes=4, initC=TRUE, batch=TRUE)
+ansM5b
+save(ansM5b, file="ansM5b.Rdata")
+ansM5c <- siena07( myalgorithm, data = mydata, prevAns=ansM5b, effects = myeff5, useCluster=TRUE, nbrNodes=4, initC=TRUE, batch=TRUE)
+ansM5c
+save(ansM5c, file="ansM5c.Rdata")
+ansM5d <- siena07( myalgorithm, data = mydata, prevAns=ansM5c, effects = myeff5, useCluster=TRUE, nbrNodes=4, initC=TRUE, batch=TRUE)
+ansM5d
+save(ansM5d, file="ansM5d.Rdata")
+
+ansM5e <- siena07( myalgorithm, data = mydata, prevAns=ansM5d, effects = myeff5, useCluster=TRUE, nbrNodes=4, initC=TRUE, batch=TRUE)
+ansM5e
+save(ansM5e, file="ansM5e.Rdata")
+ansM5f <- siena07( myalgorithm, data = mydata, prevAns=ansM5e, effects = myeff5, useCluster=TRUE, nbrNodes=4, initC=TRUE, batch=TRUE)
+ansM5f
+save(ansM5f, file="ansM5f.Rdata")
+ansM5g <- siena07( myalgorithm, data = mydata, prevAns=ansM5f, effects = myeff5, useCluster=TRUE, nbrNodes=4, initC=TRUE, batch=TRUE)
+ansM5g
+save(ansM5g, file="ansM5g.Rdata")
+
+}
+
+#update parameters
+{
+load("myeff5.Rdata")
+myeff5b <- myeff5
+#ik doe het een, ik doe het ander
+myeff5b <- includeEffects( myeff5b, crprod, interaction1="atmnet", name="fnet" , include=FALSE)
+
+#ik doe het een, jij doet het ander terug
+myeff5b <- includeEffects( myeff5b, crprodRecip, interaction1="atmnet", name="fnet" , include=FALSE)
+
+myeff5b
+
+save(myeff5b, file="myeff5b.Rdata")
+}
+
+
+# reestimate model 5 estimate parameters
+{
+myalgorithm <- sienaAlgorithmCreate( projname = 'test')
+load("myeff5b.Rdata")
+load("ansM5e.Rdata")
+ansM5h <- siena07( myalgorithm, data = mydata, prevAns=ansM5e, effects = myeff5b, useCluster=TRUE, nbrNodes=4, initC=TRUE, batch=TRUE)
+ansM5h
+save(ansM5h, file="ansM5h.Rdata")
+ansM5i <- siena07( myalgorithm, data = mydata, prevAns=ansM5h, effects = myeff5b, useCluster=TRUE, nbrNodes=4, initC=TRUE, batch=TRUE)
+ansM5i
+save(ansM5i, file="ansM5i.Rdata")
+ansM5j <- siena07( myalgorithm, data = mydata, prevAns=ansM5i, effects = myeff5b, useCluster=TRUE, nbrNodes=4, initC=TRUE, batch=TRUE)
+ansM5j
+save(ansM5j, file="ansM5j.Rdata")
+ansM5k <- siena07( myalgorithm, data = mydata, prevAns=ansM5j, effects = myeff5b, useCluster=TRUE, nbrNodes=4, initC=TRUE, batch=TRUE)
+ansM5k
+save(ansM5k, file="ansM5k.Rdata")
+
+
+}
+
+
+###model 6 : time heterogeneity
+
+{
+tt <- sienaTimeTest(ansM5i)
+#plot(tt, effects=1:70)
+tt$EffectTest
+load("myeff5b.Rdata")
+myeff6 <- myeff5b
+myeff6 <- includeTimeDummy(myeff6, sameX, interaction1 = "partij", name="atmnet", timeDummy="2")
+myeff6 <- includeTimeDummy(myeff6, sameX, interaction1 = "partij", name="rtnet", timeDummy="2")
+myeff6
+save(myeff6, file="myeff6.Rdata")
+}
+
+# estimate parameters Model 6
+{
+#ansM5i best
+myalgorithm <- sienaAlgorithmCreate( projname = 'test')
+load("myeff6.Rdata")
+load("ansM5i.Rdata")
+ansM6 <- siena07( myalgorithm, data = mydata, prevAns=ansM5i, effects = myeff6, useCluster=TRUE, nbrNodes=4, initC=TRUE, batch=TRUE)
+ansM6
+save(ansM6, file="ansM6.Rdata")
+ansM6b <- siena07( myalgorithm, data = mydata, prevAns=ansM6, effects = myeff6, useCluster=TRUE, nbrNodes=4, initC=TRUE, batch=TRUE)
+ansM6b
+save(ansM6b, file="ansM6.Rdata")
+
+}
+
+#prepare output table
+load("ansM1c.Rdata")
+load("ansM2g.Rdata")
+load("ansM3c.Rdata")
+load("ansM4i.Rdata")
+ansM4i <- ansM5
+load("ansM5i.Rdata")
+load("ansM6.Rdata")
+ansM6
+
+fanscsv <- function(ans=ans, filename="ans.csv") {
+	ans1_mat <- matrix(NA, nrow=length(ans$effects[,2]),ncol=3)
+	row.names(ans1_mat) <- ans$effects[,2]
+	ans1_mat[,1] <- (ans$theta)
+	ans1_mat[,2] <- (ans$se)
+	ans1_mat[,3] <- (ans$tconv)
+	ans1_mat <- rbind(ans1_mat, c(ans$tconv.max))
+	row.names(ans1_mat)[length(row.names(ans1_mat))] <- "Overall maximum convergence ratio:"
+	colnames(ans1_mat) <- c("Estimate", "Standard Error", "Convergence t-ratio")
+	print(ans1_mat)
+	write.csv(ans1_mat, filename)
+}
+
+fanscsv(ansM2g, "ansM2.csv")
+
+ans1_mat
+?write.csv
+
+ans1_mat[length(ansM1c$effects[,2])+1,1] <- ansM1c$tconv.max
+
+ans1_mat
+
+colnames(ans1_mat) <- c("effect name", "Estimate", "Standard Error", "Convergence t-ratio")
+ans1_mat
+ansM1c
+
+colnames(ans1_mat) <- c("effect name", "Estimate", "Standard Error", "Convergence t-ratio")
+
+ansM1c$theta
+ansM1c$effects[,2]
+ansM1c$se
+
+---> 
+
+

@@ -1,0 +1,675 @@
+---
+title: "Replication package-Tables"
+author: '[Jochem Tolsma](https://www.jochemtolsma.nl) - Radboud University / University of Groningen, the Netherlands'
+bibliography: references.bib
+date: "Last compiled on `r format(Sys.time(), '%B, %Y')`"
+output: 
+  html_document:
+    toc:  true
+    toc_float: true
+    number_sections: false
+    code_folding: hide
+    code_download: yes
+---
+
+```{r globalsettings, echo=FALSE, warning=FALSE}
+library(knitr)
+opts_chunk$set(tidy.opts=list(width.cutoff=100),tidy=TRUE, warning = FALSE, message = FALSE,comment = "#>", cache=TRUE, echo=FALSE, class.source=c("test"), class.output=c("test2"))
+options(width = 100)
+rgl::setupKnitr()
+```
+
+```{r colorize, echo=FALSE}
+colorize <- function(x, color) {
+  if (knitr::is_latex_output()) {
+    sprintf("\\textcolor{%s}{%s}", color, x)
+  } else if (knitr::is_html_output()) {
+    sprintf("<span style='color: %s;'>%s</span>", color, 
+            x)
+  } else x
+}
+
+```
+
+```{r klippy, echo=FALSE, include=TRUE}
+klippy::klippy(position = c('top', 'right'))
+#klippy::klippy(color = 'darkred')
+#klippy::klippy(tooltip_message = 'Click to copy', tooltip_success = 'Done')
+```
+
+```{css, echo=FALSE}
+pre.test {
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: auto;
+  margin: 0px;
+}
+
+pre.test2 {
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: auto;
+  margin: 0px;
+  background-color: white;
+  color: rgb(201, 76, 76);
+}
+
+
+h1, .h1, h2, .h2, h3, .h3 {
+  margin-top: 24px;
+}
+
+
+```
+
+
+
+------------------------------------------------------------------------
+
+
+# Intro  
+
+
+This [website](https://jochemtolsma.github.io/Twitter/) is a replication package for the paper "Twitter" by @Tolsma2021.
+
+It contains R code to replicate all Tables/Figures/Results in the manuscript.
+
+To copy the code click the button in the upper right corner of the code-chunks.
+
+Use the top menu to navigate to the section of interest. 
+
+The source code of this website can be found on [Github](https://github.com/JochemTolsma/Twitter)
+
+Questions can be addressed to [Jochem Tolsma](mailto:jochem.tolsma@ru.nl).
+
+---  
+
+## Packages  
+
+```{r packages, echo=TRUE}
+#install if necessary 
+if (!require("dplyr", character.only = TRUE)) {install.packages("dplyr", dependencies=TRUE)}
+if (!require("foreign", character.only = TRUE)) {install.packages("foreign", dependencies=TRUE)}
+if (!require("igraph", character.only = TRUE)) {install.packages("igraph", dependencies=TRUE)}
+
+#load packages.
+library(tidyverse)
+library(dplyr)
+library(foreign)
+library(igraph)
+library(knitr)
+library(kableExtra)
+
+```
+
+
+---   
+
+
+## Custom segregation functions {.tabset .tabset-fade}
+
+Define custom functions to calculate network-segregation:  
+
+- fdensity: density of network  
+- fdensityintra: density within subgroups  
+- fscolnet: Coleman’s Homophily Index at the network-level, see [(@BOJANOWSKI201414)]  
+- fhomomat: make a matrix indicating wheter nodes are similar  
+- fndyads: count number of dyads  
+- fndayds2: count number of within subgroup dyads
+
+```{r functions, echo=TRUE}
+fdensity <- function(x) { 
+	#x is your nomination network
+	#should be relationship, divided by all possible off diagonal ties. 
+	#make sure diagonal cells are NA
+	diag(x) <- NA
+	x[x==10] <- NA
+	sum(x==1, na.rm=T) / (sum(x==1 | x==0, na.rm=T))
+}
+
+fdensityintra <- function(x, A) { 
+	#A is matrix indicating whether nodes constituting dyad have same characteristics
+	diag(x) <- NA
+	x[x==10] <- NA
+	diag(A) <- NA
+	sum(x==1 & A==1, na.rm=T) / (sum((x==1 | x==0) & A==1, na.rm=T))
+}
+
+fdensityinter <- function(x, A) { 
+	#A is matrix indicating whether nodes constituting dyad have same characteristics
+	diag(x) <- NA
+	x[x==10] <- NA
+	diag(A) <- NA
+	sum(x==1 & A!=1, na.rm=T) / (sum((x==1 | x==0) & A!=1, na.rm=T))
+}
+
+fhomomat <- function(x) {
+xmat <- matrix(x, nrow=length(x), ncol=length(x))
+xmatt <- t(xmat)
+xhomo <- xmat==xmatt
+return(xhomo)
+}
+
+fndyads <- function(x) {
+	diag(x) <- NA
+	x[x==10] <- NA
+	(sum((x==1 | x==0) , na.rm=T))
+}
+
+fndyads2 <- function(x, A) {
+	diag(x) <- NA
+	x[x==10] <- NA
+	diag(A) <- NA
+	(sum((x==1 | x==0) & A==1, na.rm=T))
+}
+
+
+fscolnet <- function(network, ccovar) {
+#Calculate coleman on network level: https://reader.elsevier.com/reader/sd/pii/S0378873314000239?token=A42F99FF6E2B750436DD2CB0DB7B1F41BDEC16052A45683C02644DAF88215A3379636B2AA197B65941D6373E9E2EE413
+
+	fhomomat <- function(x) {
+	xmat <- matrix(x, nrow=length(x), ncol=length(x))
+	xmatt <- t(xmat)
+	xhomo <- xmat==xmatt
+	return(xhomo)
+	}
+
+	fsumintra <- function(x, A) { 
+	#A is matrix indicating whether nodes constituting dyad have same characteristics
+	diag(x) <- NA
+	x[x==10] <- NA
+	diag(A) <- NA
+	sum(x==1 & A==1, na.rm=T) 
+	}
+
+	#expecation w*=sum_g sum_i (ni((ng-1)/(N-1)))
+	network[network==10] <- NA
+	ni <- rowSums(network, na.rm=T)
+	ng <- NA
+	for (i in 1:length(ccovar)) {ng[i] <- table(ccovar)[rownames(table(ccovar))==ccovar[i]]}
+	N <- length(ccovar)
+	wexp <- sum(ni*((ng-1)/(N-1)), na.rm=T)
+
+	#wgg1 how many intragroup ties
+	w <- fsumintra(network, fhomomat(ccovar)) 
+	
+	Scol_net <- ifelse(w>=wexp, (w-wexp) / (sum(ni, na.rm=T) - wexp), (w - wexp)/wexp)
+	return(Scol_net)
+
+}
+
+
+```
+
+---  
+
+## Load data objects {.tabset .tabset-fade}  
+
+See ... for construction of data objects.  
+
+Data objects:  
+
+- key: information on all politicians on election list  
+- keyf: information on all 147 MPs with twitter handle  
+- mydata: RSiena object with all kind of goodies inside  
+- seats: seating coordinates of HoP (used for plotting)
+
+```{r data, echo=TRUE}
+#STAP 1: read in data
+key <- read.spss('data-processed\\key moederbestand 20171114.sav', use.value.labels=T, to.data.frame=T)
+
+
+load("data-processed\\twitter_20190919.RData")
+#str(twitter_20190919,1)
+keyf <- twitter_20190919[[1]]
+mydata <- twitter_20190919[[2]]
+seats <- twitter_20190919[[3]]
+```
+
+---  
+
+## Summary of dataset used. 
+
+
+```{r dataset, echo=TRUE}
+#select all MPs (we need to filter the correct EGOhandle)
+data_mp <- key %>% 
+  filter(Elected20170315=="yes, verkozen" & !(EGOhandle %in% c(10401, 10403, 13102, 15102, 106101, 41400))) %>%
+  select("Naam", "Partij", "Geslacht", "GebJaar", "EthMinZ", "PlekLijst", "Kamerlid20161123","ZetelSegment20170315", "ZetelRij20170315", "ZetelKolom20170315")
+
+# not necessary: "Twitterhandle" "Elected20170315"
+
+seats$ZetelSegment20170315 <- seats$segments
+seats$ZetelRij20170315 <- seats$rows
+seats$ZetelKolom20170315 <- seats$columns
+
+data_mp <- inner_join(data_mp, seats) %>%
+  select("Naam", "Partij", "Geslacht", "GebJaar", "EthMinZ", "PlekLijst", "Kamerlid20161123","ZetelSegment20170315", "ZetelRij20170315", "ZetelKolom20170315", "X", "Y")
+
+
+colnames(data_mp) <- c("Name", "Party", "Sex", "Birth Year", "Visible Minority", "List Position", "Incumbency status","Seating Segment", "Seating Row", "Seating Column", "X-coord.", "Y-coord")
+
+data_mp$Sex <- as.character(data_mp$Sex)
+data_mp$Sex[data_mp$Sex=="vrouw"] <- "female"
+data_mp$Sex[data_mp$Sex=="man"] <- "male"
+
+
+sumdat <- kbl(data_mp, booktabs=TRUE, digits=2, caption="Dataset summary", align = "c") %>%
+  kable_classic(full_width = F, html_font = "Cambria") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) 
+
+scroll_box(sumdat, width="100%", height="500px")
+
+
+
+
+```
+
+---  
+
+
+
+## Table 1 in manuscript  
+
+
+```{r table1, echo=TRUE}
+
+#select all MPs (we need to filter the correct EGOhandle)
+data_mp <- key %>% 
+  filter(Elected20170315=="yes, verkozen" & !(EGOhandle %in% c(10401, 10403, 13102, 15102, 106101, 41400)))
+
+dg <- data_mp %>% 
+  group_by(Geslacht) %>%
+  summarize(count= n(), freq=count/150)
+
+de <- data_mp %>% 
+  group_by(EthMinZ) %>%
+  summarize(count= n(), freq=count/150)
+
+da <- data_mp %>% 
+  mutate (variable="AGE") %>%
+  summarize(age=first(variable), mean= mean(2017-GebJaar, na.rm=T), sd=sd(2017-GebJaar, na.rm=T)) 
+
+dp <- data_mp %>% 
+  group_by(Partij) %>%
+  summarize(count= n(), freq=count/150) %>%
+  arrange(desc(count))
+
+# by party
+dgp <- data_mp %>% 
+  group_by(Partij) %>%
+  add_tally() %>% 
+  group_by(Partij, Geslacht) %>%
+  summarize(count=n(), freq=count/first(n), first=first(n)) %>%
+  arrange(desc(first)) %>%
+  select("Partij", "Geslacht", "count", "freq")
+
+dep <- data_mp %>% 
+  group_by(Partij) %>%
+  add_tally() %>% 
+  group_by(Partij, EthMinZ) %>%
+  summarize(count=n(), freq=count/first(n), first=first(n)) %>%
+  arrange(desc(first)) %>%
+  select("Partij", "EthMinZ", "count", "freq")
+
+dap <- data_mp %>%
+  mutate (variable="AGE") %>%
+  group_by(Partij) %>%
+  add_tally() %>% 
+  summarize(age=first(variable), mean= mean(2017-GebJaar, na.rm=T), sd=sd(2017-GebJaar, na.rm=T), first=first(n)) %>% 
+  arrange(desc(first)) %>%
+  select("Partij", "age", "mean", "sd") 
+
+dg <- dg %>% add_column(grouping = "NO", .before="Geslacht")
+da <- da %>% add_column(grouping = "NO", .before="age")
+de <- de %>% add_column(grouping = "NO", .before="EthMinZ")
+dp <- dp %>% add_column(grouping = "NO", .before="Partij")
+
+
+# dgp
+# dap
+# dep
+
+# write_csv(dg, "table.csv")
+# write_csv(da, "table.csv", append = TRUE)
+# write_csv(de, "table.csv", append = TRUE)
+# write_csv(dp, "table.csv", append = TRUE)
+# 
+# write_csv(dgp, "table.csv", append = TRUE)
+# write_csv(dap, "table.csv", append = TRUE)
+# write_csv(dep, "table.csv", append = TRUE)
+
+test <- read_csv('table.csv')
+
+colnames(test) <- c("grouping", "social dimension", "N / mean", "prop. / SD")
+test$grouping[test$grouping=="NO"] <- "HoP"
+test[test=="man"] <- "male"
+test[test=="vrouw"] <- "female"
+test[test=="0"] <- "no visible minority"
+test[,2][test[,2]=="1"] <- "visible minority"
+
+
+table1 <- kbl(test, booktabs=TRUE, digits=2, caption="Table 1", align = "c") %>%
+  kable_classic(full_width = F, html_font = "Cambria") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) 
+
+scroll_box(table1, width="100%", height="500px")
+
+ # %>%  pack_rows(index=c("sex"=2, "age"=1, "minority status"=2, "party"=13)) 
+#save_kable(table1, "table1.html")
+ 
+  
+```
+
+
+---  
+
+
+
+## Table 2 in manuscript {.tabset .tabset-fade} 
+
+We retrieve the data from the RSiena data-object 
+
+```{r datatable2, echo=TRUE}
+
+fnet <- mydata$depvars$fnet
+atmnet <- mydata$depvars$atmnet
+rtnet <- mydata$depvars$rtnet
+
+vrouw <- mydata$cCovars$vrouw
+partij <- mydata$cCovars$partij
+ethminz <- mydata$cCovars$ethminz
+lft <- mydata$cCovars$lft
+
+ethminz <- ethminz + attributes(ethminz)$mean
+partij <- partij + attributes(partij)$mean
+vrouw <- vrouw + attributes(vrouw)$mean
+lft <- lft + attributes(lft)$mean
+
+vrouwm <- fhomomat(vrouw)
+partijm <- fhomomat(partij)
+ethminzm <- fhomomat(ethminz)
+
+xmat <- matrix(ethminz, nrow=length(ethminz), ncol=length(ethminz))
+xmatt <- t(xmat)
+minoritym <- xmat==1 & xmatt==1
+
+#for age max 5 year difference / for descriptives
+xmat <- matrix(lft, nrow=length(lft), ncol=length(lft))
+xmatt <- t(xmat)
+lftm <- (abs(xmat - xmatt) < 6)
+
+# fndyads2(fnet[,,1], vrouwm)
+# fndyads2(fnet[,,3], vrouwm)
+# fndyads2(fnet[,,1], partijm)
+# fndyads2(fnet[,,3], partijm)
+# fndyads2(fnet[,,1], ethminzm)
+# fndyads2(fnet[,,3], ethminzm)
+
+``` 
+
+<br> 
+
+### Density  
+
+```{r Table2a, echo=TRUE}
+
+desmat <- matrix(NA, nrow=10, ncol=9)
+desmat[1,1] <- fdensity(fnet[,,1])
+desmat[1,2] <- fdensity(fnet[,,2])
+desmat[1,3] <- fdensity(fnet[,,3])
+desmat[2,1] <- fdensityintra(fnet[,,1], vrouwm)
+desmat[2,2] <- fdensityintra(fnet[,,2], vrouwm)
+desmat[2,3] <- fdensityintra(fnet[,,3], vrouwm)
+desmat[3,1] <- fdensityinter(fnet[,,1], vrouwm)
+desmat[3,2] <- fdensityinter(fnet[,,2], vrouwm)
+desmat[3,3] <- fdensityinter(fnet[,,3], vrouwm)
+desmat[4,1] <- fdensityintra(fnet[,,1], partijm)
+desmat[4,2] <- fdensityintra(fnet[,,2], partijm)
+desmat[4,3] <- fdensityintra(fnet[,,3], partijm)
+desmat[5,1] <- fdensityinter(fnet[,,1], partijm)
+desmat[5,2] <- fdensityinter(fnet[,,2], partijm)
+desmat[5,3] <- fdensityinter(fnet[,,3], partijm)
+desmat[6,1] <- fdensityintra(fnet[,,1], ethminzm)
+desmat[6,2] <- fdensityintra(fnet[,,2], ethminzm)
+desmat[6,3] <- fdensityintra(fnet[,,3], ethminzm)
+desmat[7,1] <- fdensityinter(fnet[,,1], ethminzm)
+desmat[7,2] <- fdensityinter(fnet[,,2], ethminzm)
+desmat[7,3] <- fdensityinter(fnet[,,3], ethminzm)
+desmat[8,1] <- fdensityinter(fnet[,,1], minoritym)
+desmat[8,2] <- fdensityinter(fnet[,,2], minoritym)
+desmat[8,3] <- fdensityinter(fnet[,,3], minoritym)
+desmat[9,1] <- fdensityintra(fnet[,,1], lftm)
+desmat[9,2] <- fdensityintra(fnet[,,2], lftm)
+desmat[9,3] <- fdensityintra(fnet[,,3], lftm)
+desmat[10,1] <- fdensityinter(fnet[,,1], lftm)
+desmat[10,2] <- fdensityinter(fnet[,,2], lftm)
+desmat[10,3] <- fdensityinter(fnet[,,3], lftm)
+
+desmat[1,1 +3] <- fdensity(atmnet[,,1])
+desmat[1,2+3] <- fdensity(atmnet[,,2])
+desmat[1,3+3] <- fdensity(atmnet[,,3])
+desmat[2,1+3] <- fdensityintra(atmnet[,,1], vrouwm)
+desmat[2,2+3] <- fdensityintra(atmnet[,,2], vrouwm)
+desmat[2,3+3] <- fdensityintra(atmnet[,,3], vrouwm)
+desmat[3,1+3] <- fdensityinter(atmnet[,,1], vrouwm)
+desmat[3,2+3] <- fdensityinter(atmnet[,,2], vrouwm)
+desmat[3,3+3] <- fdensityinter(atmnet[,,3], vrouwm)
+desmat[4,1+3] <- fdensityintra(atmnet[,,1], partijm)
+desmat[4,2+3] <- fdensityintra(atmnet[,,2], partijm)
+desmat[4,3+3] <- fdensityintra(atmnet[,,3], partijm)
+desmat[5,1+3] <- fdensityinter(atmnet[,,1], partijm)
+desmat[5,2+3] <- fdensityinter(atmnet[,,2], partijm)
+desmat[5,3+3] <- fdensityinter(atmnet[,,3], partijm)
+desmat[6,1+3] <- fdensityintra(atmnet[,,1], ethminzm)
+desmat[6,2+3] <- fdensityintra(atmnet[,,2], ethminzm)
+desmat[6,3+3] <- fdensityintra(atmnet[,,3], ethminzm)
+desmat[7,1+3] <- fdensityinter(atmnet[,,1], ethminzm)
+desmat[7,2+3] <- fdensityinter(atmnet[,,2], ethminzm)
+desmat[7,3+3] <- fdensityinter(atmnet[,,3], ethminzm)
+desmat[8,1+3] <- fdensityinter(atmnet[,,1], minoritym)
+desmat[8,2+3] <- fdensityinter(atmnet[,,2], minoritym)
+desmat[8,3+3] <- fdensityinter(atmnet[,,3], minoritym)
+desmat[9,1+3] <- fdensityintra(atmnet[,,1], lftm)
+desmat[9,2+3] <- fdensityintra(atmnet[,,2], lftm)
+desmat[9,3+3] <- fdensityintra(atmnet[,,3], lftm)
+desmat[10,1+3] <- fdensityinter(atmnet[,,1], lftm)
+desmat[10,2+3] <- fdensityinter(atmnet[,,2], lftm)
+desmat[10,3+3] <- fdensityinter(atmnet[,,3], lftm)
+
+desmat[1,1 +6] <- fdensity(rtnet[,,1])
+desmat[1,2+6] <- fdensity(rtnet[,,2])
+desmat[1,3+6] <- fdensity(rtnet[,,3])
+desmat[2,1+6] <- fdensityintra(rtnet[,,1], vrouwm)
+desmat[2,2+6] <- fdensityintra(rtnet[,,2], vrouwm)
+desmat[2,3+6] <- fdensityintra(rtnet[,,3], vrouwm)
+desmat[3,1+6] <- fdensityinter(rtnet[,,1], vrouwm)
+desmat[3,2+6] <- fdensityinter(rtnet[,,2], vrouwm)
+desmat[3,3+6] <- fdensityinter(rtnet[,,3], vrouwm)
+desmat[4,1+6] <- fdensityintra(rtnet[,,1], partijm)
+desmat[4,2+6] <- fdensityintra(rtnet[,,2], partijm)
+desmat[4,3+6] <- fdensityintra(rtnet[,,3], partijm)
+desmat[5,1+6] <- fdensityinter(rtnet[,,1], partijm)
+desmat[5,2+6] <- fdensityinter(rtnet[,,2], partijm)
+desmat[5,3+6] <- fdensityinter(rtnet[,,3], partijm)
+desmat[6,1+6] <- fdensityintra(rtnet[,,1], ethminzm)
+desmat[6,2+6] <- fdensityintra(rtnet[,,2], ethminzm)
+desmat[6,3+6] <- fdensityintra(rtnet[,,3], ethminzm)
+desmat[7,1+6] <- fdensityinter(rtnet[,,1], ethminzm)
+desmat[7,2+6] <- fdensityinter(rtnet[,,2], ethminzm)
+desmat[7,3+6] <- fdensityinter(rtnet[,,3], ethminzm)
+desmat[8,1+6] <- fdensityinter(rtnet[,,1], minoritym)
+desmat[8,2+6] <- fdensityinter(rtnet[,,2], minoritym)
+desmat[8,3+6] <- fdensityinter(rtnet[,,3], minoritym)
+desmat[9,1+6] <- fdensityintra(rtnet[,,1], lftm)
+desmat[9,2+6] <- fdensityintra(rtnet[,,2], lftm)
+desmat[9,3+6] <- fdensityintra(rtnet[,,3], lftm)
+desmat[10,1+6] <- fdensityinter(rtnet[,,1], lftm)
+desmat[10,2+6] <- fdensityinter(rtnet[,,2], lftm)
+desmat[10,3+6] <- fdensityinter(rtnet[,,3], lftm)
+
+colnames(desmat) <- c("friends w1", "friends w2", "friends w3","atmentions w1","atmentions w2","atmentions w3","retweets w1","retweets w2","retweets w3") 
+rownames(desmat) <- c("total", "same sex", "different sex", "same party", "different party", "same ethnicity", "different ethnicity", "both minority", "same age (<6)", "different age (>5)")
+
+#desmat
+#write.csv2(desmat, "20190829desmat.csv")
+
+desmatkable <- kbl(desmat, booktabs=TRUE, digits=2, caption="Table 2: Density", align = "c") %>%
+  kable_classic(full_width = F, html_font = "Cambria") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(column = 1, width = "3in")
+  
+desmatkable
+
+
+
+``` 
+
+---  
+
+
+### Coleman's  
+
+
+```{r Table2b, echo=TRUE}
+
+fnet[fnet==10] <- NA
+rtnet[rtnet==10] <- NA
+atmnet[atmnet==10] <- NA
+
+colmat <- matrix(NA, nrow=3, ncol=9)
+
+colmat[1,1] <- fscolnet(fnet[,,1], partij) 
+colmat[1,2] <- fscolnet(fnet[,,2], partij) 
+colmat[1,3] <- fscolnet(fnet[,,3], partij) 
+colmat[1,4] <- fscolnet(atmnet[,,1], partij) 
+colmat[1,5] <- fscolnet(atmnet[,,2], partij) 
+colmat[1,6] <- fscolnet(atmnet[,,3], partij) 
+colmat[1,7] <- fscolnet(rtnet[,,1], partij) 
+colmat[1,8] <- fscolnet(rtnet[,,2], partij) 
+colmat[1,9] <- fscolnet(rtnet[,,3], partij) 
+
+colmat[2,1] <- fscolnet(fnet[,,1], vrouw) 
+colmat[2,2] <- fscolnet(fnet[,,2], vrouw) 
+colmat[2,3] <- fscolnet(fnet[,,3], vrouw) 
+colmat[2,4] <- fscolnet(atmnet[,,1], vrouw) 
+colmat[2,5] <- fscolnet(atmnet[,,2], vrouw) 
+colmat[2,6] <- fscolnet(atmnet[,,3], vrouw) 
+colmat[2,7] <- fscolnet(rtnet[,,1], vrouw) 
+colmat[2,8] <- fscolnet(rtnet[,,2], vrouw) 
+colmat[2,9] <- fscolnet(rtnet[,,3], vrouw) 
+
+colmat[3,1] <- fscolnet(fnet[,,1], ethminz) 
+colmat[3,2] <- fscolnet(fnet[,,2], ethminz) 
+colmat[3,3] <- fscolnet(fnet[,,3], ethminz) 
+colmat[3,4] <- fscolnet(atmnet[,,1], ethminz) 
+colmat[3,5] <- fscolnet(atmnet[,,2], ethminz) 
+colmat[3,6] <- fscolnet(atmnet[,,3], ethminz) 
+colmat[3,7] <- fscolnet(rtnet[,,1], ethminz) 
+colmat[3,8] <- fscolnet(rtnet[,,2], ethminz) 
+colmat[3,9] <- fscolnet(rtnet[,,3], ethminz) 
+
+colnames(colmat) <- c("friends w1", "friends w2", "friends w3","atmentions w1","atmentions w2","atmentions w3","retweets w1","retweets w2","retweets w3") 
+rownames(colmat) <- c("party", "sex", "ethnicity")
+#colmat
+ 
+#write.csv2(colmat, "20190829colmat.csv")
+
+colmatkable <- kbl(colmat, booktabs=TRUE, digits=2, caption="Table 2: Coleman", align = "c") %>%
+  kable_classic(full_width = F, html_font = "Cambria") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(column = 1, width = "3in")
+  
+colmatkable
+
+``` 
+
+  
+---  
+
+
+### Assortivity coefficients
+
+```{r Table2c, echo=TRUE} 
+
+fnet[fnet==10] <- NA
+rtnet[rtnet==10] <- NA
+atmnet[atmnet==10] <- NA
+
+vrouw_int <- as.integer(vrouw) + 1
+partij_int <- as.integer(partij)
+ethminz <- ethminz + 1
+
+asmat <- matrix(NA, nrow=4, ncol=9)
+
+gfnet1 <- graph_from_adjacency_matrix(fnet[,,1], mode = "directed", weighted = NULL, diag = FALSE,  add.colnames = NA, add.rownames = NA)
+gfnet2 <- graph_from_adjacency_matrix(fnet[,,2], mode = "directed", weighted = NULL, diag = FALSE,  add.colnames = NA, add.rownames = NA)
+gfnet3 <- graph_from_adjacency_matrix(fnet[,,3], mode = "directed", weighted = NULL, diag = FALSE,  add.colnames = NA, add.rownames = NA)
+
+grtnet1 <- graph_from_adjacency_matrix(rtnet[,,1], mode = "directed", weighted = NULL, diag = FALSE,  add.colnames = NA, add.rownames = NA)
+grtnet2 <- graph_from_adjacency_matrix(rtnet[,,2], mode = "directed", weighted = NULL, diag = FALSE,  add.colnames = NA, add.rownames = NA)
+grtnet3 <- graph_from_adjacency_matrix(rtnet[,,3], mode = "directed", weighted = NULL, diag = FALSE,  add.colnames = NA, add.rownames = NA)
+
+gatmnet1 <- graph_from_adjacency_matrix(atmnet[,,1], mode = "directed", weighted = NULL, diag = FALSE,  add.colnames = NA, add.rownames = NA)
+gatmnet2 <- graph_from_adjacency_matrix(atmnet[,,2], mode = "directed", weighted = NULL, diag = FALSE,  add.colnames = NA, add.rownames = NA)
+gatmnet3 <- graph_from_adjacency_matrix(atmnet[,,3], mode = "directed", weighted = NULL, diag = FALSE,  add.colnames = NA, add.rownames = NA)
+
+asmat[1,1] <- assortativity_nominal(gfnet1, types=partij_int, directed = TRUE)
+asmat[1,2] <- assortativity_nominal(gfnet2, types=partij_int, directed = TRUE)
+asmat[1,3] <- assortativity_nominal(gfnet3, types=partij_int, directed = TRUE)
+asmat[2,1] <- assortativity_nominal(gfnet1, types=vrouw_int, directed = TRUE)
+asmat[2,2] <- assortativity_nominal(gfnet2, types=vrouw_int, directed = TRUE)
+asmat[2,3] <- assortativity_nominal(gfnet3, types=vrouw_int, directed = TRUE)
+asmat[3,1] <- assortativity_nominal(gfnet1, types=ethminz, directed = TRUE)
+asmat[3,2] <- assortativity_nominal(gfnet2, types=ethminz, directed = TRUE)
+asmat[3,3] <- assortativity_nominal(gfnet3, types=ethminz, directed = TRUE)
+asmat[4,1] <- assortativity(gfnet1, types1=lft, directed = TRUE)
+asmat[4,2] <- assortativity(gfnet2, types1=lft, directed = TRUE)
+asmat[4,3] <- assortativity(gfnet3, types1=lft, directed = TRUE)
+
+asmat[1,4] <- assortativity_nominal(grtnet1, types=partij_int, directed = TRUE)
+asmat[1,5] <- assortativity_nominal(grtnet2, types=partij_int, directed = TRUE)
+asmat[1,6] <- assortativity_nominal(grtnet3, types=partij_int, directed = TRUE)
+asmat[2,4] <- assortativity_nominal(grtnet1, types=vrouw_int, directed = TRUE)
+asmat[2,5] <- assortativity_nominal(grtnet2, types=vrouw_int, directed = TRUE)
+asmat[2,6] <- assortativity_nominal(grtnet3, types=vrouw_int, directed = TRUE)
+asmat[3,4] <- assortativity_nominal(grtnet1, types=ethminz, directed = TRUE)
+asmat[3,5] <- assortativity_nominal(grtnet2, types=ethminz, directed = TRUE)
+asmat[3,6] <- assortativity_nominal(grtnet3, types=ethminz, directed = TRUE)
+asmat[4,4] <- assortativity(grtnet1, types1=lft, directed = TRUE)
+asmat[4,5] <- assortativity(grtnet2, types1=lft, directed = TRUE)
+asmat[4,6] <- assortativity(grtnet3, types1=lft, directed = TRUE)
+
+asmat[1,7] <- assortativity_nominal(gatmnet1, types=partij_int, directed = TRUE)
+asmat[1,8] <- assortativity_nominal(gatmnet2, types=partij_int, directed = TRUE)
+asmat[1,9] <- assortativity_nominal(gatmnet3, types=partij_int, directed = TRUE)
+asmat[2,7] <- assortativity_nominal(gatmnet1, types=vrouw_int, directed = TRUE)
+asmat[2,8] <- assortativity_nominal(gatmnet2, types=vrouw_int, directed = TRUE)
+asmat[2,9] <- assortativity_nominal(gatmnet3, types=vrouw_int, directed = TRUE)
+asmat[3,7] <- assortativity_nominal(gatmnet1, types=ethminz, directed = TRUE)
+asmat[3,8] <- assortativity_nominal(gatmnet2, types=ethminz, directed = TRUE)
+asmat[3,9] <- assortativity_nominal(gatmnet3, types=ethminz, directed = TRUE)
+asmat[4,7] <- assortativity(gatmnet1, types1=lft, directed = TRUE)
+asmat[4,8] <- assortativity(gatmnet2, types1=lft, directed = TRUE)
+asmat[4,9] <- assortativity(gatmnet3, types1=lft, directed = TRUE)
+
+colnames(asmat) <- c("friends w1", "friends w2", "friends w3","atmentions w1","atmentions w2","atmentions w3","retweets w1","retweets w2","retweets w3") 
+rownames(asmat) <- c("party", "sex", "ethnicity", "age")
+#asmat
+#write.csv2(asmat, "20190828asmat.csv")
+
+asmatkable <- kbl(asmat, booktabs=TRUE, digits=2, caption="Table 2: Assortativity", align = "c") %>%
+  kable_classic(full_width = F, html_font = "Cambria") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(column = 1, width = "3in")
+  
+asmatkable
+
+
+```
+
+
+---   
+
+
+

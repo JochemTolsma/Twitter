@@ -1,0 +1,8550 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Jochem Tolsma - Radboud University / University of Groningen, the Netherlands" />
+
+
+<title>Replication package-Tables</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<script src="site_libs/navigation-1.1/sourceembed.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/clipboard-1.7.1/clipboard.min.js"></script>
+<link href="site_libs/primer-tooltips-1.4.0/build.css" rel="stylesheet" />
+<link href="site_libs/klippy-0.0.0.9500/css/klippy.min.css" rel="stylesheet" />
+<script src="site_libs/klippy-0.0.0.9500/js/klippy.min.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+#rmd-source-code {
+  display: none;
+}
+</style>
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 60px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h2 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h3 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h4 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h5 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h6 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Replication package</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Descriptive Tables 1 &amp; 2</a>
+</li>
+<li>
+  <a href="figures.html">Figures</a>
+</li>
+<li>
+  <a href="rsiena.html">RSiena Tables 3 &amp; 4</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/JochemTolsma/Twitter">
+    <span class="fab fa-github"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+<div class="btn-group pull-right">
+<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+<li role="separator" class="divider"></li>
+<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Replication package-Tables</h1>
+<h4 class="author"><a href="https://www.jochemtolsma.nl">Jochem Tolsma</a> - Radboud University / University of Groningen, the Netherlands</h4>
+<h4 class="date">Last compiled on augustus, 2021</h4>
+
+</div>
+
+
+<script>
+  addClassKlippyTo("pre.r, pre.markdown");
+  addKlippy('right', 'top', 'auto', '1', 'Copy code', 'Copied!');
+</script>
+<style type="text/css">
+pre.test {
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: auto;
+  margin: 0px;
+}
+
+pre.test2 {
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: auto;
+  margin: 0px;
+  background-color: white;
+  color: rgb(201, 76, 76);
+}
+
+
+h1, .h1, h2, .h2, h3, .h3 {
+  margin-top: 24px;
+}
+
+
+</style>
+<hr />
+<div id="intro" class="section level1">
+<h1>Intro</h1>
+<p>This <a href="https://jochemtolsma.github.io/Twitter/">website</a> is a replication package for the paper “Twitter” by <span class="citation">Tolsma, Spierings, and Jacobs (n.d.)</span>.</p>
+<p>It contains R code to replicate all Tables/Figures/Results in the manuscript.</p>
+<p>To copy the code click the button in the upper right corner of the code-chunks.</p>
+<p>Use the top menu to navigate to the section of interest.</p>
+<p>The source code of this website can be found on <a href="https://github.com/JochemTolsma/Twitter">Github</a></p>
+<p>Questions can be addressed to <a href="mailto:jochem.tolsma@ru.nl">Jochem Tolsma</a>.</p>
+<hr />
+<div id="packages" class="section level2">
+<h2>Packages</h2>
+<pre class="r test"><code># install if necessary
+if (!require(&quot;dplyr&quot;, character.only = TRUE)) {
+    install.packages(&quot;dplyr&quot;, dependencies = TRUE)
+}
+if (!require(&quot;foreign&quot;, character.only = TRUE)) {
+    install.packages(&quot;foreign&quot;, dependencies = TRUE)
+}
+if (!require(&quot;igraph&quot;, character.only = TRUE)) {
+    install.packages(&quot;igraph&quot;, dependencies = TRUE)
+}
+
+# load packages.
+library(tidyverse)
+library(dplyr)
+library(foreign)
+library(igraph)
+library(knitr)
+library(kableExtra)</code></pre>
+<hr />
+</div>
+<div id="custom-segregation-functions" class="section level2 tabset tabset-fade">
+<h2>Custom segregation functions</h2>
+<p>Define custom functions to calculate network-segregation:</p>
+<ul>
+<li>fdensity: density of network<br />
+</li>
+<li>fdensityintra: density within subgroups<br />
+</li>
+<li>fscolnet: Coleman’s Homophily Index at the network-level, see <span class="citation">(( Bojanowski and Corten 2014))</span><br />
+</li>
+<li>fhomomat: make a matrix indicating wheter nodes are similar<br />
+</li>
+<li>fndyads: count number of dyads<br />
+</li>
+<li>fndayds2: count number of within subgroup dyads</li>
+</ul>
+<pre class="r test"><code>fdensity &lt;- function(x) {
+    # x is your nomination network should be relationship, divided by all possible off diagonal ties.
+    # make sure diagonal cells are NA
+    diag(x) &lt;- NA
+    x[x == 10] &lt;- NA
+    sum(x == 1, na.rm = T)/(sum(x == 1 | x == 0, na.rm = T))
+}
+
+fdensityintra &lt;- function(x, A) {
+    # A is matrix indicating whether nodes constituting dyad have same characteristics
+    diag(x) &lt;- NA
+    x[x == 10] &lt;- NA
+    diag(A) &lt;- NA
+    sum(x == 1 &amp; A == 1, na.rm = T)/(sum((x == 1 | x == 0) &amp; A == 1, na.rm = T))
+}
+
+fdensityinter &lt;- function(x, A) {
+    # A is matrix indicating whether nodes constituting dyad have same characteristics
+    diag(x) &lt;- NA
+    x[x == 10] &lt;- NA
+    diag(A) &lt;- NA
+    sum(x == 1 &amp; A != 1, na.rm = T)/(sum((x == 1 | x == 0) &amp; A != 1, na.rm = T))
+}
+
+fhomomat &lt;- function(x) {
+    xmat &lt;- matrix(x, nrow = length(x), ncol = length(x))
+    xmatt &lt;- t(xmat)
+    xhomo &lt;- xmat == xmatt
+    return(xhomo)
+}
+
+fndyads &lt;- function(x) {
+    diag(x) &lt;- NA
+    x[x == 10] &lt;- NA
+    (sum((x == 1 | x == 0), na.rm = T))
+}
+
+fndyads2 &lt;- function(x, A) {
+    diag(x) &lt;- NA
+    x[x == 10] &lt;- NA
+    diag(A) &lt;- NA
+    (sum((x == 1 | x == 0) &amp; A == 1, na.rm = T))
+}
+
+
+fscolnet &lt;- function(network, ccovar) {
+    # Calculate coleman on network level:
+    # https://reader.elsevier.com/reader/sd/pii/S0378873314000239?token=A42F99FF6E2B750436DD2CB0DB7B1F41BDEC16052A45683C02644DAF88215A3379636B2AA197B65941D6373E9E2EE413
+    
+    fhomomat &lt;- function(x) {
+        xmat &lt;- matrix(x, nrow = length(x), ncol = length(x))
+        xmatt &lt;- t(xmat)
+        xhomo &lt;- xmat == xmatt
+        return(xhomo)
+    }
+    
+    fsumintra &lt;- function(x, A) {
+        # A is matrix indicating whether nodes constituting dyad have same characteristics
+        diag(x) &lt;- NA
+        x[x == 10] &lt;- NA
+        diag(A) &lt;- NA
+        sum(x == 1 &amp; A == 1, na.rm = T)
+    }
+    
+    # expecation w*=sum_g sum_i (ni((ng-1)/(N-1)))
+    network[network == 10] &lt;- NA
+    ni &lt;- rowSums(network, na.rm = T)
+    ng &lt;- NA
+    for (i in 1:length(ccovar)) {
+        ng[i] &lt;- table(ccovar)[rownames(table(ccovar)) == ccovar[i]]
+    }
+    N &lt;- length(ccovar)
+    wexp &lt;- sum(ni * ((ng - 1)/(N - 1)), na.rm = T)
+    
+    # wgg1 how many intragroup ties
+    w &lt;- fsumintra(network, fhomomat(ccovar))
+    
+    Scol_net &lt;- ifelse(w &gt;= wexp, (w - wexp)/(sum(ni, na.rm = T) - wexp), (w - wexp)/wexp)
+    return(Scol_net)
+    
+}</code></pre>
+<hr />
+</div>
+<div id="load-data-objects" class="section level2 tabset tabset-fade">
+<h2>Load data objects</h2>
+<p>See … for construction of data objects.</p>
+<p>Data objects:</p>
+<ul>
+<li>key: information on all politicians on election list<br />
+</li>
+<li>keyf: information on all 147 MPs with twitter handle<br />
+</li>
+<li>mydata: RSiena object with all kind of goodies inside<br />
+</li>
+<li>seats: seating coordinates of HoP (used for plotting)</li>
+</ul>
+<pre class="r test"><code># STAP 1: read in data
+key &lt;- read.spss(&quot;data-processed\\key moederbestand 20171114.sav&quot;, use.value.labels = T, to.data.frame = T)
+
+
+load(&quot;data-processed\\twitter_20190919.RData&quot;)
+# str(twitter_20190919,1)
+keyf &lt;- twitter_20190919[[1]]
+mydata &lt;- twitter_20190919[[2]]
+seats &lt;- twitter_20190919[[3]]</code></pre>
+<hr />
+</div>
+<div id="summary-of-dataset-used." class="section level2">
+<h2>Summary of dataset used.</h2>
+<pre class="r test"><code># select all MPs (we need to filter the correct EGOhandle)
+data_mp &lt;- key %&gt;% filter(Elected20170315 == &quot;yes, verkozen&quot; &amp; !(EGOhandle %in% c(10401, 10403, 13102, 
+    15102, 106101, 41400))) %&gt;% select(&quot;Naam&quot;, &quot;Partij&quot;, &quot;Geslacht&quot;, &quot;GebJaar&quot;, &quot;EthMinZ&quot;, &quot;PlekLijst&quot;, 
+    &quot;Kamerlid20161123&quot;, &quot;ZetelSegment20170315&quot;, &quot;ZetelRij20170315&quot;, &quot;ZetelKolom20170315&quot;)
+
+# not necessary: &#39;Twitterhandle&#39; &#39;Elected20170315&#39;
+
+seats$ZetelSegment20170315 &lt;- seats$segments
+seats$ZetelRij20170315 &lt;- seats$rows
+seats$ZetelKolom20170315 &lt;- seats$columns
+
+data_mp &lt;- inner_join(data_mp, seats) %&gt;% select(&quot;Naam&quot;, &quot;Partij&quot;, &quot;Geslacht&quot;, &quot;GebJaar&quot;, &quot;EthMinZ&quot;, 
+    &quot;PlekLijst&quot;, &quot;Kamerlid20161123&quot;, &quot;ZetelSegment20170315&quot;, &quot;ZetelRij20170315&quot;, &quot;ZetelKolom20170315&quot;, 
+    &quot;X&quot;, &quot;Y&quot;)
+
+
+colnames(data_mp) &lt;- c(&quot;Name&quot;, &quot;Party&quot;, &quot;Sex&quot;, &quot;Birth Year&quot;, &quot;Visible Minority&quot;, &quot;List Position&quot;, &quot;Incumbency status&quot;, 
+    &quot;Seating Segment&quot;, &quot;Seating Row&quot;, &quot;Seating Column&quot;, &quot;X-coord.&quot;, &quot;Y-coord&quot;)
+
+data_mp$Sex &lt;- as.character(data_mp$Sex)
+data_mp$Sex[data_mp$Sex == &quot;vrouw&quot;] &lt;- &quot;female&quot;
+data_mp$Sex[data_mp$Sex == &quot;man&quot;] &lt;- &quot;male&quot;
+
+
+sumdat &lt;- kbl(data_mp, booktabs = TRUE, digits = 2, caption = &quot;Dataset summary&quot;, align = &quot;c&quot;) %&gt;% kable_classic(full_width = F, 
+    html_font = &quot;Cambria&quot;) %&gt;% kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;, &quot;condensed&quot;, &quot;responsive&quot;))
+
+scroll_box(sumdat, width = &quot;100%&quot;, height = &quot;500px&quot;)</code></pre>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:500px; overflow-x: scroll; width:100%; ">
+<table class=" lightable-classic table table-striped table-hover table-condensed table-responsive" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<caption>
+Dataset summary
+</caption>
+<thead>
+<tr>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+Name
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+Party
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+Sex
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+Birth Year
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+Visible Minority
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+List Position
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+Incumbency status
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+Seating Segment
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+Seating Row
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+Seating Column
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+X-coord.
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+Y-coord
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+Agema, Fleur
+</td>
+<td style="text-align:center;">
+PVV
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1976
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+7.9
+</td>
+<td style="text-align:center;">
+-2.9
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Amhaouch, Mustafa
+</td>
+<td style="text-align:center;">
+CDA
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1970
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+15
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+9.5
+</td>
+<td style="text-align:center;">
+1.3
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Arib, Khadija
+</td>
+<td style="text-align:center;">
+PvdA
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1960
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+-16.1
+</td>
+<td style="text-align:center;">
+-0.8
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+<ol start="22" style="list-style-type: lower-alpha">
+<li>Ark, Tamara
+</td>
+<td style="text-align:center;">
+VVD
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1974
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+3.9
+</td>
+<td style="text-align:center;">
+3.5
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Azmani, Malik
+</td>
+<td style="text-align:center;">
+VVD
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1976
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+10
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+3.7
+</td>
+<td style="text-align:center;">
+5.5
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Beertema, Harm
+</td>
+<td style="text-align:center;">
+PVV
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1952
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+10
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+13.6
+</td>
+<td style="text-align:center;">
+-4.5
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Belhaj, Salima
+</td>
+<td style="text-align:center;">
+D66
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1979
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+14
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+-3.3
+</td>
+<td style="text-align:center;">
+7.4
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Bergkamp, Vera
+</td>
+<td style="text-align:center;">
+D66
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1971
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+-4.6
+</td>
+<td style="text-align:center;">
+5.0
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Bisschop, Roelof
+</td>
+<td style="text-align:center;">
+SGP
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1956
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+3.6
+</td>
+<td style="text-align:center;">
+7.4
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Bosma, Martin
+</td>
+<td style="text-align:center;">
+PVV
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1964
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+10.0
+</td>
+<td style="text-align:center;">
+-4.4
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Bosman, Andre
+</td>
+<td style="text-align:center;">
+VVD
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1965
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+24
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+1.2
+</td>
+<td style="text-align:center;">
+7.8
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+ten Broeke, Han
+</td>
+<td style="text-align:center;">
+VVD
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1969
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+9
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+2.6
+</td>
+<td style="text-align:center;">
+4.0
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Bruins Slot, Hanke
+</td>
+<td style="text-align:center;">
+CDA
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1977
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+9
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+7.8
+</td>
+<td style="text-align:center;">
+2.9
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Van Dijck, Tony
+</td>
+<td style="text-align:center;">
+PVV
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1963
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+8
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+11.3
+</td>
+<td style="text-align:center;">
+-1.9
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Van Dijk, Jasper
+</td>
+<td style="text-align:center;">
+SP
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1971
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+14
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+-16.9
+</td>
+<td style="text-align:center;">
+-4.4
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Dijkgraaf, Elbert
+</td>
+<td style="text-align:center;">
+SGP
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1970
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+4.7
+</td>
+<td style="text-align:center;">
+7.0
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Dijkstra, Pia
+</td>
+<td style="text-align:center;">
+D66
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1954
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+-1.1
+</td>
+<td style="text-align:center;">
+4.2
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Dijkstra, Remco
+</td>
+<td style="text-align:center;">
+VVD
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1972
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+27
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+4.0
+</td>
+<td style="text-align:center;">
+9.1
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Dik-Faber, Carla
+</td>
+<td style="text-align:center;">
+CU
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1971
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+9.9
+</td>
+<td style="text-align:center;">
+6.1
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Duisenberg, Pieter
+</td>
+<td style="text-align:center;">
+VVD
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1967
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+15
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+-1.2
+</td>
+<td style="text-align:center;">
+9.6
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Fritsma, Sietse
+</td>
+<td style="text-align:center;">
+PVV
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1972
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+11.8
+</td>
+<td style="text-align:center;">
+-4.5
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Geurts, Jaco
+</td>
+<td style="text-align:center;">
+CDA
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1970
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+10
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+12.8
+</td>
+<td style="text-align:center;">
+-1.0
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+De Graaf, Machiel
+</td>
+<td style="text-align:center;">
+PVV
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1969
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+11
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+13.5
+</td>
+<td style="text-align:center;">
+-3.2
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Grashoff, Rik
+</td>
+<td style="text-align:center;">
+GroenLinks
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1961
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+-6.8
+</td>
+<td style="text-align:center;">
+3.8
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Graus, Dion
+</td>
+<td style="text-align:center;">
+PVV
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1967
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+12
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+13.2
+</td>
+<td style="text-align:center;">
+-2.1
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Van Haersma Buma, Sybrand
+</td>
+<td style="text-align:center;">
+CDA
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1965
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+5.3
+</td>
+<td style="text-align:center;">
+0.5
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Harbers, Mark
+</td>
+<td style="text-align:center;">
+VVD
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1969
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+8
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+1.3
+</td>
+<td style="text-align:center;">
+4.2
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Heerma, Pieter
+</td>
+<td style="text-align:center;">
+CDA
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1977
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+7
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+7.9
+</td>
+<td style="text-align:center;">
+0.3
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Helder, Lilian
+</td>
+<td style="text-align:center;">
+PVV
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1973
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+9
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+10.8
+</td>
+<td style="text-align:center;">
+-0.9
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Van Helvert, Martijn
+</td>
+<td style="text-align:center;">
+CDA
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1978
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+16
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+12.5
+</td>
+<td style="text-align:center;">
+0.0
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Keijzer, Mona
+</td>
+<td style="text-align:center;">
+CDA
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1968
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+6.4
+</td>
+<td style="text-align:center;">
+-0.4
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Klaver, jesse
+</td>
+<td style="text-align:center;">
+GroenLinks
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1986
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+-5.1
+</td>
+<td style="text-align:center;">
+0.5
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Knops, Raymond
+</td>
+<td style="text-align:center;">
+CDA
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1971
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+7.1
+</td>
+<td style="text-align:center;">
+1.4
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Kooiman, Nine
+</td>
+<td style="text-align:center;">
+SP
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1980
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+12
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+-16.4
+</td>
+<td style="text-align:center;">
+-1.9
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Koolmees, Wouter
+</td>
+<td style="text-align:center;">
+D66
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1977
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+-3.7
+</td>
+<td style="text-align:center;">
+3.5
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Krol, Henk
+</td>
+<td style="text-align:center;">
+50Plus
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1950
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+-12.4
+</td>
+<td style="text-align:center;">
+3.1
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Kuiken, Attje
+</td>
+<td style="text-align:center;">
+PvdA
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1977
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+-11.0
+</td>
+<td style="text-align:center;">
+-1.9
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Kuzu, Tunahan
+</td>
+<td style="text-align:center;">
+DENK
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1981
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+-10.3
+</td>
+<td style="text-align:center;">
+7.5
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Leijten, Renske
+</td>
+<td style="text-align:center;">
+SP
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1979
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+-8.0
+</td>
+<td style="text-align:center;">
+-4.3
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Lodders, Helma
+</td>
+<td style="text-align:center;">
+VVD
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1968
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+12
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+4.8
+</td>
+<td style="text-align:center;">
+5.0
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Madlener, Barry
+</td>
+<td style="text-align:center;">
+PVV
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1969
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+7
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+11.6
+</td>
+<td style="text-align:center;">
+-3.2
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Van Meenen, Paul
+</td>
+<td style="text-align:center;">
+D66
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1956
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+8
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+-5.5
+</td>
+<td style="text-align:center;">
+6.5
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Mulder, Agnes
+</td>
+<td style="text-align:center;">
+CDA
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1973
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+13
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+14.0
+</td>
+<td style="text-align:center;">
+0.8
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Nijboer, Henk
+</td>
+<td style="text-align:center;">
+PvdA
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1983
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+7
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+-14.3
+</td>
+<td style="text-align:center;">
+-0.4
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Nijkerken-de Haan, Chantal
+</td>
+<td style="text-align:center;">
+VVD
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1973
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+30
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+-2.3
+</td>
+<td style="text-align:center;">
+11.0
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Van Nispen, Michiel
+</td>
+<td style="text-align:center;">
+SP
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1982
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+7
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+-11.5
+</td>
+<td style="text-align:center;">
+-4.5
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Omtzigt, Pieter
+</td>
+<td style="text-align:center;">
+CDA
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1974
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+6.1
+</td>
+<td style="text-align:center;">
+2.1
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Van Oosten, Foort
+</td>
+<td style="text-align:center;">
+VVD
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1977
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+32
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+5.4
+</td>
+<td style="text-align:center;">
+8.6
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Ozturk, Selcuk
+</td>
+<td style="text-align:center;">
+DENK
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1972
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+-12.2
+</td>
+<td style="text-align:center;">
+5.8
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Pechtold, Alexander
+</td>
+<td style="text-align:center;">
+D66
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1965
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+-2.6
+</td>
+<td style="text-align:center;">
+2.1
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Van Raak, Ronald
+</td>
+<td style="text-align:center;">
+SP
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1969
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+-9.5
+</td>
+<td style="text-align:center;">
+-3.1
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Roemer, Emile
+</td>
+<td style="text-align:center;">
+SP
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1962
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+-7.7
+</td>
+<td style="text-align:center;">
+-2.9
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Rog, Michel
+</td>
+<td style="text-align:center;">
+CDA
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1973
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+14
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+11.8
+</td>
+<td style="text-align:center;">
+4.1
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Ronnes, Erik
+</td>
+<td style="text-align:center;">
+CDA
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1967
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+17
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+14.1
+</td>
+<td style="text-align:center;">
+3.8
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+De Roon, Raymond
+</td>
+<td style="text-align:center;">
+PVV
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1952
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+13
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+15.4
+</td>
+<td style="text-align:center;">
+-4.4
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Rutte, Arno
+</td>
+<td style="text-align:center;">
+VVD
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1972
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+20
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+1.3
+</td>
+<td style="text-align:center;">
+9.6
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Schouten, Carola
+</td>
+<td style="text-align:center;">
+CU
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1977
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+8.8
+</td>
+<td style="text-align:center;">
+4.7
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Segers, Gert-Jan
+</td>
+<td style="text-align:center;">
+CU
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1969
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+7.9
+</td>
+<td style="text-align:center;">
+5.4
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Sjoerdsma, Sjoerd
+</td>
+<td style="text-align:center;">
+D66
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1981
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+11
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+-1.0
+</td>
+<td style="text-align:center;">
+6.0
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Van der Staaij, Kees
+</td>
+<td style="text-align:center;">
+SGP
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1968
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+5.7
+</td>
+<td style="text-align:center;">
+6.5
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Tellegen, Ockje
+</td>
+<td style="text-align:center;">
+VVD
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1974
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+21
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+2.6
+</td>
+<td style="text-align:center;">
+9.3
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Thieme, Marianne
+</td>
+<td style="text-align:center;">
+PvdDieren
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1972
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+-8.6
+</td>
+<td style="text-align:center;">
+4.7
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Van Toorenburg, Madeleine
+</td>
+<td style="text-align:center;">
+CDA
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1986
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+13.3
+</td>
+<td style="text-align:center;">
+4.8
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Van Veldhoven, Stientje
+</td>
+<td style="text-align:center;">
+D66
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1973
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+-1.3
+</td>
+<td style="text-align:center;">
+2.4
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Verhoeven, Kees
+</td>
+<td style="text-align:center;">
+D66
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1976
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+7
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+-2.4
+</td>
+<td style="text-align:center;">
+4.0
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Visser, Barbara
+</td>
+<td style="text-align:center;">
+VVD
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1977
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+7
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+2.3
+</td>
+<td style="text-align:center;">
+7.7
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Voordewind, Joel
+</td>
+<td style="text-align:center;">
+CU
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1965
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+8.8
+</td>
+<td style="text-align:center;">
+6.8
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Voortman, Linda
+</td>
+<td style="text-align:center;">
+GroenLinks
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1979
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+-6.9
+</td>
+<td style="text-align:center;">
+1.4
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+De Vries, Aukje
+</td>
+<td style="text-align:center;">
+VVD
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1964
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+18
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+-3.6
+</td>
+<td style="text-align:center;">
+10.8
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Wassenberg, Frank
+</td>
+<td style="text-align:center;">
+PvdDieren
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1966
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+-9.6
+</td>
+<td style="text-align:center;">
+6.1
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Van Weyenberg, Steven
+</td>
+<td style="text-align:center;">
+D66
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1973
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+10
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+-3.6
+</td>
+<td style="text-align:center;">
+5.5
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Wilders, Geert
+</td>
+<td style="text-align:center;">
+PVV
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1963
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+8.2
+</td>
+<td style="text-align:center;">
+-4.3
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Van t’Wout, Bas
+</td>
+<td style="text-align:center;">
+VVD
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1979
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+13
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+-2.4
+</td>
+<td style="text-align:center;">
+9.3
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Ziengs, Erik
+</td>
+<td style="text-align:center;">
+VVD
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1960
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+23
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+-1.1
+</td>
+<td style="text-align:center;">
+7.8
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Zijlstra, Halbe
+</td>
+<td style="text-align:center;">
+VVD
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1969
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+1.4
+</td>
+<td style="text-align:center;">
+2.4
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Rutte, Mark
+</td>
+<td style="text-align:center;">
+VVD
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1967
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+3.0
+</td>
+<td style="text-align:center;">
+2.1
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Ploumen, Lilianne
+</td>
+<td style="text-align:center;">
+PvdA
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1962
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+10
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+-15.7
+</td>
+<td style="text-align:center;">
+0.6
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Hennis-Plasschaert, Jeanine
+</td>
+<td style="text-align:center;">
+VVD
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1973
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+1.3
+</td>
+<td style="text-align:center;">
+6.0
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Dijsselbloem, Jeroen
+</td>
+<td style="text-align:center;">
+PvdA
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1966
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+-12.6
+</td>
+<td style="text-align:center;">
+-1.0
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Asscher, Lodewijk
+</td>
+<td style="text-align:center;">
+PvdA
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1974
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+-10.6
+</td>
+<td style="text-align:center;">
+-0.9
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Dijksma, Sharon
+</td>
+<td style="text-align:center;">
+PvdA
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1971
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+-13.0
+</td>
+<td style="text-align:center;">
+-2.1
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Dekker, Sander
+</td>
+<td style="text-align:center;">
+VVD
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1975
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+6.5
+</td>
+<td style="text-align:center;">
+8.2
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Dijkhoff, Klaas
+</td>
+<td style="text-align:center;">
+VVD
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1981
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+2.4
+</td>
+<td style="text-align:center;">
+5.9
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Thierry Baudet
+</td>
+<td style="text-align:center;">
+FvD
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1983
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+15.4
+</td>
+<td style="text-align:center;">
+1.6
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Eppo Bruins
+</td>
+<td style="text-align:center;">
+CU
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1969
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+10.9
+</td>
+<td style="text-align:center;">
+5.1
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+LILIAN MARIJNISSEN
+</td>
+<td style="text-align:center;">
+SP
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1985
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+-9.0
+</td>
+<td style="text-align:center;">
+-1.8
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+SADET KARABULUT
+</td>
+<td style="text-align:center;">
+SP
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1975
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+-9.8
+</td>
+<td style="text-align:center;">
+-4.4
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+SANDRA BECKERMAN
+</td>
+<td style="text-align:center;">
+SP
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1983
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+-11.4
+</td>
+<td style="text-align:center;">
+-3.2
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+PETER KWINT
+</td>
+<td style="text-align:center;">
+SP
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1984
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+8
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+-13.2
+</td>
+<td style="text-align:center;">
+-3.2
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+BART VAN KENT
+</td>
+<td style="text-align:center;">
+SP
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1983
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+9
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+-13.3
+</td>
+<td style="text-align:center;">
+-4.5
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+CEM LACIN
+</td>
+<td style="text-align:center;">
+SP
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1986
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+10
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+-15.0
+</td>
+<td style="text-align:center;">
+-3.2
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+FRANK FUTSELAAR
+</td>
+<td style="text-align:center;">
+SP
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1979
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+11
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+-15.1
+</td>
+<td style="text-align:center;">
+-4.4
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+MAARTEN HIJINK
+</td>
+<td style="text-align:center;">
+SP
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1983
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+13
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+-16.6
+</td>
+<td style="text-align:center;">
+-3.2
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Ingrid van Engelshoven
+</td>
+<td style="text-align:center;">
+D66
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1966
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+-2.3
+</td>
+<td style="text-align:center;">
+5.9
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Jan Paternotte
+</td>
+<td style="text-align:center;">
+D66
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1984
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+9
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+-3.7
+</td>
+<td style="text-align:center;">
+9.1
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Rob Jetten
+</td>
+<td style="text-align:center;">
+D66
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1987
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+12
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+-5.1
+</td>
+<td style="text-align:center;">
+8.6
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Jessica van Eijs
+</td>
+<td style="text-align:center;">
+D66
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1981
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+13
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+-4.5
+</td>
+<td style="text-align:center;">
+7.0
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Maarten Groothuizen
+</td>
+<td style="text-align:center;">
+D66
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1976
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+15
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+-5.9
+</td>
+<td style="text-align:center;">
+10.1
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Rens Raemakers
+</td>
+<td style="text-align:center;">
+D66
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1991
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+17
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+-4.8
+</td>
+<td style="text-align:center;">
+10.5
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Achraf Bouali
+</td>
+<td style="text-align:center;">
+D66
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1974
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+16
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+-6.3
+</td>
+<td style="text-align:center;">
+8.2
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Antje Diertens
+</td>
+<td style="text-align:center;">
+D66
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1958
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+18
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+-7.2
+</td>
+<td style="text-align:center;">
+9.6
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Tjeerd de Groot
+</td>
+<td style="text-align:center;">
+D66
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1968
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+19
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+-9.4
+</td>
+<td style="text-align:center;">
+8.3
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+René Peters
+</td>
+<td style="text-align:center;">
+CDA
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1975
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+12.7
+</td>
+<td style="text-align:center;">
+3.1
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Harry van der Molen
+</td>
+<td style="text-align:center;">
+CDA
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1980
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+8
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+9.6
+</td>
+<td style="text-align:center;">
+4.0
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Anne Kuik
+</td>
+<td style="text-align:center;">
+CDA
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1987
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+11
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+11.1
+</td>
+<td style="text-align:center;">
+2.2
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Chris van Dam
+</td>
+<td style="text-align:center;">
+CDA
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1963
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+12
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+6.8
+</td>
+<td style="text-align:center;">
+3.8
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Joba van den Berg-Jansen
+</td>
+<td style="text-align:center;">
+CDA
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1958
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+18
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+8.7
+</td>
+<td style="text-align:center;">
+2.2
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Maurits von Martels
+</td>
+<td style="text-align:center;">
+CDA
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1960
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+44
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+10.4
+</td>
+<td style="text-align:center;">
+3.0
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Dennis Wiersma
+</td>
+<td style="text-align:center;">
+VVD
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1986
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+11
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+-1.0
+</td>
+<td style="text-align:center;">
+11.2
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Bente Becker
+</td>
+<td style="text-align:center;">
+VVD
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1985
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+14
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+1.3
+</td>
+<td style="text-align:center;">
+11.2
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Sophie Hermans
+</td>
+<td style="text-align:center;">
+VVD
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1981
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+16
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+2.6
+</td>
+<td style="text-align:center;">
+11.0
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Anne Mulder
+</td>
+<td style="text-align:center;">
+VVD
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1969
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+17
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+-2.2
+</td>
+<td style="text-align:center;">
+7.7
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Dilan Yesilgöz-Zegerius
+</td>
+<td style="text-align:center;">
+VVD
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1977
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+19
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+3.7
+</td>
+<td style="text-align:center;">
+10.8
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Daniel Koerhuis
+</td>
+<td style="text-align:center;">
+VVD
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1981
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+22
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+5.0
+</td>
+<td style="text-align:center;">
+10.5
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Albert van den Bosch
+</td>
+<td style="text-align:center;">
+VVD
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1955
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+25
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+6.3
+</td>
+<td style="text-align:center;">
+10.1
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Zohair el Yassini
+</td>
+<td style="text-align:center;">
+VVD
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1979
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+26
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+7.3
+</td>
+<td style="text-align:center;">
+9.6
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Martin Wörsdörfer
+</td>
+<td style="text-align:center;">
+VVD
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1972
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+28
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+9.5
+</td>
+<td style="text-align:center;">
+8.3
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Arne Weverling
+</td>
+<td style="text-align:center;">
+VVD
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1974
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+29
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+10.6
+</td>
+<td style="text-align:center;">
+7.5
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Sven Koopmans
+</td>
+<td style="text-align:center;">
+VVD
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1973
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+33
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+11.6
+</td>
+<td style="text-align:center;">
+6.8
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Jan Middendorp
+</td>
+<td style="text-align:center;">
+VVD
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1975
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+34
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+12.5
+</td>
+<td style="text-align:center;">
+5.8
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Léonie Sazias
+</td>
+<td style="text-align:center;">
+50Plus
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1957
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+-11.5
+</td>
+<td style="text-align:center;">
+4.1
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Martin van Rooijen
+</td>
+<td style="text-align:center;">
+50Plus
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1942
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+-13.1
+</td>
+<td style="text-align:center;">
+4.8
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Corrie van Brenk
+</td>
+<td style="text-align:center;">
+50Plus
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1960
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+-13.9
+</td>
+<td style="text-align:center;">
+3.8
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Esther Ouwehand
+</td>
+<td style="text-align:center;">
+PvdDieren
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1976
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+-7.7
+</td>
+<td style="text-align:center;">
+5.4
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Kathalijne Buitenweg
+</td>
+<td style="text-align:center;">
+GroenLinks
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1970
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+-6.1
+</td>
+<td style="text-align:center;">
+-0.4
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Tom van der Lee
+</td>
+<td style="text-align:center;">
+GroenLinks
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1964
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+-7.7
+</td>
+<td style="text-align:center;">
+0.3
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Corinne Ellemeet
+</td>
+<td style="text-align:center;">
+GroenLinks
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1976
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+7
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+-8.6
+</td>
+<td style="text-align:center;">
+2.2
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Zihni Özdil
+</td>
+<td style="text-align:center;">
+GroenLinks
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1981
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+8
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+-9.3
+</td>
+<td style="text-align:center;">
+1.3
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Bart Snels
+</td>
+<td style="text-align:center;">
+GroenLinks
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1966
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+9
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+-5.9
+</td>
+<td style="text-align:center;">
+2.1
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Suzanne Kröger
+</td>
+<td style="text-align:center;">
+GroenLinks
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1977
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+11
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+-10.4
+</td>
+<td style="text-align:center;">
+3.0
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Bram van Oijk
+</td>
+<td style="text-align:center;">
+GroenLinks
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1954
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+10
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+-11.0
+</td>
+<td style="text-align:center;">
+2.2
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Nevin Özütok
+</td>
+<td style="text-align:center;">
+GroenLinks
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1960
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+12
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+-9.5
+</td>
+<td style="text-align:center;">
+4.0
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Lisa Westerveld
+</td>
+<td style="text-align:center;">
+GroenLinks
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1981
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+14
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+-13.8
+</td>
+<td style="text-align:center;">
+0.8
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Isabelle Diks
+</td>
+<td style="text-align:center;">
+GroenLinks
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1965
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+19
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+-15.2
+</td>
+<td style="text-align:center;">
+1.6
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Liesbeth van Tongeren
+</td>
+<td style="text-align:center;">
+GroenLinks
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1958
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+-7.7
+</td>
+<td style="text-align:center;">
+2.9
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Lammert van Raan
+</td>
+<td style="text-align:center;">
+PvdDieren
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1962
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+-8.6
+</td>
+<td style="text-align:center;">
+6.8
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Femke Merel Arissen
+</td>
+<td style="text-align:center;">
+PvdDieren
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1983
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+-10.7
+</td>
+<td style="text-align:center;">
+5.1
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Farid Azarkan
+</td>
+<td style="text-align:center;">
+DENK
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1971
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+-11.3
+</td>
+<td style="text-align:center;">
+6.8
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Gijs van Dijk
+</td>
+<td style="text-align:center;">
+PvdA
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1980
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+-12.2
+</td>
+<td style="text-align:center;">
+0.0
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Kirsten van den Hul
+</td>
+<td style="text-align:center;">
+PvdA
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1976
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+8
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+-14.6
+</td>
+<td style="text-align:center;">
+-1.7
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Gerbrands, Karen
+</td>
+<td style="text-align:center;">
+PVV
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1967
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+16
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+14.4
+</td>
+<td style="text-align:center;">
+-0.4
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Theo Hiddema
+</td>
+<td style="text-align:center;">
+FvD
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1944
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+15.9
+</td>
+<td style="text-align:center;">
+0.6
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Vicky Maeijer
+</td>
+<td style="text-align:center;">
+PVV
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1986
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+9.3
+</td>
+<td style="text-align:center;">
+-1.8
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Gidi Markuszower
+</td>
+<td style="text-align:center;">
+PVV
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1977
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+9.8
+</td>
+<td style="text-align:center;">
+-3.1
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Danai van Weerdenburg
+</td>
+<td style="text-align:center;">
+PVV
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1976
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+14
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+15.2
+</td>
+<td style="text-align:center;">
+-3.2
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Edgar Mulder
+</td>
+<td style="text-align:center;">
+PVV
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1961
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+15
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+14.9
+</td>
+<td style="text-align:center;">
+-1.7
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Léon de Jong
+</td>
+<td style="text-align:center;">
+PVV
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1982
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+17
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+17.1
+</td>
+<td style="text-align:center;">
+-4.4
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Gabriëlle Popken
+</td>
+<td style="text-align:center;">
+PVV
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+1983
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+18
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+16.9
+</td>
+<td style="text-align:center;">
+-3.2
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Alexander Kops
+</td>
+<td style="text-align:center;">
+PVV
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1984
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+19
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+16.7
+</td>
+<td style="text-align:center;">
+-1.9
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Roy van Aalst
+</td>
+<td style="text-align:center;">
+PVV
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+1983
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+20
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+16.3
+</td>
+<td style="text-align:center;">
+-0.8
+</td>
+</tr>
+</tbody>
+</table>
+</div></li>
+</ol>
+<hr />
+</div>
+<div id="table-1-in-manuscript" class="section level2">
+<h2>Table 1 in manuscript</h2>
+<pre class="r test"><code># select all MPs (we need to filter the correct EGOhandle)
+data_mp &lt;- key %&gt;% filter(Elected20170315 == &quot;yes, verkozen&quot; &amp; !(EGOhandle %in% c(10401, 10403, 13102, 
+    15102, 106101, 41400)))
+
+dg &lt;- data_mp %&gt;% group_by(Geslacht) %&gt;% summarize(count = n(), freq = count/150)
+
+de &lt;- data_mp %&gt;% group_by(EthMinZ) %&gt;% summarize(count = n(), freq = count/150)
+
+da &lt;- data_mp %&gt;% mutate(variable = &quot;AGE&quot;) %&gt;% summarize(age = first(variable), mean = mean(2017 - GebJaar, 
+    na.rm = T), sd = sd(2017 - GebJaar, na.rm = T))
+
+dp &lt;- data_mp %&gt;% group_by(Partij) %&gt;% summarize(count = n(), freq = count/150) %&gt;% arrange(desc(count))
+
+# by party
+dgp &lt;- data_mp %&gt;% group_by(Partij) %&gt;% add_tally() %&gt;% group_by(Partij, Geslacht) %&gt;% summarize(count = n(), 
+    freq = count/first(n), first = first(n)) %&gt;% arrange(desc(first)) %&gt;% select(&quot;Partij&quot;, &quot;Geslacht&quot;, 
+    &quot;count&quot;, &quot;freq&quot;)
+
+dep &lt;- data_mp %&gt;% group_by(Partij) %&gt;% add_tally() %&gt;% group_by(Partij, EthMinZ) %&gt;% summarize(count = n(), 
+    freq = count/first(n), first = first(n)) %&gt;% arrange(desc(first)) %&gt;% select(&quot;Partij&quot;, &quot;EthMinZ&quot;, 
+    &quot;count&quot;, &quot;freq&quot;)
+
+dap &lt;- data_mp %&gt;% mutate(variable = &quot;AGE&quot;) %&gt;% group_by(Partij) %&gt;% add_tally() %&gt;% summarize(age = first(variable), 
+    mean = mean(2017 - GebJaar, na.rm = T), sd = sd(2017 - GebJaar, na.rm = T), first = first(n)) %&gt;% 
+    arrange(desc(first)) %&gt;% select(&quot;Partij&quot;, &quot;age&quot;, &quot;mean&quot;, &quot;sd&quot;)
+
+dg &lt;- dg %&gt;% add_column(grouping = &quot;NO&quot;, .before = &quot;Geslacht&quot;)
+da &lt;- da %&gt;% add_column(grouping = &quot;NO&quot;, .before = &quot;age&quot;)
+de &lt;- de %&gt;% add_column(grouping = &quot;NO&quot;, .before = &quot;EthMinZ&quot;)
+dp &lt;- dp %&gt;% add_column(grouping = &quot;NO&quot;, .before = &quot;Partij&quot;)
+
+
+# dgp dap dep
+
+# write_csv(dg, &#39;table.csv&#39;) write_csv(da, &#39;table.csv&#39;, append = TRUE) write_csv(de, &#39;table.csv&#39;,
+# append = TRUE) write_csv(dp, &#39;table.csv&#39;, append = TRUE) write_csv(dgp, &#39;table.csv&#39;, append = TRUE)
+# write_csv(dap, &#39;table.csv&#39;, append = TRUE) write_csv(dep, &#39;table.csv&#39;, append = TRUE)
+
+test &lt;- read_csv(&quot;table.csv&quot;)
+
+colnames(test) &lt;- c(&quot;grouping&quot;, &quot;social dimension&quot;, &quot;N / mean&quot;, &quot;prop. / SD&quot;)
+test$grouping[test$grouping == &quot;NO&quot;] &lt;- &quot;HoP&quot;
+test[test == &quot;man&quot;] &lt;- &quot;male&quot;
+test[test == &quot;vrouw&quot;] &lt;- &quot;female&quot;
+test[test == &quot;0&quot;] &lt;- &quot;no visible minority&quot;
+test[, 2][test[, 2] == &quot;1&quot;] &lt;- &quot;visible minority&quot;
+
+
+table1 &lt;- kbl(test, booktabs = TRUE, digits = 2, caption = &quot;Table 1&quot;, align = &quot;c&quot;) %&gt;% kable_classic(full_width = F, 
+    html_font = &quot;Cambria&quot;) %&gt;% kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;, &quot;condensed&quot;, &quot;responsive&quot;))
+
+scroll_box(table1, width = &quot;100%&quot;, height = &quot;500px&quot;)</code></pre>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:500px; overflow-x: scroll; width:100%; ">
+<table class=" lightable-classic table table-striped table-hover table-condensed table-responsive" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<caption>
+Table 1
+</caption>
+<thead>
+<tr>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+grouping
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+social dimension
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+N / mean
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+prop. / SD
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+HoP
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+96.00
+</td>
+<td style="text-align:center;">
+0.64
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+HoP
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+54.00
+</td>
+<td style="text-align:center;">
+0.36
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+HoP
+</td>
+<td style="text-align:center;">
+AGE
+</td>
+<td style="text-align:center;">
+45.13
+</td>
+<td style="text-align:center;">
+9.32
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+HoP
+</td>
+<td style="text-align:center;">
+no visible minority
+</td>
+<td style="text-align:center;">
+134.00
+</td>
+<td style="text-align:center;">
+0.89
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+HoP
+</td>
+<td style="text-align:center;">
+visible minority
+</td>
+<td style="text-align:center;">
+16.00
+</td>
+<td style="text-align:center;">
+0.11
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+HoP
+</td>
+<td style="text-align:center;">
+VVD
+</td>
+<td style="text-align:center;">
+33.00
+</td>
+<td style="text-align:center;">
+0.22
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+HoP
+</td>
+<td style="text-align:center;">
+PVV
+</td>
+<td style="text-align:center;">
+20.00
+</td>
+<td style="text-align:center;">
+0.13
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+HoP
+</td>
+<td style="text-align:center;">
+CDA
+</td>
+<td style="text-align:center;">
+19.00
+</td>
+<td style="text-align:center;">
+0.13
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+HoP
+</td>
+<td style="text-align:center;">
+D66
+</td>
+<td style="text-align:center;">
+19.00
+</td>
+<td style="text-align:center;">
+0.13
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+HoP
+</td>
+<td style="text-align:center;">
+GroenLinks
+</td>
+<td style="text-align:center;">
+14.00
+</td>
+<td style="text-align:center;">
+0.09
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+HoP
+</td>
+<td style="text-align:center;">
+SP
+</td>
+<td style="text-align:center;">
+14.00
+</td>
+<td style="text-align:center;">
+0.09
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+HoP
+</td>
+<td style="text-align:center;">
+PvdA
+</td>
+<td style="text-align:center;">
+9.00
+</td>
+<td style="text-align:center;">
+0.06
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+HoP
+</td>
+<td style="text-align:center;">
+CU
+</td>
+<td style="text-align:center;">
+5.00
+</td>
+<td style="text-align:center;">
+0.03
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+HoP
+</td>
+<td style="text-align:center;">
+PvdDieren
+</td>
+<td style="text-align:center;">
+5.00
+</td>
+<td style="text-align:center;">
+0.03
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+HoP
+</td>
+<td style="text-align:center;">
+50Plus
+</td>
+<td style="text-align:center;">
+4.00
+</td>
+<td style="text-align:center;">
+0.03
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+HoP
+</td>
+<td style="text-align:center;">
+DENK
+</td>
+<td style="text-align:center;">
+3.00
+</td>
+<td style="text-align:center;">
+0.02
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+HoP
+</td>
+<td style="text-align:center;">
+SGP
+</td>
+<td style="text-align:center;">
+3.00
+</td>
+<td style="text-align:center;">
+0.02
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+HoP
+</td>
+<td style="text-align:center;">
+FvD
+</td>
+<td style="text-align:center;">
+2.00
+</td>
+<td style="text-align:center;">
+0.01
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+VVD
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+23.00
+</td>
+<td style="text-align:center;">
+0.70
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+VVD
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+10.00
+</td>
+<td style="text-align:center;">
+0.30
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+PVV
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+14.00
+</td>
+<td style="text-align:center;">
+0.70
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+PVV
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+6.00
+</td>
+<td style="text-align:center;">
+0.30
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+CDA
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+13.00
+</td>
+<td style="text-align:center;">
+0.68
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+CDA
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+6.00
+</td>
+<td style="text-align:center;">
+0.32
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+D66
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+12.00
+</td>
+<td style="text-align:center;">
+0.63
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+D66
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+7.00
+</td>
+<td style="text-align:center;">
+0.37
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+GroenLinks
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+6.00
+</td>
+<td style="text-align:center;">
+0.43
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+GroenLinks
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+8.00
+</td>
+<td style="text-align:center;">
+0.57
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+SP
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+9.00
+</td>
+<td style="text-align:center;">
+0.64
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+SP
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+5.00
+</td>
+<td style="text-align:center;">
+0.36
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+PvdA
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+4.00
+</td>
+<td style="text-align:center;">
+0.44
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+PvdA
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+5.00
+</td>
+<td style="text-align:center;">
+0.56
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+CU
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+3.00
+</td>
+<td style="text-align:center;">
+0.60
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+CU
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+2.00
+</td>
+<td style="text-align:center;">
+0.40
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+PvdDieren
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+2.00
+</td>
+<td style="text-align:center;">
+0.40
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+PvdDieren
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+3.00
+</td>
+<td style="text-align:center;">
+0.60
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+50Plus
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+2.00
+</td>
+<td style="text-align:center;">
+0.50
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+50Plus
+</td>
+<td style="text-align:center;">
+female
+</td>
+<td style="text-align:center;">
+2.00
+</td>
+<td style="text-align:center;">
+0.50
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+DENK
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+3.00
+</td>
+<td style="text-align:center;">
+1.00
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+SGP
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+3.00
+</td>
+<td style="text-align:center;">
+1.00
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+FvD
+</td>
+<td style="text-align:center;">
+male
+</td>
+<td style="text-align:center;">
+2.00
+</td>
+<td style="text-align:center;">
+1.00
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+VVD
+</td>
+<td style="text-align:center;">
+AGE
+</td>
+<td style="text-align:center;">
+44.03
+</td>
+<td style="text-align:center;">
+6.72
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+PVV
+</td>
+<td style="text-align:center;">
+AGE
+</td>
+<td style="text-align:center;">
+46.05
+</td>
+<td style="text-align:center;">
+10.09
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+CDA
+</td>
+<td style="text-align:center;">
+AGE
+</td>
+<td style="text-align:center;">
+44.79
+</td>
+<td style="text-align:center;">
+7.84
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+D66
+</td>
+<td style="text-align:center;">
+AGE
+</td>
+<td style="text-align:center;">
+43.84
+</td>
+<td style="text-align:center;">
+10.16
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+GroenLinks
+</td>
+<td style="text-align:center;">
+AGE
+</td>
+<td style="text-align:center;">
+47.14
+</td>
+<td style="text-align:center;">
+10.08
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+SP
+</td>
+<td style="text-align:center;">
+AGE
+</td>
+<td style="text-align:center;">
+38.36
+</td>
+<td style="text-align:center;">
+6.99
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+PvdA
+</td>
+<td style="text-align:center;">
+AGE
+</td>
+<td style="text-align:center;">
+44.89
+</td>
+<td style="text-align:center;">
+7.99
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+CU
+</td>
+<td style="text-align:center;">
+AGE
+</td>
+<td style="text-align:center;">
+46.80
+</td>
+<td style="text-align:center;">
+4.38
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+PvdDieren
+</td>
+<td style="text-align:center;">
+AGE
+</td>
+<td style="text-align:center;">
+45.20
+</td>
+<td style="text-align:center;">
+8.26
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+50Plus
+</td>
+<td style="text-align:center;">
+AGE
+</td>
+<td style="text-align:center;">
+64.75
+</td>
+<td style="text-align:center;">
+8.02
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+DENK
+</td>
+<td style="text-align:center;">
+AGE
+</td>
+<td style="text-align:center;">
+42.33
+</td>
+<td style="text-align:center;">
+5.51
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+SGP
+</td>
+<td style="text-align:center;">
+AGE
+</td>
+<td style="text-align:center;">
+52.33
+</td>
+<td style="text-align:center;">
+7.57
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+FvD
+</td>
+<td style="text-align:center;">
+AGE
+</td>
+<td style="text-align:center;">
+53.50
+</td>
+<td style="text-align:center;">
+27.58
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+VVD
+</td>
+<td style="text-align:center;">
+no visible minority
+</td>
+<td style="text-align:center;">
+30.00
+</td>
+<td style="text-align:center;">
+0.91
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+VVD
+</td>
+<td style="text-align:center;">
+visible minority
+</td>
+<td style="text-align:center;">
+3.00
+</td>
+<td style="text-align:center;">
+0.09
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+PVV
+</td>
+<td style="text-align:center;">
+no visible minority
+</td>
+<td style="text-align:center;">
+19.00
+</td>
+<td style="text-align:center;">
+0.95
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+PVV
+</td>
+<td style="text-align:center;">
+visible minority
+</td>
+<td style="text-align:center;">
+1.00
+</td>
+<td style="text-align:center;">
+0.05
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+CDA
+</td>
+<td style="text-align:center;">
+no visible minority
+</td>
+<td style="text-align:center;">
+18.00
+</td>
+<td style="text-align:center;">
+0.95
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+CDA
+</td>
+<td style="text-align:center;">
+visible minority
+</td>
+<td style="text-align:center;">
+1.00
+</td>
+<td style="text-align:center;">
+0.05
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+D66
+</td>
+<td style="text-align:center;">
+no visible minority
+</td>
+<td style="text-align:center;">
+17.00
+</td>
+<td style="text-align:center;">
+0.89
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+D66
+</td>
+<td style="text-align:center;">
+visible minority
+</td>
+<td style="text-align:center;">
+2.00
+</td>
+<td style="text-align:center;">
+0.11
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+GroenLinks
+</td>
+<td style="text-align:center;">
+no visible minority
+</td>
+<td style="text-align:center;">
+11.00
+</td>
+<td style="text-align:center;">
+0.79
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+GroenLinks
+</td>
+<td style="text-align:center;">
+visible minority
+</td>
+<td style="text-align:center;">
+3.00
+</td>
+<td style="text-align:center;">
+0.21
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+SP
+</td>
+<td style="text-align:center;">
+no visible minority
+</td>
+<td style="text-align:center;">
+12.00
+</td>
+<td style="text-align:center;">
+0.86
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+SP
+</td>
+<td style="text-align:center;">
+visible minority
+</td>
+<td style="text-align:center;">
+2.00
+</td>
+<td style="text-align:center;">
+0.14
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+PvdA
+</td>
+<td style="text-align:center;">
+no visible minority
+</td>
+<td style="text-align:center;">
+8.00
+</td>
+<td style="text-align:center;">
+0.89
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+PvdA
+</td>
+<td style="text-align:center;">
+visible minority
+</td>
+<td style="text-align:center;">
+1.00
+</td>
+<td style="text-align:center;">
+0.11
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+CU
+</td>
+<td style="text-align:center;">
+no visible minority
+</td>
+<td style="text-align:center;">
+5.00
+</td>
+<td style="text-align:center;">
+1.00
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+PvdDieren
+</td>
+<td style="text-align:center;">
+no visible minority
+</td>
+<td style="text-align:center;">
+5.00
+</td>
+<td style="text-align:center;">
+1.00
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+50Plus
+</td>
+<td style="text-align:center;">
+no visible minority
+</td>
+<td style="text-align:center;">
+4.00
+</td>
+<td style="text-align:center;">
+1.00
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+DENK
+</td>
+<td style="text-align:center;">
+visible minority
+</td>
+<td style="text-align:center;">
+3.00
+</td>
+<td style="text-align:center;">
+1.00
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+SGP
+</td>
+<td style="text-align:center;">
+no visible minority
+</td>
+<td style="text-align:center;">
+3.00
+</td>
+<td style="text-align:center;">
+1.00
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+FvD
+</td>
+<td style="text-align:center;">
+no visible minority
+</td>
+<td style="text-align:center;">
+2.00
+</td>
+<td style="text-align:center;">
+1.00
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<pre class="r test"><code># %&gt;% pack_rows(index=c(&#39;sex&#39;=2, &#39;age&#39;=1, &#39;minority status&#39;=2, &#39;party&#39;=13)) save_kable(table1,
+# &#39;table1.html&#39;)</code></pre>
+<hr />
+</div>
+<div id="table-2-in-manuscript" class="section level2 tabset tabset-fade">
+<h2>Table 2 in manuscript</h2>
+<p>We retrieve the data from the RSiena data-object</p>
+<pre class="r test"><code>fnet &lt;- mydata$depvars$fnet
+atmnet &lt;- mydata$depvars$atmnet
+rtnet &lt;- mydata$depvars$rtnet
+
+vrouw &lt;- mydata$cCovars$vrouw
+partij &lt;- mydata$cCovars$partij
+ethminz &lt;- mydata$cCovars$ethminz
+lft &lt;- mydata$cCovars$lft
+
+ethminz &lt;- ethminz + attributes(ethminz)$mean
+partij &lt;- partij + attributes(partij)$mean
+vrouw &lt;- vrouw + attributes(vrouw)$mean
+lft &lt;- lft + attributes(lft)$mean
+
+vrouwm &lt;- fhomomat(vrouw)
+partijm &lt;- fhomomat(partij)
+ethminzm &lt;- fhomomat(ethminz)
+
+xmat &lt;- matrix(ethminz, nrow = length(ethminz), ncol = length(ethminz))
+xmatt &lt;- t(xmat)
+minoritym &lt;- xmat == 1 &amp; xmatt == 1
+
+# for age max 5 year difference / for descriptives
+xmat &lt;- matrix(lft, nrow = length(lft), ncol = length(lft))
+xmatt &lt;- t(xmat)
+lftm &lt;- (abs(xmat - xmatt) &lt; 6)
+
+# fndyads2(fnet[,,1], vrouwm) fndyads2(fnet[,,3], vrouwm) fndyads2(fnet[,,1], partijm)
+# fndyads2(fnet[,,3], partijm) fndyads2(fnet[,,1], ethminzm) fndyads2(fnet[,,3], ethminzm)</code></pre>
+<p><br></p>
+<div id="density" class="section level3">
+<h3>Density</h3>
+<pre class="r test"><code>desmat &lt;- matrix(NA, nrow = 10, ncol = 9)
+desmat[1, 1] &lt;- fdensity(fnet[, , 1])
+desmat[1, 2] &lt;- fdensity(fnet[, , 2])
+desmat[1, 3] &lt;- fdensity(fnet[, , 3])
+desmat[2, 1] &lt;- fdensityintra(fnet[, , 1], vrouwm)
+desmat[2, 2] &lt;- fdensityintra(fnet[, , 2], vrouwm)
+desmat[2, 3] &lt;- fdensityintra(fnet[, , 3], vrouwm)
+desmat[3, 1] &lt;- fdensityinter(fnet[, , 1], vrouwm)
+desmat[3, 2] &lt;- fdensityinter(fnet[, , 2], vrouwm)
+desmat[3, 3] &lt;- fdensityinter(fnet[, , 3], vrouwm)
+desmat[4, 1] &lt;- fdensityintra(fnet[, , 1], partijm)
+desmat[4, 2] &lt;- fdensityintra(fnet[, , 2], partijm)
+desmat[4, 3] &lt;- fdensityintra(fnet[, , 3], partijm)
+desmat[5, 1] &lt;- fdensityinter(fnet[, , 1], partijm)
+desmat[5, 2] &lt;- fdensityinter(fnet[, , 2], partijm)
+desmat[5, 3] &lt;- fdensityinter(fnet[, , 3], partijm)
+desmat[6, 1] &lt;- fdensityintra(fnet[, , 1], ethminzm)
+desmat[6, 2] &lt;- fdensityintra(fnet[, , 2], ethminzm)
+desmat[6, 3] &lt;- fdensityintra(fnet[, , 3], ethminzm)
+desmat[7, 1] &lt;- fdensityinter(fnet[, , 1], ethminzm)
+desmat[7, 2] &lt;- fdensityinter(fnet[, , 2], ethminzm)
+desmat[7, 3] &lt;- fdensityinter(fnet[, , 3], ethminzm)
+desmat[8, 1] &lt;- fdensityinter(fnet[, , 1], minoritym)
+desmat[8, 2] &lt;- fdensityinter(fnet[, , 2], minoritym)
+desmat[8, 3] &lt;- fdensityinter(fnet[, , 3], minoritym)
+desmat[9, 1] &lt;- fdensityintra(fnet[, , 1], lftm)
+desmat[9, 2] &lt;- fdensityintra(fnet[, , 2], lftm)
+desmat[9, 3] &lt;- fdensityintra(fnet[, , 3], lftm)
+desmat[10, 1] &lt;- fdensityinter(fnet[, , 1], lftm)
+desmat[10, 2] &lt;- fdensityinter(fnet[, , 2], lftm)
+desmat[10, 3] &lt;- fdensityinter(fnet[, , 3], lftm)
+
+desmat[1, 1 + 3] &lt;- fdensity(atmnet[, , 1])
+desmat[1, 2 + 3] &lt;- fdensity(atmnet[, , 2])
+desmat[1, 3 + 3] &lt;- fdensity(atmnet[, , 3])
+desmat[2, 1 + 3] &lt;- fdensityintra(atmnet[, , 1], vrouwm)
+desmat[2, 2 + 3] &lt;- fdensityintra(atmnet[, , 2], vrouwm)
+desmat[2, 3 + 3] &lt;- fdensityintra(atmnet[, , 3], vrouwm)
+desmat[3, 1 + 3] &lt;- fdensityinter(atmnet[, , 1], vrouwm)
+desmat[3, 2 + 3] &lt;- fdensityinter(atmnet[, , 2], vrouwm)
+desmat[3, 3 + 3] &lt;- fdensityinter(atmnet[, , 3], vrouwm)
+desmat[4, 1 + 3] &lt;- fdensityintra(atmnet[, , 1], partijm)
+desmat[4, 2 + 3] &lt;- fdensityintra(atmnet[, , 2], partijm)
+desmat[4, 3 + 3] &lt;- fdensityintra(atmnet[, , 3], partijm)
+desmat[5, 1 + 3] &lt;- fdensityinter(atmnet[, , 1], partijm)
+desmat[5, 2 + 3] &lt;- fdensityinter(atmnet[, , 2], partijm)
+desmat[5, 3 + 3] &lt;- fdensityinter(atmnet[, , 3], partijm)
+desmat[6, 1 + 3] &lt;- fdensityintra(atmnet[, , 1], ethminzm)
+desmat[6, 2 + 3] &lt;- fdensityintra(atmnet[, , 2], ethminzm)
+desmat[6, 3 + 3] &lt;- fdensityintra(atmnet[, , 3], ethminzm)
+desmat[7, 1 + 3] &lt;- fdensityinter(atmnet[, , 1], ethminzm)
+desmat[7, 2 + 3] &lt;- fdensityinter(atmnet[, , 2], ethminzm)
+desmat[7, 3 + 3] &lt;- fdensityinter(atmnet[, , 3], ethminzm)
+desmat[8, 1 + 3] &lt;- fdensityinter(atmnet[, , 1], minoritym)
+desmat[8, 2 + 3] &lt;- fdensityinter(atmnet[, , 2], minoritym)
+desmat[8, 3 + 3] &lt;- fdensityinter(atmnet[, , 3], minoritym)
+desmat[9, 1 + 3] &lt;- fdensityintra(atmnet[, , 1], lftm)
+desmat[9, 2 + 3] &lt;- fdensityintra(atmnet[, , 2], lftm)
+desmat[9, 3 + 3] &lt;- fdensityintra(atmnet[, , 3], lftm)
+desmat[10, 1 + 3] &lt;- fdensityinter(atmnet[, , 1], lftm)
+desmat[10, 2 + 3] &lt;- fdensityinter(atmnet[, , 2], lftm)
+desmat[10, 3 + 3] &lt;- fdensityinter(atmnet[, , 3], lftm)
+
+desmat[1, 1 + 6] &lt;- fdensity(rtnet[, , 1])
+desmat[1, 2 + 6] &lt;- fdensity(rtnet[, , 2])
+desmat[1, 3 + 6] &lt;- fdensity(rtnet[, , 3])
+desmat[2, 1 + 6] &lt;- fdensityintra(rtnet[, , 1], vrouwm)
+desmat[2, 2 + 6] &lt;- fdensityintra(rtnet[, , 2], vrouwm)
+desmat[2, 3 + 6] &lt;- fdensityintra(rtnet[, , 3], vrouwm)
+desmat[3, 1 + 6] &lt;- fdensityinter(rtnet[, , 1], vrouwm)
+desmat[3, 2 + 6] &lt;- fdensityinter(rtnet[, , 2], vrouwm)
+desmat[3, 3 + 6] &lt;- fdensityinter(rtnet[, , 3], vrouwm)
+desmat[4, 1 + 6] &lt;- fdensityintra(rtnet[, , 1], partijm)
+desmat[4, 2 + 6] &lt;- fdensityintra(rtnet[, , 2], partijm)
+desmat[4, 3 + 6] &lt;- fdensityintra(rtnet[, , 3], partijm)
+desmat[5, 1 + 6] &lt;- fdensityinter(rtnet[, , 1], partijm)
+desmat[5, 2 + 6] &lt;- fdensityinter(rtnet[, , 2], partijm)
+desmat[5, 3 + 6] &lt;- fdensityinter(rtnet[, , 3], partijm)
+desmat[6, 1 + 6] &lt;- fdensityintra(rtnet[, , 1], ethminzm)
+desmat[6, 2 + 6] &lt;- fdensityintra(rtnet[, , 2], ethminzm)
+desmat[6, 3 + 6] &lt;- fdensityintra(rtnet[, , 3], ethminzm)
+desmat[7, 1 + 6] &lt;- fdensityinter(rtnet[, , 1], ethminzm)
+desmat[7, 2 + 6] &lt;- fdensityinter(rtnet[, , 2], ethminzm)
+desmat[7, 3 + 6] &lt;- fdensityinter(rtnet[, , 3], ethminzm)
+desmat[8, 1 + 6] &lt;- fdensityinter(rtnet[, , 1], minoritym)
+desmat[8, 2 + 6] &lt;- fdensityinter(rtnet[, , 2], minoritym)
+desmat[8, 3 + 6] &lt;- fdensityinter(rtnet[, , 3], minoritym)
+desmat[9, 1 + 6] &lt;- fdensityintra(rtnet[, , 1], lftm)
+desmat[9, 2 + 6] &lt;- fdensityintra(rtnet[, , 2], lftm)
+desmat[9, 3 + 6] &lt;- fdensityintra(rtnet[, , 3], lftm)
+desmat[10, 1 + 6] &lt;- fdensityinter(rtnet[, , 1], lftm)
+desmat[10, 2 + 6] &lt;- fdensityinter(rtnet[, , 2], lftm)
+desmat[10, 3 + 6] &lt;- fdensityinter(rtnet[, , 3], lftm)
+
+colnames(desmat) &lt;- c(&quot;friends w1&quot;, &quot;friends w2&quot;, &quot;friends w3&quot;, &quot;atmentions w1&quot;, &quot;atmentions w2&quot;, &quot;atmentions w3&quot;, 
+    &quot;retweets w1&quot;, &quot;retweets w2&quot;, &quot;retweets w3&quot;)
+rownames(desmat) &lt;- c(&quot;total&quot;, &quot;same sex&quot;, &quot;different sex&quot;, &quot;same party&quot;, &quot;different party&quot;, &quot;same ethnicity&quot;, 
+    &quot;different ethnicity&quot;, &quot;both minority&quot;, &quot;same age (&lt;6)&quot;, &quot;different age (&gt;5)&quot;)
+
+# desmat write.csv2(desmat, &#39;20190829desmat.csv&#39;)
+
+desmatkable &lt;- kbl(desmat, booktabs = TRUE, digits = 2, caption = &quot;Table 2: Density&quot;, align = &quot;c&quot;) %&gt;% 
+    kable_classic(full_width = F, html_font = &quot;Cambria&quot;) %&gt;% kable_styling(bootstrap_options = c(&quot;striped&quot;, 
+    &quot;hover&quot;, &quot;condensed&quot;, &quot;responsive&quot;)) %&gt;% column_spec(column = 1, width = &quot;3in&quot;)
+
+desmatkable</code></pre>
+<table class=" lightable-classic table table-striped table-hover table-condensed table-responsive" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<caption>
+Table 2: Density
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+friends w1
+</th>
+<th style="text-align:center;">
+friends w2
+</th>
+<th style="text-align:center;">
+friends w3
+</th>
+<th style="text-align:center;">
+atmentions w1
+</th>
+<th style="text-align:center;">
+atmentions w2
+</th>
+<th style="text-align:center;">
+atmentions w3
+</th>
+<th style="text-align:center;">
+retweets w1
+</th>
+<th style="text-align:center;">
+retweets w2
+</th>
+<th style="text-align:center;">
+retweets w3
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;width: 3in; ">
+total
+</td>
+<td style="text-align:center;">
+0.25
+</td>
+<td style="text-align:center;">
+0.28
+</td>
+<td style="text-align:center;">
+0.28
+</td>
+<td style="text-align:center;">
+0.05
+</td>
+<td style="text-align:center;">
+0.04
+</td>
+<td style="text-align:center;">
+0.01
+</td>
+<td style="text-align:center;">
+0.05
+</td>
+<td style="text-align:center;">
+0.03
+</td>
+<td style="text-align:center;">
+0.03
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; ">
+same sex
+</td>
+<td style="text-align:center;">
+0.26
+</td>
+<td style="text-align:center;">
+0.29
+</td>
+<td style="text-align:center;">
+0.29
+</td>
+<td style="text-align:center;">
+0.05
+</td>
+<td style="text-align:center;">
+0.04
+</td>
+<td style="text-align:center;">
+0.01
+</td>
+<td style="text-align:center;">
+0.05
+</td>
+<td style="text-align:center;">
+0.03
+</td>
+<td style="text-align:center;">
+0.03
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; ">
+different sex
+</td>
+<td style="text-align:center;">
+0.24
+</td>
+<td style="text-align:center;">
+0.27
+</td>
+<td style="text-align:center;">
+0.27
+</td>
+<td style="text-align:center;">
+0.04
+</td>
+<td style="text-align:center;">
+0.03
+</td>
+<td style="text-align:center;">
+0.01
+</td>
+<td style="text-align:center;">
+0.05
+</td>
+<td style="text-align:center;">
+0.03
+</td>
+<td style="text-align:center;">
+0.03
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; ">
+same party
+</td>
+<td style="text-align:center;">
+0.71
+</td>
+<td style="text-align:center;">
+0.73
+</td>
+<td style="text-align:center;">
+0.74
+</td>
+<td style="text-align:center;">
+0.20
+</td>
+<td style="text-align:center;">
+0.14
+</td>
+<td style="text-align:center;">
+0.06
+</td>
+<td style="text-align:center;">
+0.34
+</td>
+<td style="text-align:center;">
+0.25
+</td>
+<td style="text-align:center;">
+0.25
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; ">
+different party
+</td>
+<td style="text-align:center;">
+0.19
+</td>
+<td style="text-align:center;">
+0.22
+</td>
+<td style="text-align:center;">
+0.22
+</td>
+<td style="text-align:center;">
+0.03
+</td>
+<td style="text-align:center;">
+0.02
+</td>
+<td style="text-align:center;">
+0.01
+</td>
+<td style="text-align:center;">
+0.01
+</td>
+<td style="text-align:center;">
+0.01
+</td>
+<td style="text-align:center;">
+0.01
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; ">
+same ethnicity
+</td>
+<td style="text-align:center;">
+0.27
+</td>
+<td style="text-align:center;">
+0.29
+</td>
+<td style="text-align:center;">
+0.29
+</td>
+<td style="text-align:center;">
+0.05
+</td>
+<td style="text-align:center;">
+0.04
+</td>
+<td style="text-align:center;">
+0.01
+</td>
+<td style="text-align:center;">
+0.05
+</td>
+<td style="text-align:center;">
+0.03
+</td>
+<td style="text-align:center;">
+0.03
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; ">
+different ethnicity
+</td>
+<td style="text-align:center;">
+0.21
+</td>
+<td style="text-align:center;">
+0.24
+</td>
+<td style="text-align:center;">
+0.24
+</td>
+<td style="text-align:center;">
+0.05
+</td>
+<td style="text-align:center;">
+0.03
+</td>
+<td style="text-align:center;">
+0.01
+</td>
+<td style="text-align:center;">
+0.04
+</td>
+<td style="text-align:center;">
+0.03
+</td>
+<td style="text-align:center;">
+0.03
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; ">
+both minority
+</td>
+<td style="text-align:center;">
+0.25
+</td>
+<td style="text-align:center;">
+0.28
+</td>
+<td style="text-align:center;">
+0.28
+</td>
+<td style="text-align:center;">
+0.05
+</td>
+<td style="text-align:center;">
+0.03
+</td>
+<td style="text-align:center;">
+0.01
+</td>
+<td style="text-align:center;">
+0.05
+</td>
+<td style="text-align:center;">
+0.03
+</td>
+<td style="text-align:center;">
+0.03
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; ">
+same age (&lt;6)
+</td>
+<td style="text-align:center;">
+0.29
+</td>
+<td style="text-align:center;">
+0.31
+</td>
+<td style="text-align:center;">
+0.31
+</td>
+<td style="text-align:center;">
+0.06
+</td>
+<td style="text-align:center;">
+0.04
+</td>
+<td style="text-align:center;">
+0.01
+</td>
+<td style="text-align:center;">
+0.05
+</td>
+<td style="text-align:center;">
+0.04
+</td>
+<td style="text-align:center;">
+0.04
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; ">
+different age (&gt;5)
+</td>
+<td style="text-align:center;">
+0.24
+</td>
+<td style="text-align:center;">
+0.26
+</td>
+<td style="text-align:center;">
+0.26
+</td>
+<td style="text-align:center;">
+0.04
+</td>
+<td style="text-align:center;">
+0.03
+</td>
+<td style="text-align:center;">
+0.01
+</td>
+<td style="text-align:center;">
+0.04
+</td>
+<td style="text-align:center;">
+0.03
+</td>
+<td style="text-align:center;">
+0.03
+</td>
+</tr>
+</tbody>
+</table>
+<hr />
+</div>
+<div id="colemans" class="section level3">
+<h3>Coleman’s</h3>
+<pre class="r test"><code>fnet[fnet == 10] &lt;- NA
+rtnet[rtnet == 10] &lt;- NA
+atmnet[atmnet == 10] &lt;- NA
+
+colmat &lt;- matrix(NA, nrow = 3, ncol = 9)
+
+colmat[1, 1] &lt;- fscolnet(fnet[, , 1], partij)
+colmat[1, 2] &lt;- fscolnet(fnet[, , 2], partij)
+colmat[1, 3] &lt;- fscolnet(fnet[, , 3], partij)
+colmat[1, 4] &lt;- fscolnet(atmnet[, , 1], partij)
+colmat[1, 5] &lt;- fscolnet(atmnet[, , 2], partij)
+colmat[1, 6] &lt;- fscolnet(atmnet[, , 3], partij)
+colmat[1, 7] &lt;- fscolnet(rtnet[, , 1], partij)
+colmat[1, 8] &lt;- fscolnet(rtnet[, , 2], partij)
+colmat[1, 9] &lt;- fscolnet(rtnet[, , 3], partij)
+
+colmat[2, 1] &lt;- fscolnet(fnet[, , 1], vrouw)
+colmat[2, 2] &lt;- fscolnet(fnet[, , 2], vrouw)
+colmat[2, 3] &lt;- fscolnet(fnet[, , 3], vrouw)
+colmat[2, 4] &lt;- fscolnet(atmnet[, , 1], vrouw)
+colmat[2, 5] &lt;- fscolnet(atmnet[, , 2], vrouw)
+colmat[2, 6] &lt;- fscolnet(atmnet[, , 3], vrouw)
+colmat[2, 7] &lt;- fscolnet(rtnet[, , 1], vrouw)
+colmat[2, 8] &lt;- fscolnet(rtnet[, , 2], vrouw)
+colmat[2, 9] &lt;- fscolnet(rtnet[, , 3], vrouw)
+
+colmat[3, 1] &lt;- fscolnet(fnet[, , 1], ethminz)
+colmat[3, 2] &lt;- fscolnet(fnet[, , 2], ethminz)
+colmat[3, 3] &lt;- fscolnet(fnet[, , 3], ethminz)
+colmat[3, 4] &lt;- fscolnet(atmnet[, , 1], ethminz)
+colmat[3, 5] &lt;- fscolnet(atmnet[, , 2], ethminz)
+colmat[3, 6] &lt;- fscolnet(atmnet[, , 3], ethminz)
+colmat[3, 7] &lt;- fscolnet(rtnet[, , 1], ethminz)
+colmat[3, 8] &lt;- fscolnet(rtnet[, , 2], ethminz)
+colmat[3, 9] &lt;- fscolnet(rtnet[, , 3], ethminz)
+
+colnames(colmat) &lt;- c(&quot;friends w1&quot;, &quot;friends w2&quot;, &quot;friends w3&quot;, &quot;atmentions w1&quot;, &quot;atmentions w2&quot;, &quot;atmentions w3&quot;, 
+    &quot;retweets w1&quot;, &quot;retweets w2&quot;, &quot;retweets w3&quot;)
+rownames(colmat) &lt;- c(&quot;party&quot;, &quot;sex&quot;, &quot;ethnicity&quot;)
+# colmat
+
+# write.csv2(colmat, &#39;20190829colmat.csv&#39;)
+
+colmatkable &lt;- kbl(colmat, booktabs = TRUE, digits = 2, caption = &quot;Table 2: Coleman&quot;, align = &quot;c&quot;) %&gt;% 
+    kable_classic(full_width = F, html_font = &quot;Cambria&quot;) %&gt;% kable_styling(bootstrap_options = c(&quot;striped&quot;, 
+    &quot;hover&quot;, &quot;condensed&quot;, &quot;responsive&quot;)) %&gt;% column_spec(column = 1, width = &quot;3in&quot;)
+
+colmatkable</code></pre>
+<table class=" lightable-classic table table-striped table-hover table-condensed table-responsive" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<caption>
+Table 2: Coleman
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+friends w1
+</th>
+<th style="text-align:center;">
+friends w2
+</th>
+<th style="text-align:center;">
+friends w3
+</th>
+<th style="text-align:center;">
+atmentions w1
+</th>
+<th style="text-align:center;">
+atmentions w2
+</th>
+<th style="text-align:center;">
+atmentions w3
+</th>
+<th style="text-align:center;">
+retweets w1
+</th>
+<th style="text-align:center;">
+retweets w2
+</th>
+<th style="text-align:center;">
+retweets w3
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;width: 3in; ">
+party
+</td>
+<td style="text-align:center;">
+0.23
+</td>
+<td style="text-align:center;">
+0.21
+</td>
+<td style="text-align:center;">
+0.21
+</td>
+<td style="text-align:center;">
+0.39
+</td>
+<td style="text-align:center;">
+0.40
+</td>
+<td style="text-align:center;">
+0.48
+</td>
+<td style="text-align:center;">
+0.80
+</td>
+<td style="text-align:center;">
+0.80
+</td>
+<td style="text-align:center;">
+0.80
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; ">
+sex
+</td>
+<td style="text-align:center;">
+0.05
+</td>
+<td style="text-align:center;">
+0.04
+</td>
+<td style="text-align:center;">
+0.04
+</td>
+<td style="text-align:center;">
+0.07
+</td>
+<td style="text-align:center;">
+0.03
+</td>
+<td style="text-align:center;">
+0.05
+</td>
+<td style="text-align:center;">
+-0.01
+</td>
+<td style="text-align:center;">
+-0.03
+</td>
+<td style="text-align:center;">
+-0.01
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; ">
+ethnicity
+</td>
+<td style="text-align:center;">
+0.12
+</td>
+<td style="text-align:center;">
+0.10
+</td>
+<td style="text-align:center;">
+0.10
+</td>
+<td style="text-align:center;">
+-0.03
+</td>
+<td style="text-align:center;">
+0.00
+</td>
+<td style="text-align:center;">
+-0.02
+</td>
+<td style="text-align:center;">
+0.05
+</td>
+<td style="text-align:center;">
+-0.01
+</td>
+<td style="text-align:center;">
+-0.01
+</td>
+</tr>
+</tbody>
+</table>
+<hr />
+</div>
+<div id="assortivity-coefficients" class="section level3">
+<h3>Assortivity coefficients</h3>
+<pre class="r test"><code>fnet[fnet == 10] &lt;- NA
+rtnet[rtnet == 10] &lt;- NA
+atmnet[atmnet == 10] &lt;- NA
+
+vrouw_int &lt;- as.integer(vrouw) + 1
+partij_int &lt;- as.integer(partij)
+ethminz &lt;- ethminz + 1
+
+asmat &lt;- matrix(NA, nrow = 4, ncol = 9)
+
+gfnet1 &lt;- graph_from_adjacency_matrix(fnet[, , 1], mode = &quot;directed&quot;, weighted = NULL, diag = FALSE, 
+    add.colnames = NA, add.rownames = NA)
+gfnet2 &lt;- graph_from_adjacency_matrix(fnet[, , 2], mode = &quot;directed&quot;, weighted = NULL, diag = FALSE, 
+    add.colnames = NA, add.rownames = NA)
+gfnet3 &lt;- graph_from_adjacency_matrix(fnet[, , 3], mode = &quot;directed&quot;, weighted = NULL, diag = FALSE, 
+    add.colnames = NA, add.rownames = NA)
+
+grtnet1 &lt;- graph_from_adjacency_matrix(rtnet[, , 1], mode = &quot;directed&quot;, weighted = NULL, diag = FALSE, 
+    add.colnames = NA, add.rownames = NA)
+grtnet2 &lt;- graph_from_adjacency_matrix(rtnet[, , 2], mode = &quot;directed&quot;, weighted = NULL, diag = FALSE, 
+    add.colnames = NA, add.rownames = NA)
+grtnet3 &lt;- graph_from_adjacency_matrix(rtnet[, , 3], mode = &quot;directed&quot;, weighted = NULL, diag = FALSE, 
+    add.colnames = NA, add.rownames = NA)
+
+gatmnet1 &lt;- graph_from_adjacency_matrix(atmnet[, , 1], mode = &quot;directed&quot;, weighted = NULL, diag = FALSE, 
+    add.colnames = NA, add.rownames = NA)
+gatmnet2 &lt;- graph_from_adjacency_matrix(atmnet[, , 2], mode = &quot;directed&quot;, weighted = NULL, diag = FALSE, 
+    add.colnames = NA, add.rownames = NA)
+gatmnet3 &lt;- graph_from_adjacency_matrix(atmnet[, , 3], mode = &quot;directed&quot;, weighted = NULL, diag = FALSE, 
+    add.colnames = NA, add.rownames = NA)
+
+asmat[1, 1] &lt;- assortativity_nominal(gfnet1, types = partij_int, directed = TRUE)
+asmat[1, 2] &lt;- assortativity_nominal(gfnet2, types = partij_int, directed = TRUE)
+asmat[1, 3] &lt;- assortativity_nominal(gfnet3, types = partij_int, directed = TRUE)
+asmat[2, 1] &lt;- assortativity_nominal(gfnet1, types = vrouw_int, directed = TRUE)
+asmat[2, 2] &lt;- assortativity_nominal(gfnet2, types = vrouw_int, directed = TRUE)
+asmat[2, 3] &lt;- assortativity_nominal(gfnet3, types = vrouw_int, directed = TRUE)
+asmat[3, 1] &lt;- assortativity_nominal(gfnet1, types = ethminz, directed = TRUE)
+asmat[3, 2] &lt;- assortativity_nominal(gfnet2, types = ethminz, directed = TRUE)
+asmat[3, 3] &lt;- assortativity_nominal(gfnet3, types = ethminz, directed = TRUE)
+asmat[4, 1] &lt;- assortativity(gfnet1, types1 = lft, directed = TRUE)
+asmat[4, 2] &lt;- assortativity(gfnet2, types1 = lft, directed = TRUE)
+asmat[4, 3] &lt;- assortativity(gfnet3, types1 = lft, directed = TRUE)
+
+asmat[1, 4] &lt;- assortativity_nominal(grtnet1, types = partij_int, directed = TRUE)
+asmat[1, 5] &lt;- assortativity_nominal(grtnet2, types = partij_int, directed = TRUE)
+asmat[1, 6] &lt;- assortativity_nominal(grtnet3, types = partij_int, directed = TRUE)
+asmat[2, 4] &lt;- assortativity_nominal(grtnet1, types = vrouw_int, directed = TRUE)
+asmat[2, 5] &lt;- assortativity_nominal(grtnet2, types = vrouw_int, directed = TRUE)
+asmat[2, 6] &lt;- assortativity_nominal(grtnet3, types = vrouw_int, directed = TRUE)
+asmat[3, 4] &lt;- assortativity_nominal(grtnet1, types = ethminz, directed = TRUE)
+asmat[3, 5] &lt;- assortativity_nominal(grtnet2, types = ethminz, directed = TRUE)
+asmat[3, 6] &lt;- assortativity_nominal(grtnet3, types = ethminz, directed = TRUE)
+asmat[4, 4] &lt;- assortativity(grtnet1, types1 = lft, directed = TRUE)
+asmat[4, 5] &lt;- assortativity(grtnet2, types1 = lft, directed = TRUE)
+asmat[4, 6] &lt;- assortativity(grtnet3, types1 = lft, directed = TRUE)
+
+asmat[1, 7] &lt;- assortativity_nominal(gatmnet1, types = partij_int, directed = TRUE)
+asmat[1, 8] &lt;- assortativity_nominal(gatmnet2, types = partij_int, directed = TRUE)
+asmat[1, 9] &lt;- assortativity_nominal(gatmnet3, types = partij_int, directed = TRUE)
+asmat[2, 7] &lt;- assortativity_nominal(gatmnet1, types = vrouw_int, directed = TRUE)
+asmat[2, 8] &lt;- assortativity_nominal(gatmnet2, types = vrouw_int, directed = TRUE)
+asmat[2, 9] &lt;- assortativity_nominal(gatmnet3, types = vrouw_int, directed = TRUE)
+asmat[3, 7] &lt;- assortativity_nominal(gatmnet1, types = ethminz, directed = TRUE)
+asmat[3, 8] &lt;- assortativity_nominal(gatmnet2, types = ethminz, directed = TRUE)
+asmat[3, 9] &lt;- assortativity_nominal(gatmnet3, types = ethminz, directed = TRUE)
+asmat[4, 7] &lt;- assortativity(gatmnet1, types1 = lft, directed = TRUE)
+asmat[4, 8] &lt;- assortativity(gatmnet2, types1 = lft, directed = TRUE)
+asmat[4, 9] &lt;- assortativity(gatmnet3, types1 = lft, directed = TRUE)
+
+colnames(asmat) &lt;- c(&quot;friends w1&quot;, &quot;friends w2&quot;, &quot;friends w3&quot;, &quot;atmentions w1&quot;, &quot;atmentions w2&quot;, &quot;atmentions w3&quot;, 
+    &quot;retweets w1&quot;, &quot;retweets w2&quot;, &quot;retweets w3&quot;)
+rownames(asmat) &lt;- c(&quot;party&quot;, &quot;sex&quot;, &quot;ethnicity&quot;, &quot;age&quot;)
+# asmat write.csv2(asmat, &#39;20190828asmat.csv&#39;)
+
+asmatkable &lt;- kbl(asmat, booktabs = TRUE, digits = 2, caption = &quot;Table 2: Assortativity&quot;, align = &quot;c&quot;) %&gt;% 
+    kable_classic(full_width = F, html_font = &quot;Cambria&quot;) %&gt;% kable_styling(bootstrap_options = c(&quot;striped&quot;, 
+    &quot;hover&quot;, &quot;condensed&quot;, &quot;responsive&quot;)) %&gt;% column_spec(column = 1, width = &quot;3in&quot;)
+
+asmatkable</code></pre>
+<table class=" lightable-classic table table-striped table-hover table-condensed table-responsive" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<caption>
+Table 2: Assortativity
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+friends w1
+</th>
+<th style="text-align:center;">
+friends w2
+</th>
+<th style="text-align:center;">
+friends w3
+</th>
+<th style="text-align:center;">
+atmentions w1
+</th>
+<th style="text-align:center;">
+atmentions w2
+</th>
+<th style="text-align:center;">
+atmentions w3
+</th>
+<th style="text-align:center;">
+retweets w1
+</th>
+<th style="text-align:center;">
+retweets w2
+</th>
+<th style="text-align:center;">
+retweets w3
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;width: 3in; ">
+party
+</td>
+<td style="text-align:center;">
+0.22
+</td>
+<td style="text-align:center;">
+0.20
+</td>
+<td style="text-align:center;">
+0.20
+</td>
+<td style="text-align:center;">
+0.82
+</td>
+<td style="text-align:center;">
+0.83
+</td>
+<td style="text-align:center;">
+0.83
+</td>
+<td style="text-align:center;">
+0.39
+</td>
+<td style="text-align:center;">
+0.39
+</td>
+<td style="text-align:center;">
+0.47
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; ">
+sex
+</td>
+<td style="text-align:center;">
+0.04
+</td>
+<td style="text-align:center;">
+0.03
+</td>
+<td style="text-align:center;">
+0.04
+</td>
+<td style="text-align:center;">
+0.01
+</td>
+<td style="text-align:center;">
+-0.01
+</td>
+<td style="text-align:center;">
+0.02
+</td>
+<td style="text-align:center;">
+0.10
+</td>
+<td style="text-align:center;">
+0.04
+</td>
+<td style="text-align:center;">
+0.06
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; ">
+ethnicity
+</td>
+<td style="text-align:center;">
+0.06
+</td>
+<td style="text-align:center;">
+0.05
+</td>
+<td style="text-align:center;">
+0.05
+</td>
+<td style="text-align:center;">
+0.09
+</td>
+<td style="text-align:center;">
+0.02
+</td>
+<td style="text-align:center;">
+0.04
+</td>
+<td style="text-align:center;">
+0.08
+</td>
+<td style="text-align:center;">
+0.02
+</td>
+<td style="text-align:center;">
+-0.07
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; ">
+age
+</td>
+<td style="text-align:center;">
+0.05
+</td>
+<td style="text-align:center;">
+0.04
+</td>
+<td style="text-align:center;">
+0.04
+</td>
+<td style="text-align:center;">
+0.02
+</td>
+<td style="text-align:center;">
+0.01
+</td>
+<td style="text-align:center;">
+0.06
+</td>
+<td style="text-align:center;">
+0.09
+</td>
+<td style="text-align:center;">
+0.02
+</td>
+<td style="text-align:center;">
+0.12
+</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<div id="refs" class="references">
+<div id="ref-BOJANOWSKI201414">
+<p>Bojanowski, Michał, and Rense Corten. 2014. “Measuring Segregation in Social Networks.” <em>Social Networks</em> 39: 14–32. <a href="https://doi.org/https://doi.org/10.1016/j.socnet.2014.04.001">https://doi.org/https://doi.org/10.1016/j.socnet.2014.04.001</a>.</p>
+</div>
+<div id="ref-Tolsma2021">
+<p>Tolsma, Jochem, Niels Spierings, and Kristof Jacobs. n.d. “Twitter.” <em>-</em> - (-): –. <a href="-">-</a>.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIlJlcGxpY2F0aW9uIHBhY2thZ2UtVGFibGVzIg0KYXV0aG9yOiAnW0pvY2hlbSBUb2xzbWFdKGh0dHBzOi8vd3d3LmpvY2hlbXRvbHNtYS5ubCkgLSBSYWRib3VkIFVuaXZlcnNpdHkgLyBVbml2ZXJzaXR5IG9mIEdyb25pbmdlbiwgdGhlIE5ldGhlcmxhbmRzJw0KYmlibGlvZ3JhcGh5OiByZWZlcmVuY2VzLmJpYg0KZGF0ZTogIkxhc3QgY29tcGlsZWQgb24gYHIgZm9ybWF0KFN5cy50aW1lKCksICclQiwgJVknKWAiDQpvdXRwdXQ6IA0KICBodG1sX2RvY3VtZW50Og0KICAgIHRvYzogIHRydWUNCiAgICB0b2NfZmxvYXQ6IHRydWUNCiAgICBudW1iZXJfc2VjdGlvbnM6IGZhbHNlDQogICAgY29kZV9mb2xkaW5nOiBoaWRlDQogICAgY29kZV9kb3dubG9hZDogeWVzDQotLS0NCg0KYGBge3IgZ2xvYmFsc2V0dGluZ3MsIGVjaG89RkFMU0UsIHdhcm5pbmc9RkFMU0V9DQpsaWJyYXJ5KGtuaXRyKQ0Kb3B0c19jaHVuayRzZXQodGlkeS5vcHRzPWxpc3Qod2lkdGguY3V0b2ZmPTEwMCksdGlkeT1UUlVFLCB3YXJuaW5nID0gRkFMU0UsIG1lc3NhZ2UgPSBGQUxTRSxjb21tZW50ID0gIiM+IiwgY2FjaGU9VFJVRSwgZWNobz1GQUxTRSwgY2xhc3Muc291cmNlPWMoInRlc3QiKSwgY2xhc3Mub3V0cHV0PWMoInRlc3QyIikpDQpvcHRpb25zKHdpZHRoID0gMTAwKQ0KcmdsOjpzZXR1cEtuaXRyKCkNCmBgYA0KDQpgYGB7ciBjb2xvcml6ZSwgZWNobz1GQUxTRX0NCmNvbG9yaXplIDwtIGZ1bmN0aW9uKHgsIGNvbG9yKSB7DQogIGlmIChrbml0cjo6aXNfbGF0ZXhfb3V0cHV0KCkpIHsNCiAgICBzcHJpbnRmKCJcXHRleHRjb2xvcnslc317JXN9IiwgY29sb3IsIHgpDQogIH0gZWxzZSBpZiAoa25pdHI6OmlzX2h0bWxfb3V0cHV0KCkpIHsNCiAgICBzcHJpbnRmKCI8c3BhbiBzdHlsZT0nY29sb3I6ICVzOyc+JXM8L3NwYW4+IiwgY29sb3IsIA0KICAgICAgICAgICAgeCkNCiAgfSBlbHNlIHgNCn0NCg0KYGBgDQoNCmBgYHtyIGtsaXBweSwgZWNobz1GQUxTRSwgaW5jbHVkZT1UUlVFfQ0Ka2xpcHB5OjprbGlwcHkocG9zaXRpb24gPSBjKCd0b3AnLCAncmlnaHQnKSkNCiNrbGlwcHk6OmtsaXBweShjb2xvciA9ICdkYXJrcmVkJykNCiNrbGlwcHk6OmtsaXBweSh0b29sdGlwX21lc3NhZ2UgPSAnQ2xpY2sgdG8gY29weScsIHRvb2x0aXBfc3VjY2VzcyA9ICdEb25lJykNCmBgYA0KDQpgYGB7Y3NzLCBlY2hvPUZBTFNFfQ0KcHJlLnRlc3Qgew0KICBtYXgtaGVpZ2h0OiAzMDBweDsNCiAgb3ZlcmZsb3cteTogYXV0bzsNCiAgb3ZlcmZsb3cteDogYXV0bzsNCiAgbWFyZ2luOiAwcHg7DQp9DQoNCnByZS50ZXN0MiB7DQogIG1heC1oZWlnaHQ6IDMwMHB4Ow0KICBvdmVyZmxvdy15OiBhdXRvOw0KICBvdmVyZmxvdy14OiBhdXRvOw0KICBtYXJnaW46IDBweDsNCiAgYmFja2dyb3VuZC1jb2xvcjogd2hpdGU7DQogIGNvbG9yOiByZ2IoMjAxLCA3NiwgNzYpOw0KfQ0KDQoNCmgxLCAuaDEsIGgyLCAuaDIsIGgzLCAuaDMgew0KICBtYXJnaW4tdG9wOiAyNHB4Ow0KfQ0KDQoNCmBgYA0KDQoNCg0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQoNCg0KIyBJbnRybyAgDQoNCg0KVGhpcyBbd2Vic2l0ZV0oaHR0cHM6Ly9qb2NoZW10b2xzbWEuZ2l0aHViLmlvL1R3aXR0ZXIvKSBpcyBhIHJlcGxpY2F0aW9uIHBhY2thZ2UgZm9yIHRoZSBwYXBlciAiVHdpdHRlciIgYnkgQFRvbHNtYTIwMjEuDQoNCkl0IGNvbnRhaW5zIFIgY29kZSB0byByZXBsaWNhdGUgYWxsIFRhYmxlcy9GaWd1cmVzL1Jlc3VsdHMgaW4gdGhlIG1hbnVzY3JpcHQuDQoNClRvIGNvcHkgdGhlIGNvZGUgY2xpY2sgdGhlIGJ1dHRvbiBpbiB0aGUgdXBwZXIgcmlnaHQgY29ybmVyIG9mIHRoZSBjb2RlLWNodW5rcy4NCg0KVXNlIHRoZSB0b3AgbWVudSB0byBuYXZpZ2F0ZSB0byB0aGUgc2VjdGlvbiBvZiBpbnRlcmVzdC4gDQoNClRoZSBzb3VyY2UgY29kZSBvZiB0aGlzIHdlYnNpdGUgY2FuIGJlIGZvdW5kIG9uIFtHaXRodWJdKGh0dHBzOi8vZ2l0aHViLmNvbS9Kb2NoZW1Ub2xzbWEvVHdpdHRlcikNCg0KUXVlc3Rpb25zIGNhbiBiZSBhZGRyZXNzZWQgdG8gW0pvY2hlbSBUb2xzbWFdKG1haWx0bzpqb2NoZW0udG9sc21hQHJ1Lm5sKS4NCg0KLS0tICANCg0KIyMgUGFja2FnZXMgIA0KDQpgYGB7ciBwYWNrYWdlcywgZWNobz1UUlVFfQ0KI2luc3RhbGwgaWYgbmVjZXNzYXJ5IA0KaWYgKCFyZXF1aXJlKCJkcGx5ciIsIGNoYXJhY3Rlci5vbmx5ID0gVFJVRSkpIHtpbnN0YWxsLnBhY2thZ2VzKCJkcGx5ciIsIGRlcGVuZGVuY2llcz1UUlVFKX0NCmlmICghcmVxdWlyZSgiZm9yZWlnbiIsIGNoYXJhY3Rlci5vbmx5ID0gVFJVRSkpIHtpbnN0YWxsLnBhY2thZ2VzKCJmb3JlaWduIiwgZGVwZW5kZW5jaWVzPVRSVUUpfQ0KaWYgKCFyZXF1aXJlKCJpZ3JhcGgiLCBjaGFyYWN0ZXIub25seSA9IFRSVUUpKSB7aW5zdGFsbC5wYWNrYWdlcygiaWdyYXBoIiwgZGVwZW5kZW5jaWVzPVRSVUUpfQ0KDQojbG9hZCBwYWNrYWdlcy4NCmxpYnJhcnkodGlkeXZlcnNlKQ0KbGlicmFyeShkcGx5cikNCmxpYnJhcnkoZm9yZWlnbikNCmxpYnJhcnkoaWdyYXBoKQ0KbGlicmFyeShrbml0cikNCmxpYnJhcnkoa2FibGVFeHRyYSkNCg0KYGBgDQoNCg0KLS0tICAgDQoNCg0KIyMgQ3VzdG9tIHNlZ3JlZ2F0aW9uIGZ1bmN0aW9ucyB7LnRhYnNldCAudGFic2V0LWZhZGV9DQoNCkRlZmluZSBjdXN0b20gZnVuY3Rpb25zIHRvIGNhbGN1bGF0ZSBuZXR3b3JrLXNlZ3JlZ2F0aW9uOiAgDQoNCi0gZmRlbnNpdHk6IGRlbnNpdHkgb2YgbmV0d29yayAgDQotIGZkZW5zaXR5aW50cmE6IGRlbnNpdHkgd2l0aGluIHN1Ymdyb3VwcyAgDQotIGZzY29sbmV0OiBDb2xlbWFu4oCZcyBIb21vcGhpbHkgSW5kZXggYXQgdGhlIG5ldHdvcmstbGV2ZWwsIHNlZSBbKEBCT0pBTk9XU0tJMjAxNDE0KV0gIA0KLSBmaG9tb21hdDogbWFrZSBhIG1hdHJpeCBpbmRpY2F0aW5nIHdoZXRlciBub2RlcyBhcmUgc2ltaWxhciAgDQotIGZuZHlhZHM6IGNvdW50IG51bWJlciBvZiBkeWFkcyAgDQotIGZuZGF5ZHMyOiBjb3VudCBudW1iZXIgb2Ygd2l0aGluIHN1Ymdyb3VwIGR5YWRzDQoNCmBgYHtyIGZ1bmN0aW9ucywgZWNobz1UUlVFfQ0KZmRlbnNpdHkgPC0gZnVuY3Rpb24oeCkgeyANCgkjeCBpcyB5b3VyIG5vbWluYXRpb24gbmV0d29yaw0KCSNzaG91bGQgYmUgcmVsYXRpb25zaGlwLCBkaXZpZGVkIGJ5IGFsbCBwb3NzaWJsZSBvZmYgZGlhZ29uYWwgdGllcy4gDQoJI21ha2Ugc3VyZSBkaWFnb25hbCBjZWxscyBhcmUgTkENCglkaWFnKHgpIDwtIE5BDQoJeFt4PT0xMF0gPC0gTkENCglzdW0oeD09MSwgbmEucm09VCkgLyAoc3VtKHg9PTEgfCB4PT0wLCBuYS5ybT1UKSkNCn0NCg0KZmRlbnNpdHlpbnRyYSA8LSBmdW5jdGlvbih4LCBBKSB7IA0KCSNBIGlzIG1hdHJpeCBpbmRpY2F0aW5nIHdoZXRoZXIgbm9kZXMgY29uc3RpdHV0aW5nIGR5YWQgaGF2ZSBzYW1lIGNoYXJhY3RlcmlzdGljcw0KCWRpYWcoeCkgPC0gTkENCgl4W3g9PTEwXSA8LSBOQQ0KCWRpYWcoQSkgPC0gTkENCglzdW0oeD09MSAmIEE9PTEsIG5hLnJtPVQpIC8gKHN1bSgoeD09MSB8IHg9PTApICYgQT09MSwgbmEucm09VCkpDQp9DQoNCmZkZW5zaXR5aW50ZXIgPC0gZnVuY3Rpb24oeCwgQSkgeyANCgkjQSBpcyBtYXRyaXggaW5kaWNhdGluZyB3aGV0aGVyIG5vZGVzIGNvbnN0aXR1dGluZyBkeWFkIGhhdmUgc2FtZSBjaGFyYWN0ZXJpc3RpY3MNCglkaWFnKHgpIDwtIE5BDQoJeFt4PT0xMF0gPC0gTkENCglkaWFnKEEpIDwtIE5BDQoJc3VtKHg9PTEgJiBBIT0xLCBuYS5ybT1UKSAvIChzdW0oKHg9PTEgfCB4PT0wKSAmIEEhPTEsIG5hLnJtPVQpKQ0KfQ0KDQpmaG9tb21hdCA8LSBmdW5jdGlvbih4KSB7DQp4bWF0IDwtIG1hdHJpeCh4LCBucm93PWxlbmd0aCh4KSwgbmNvbD1sZW5ndGgoeCkpDQp4bWF0dCA8LSB0KHhtYXQpDQp4aG9tbyA8LSB4bWF0PT14bWF0dA0KcmV0dXJuKHhob21vKQ0KfQ0KDQpmbmR5YWRzIDwtIGZ1bmN0aW9uKHgpIHsNCglkaWFnKHgpIDwtIE5BDQoJeFt4PT0xMF0gPC0gTkENCgkoc3VtKCh4PT0xIHwgeD09MCkgLCBuYS5ybT1UKSkNCn0NCg0KZm5keWFkczIgPC0gZnVuY3Rpb24oeCwgQSkgew0KCWRpYWcoeCkgPC0gTkENCgl4W3g9PTEwXSA8LSBOQQ0KCWRpYWcoQSkgPC0gTkENCgkoc3VtKCh4PT0xIHwgeD09MCkgJiBBPT0xLCBuYS5ybT1UKSkNCn0NCg0KDQpmc2NvbG5ldCA8LSBmdW5jdGlvbihuZXR3b3JrLCBjY292YXIpIHsNCiNDYWxjdWxhdGUgY29sZW1hbiBvbiBuZXR3b3JrIGxldmVsOiBodHRwczovL3JlYWRlci5lbHNldmllci5jb20vcmVhZGVyL3NkL3BpaS9TMDM3ODg3MzMxNDAwMDIzOT90b2tlbj1BNDJGOTlGRjZFMkI3NTA0MzZERDJDQjBEQjdCMUY0MUJERUMxNjA1MkE0NTY4M0MwMjY0NERBRjg4MjE1QTMzNzk2MzZCMkFBMTk3QjY1OTQxRDYzNzNFOUUyRUU0MTMNCg0KCWZob21vbWF0IDwtIGZ1bmN0aW9uKHgpIHsNCgl4bWF0IDwtIG1hdHJpeCh4LCBucm93PWxlbmd0aCh4KSwgbmNvbD1sZW5ndGgoeCkpDQoJeG1hdHQgPC0gdCh4bWF0KQ0KCXhob21vIDwtIHhtYXQ9PXhtYXR0DQoJcmV0dXJuKHhob21vKQ0KCX0NCg0KCWZzdW1pbnRyYSA8LSBmdW5jdGlvbih4LCBBKSB7IA0KCSNBIGlzIG1hdHJpeCBpbmRpY2F0aW5nIHdoZXRoZXIgbm9kZXMgY29uc3RpdHV0aW5nIGR5YWQgaGF2ZSBzYW1lIGNoYXJhY3RlcmlzdGljcw0KCWRpYWcoeCkgPC0gTkENCgl4W3g9PTEwXSA8LSBOQQ0KCWRpYWcoQSkgPC0gTkENCglzdW0oeD09MSAmIEE9PTEsIG5hLnJtPVQpIA0KCX0NCg0KCSNleHBlY2F0aW9uIHcqPXN1bV9nIHN1bV9pIChuaSgobmctMSkvKE4tMSkpKQ0KCW5ldHdvcmtbbmV0d29yaz09MTBdIDwtIE5BDQoJbmkgPC0gcm93U3VtcyhuZXR3b3JrLCBuYS5ybT1UKQ0KCW5nIDwtIE5BDQoJZm9yIChpIGluIDE6bGVuZ3RoKGNjb3ZhcikpIHtuZ1tpXSA8LSB0YWJsZShjY292YXIpW3Jvd25hbWVzKHRhYmxlKGNjb3ZhcikpPT1jY292YXJbaV1dfQ0KCU4gPC0gbGVuZ3RoKGNjb3ZhcikNCgl3ZXhwIDwtIHN1bShuaSooKG5nLTEpLyhOLTEpKSwgbmEucm09VCkNCg0KCSN3Z2cxIGhvdyBtYW55IGludHJhZ3JvdXAgdGllcw0KCXcgPC0gZnN1bWludHJhKG5ldHdvcmssIGZob21vbWF0KGNjb3ZhcikpIA0KCQ0KCVNjb2xfbmV0IDwtIGlmZWxzZSh3Pj13ZXhwLCAody13ZXhwKSAvIChzdW0obmksIG5hLnJtPVQpIC0gd2V4cCksICh3IC0gd2V4cCkvd2V4cCkNCglyZXR1cm4oU2NvbF9uZXQpDQoNCn0NCg0KDQpgYGANCg0KLS0tICANCg0KIyMgTG9hZCBkYXRhIG9iamVjdHMgey50YWJzZXQgLnRhYnNldC1mYWRlfSAgDQoNClNlZSAuLi4gZm9yIGNvbnN0cnVjdGlvbiBvZiBkYXRhIG9iamVjdHMuICANCg0KRGF0YSBvYmplY3RzOiAgDQoNCi0ga2V5OiBpbmZvcm1hdGlvbiBvbiBhbGwgcG9saXRpY2lhbnMgb24gZWxlY3Rpb24gbGlzdCAgDQotIGtleWY6IGluZm9ybWF0aW9uIG9uIGFsbCAxNDcgTVBzIHdpdGggdHdpdHRlciBoYW5kbGUgIA0KLSBteWRhdGE6IFJTaWVuYSBvYmplY3Qgd2l0aCBhbGwga2luZCBvZiBnb29kaWVzIGluc2lkZSAgDQotIHNlYXRzOiBzZWF0aW5nIGNvb3JkaW5hdGVzIG9mIEhvUCAodXNlZCBmb3IgcGxvdHRpbmcpDQoNCmBgYHtyIGRhdGEsIGVjaG89VFJVRX0NCiNTVEFQIDE6IHJlYWQgaW4gZGF0YQ0Ka2V5IDwtIHJlYWQuc3BzcygnZGF0YS1wcm9jZXNzZWRcXGtleSBtb2VkZXJiZXN0YW5kIDIwMTcxMTE0LnNhdicsIHVzZS52YWx1ZS5sYWJlbHM9VCwgdG8uZGF0YS5mcmFtZT1UKQ0KDQoNCmxvYWQoImRhdGEtcHJvY2Vzc2VkXFx0d2l0dGVyXzIwMTkwOTE5LlJEYXRhIikNCiNzdHIodHdpdHRlcl8yMDE5MDkxOSwxKQ0Ka2V5ZiA8LSB0d2l0dGVyXzIwMTkwOTE5W1sxXV0NCm15ZGF0YSA8LSB0d2l0dGVyXzIwMTkwOTE5W1syXV0NCnNlYXRzIDwtIHR3aXR0ZXJfMjAxOTA5MTlbWzNdXQ0KYGBgDQoNCi0tLSAgDQoNCiMjIFN1bW1hcnkgb2YgZGF0YXNldCB1c2VkLiANCg0KDQpgYGB7ciBkYXRhc2V0LCBlY2hvPVRSVUV9DQojc2VsZWN0IGFsbCBNUHMgKHdlIG5lZWQgdG8gZmlsdGVyIHRoZSBjb3JyZWN0IEVHT2hhbmRsZSkNCmRhdGFfbXAgPC0ga2V5ICU+JSANCiAgZmlsdGVyKEVsZWN0ZWQyMDE3MDMxNT09InllcywgdmVya296ZW4iICYgIShFR09oYW5kbGUgJWluJSBjKDEwNDAxLCAxMDQwMywgMTMxMDIsIDE1MTAyLCAxMDYxMDEsIDQxNDAwKSkpICU+JQ0KICBzZWxlY3QoIk5hYW0iLCAiUGFydGlqIiwgIkdlc2xhY2h0IiwgIkdlYkphYXIiLCAiRXRoTWluWiIsICJQbGVrTGlqc3QiLCAiS2FtZXJsaWQyMDE2MTEyMyIsIlpldGVsU2VnbWVudDIwMTcwMzE1IiwgIlpldGVsUmlqMjAxNzAzMTUiLCAiWmV0ZWxLb2xvbTIwMTcwMzE1IikNCg0KIyBub3QgbmVjZXNzYXJ5OiAiVHdpdHRlcmhhbmRsZSIgIkVsZWN0ZWQyMDE3MDMxNSINCg0Kc2VhdHMkWmV0ZWxTZWdtZW50MjAxNzAzMTUgPC0gc2VhdHMkc2VnbWVudHMNCnNlYXRzJFpldGVsUmlqMjAxNzAzMTUgPC0gc2VhdHMkcm93cw0Kc2VhdHMkWmV0ZWxLb2xvbTIwMTcwMzE1IDwtIHNlYXRzJGNvbHVtbnMNCg0KZGF0YV9tcCA8LSBpbm5lcl9qb2luKGRhdGFfbXAsIHNlYXRzKSAlPiUNCiAgc2VsZWN0KCJOYWFtIiwgIlBhcnRpaiIsICJHZXNsYWNodCIsICJHZWJKYWFyIiwgIkV0aE1pbloiLCAiUGxla0xpanN0IiwgIkthbWVybGlkMjAxNjExMjMiLCJaZXRlbFNlZ21lbnQyMDE3MDMxNSIsICJaZXRlbFJpajIwMTcwMzE1IiwgIlpldGVsS29sb20yMDE3MDMxNSIsICJYIiwgIlkiKQ0KDQoNCmNvbG5hbWVzKGRhdGFfbXApIDwtIGMoIk5hbWUiLCAiUGFydHkiLCAiU2V4IiwgIkJpcnRoIFllYXIiLCAiVmlzaWJsZSBNaW5vcml0eSIsICJMaXN0IFBvc2l0aW9uIiwgIkluY3VtYmVuY3kgc3RhdHVzIiwiU2VhdGluZyBTZWdtZW50IiwgIlNlYXRpbmcgUm93IiwgIlNlYXRpbmcgQ29sdW1uIiwgIlgtY29vcmQuIiwgIlktY29vcmQiKQ0KDQpkYXRhX21wJFNleCA8LSBhcy5jaGFyYWN0ZXIoZGF0YV9tcCRTZXgpDQpkYXRhX21wJFNleFtkYXRhX21wJFNleD09InZyb3V3Il0gPC0gImZlbWFsZSINCmRhdGFfbXAkU2V4W2RhdGFfbXAkU2V4PT0ibWFuIl0gPC0gIm1hbGUiDQoNCg0Kc3VtZGF0IDwtIGtibChkYXRhX21wLCBib29rdGFicz1UUlVFLCBkaWdpdHM9MiwgY2FwdGlvbj0iRGF0YXNldCBzdW1tYXJ5IiwgYWxpZ24gPSAiYyIpICU+JQ0KICBrYWJsZV9jbGFzc2ljKGZ1bGxfd2lkdGggPSBGLCBodG1sX2ZvbnQgPSAiQ2FtYnJpYSIpICU+JQ0KICBrYWJsZV9zdHlsaW5nKGJvb3RzdHJhcF9vcHRpb25zID0gYygic3RyaXBlZCIsICJob3ZlciIsICJjb25kZW5zZWQiLCAicmVzcG9uc2l2ZSIpKSANCg0Kc2Nyb2xsX2JveChzdW1kYXQsIHdpZHRoPSIxMDAlIiwgaGVpZ2h0PSI1MDBweCIpDQoNCg0KDQoNCmBgYA0KDQotLS0gIA0KDQoNCg0KIyMgVGFibGUgMSBpbiBtYW51c2NyaXB0ICANCg0KDQpgYGB7ciB0YWJsZTEsIGVjaG89VFJVRX0NCg0KI3NlbGVjdCBhbGwgTVBzICh3ZSBuZWVkIHRvIGZpbHRlciB0aGUgY29ycmVjdCBFR09oYW5kbGUpDQpkYXRhX21wIDwtIGtleSAlPiUgDQogIGZpbHRlcihFbGVjdGVkMjAxNzAzMTU9PSJ5ZXMsIHZlcmtvemVuIiAmICEoRUdPaGFuZGxlICVpbiUgYygxMDQwMSwgMTA0MDMsIDEzMTAyLCAxNTEwMiwgMTA2MTAxLCA0MTQwMCkpKQ0KDQpkZyA8LSBkYXRhX21wICU+JSANCiAgZ3JvdXBfYnkoR2VzbGFjaHQpICU+JQ0KICBzdW1tYXJpemUoY291bnQ9IG4oKSwgZnJlcT1jb3VudC8xNTApDQoNCmRlIDwtIGRhdGFfbXAgJT4lIA0KICBncm91cF9ieShFdGhNaW5aKSAlPiUNCiAgc3VtbWFyaXplKGNvdW50PSBuKCksIGZyZXE9Y291bnQvMTUwKQ0KDQpkYSA8LSBkYXRhX21wICU+JSANCiAgbXV0YXRlICh2YXJpYWJsZT0iQUdFIikgJT4lDQogIHN1bW1hcml6ZShhZ2U9Zmlyc3QodmFyaWFibGUpLCBtZWFuPSBtZWFuKDIwMTctR2ViSmFhciwgbmEucm09VCksIHNkPXNkKDIwMTctR2ViSmFhciwgbmEucm09VCkpIA0KDQpkcCA8LSBkYXRhX21wICU+JSANCiAgZ3JvdXBfYnkoUGFydGlqKSAlPiUNCiAgc3VtbWFyaXplKGNvdW50PSBuKCksIGZyZXE9Y291bnQvMTUwKSAlPiUNCiAgYXJyYW5nZShkZXNjKGNvdW50KSkNCg0KIyBieSBwYXJ0eQ0KZGdwIDwtIGRhdGFfbXAgJT4lIA0KICBncm91cF9ieShQYXJ0aWopICU+JQ0KICBhZGRfdGFsbHkoKSAlPiUgDQogIGdyb3VwX2J5KFBhcnRpaiwgR2VzbGFjaHQpICU+JQ0KICBzdW1tYXJpemUoY291bnQ9bigpLCBmcmVxPWNvdW50L2ZpcnN0KG4pLCBmaXJzdD1maXJzdChuKSkgJT4lDQogIGFycmFuZ2UoZGVzYyhmaXJzdCkpICU+JQ0KICBzZWxlY3QoIlBhcnRpaiIsICJHZXNsYWNodCIsICJjb3VudCIsICJmcmVxIikNCg0KZGVwIDwtIGRhdGFfbXAgJT4lIA0KICBncm91cF9ieShQYXJ0aWopICU+JQ0KICBhZGRfdGFsbHkoKSAlPiUgDQogIGdyb3VwX2J5KFBhcnRpaiwgRXRoTWluWikgJT4lDQogIHN1bW1hcml6ZShjb3VudD1uKCksIGZyZXE9Y291bnQvZmlyc3QobiksIGZpcnN0PWZpcnN0KG4pKSAlPiUNCiAgYXJyYW5nZShkZXNjKGZpcnN0KSkgJT4lDQogIHNlbGVjdCgiUGFydGlqIiwgIkV0aE1pbloiLCAiY291bnQiLCAiZnJlcSIpDQoNCmRhcCA8LSBkYXRhX21wICU+JQ0KICBtdXRhdGUgKHZhcmlhYmxlPSJBR0UiKSAlPiUNCiAgZ3JvdXBfYnkoUGFydGlqKSAlPiUNCiAgYWRkX3RhbGx5KCkgJT4lIA0KICBzdW1tYXJpemUoYWdlPWZpcnN0KHZhcmlhYmxlKSwgbWVhbj0gbWVhbigyMDE3LUdlYkphYXIsIG5hLnJtPVQpLCBzZD1zZCgyMDE3LUdlYkphYXIsIG5hLnJtPVQpLCBmaXJzdD1maXJzdChuKSkgJT4lIA0KICBhcnJhbmdlKGRlc2MoZmlyc3QpKSAlPiUNCiAgc2VsZWN0KCJQYXJ0aWoiLCAiYWdlIiwgIm1lYW4iLCAic2QiKSANCg0KZGcgPC0gZGcgJT4lIGFkZF9jb2x1bW4oZ3JvdXBpbmcgPSAiTk8iLCAuYmVmb3JlPSJHZXNsYWNodCIpDQpkYSA8LSBkYSAlPiUgYWRkX2NvbHVtbihncm91cGluZyA9ICJOTyIsIC5iZWZvcmU9ImFnZSIpDQpkZSA8LSBkZSAlPiUgYWRkX2NvbHVtbihncm91cGluZyA9ICJOTyIsIC5iZWZvcmU9IkV0aE1pbloiKQ0KZHAgPC0gZHAgJT4lIGFkZF9jb2x1bW4oZ3JvdXBpbmcgPSAiTk8iLCAuYmVmb3JlPSJQYXJ0aWoiKQ0KDQoNCiMgZGdwDQojIGRhcA0KIyBkZXANCg0KIyB3cml0ZV9jc3YoZGcsICJ0YWJsZS5jc3YiKQ0KIyB3cml0ZV9jc3YoZGEsICJ0YWJsZS5jc3YiLCBhcHBlbmQgPSBUUlVFKQ0KIyB3cml0ZV9jc3YoZGUsICJ0YWJsZS5jc3YiLCBhcHBlbmQgPSBUUlVFKQ0KIyB3cml0ZV9jc3YoZHAsICJ0YWJsZS5jc3YiLCBhcHBlbmQgPSBUUlVFKQ0KIyANCiMgd3JpdGVfY3N2KGRncCwgInRhYmxlLmNzdiIsIGFwcGVuZCA9IFRSVUUpDQojIHdyaXRlX2NzdihkYXAsICJ0YWJsZS5jc3YiLCBhcHBlbmQgPSBUUlVFKQ0KIyB3cml0ZV9jc3YoZGVwLCAidGFibGUuY3N2IiwgYXBwZW5kID0gVFJVRSkNCg0KdGVzdCA8LSByZWFkX2NzdigndGFibGUuY3N2JykNCg0KY29sbmFtZXModGVzdCkgPC0gYygiZ3JvdXBpbmciLCAic29jaWFsIGRpbWVuc2lvbiIsICJOIC8gbWVhbiIsICJwcm9wLiAvIFNEIikNCnRlc3QkZ3JvdXBpbmdbdGVzdCRncm91cGluZz09Ik5PIl0gPC0gIkhvUCINCnRlc3RbdGVzdD09Im1hbiJdIDwtICJtYWxlIg0KdGVzdFt0ZXN0PT0idnJvdXciXSA8LSAiZmVtYWxlIg0KdGVzdFt0ZXN0PT0iMCJdIDwtICJubyB2aXNpYmxlIG1pbm9yaXR5Ig0KdGVzdFssMl1bdGVzdFssMl09PSIxIl0gPC0gInZpc2libGUgbWlub3JpdHkiDQoNCg0KdGFibGUxIDwtIGtibCh0ZXN0LCBib29rdGFicz1UUlVFLCBkaWdpdHM9MiwgY2FwdGlvbj0iVGFibGUgMSIsIGFsaWduID0gImMiKSAlPiUNCiAga2FibGVfY2xhc3NpYyhmdWxsX3dpZHRoID0gRiwgaHRtbF9mb250ID0gIkNhbWJyaWEiKSAlPiUNCiAga2FibGVfc3R5bGluZyhib290c3RyYXBfb3B0aW9ucyA9IGMoInN0cmlwZWQiLCAiaG92ZXIiLCAiY29uZGVuc2VkIiwgInJlc3BvbnNpdmUiKSkgDQoNCnNjcm9sbF9ib3godGFibGUxLCB3aWR0aD0iMTAwJSIsIGhlaWdodD0iNTAwcHgiKQ0KDQogIyAlPiUgIHBhY2tfcm93cyhpbmRleD1jKCJzZXgiPTIsICJhZ2UiPTEsICJtaW5vcml0eSBzdGF0dXMiPTIsICJwYXJ0eSI9MTMpKSANCiNzYXZlX2thYmxlKHRhYmxlMSwgInRhYmxlMS5odG1sIikNCiANCiAgDQpgYGANCg0KDQotLS0gIA0KDQoNCg0KIyMgVGFibGUgMiBpbiBtYW51c2NyaXB0IHsudGFic2V0IC50YWJzZXQtZmFkZX0gDQoNCldlIHJldHJpZXZlIHRoZSBkYXRhIGZyb20gdGhlIFJTaWVuYSBkYXRhLW9iamVjdCANCg0KYGBge3IgZGF0YXRhYmxlMiwgZWNobz1UUlVFfQ0KDQpmbmV0IDwtIG15ZGF0YSRkZXB2YXJzJGZuZXQNCmF0bW5ldCA8LSBteWRhdGEkZGVwdmFycyRhdG1uZXQNCnJ0bmV0IDwtIG15ZGF0YSRkZXB2YXJzJHJ0bmV0DQoNCnZyb3V3IDwtIG15ZGF0YSRjQ292YXJzJHZyb3V3DQpwYXJ0aWogPC0gbXlkYXRhJGNDb3ZhcnMkcGFydGlqDQpldGhtaW56IDwtIG15ZGF0YSRjQ292YXJzJGV0aG1pbnoNCmxmdCA8LSBteWRhdGEkY0NvdmFycyRsZnQNCg0KZXRobWlueiA8LSBldGhtaW56ICsgYXR0cmlidXRlcyhldGhtaW56KSRtZWFuDQpwYXJ0aWogPC0gcGFydGlqICsgYXR0cmlidXRlcyhwYXJ0aWopJG1lYW4NCnZyb3V3IDwtIHZyb3V3ICsgYXR0cmlidXRlcyh2cm91dykkbWVhbg0KbGZ0IDwtIGxmdCArIGF0dHJpYnV0ZXMobGZ0KSRtZWFuDQoNCnZyb3V3bSA8LSBmaG9tb21hdCh2cm91dykNCnBhcnRpam0gPC0gZmhvbW9tYXQocGFydGlqKQ0KZXRobWluem0gPC0gZmhvbW9tYXQoZXRobWlueikNCg0KeG1hdCA8LSBtYXRyaXgoZXRobWlueiwgbnJvdz1sZW5ndGgoZXRobWlueiksIG5jb2w9bGVuZ3RoKGV0aG1pbnopKQ0KeG1hdHQgPC0gdCh4bWF0KQ0KbWlub3JpdHltIDwtIHhtYXQ9PTEgJiB4bWF0dD09MQ0KDQojZm9yIGFnZSBtYXggNSB5ZWFyIGRpZmZlcmVuY2UgLyBmb3IgZGVzY3JpcHRpdmVzDQp4bWF0IDwtIG1hdHJpeChsZnQsIG5yb3c9bGVuZ3RoKGxmdCksIG5jb2w9bGVuZ3RoKGxmdCkpDQp4bWF0dCA8LSB0KHhtYXQpDQpsZnRtIDwtIChhYnMoeG1hdCAtIHhtYXR0KSA8IDYpDQoNCiMgZm5keWFkczIoZm5ldFssLDFdLCB2cm91d20pDQojIGZuZHlhZHMyKGZuZXRbLCwzXSwgdnJvdXdtKQ0KIyBmbmR5YWRzMihmbmV0WywsMV0sIHBhcnRpam0pDQojIGZuZHlhZHMyKGZuZXRbLCwzXSwgcGFydGlqbSkNCiMgZm5keWFkczIoZm5ldFssLDFdLCBldGhtaW56bSkNCiMgZm5keWFkczIoZm5ldFssLDNdLCBldGhtaW56bSkNCg0KYGBgIA0KDQo8YnI+IA0KDQojIyMgRGVuc2l0eSAgDQoNCmBgYHtyIFRhYmxlMmEsIGVjaG89VFJVRX0NCg0KZGVzbWF0IDwtIG1hdHJpeChOQSwgbnJvdz0xMCwgbmNvbD05KQ0KZGVzbWF0WzEsMV0gPC0gZmRlbnNpdHkoZm5ldFssLDFdKQ0KZGVzbWF0WzEsMl0gPC0gZmRlbnNpdHkoZm5ldFssLDJdKQ0KZGVzbWF0WzEsM10gPC0gZmRlbnNpdHkoZm5ldFssLDNdKQ0KZGVzbWF0WzIsMV0gPC0gZmRlbnNpdHlpbnRyYShmbmV0WywsMV0sIHZyb3V3bSkNCmRlc21hdFsyLDJdIDwtIGZkZW5zaXR5aW50cmEoZm5ldFssLDJdLCB2cm91d20pDQpkZXNtYXRbMiwzXSA8LSBmZGVuc2l0eWludHJhKGZuZXRbLCwzXSwgdnJvdXdtKQ0KZGVzbWF0WzMsMV0gPC0gZmRlbnNpdHlpbnRlcihmbmV0WywsMV0sIHZyb3V3bSkNCmRlc21hdFszLDJdIDwtIGZkZW5zaXR5aW50ZXIoZm5ldFssLDJdLCB2cm91d20pDQpkZXNtYXRbMywzXSA8LSBmZGVuc2l0eWludGVyKGZuZXRbLCwzXSwgdnJvdXdtKQ0KZGVzbWF0WzQsMV0gPC0gZmRlbnNpdHlpbnRyYShmbmV0WywsMV0sIHBhcnRpam0pDQpkZXNtYXRbNCwyXSA8LSBmZGVuc2l0eWludHJhKGZuZXRbLCwyXSwgcGFydGlqbSkNCmRlc21hdFs0LDNdIDwtIGZkZW5zaXR5aW50cmEoZm5ldFssLDNdLCBwYXJ0aWptKQ0KZGVzbWF0WzUsMV0gPC0gZmRlbnNpdHlpbnRlcihmbmV0WywsMV0sIHBhcnRpam0pDQpkZXNtYXRbNSwyXSA8LSBmZGVuc2l0eWludGVyKGZuZXRbLCwyXSwgcGFydGlqbSkNCmRlc21hdFs1LDNdIDwtIGZkZW5zaXR5aW50ZXIoZm5ldFssLDNdLCBwYXJ0aWptKQ0KZGVzbWF0WzYsMV0gPC0gZmRlbnNpdHlpbnRyYShmbmV0WywsMV0sIGV0aG1pbnptKQ0KZGVzbWF0WzYsMl0gPC0gZmRlbnNpdHlpbnRyYShmbmV0WywsMl0sIGV0aG1pbnptKQ0KZGVzbWF0WzYsM10gPC0gZmRlbnNpdHlpbnRyYShmbmV0WywsM10sIGV0aG1pbnptKQ0KZGVzbWF0WzcsMV0gPC0gZmRlbnNpdHlpbnRlcihmbmV0WywsMV0sIGV0aG1pbnptKQ0KZGVzbWF0WzcsMl0gPC0gZmRlbnNpdHlpbnRlcihmbmV0WywsMl0sIGV0aG1pbnptKQ0KZGVzbWF0WzcsM10gPC0gZmRlbnNpdHlpbnRlcihmbmV0WywsM10sIGV0aG1pbnptKQ0KZGVzbWF0WzgsMV0gPC0gZmRlbnNpdHlpbnRlcihmbmV0WywsMV0sIG1pbm9yaXR5bSkNCmRlc21hdFs4LDJdIDwtIGZkZW5zaXR5aW50ZXIoZm5ldFssLDJdLCBtaW5vcml0eW0pDQpkZXNtYXRbOCwzXSA8LSBmZGVuc2l0eWludGVyKGZuZXRbLCwzXSwgbWlub3JpdHltKQ0KZGVzbWF0WzksMV0gPC0gZmRlbnNpdHlpbnRyYShmbmV0WywsMV0sIGxmdG0pDQpkZXNtYXRbOSwyXSA8LSBmZGVuc2l0eWludHJhKGZuZXRbLCwyXSwgbGZ0bSkNCmRlc21hdFs5LDNdIDwtIGZkZW5zaXR5aW50cmEoZm5ldFssLDNdLCBsZnRtKQ0KZGVzbWF0WzEwLDFdIDwtIGZkZW5zaXR5aW50ZXIoZm5ldFssLDFdLCBsZnRtKQ0KZGVzbWF0WzEwLDJdIDwtIGZkZW5zaXR5aW50ZXIoZm5ldFssLDJdLCBsZnRtKQ0KZGVzbWF0WzEwLDNdIDwtIGZkZW5zaXR5aW50ZXIoZm5ldFssLDNdLCBsZnRtKQ0KDQpkZXNtYXRbMSwxICszXSA8LSBmZGVuc2l0eShhdG1uZXRbLCwxXSkNCmRlc21hdFsxLDIrM10gPC0gZmRlbnNpdHkoYXRtbmV0WywsMl0pDQpkZXNtYXRbMSwzKzNdIDwtIGZkZW5zaXR5KGF0bW5ldFssLDNdKQ0KZGVzbWF0WzIsMSszXSA8LSBmZGVuc2l0eWludHJhKGF0bW5ldFssLDFdLCB2cm91d20pDQpkZXNtYXRbMiwyKzNdIDwtIGZkZW5zaXR5aW50cmEoYXRtbmV0WywsMl0sIHZyb3V3bSkNCmRlc21hdFsyLDMrM10gPC0gZmRlbnNpdHlpbnRyYShhdG1uZXRbLCwzXSwgdnJvdXdtKQ0KZGVzbWF0WzMsMSszXSA8LSBmZGVuc2l0eWludGVyKGF0bW5ldFssLDFdLCB2cm91d20pDQpkZXNtYXRbMywyKzNdIDwtIGZkZW5zaXR5aW50ZXIoYXRtbmV0WywsMl0sIHZyb3V3bSkNCmRlc21hdFszLDMrM10gPC0gZmRlbnNpdHlpbnRlcihhdG1uZXRbLCwzXSwgdnJvdXdtKQ0KZGVzbWF0WzQsMSszXSA8LSBmZGVuc2l0eWludHJhKGF0bW5ldFssLDFdLCBwYXJ0aWptKQ0KZGVzbWF0WzQsMiszXSA8LSBmZGVuc2l0eWludHJhKGF0bW5ldFssLDJdLCBwYXJ0aWptKQ0KZGVzbWF0WzQsMyszXSA8LSBmZGVuc2l0eWludHJhKGF0bW5ldFssLDNdLCBwYXJ0aWptKQ0KZGVzbWF0WzUsMSszXSA8LSBmZGVuc2l0eWludGVyKGF0bW5ldFssLDFdLCBwYXJ0aWptKQ0KZGVzbWF0WzUsMiszXSA8LSBmZGVuc2l0eWludGVyKGF0bW5ldFssLDJdLCBwYXJ0aWptKQ0KZGVzbWF0WzUsMyszXSA8LSBmZGVuc2l0eWludGVyKGF0bW5ldFssLDNdLCBwYXJ0aWptKQ0KZGVzbWF0WzYsMSszXSA8LSBmZGVuc2l0eWludHJhKGF0bW5ldFssLDFdLCBldGhtaW56bSkNCmRlc21hdFs2LDIrM10gPC0gZmRlbnNpdHlpbnRyYShhdG1uZXRbLCwyXSwgZXRobWluem0pDQpkZXNtYXRbNiwzKzNdIDwtIGZkZW5zaXR5aW50cmEoYXRtbmV0WywsM10sIGV0aG1pbnptKQ0KZGVzbWF0WzcsMSszXSA8LSBmZGVuc2l0eWludGVyKGF0bW5ldFssLDFdLCBldGhtaW56bSkNCmRlc21hdFs3LDIrM10gPC0gZmRlbnNpdHlpbnRlcihhdG1uZXRbLCwyXSwgZXRobWluem0pDQpkZXNtYXRbNywzKzNdIDwtIGZkZW5zaXR5aW50ZXIoYXRtbmV0WywsM10sIGV0aG1pbnptKQ0KZGVzbWF0WzgsMSszXSA8LSBmZGVuc2l0eWludGVyKGF0bW5ldFssLDFdLCBtaW5vcml0eW0pDQpkZXNtYXRbOCwyKzNdIDwtIGZkZW5zaXR5aW50ZXIoYXRtbmV0WywsMl0sIG1pbm9yaXR5bSkNCmRlc21hdFs4LDMrM10gPC0gZmRlbnNpdHlpbnRlcihhdG1uZXRbLCwzXSwgbWlub3JpdHltKQ0KZGVzbWF0WzksMSszXSA8LSBmZGVuc2l0eWludHJhKGF0bW5ldFssLDFdLCBsZnRtKQ0KZGVzbWF0WzksMiszXSA8LSBmZGVuc2l0eWludHJhKGF0bW5ldFssLDJdLCBsZnRtKQ0KZGVzbWF0WzksMyszXSA8LSBmZGVuc2l0eWludHJhKGF0bW5ldFssLDNdLCBsZnRtKQ0KZGVzbWF0WzEwLDErM10gPC0gZmRlbnNpdHlpbnRlcihhdG1uZXRbLCwxXSwgbGZ0bSkNCmRlc21hdFsxMCwyKzNdIDwtIGZkZW5zaXR5aW50ZXIoYXRtbmV0WywsMl0sIGxmdG0pDQpkZXNtYXRbMTAsMyszXSA8LSBmZGVuc2l0eWludGVyKGF0bW5ldFssLDNdLCBsZnRtKQ0KDQpkZXNtYXRbMSwxICs2XSA8LSBmZGVuc2l0eShydG5ldFssLDFdKQ0KZGVzbWF0WzEsMis2XSA8LSBmZGVuc2l0eShydG5ldFssLDJdKQ0KZGVzbWF0WzEsMys2XSA8LSBmZGVuc2l0eShydG5ldFssLDNdKQ0KZGVzbWF0WzIsMSs2XSA8LSBmZGVuc2l0eWludHJhKHJ0bmV0WywsMV0sIHZyb3V3bSkNCmRlc21hdFsyLDIrNl0gPC0gZmRlbnNpdHlpbnRyYShydG5ldFssLDJdLCB2cm91d20pDQpkZXNtYXRbMiwzKzZdIDwtIGZkZW5zaXR5aW50cmEocnRuZXRbLCwzXSwgdnJvdXdtKQ0KZGVzbWF0WzMsMSs2XSA8LSBmZGVuc2l0eWludGVyKHJ0bmV0WywsMV0sIHZyb3V3bSkNCmRlc21hdFszLDIrNl0gPC0gZmRlbnNpdHlpbnRlcihydG5ldFssLDJdLCB2cm91d20pDQpkZXNtYXRbMywzKzZdIDwtIGZkZW5zaXR5aW50ZXIocnRuZXRbLCwzXSwgdnJvdXdtKQ0KZGVzbWF0WzQsMSs2XSA8LSBmZGVuc2l0eWludHJhKHJ0bmV0WywsMV0sIHBhcnRpam0pDQpkZXNtYXRbNCwyKzZdIDwtIGZkZW5zaXR5aW50cmEocnRuZXRbLCwyXSwgcGFydGlqbSkNCmRlc21hdFs0LDMrNl0gPC0gZmRlbnNpdHlpbnRyYShydG5ldFssLDNdLCBwYXJ0aWptKQ0KZGVzbWF0WzUsMSs2XSA8LSBmZGVuc2l0eWludGVyKHJ0bmV0WywsMV0sIHBhcnRpam0pDQpkZXNtYXRbNSwyKzZdIDwtIGZkZW5zaXR5aW50ZXIocnRuZXRbLCwyXSwgcGFydGlqbSkNCmRlc21hdFs1LDMrNl0gPC0gZmRlbnNpdHlpbnRlcihydG5ldFssLDNdLCBwYXJ0aWptKQ0KZGVzbWF0WzYsMSs2XSA8LSBmZGVuc2l0eWludHJhKHJ0bmV0WywsMV0sIGV0aG1pbnptKQ0KZGVzbWF0WzYsMis2XSA8LSBmZGVuc2l0eWludHJhKHJ0bmV0WywsMl0sIGV0aG1pbnptKQ0KZGVzbWF0WzYsMys2XSA8LSBmZGVuc2l0eWludHJhKHJ0bmV0WywsM10sIGV0aG1pbnptKQ0KZGVzbWF0WzcsMSs2XSA8LSBmZGVuc2l0eWludGVyKHJ0bmV0WywsMV0sIGV0aG1pbnptKQ0KZGVzbWF0WzcsMis2XSA8LSBmZGVuc2l0eWludGVyKHJ0bmV0WywsMl0sIGV0aG1pbnptKQ0KZGVzbWF0WzcsMys2XSA8LSBmZGVuc2l0eWludGVyKHJ0bmV0WywsM10sIGV0aG1pbnptKQ0KZGVzbWF0WzgsMSs2XSA8LSBmZGVuc2l0eWludGVyKHJ0bmV0WywsMV0sIG1pbm9yaXR5bSkNCmRlc21hdFs4LDIrNl0gPC0gZmRlbnNpdHlpbnRlcihydG5ldFssLDJdLCBtaW5vcml0eW0pDQpkZXNtYXRbOCwzKzZdIDwtIGZkZW5zaXR5aW50ZXIocnRuZXRbLCwzXSwgbWlub3JpdHltKQ0KZGVzbWF0WzksMSs2XSA8LSBmZGVuc2l0eWludHJhKHJ0bmV0WywsMV0sIGxmdG0pDQpkZXNtYXRbOSwyKzZdIDwtIGZkZW5zaXR5aW50cmEocnRuZXRbLCwyXSwgbGZ0bSkNCmRlc21hdFs5LDMrNl0gPC0gZmRlbnNpdHlpbnRyYShydG5ldFssLDNdLCBsZnRtKQ0KZGVzbWF0WzEwLDErNl0gPC0gZmRlbnNpdHlpbnRlcihydG5ldFssLDFdLCBsZnRtKQ0KZGVzbWF0WzEwLDIrNl0gPC0gZmRlbnNpdHlpbnRlcihydG5ldFssLDJdLCBsZnRtKQ0KZGVzbWF0WzEwLDMrNl0gPC0gZmRlbnNpdHlpbnRlcihydG5ldFssLDNdLCBsZnRtKQ0KDQpjb2xuYW1lcyhkZXNtYXQpIDwtIGMoImZyaWVuZHMgdzEiLCAiZnJpZW5kcyB3MiIsICJmcmllbmRzIHczIiwiYXRtZW50aW9ucyB3MSIsImF0bWVudGlvbnMgdzIiLCJhdG1lbnRpb25zIHczIiwicmV0d2VldHMgdzEiLCJyZXR3ZWV0cyB3MiIsInJldHdlZXRzIHczIikgDQpyb3duYW1lcyhkZXNtYXQpIDwtIGMoInRvdGFsIiwgInNhbWUgc2V4IiwgImRpZmZlcmVudCBzZXgiLCAic2FtZSBwYXJ0eSIsICJkaWZmZXJlbnQgcGFydHkiLCAic2FtZSBldGhuaWNpdHkiLCAiZGlmZmVyZW50IGV0aG5pY2l0eSIsICJib3RoIG1pbm9yaXR5IiwgInNhbWUgYWdlICg8NikiLCAiZGlmZmVyZW50IGFnZSAoPjUpIikNCg0KI2Rlc21hdA0KI3dyaXRlLmNzdjIoZGVzbWF0LCAiMjAxOTA4MjlkZXNtYXQuY3N2IikNCg0KZGVzbWF0a2FibGUgPC0ga2JsKGRlc21hdCwgYm9va3RhYnM9VFJVRSwgZGlnaXRzPTIsIGNhcHRpb249IlRhYmxlIDI6IERlbnNpdHkiLCBhbGlnbiA9ICJjIikgJT4lDQogIGthYmxlX2NsYXNzaWMoZnVsbF93aWR0aCA9IEYsIGh0bWxfZm9udCA9ICJDYW1icmlhIikgJT4lDQogIGthYmxlX3N0eWxpbmcoYm9vdHN0cmFwX29wdGlvbnMgPSBjKCJzdHJpcGVkIiwgImhvdmVyIiwgImNvbmRlbnNlZCIsICJyZXNwb25zaXZlIikpICU+JQ0KICBjb2x1bW5fc3BlYyhjb2x1bW4gPSAxLCB3aWR0aCA9ICIzaW4iKQ0KICANCmRlc21hdGthYmxlDQoNCg0KDQpgYGAgDQoNCi0tLSAgDQoNCg0KIyMjIENvbGVtYW4ncyAgDQoNCg0KYGBge3IgVGFibGUyYiwgZWNobz1UUlVFfQ0KDQpmbmV0W2ZuZXQ9PTEwXSA8LSBOQQ0KcnRuZXRbcnRuZXQ9PTEwXSA8LSBOQQ0KYXRtbmV0W2F0bW5ldD09MTBdIDwtIE5BDQoNCmNvbG1hdCA8LSBtYXRyaXgoTkEsIG5yb3c9MywgbmNvbD05KQ0KDQpjb2xtYXRbMSwxXSA8LSBmc2NvbG5ldChmbmV0WywsMV0sIHBhcnRpaikgDQpjb2xtYXRbMSwyXSA8LSBmc2NvbG5ldChmbmV0WywsMl0sIHBhcnRpaikgDQpjb2xtYXRbMSwzXSA8LSBmc2NvbG5ldChmbmV0WywsM10sIHBhcnRpaikgDQpjb2xtYXRbMSw0XSA8LSBmc2NvbG5ldChhdG1uZXRbLCwxXSwgcGFydGlqKSANCmNvbG1hdFsxLDVdIDwtIGZzY29sbmV0KGF0bW5ldFssLDJdLCBwYXJ0aWopIA0KY29sbWF0WzEsNl0gPC0gZnNjb2xuZXQoYXRtbmV0WywsM10sIHBhcnRpaikgDQpjb2xtYXRbMSw3XSA8LSBmc2NvbG5ldChydG5ldFssLDFdLCBwYXJ0aWopIA0KY29sbWF0WzEsOF0gPC0gZnNjb2xuZXQocnRuZXRbLCwyXSwgcGFydGlqKSANCmNvbG1hdFsxLDldIDwtIGZzY29sbmV0KHJ0bmV0WywsM10sIHBhcnRpaikgDQoNCmNvbG1hdFsyLDFdIDwtIGZzY29sbmV0KGZuZXRbLCwxXSwgdnJvdXcpIA0KY29sbWF0WzIsMl0gPC0gZnNjb2xuZXQoZm5ldFssLDJdLCB2cm91dykgDQpjb2xtYXRbMiwzXSA8LSBmc2NvbG5ldChmbmV0WywsM10sIHZyb3V3KSANCmNvbG1hdFsyLDRdIDwtIGZzY29sbmV0KGF0bW5ldFssLDFdLCB2cm91dykgDQpjb2xtYXRbMiw1XSA8LSBmc2NvbG5ldChhdG1uZXRbLCwyXSwgdnJvdXcpIA0KY29sbWF0WzIsNl0gPC0gZnNjb2xuZXQoYXRtbmV0WywsM10sIHZyb3V3KSANCmNvbG1hdFsyLDddIDwtIGZzY29sbmV0KHJ0bmV0WywsMV0sIHZyb3V3KSANCmNvbG1hdFsyLDhdIDwtIGZzY29sbmV0KHJ0bmV0WywsMl0sIHZyb3V3KSANCmNvbG1hdFsyLDldIDwtIGZzY29sbmV0KHJ0bmV0WywsM10sIHZyb3V3KSANCg0KY29sbWF0WzMsMV0gPC0gZnNjb2xuZXQoZm5ldFssLDFdLCBldGhtaW56KSANCmNvbG1hdFszLDJdIDwtIGZzY29sbmV0KGZuZXRbLCwyXSwgZXRobWlueikgDQpjb2xtYXRbMywzXSA8LSBmc2NvbG5ldChmbmV0WywsM10sIGV0aG1pbnopIA0KY29sbWF0WzMsNF0gPC0gZnNjb2xuZXQoYXRtbmV0WywsMV0sIGV0aG1pbnopIA0KY29sbWF0WzMsNV0gPC0gZnNjb2xuZXQoYXRtbmV0WywsMl0sIGV0aG1pbnopIA0KY29sbWF0WzMsNl0gPC0gZnNjb2xuZXQoYXRtbmV0WywsM10sIGV0aG1pbnopIA0KY29sbWF0WzMsN10gPC0gZnNjb2xuZXQocnRuZXRbLCwxXSwgZXRobWlueikgDQpjb2xtYXRbMyw4XSA8LSBmc2NvbG5ldChydG5ldFssLDJdLCBldGhtaW56KSANCmNvbG1hdFszLDldIDwtIGZzY29sbmV0KHJ0bmV0WywsM10sIGV0aG1pbnopIA0KDQpjb2xuYW1lcyhjb2xtYXQpIDwtIGMoImZyaWVuZHMgdzEiLCAiZnJpZW5kcyB3MiIsICJmcmllbmRzIHczIiwiYXRtZW50aW9ucyB3MSIsImF0bWVudGlvbnMgdzIiLCJhdG1lbnRpb25zIHczIiwicmV0d2VldHMgdzEiLCJyZXR3ZWV0cyB3MiIsInJldHdlZXRzIHczIikgDQpyb3duYW1lcyhjb2xtYXQpIDwtIGMoInBhcnR5IiwgInNleCIsICJldGhuaWNpdHkiKQ0KI2NvbG1hdA0KIA0KI3dyaXRlLmNzdjIoY29sbWF0LCAiMjAxOTA4Mjljb2xtYXQuY3N2IikNCg0KY29sbWF0a2FibGUgPC0ga2JsKGNvbG1hdCwgYm9va3RhYnM9VFJVRSwgZGlnaXRzPTIsIGNhcHRpb249IlRhYmxlIDI6IENvbGVtYW4iLCBhbGlnbiA9ICJjIikgJT4lDQogIGthYmxlX2NsYXNzaWMoZnVsbF93aWR0aCA9IEYsIGh0bWxfZm9udCA9ICJDYW1icmlhIikgJT4lDQogIGthYmxlX3N0eWxpbmcoYm9vdHN0cmFwX29wdGlvbnMgPSBjKCJzdHJpcGVkIiwgImhvdmVyIiwgImNvbmRlbnNlZCIsICJyZXNwb25zaXZlIikpICU+JQ0KICBjb2x1bW5fc3BlYyhjb2x1bW4gPSAxLCB3aWR0aCA9ICIzaW4iKQ0KICANCmNvbG1hdGthYmxlDQoNCmBgYCANCg0KICANCi0tLSAgDQoNCg0KIyMjIEFzc29ydGl2aXR5IGNvZWZmaWNpZW50cw0KDQpgYGB7ciBUYWJsZTJjLCBlY2hvPVRSVUV9IA0KDQpmbmV0W2ZuZXQ9PTEwXSA8LSBOQQ0KcnRuZXRbcnRuZXQ9PTEwXSA8LSBOQQ0KYXRtbmV0W2F0bW5ldD09MTBdIDwtIE5BDQoNCnZyb3V3X2ludCA8LSBhcy5pbnRlZ2VyKHZyb3V3KSArIDENCnBhcnRpal9pbnQgPC0gYXMuaW50ZWdlcihwYXJ0aWopDQpldGhtaW56IDwtIGV0aG1pbnogKyAxDQoNCmFzbWF0IDwtIG1hdHJpeChOQSwgbnJvdz00LCBuY29sPTkpDQoNCmdmbmV0MSA8LSBncmFwaF9mcm9tX2FkamFjZW5jeV9tYXRyaXgoZm5ldFssLDFdLCBtb2RlID0gImRpcmVjdGVkIiwgd2VpZ2h0ZWQgPSBOVUxMLCBkaWFnID0gRkFMU0UsICBhZGQuY29sbmFtZXMgPSBOQSwgYWRkLnJvd25hbWVzID0gTkEpDQpnZm5ldDIgPC0gZ3JhcGhfZnJvbV9hZGphY2VuY3lfbWF0cml4KGZuZXRbLCwyXSwgbW9kZSA9ICJkaXJlY3RlZCIsIHdlaWdodGVkID0gTlVMTCwgZGlhZyA9IEZBTFNFLCAgYWRkLmNvbG5hbWVzID0gTkEsIGFkZC5yb3duYW1lcyA9IE5BKQ0KZ2ZuZXQzIDwtIGdyYXBoX2Zyb21fYWRqYWNlbmN5X21hdHJpeChmbmV0WywsM10sIG1vZGUgPSAiZGlyZWN0ZWQiLCB3ZWlnaHRlZCA9IE5VTEwsIGRpYWcgPSBGQUxTRSwgIGFkZC5jb2xuYW1lcyA9IE5BLCBhZGQucm93bmFtZXMgPSBOQSkNCg0KZ3J0bmV0MSA8LSBncmFwaF9mcm9tX2FkamFjZW5jeV9tYXRyaXgocnRuZXRbLCwxXSwgbW9kZSA9ICJkaXJlY3RlZCIsIHdlaWdodGVkID0gTlVMTCwgZGlhZyA9IEZBTFNFLCAgYWRkLmNvbG5hbWVzID0gTkEsIGFkZC5yb3duYW1lcyA9IE5BKQ0KZ3J0bmV0MiA8LSBncmFwaF9mcm9tX2FkamFjZW5jeV9tYXRyaXgocnRuZXRbLCwyXSwgbW9kZSA9ICJkaXJlY3RlZCIsIHdlaWdodGVkID0gTlVMTCwgZGlhZyA9IEZBTFNFLCAgYWRkLmNvbG5hbWVzID0gTkEsIGFkZC5yb3duYW1lcyA9IE5BKQ0KZ3J0bmV0MyA8LSBncmFwaF9mcm9tX2FkamFjZW5jeV9tYXRyaXgocnRuZXRbLCwzXSwgbW9kZSA9ICJkaXJlY3RlZCIsIHdlaWdodGVkID0gTlVMTCwgZGlhZyA9IEZBTFNFLCAgYWRkLmNvbG5hbWVzID0gTkEsIGFkZC5yb3duYW1lcyA9IE5BKQ0KDQpnYXRtbmV0MSA8LSBncmFwaF9mcm9tX2FkamFjZW5jeV9tYXRyaXgoYXRtbmV0WywsMV0sIG1vZGUgPSAiZGlyZWN0ZWQiLCB3ZWlnaHRlZCA9IE5VTEwsIGRpYWcgPSBGQUxTRSwgIGFkZC5jb2xuYW1lcyA9IE5BLCBhZGQucm93bmFtZXMgPSBOQSkNCmdhdG1uZXQyIDwtIGdyYXBoX2Zyb21fYWRqYWNlbmN5X21hdHJpeChhdG1uZXRbLCwyXSwgbW9kZSA9ICJkaXJlY3RlZCIsIHdlaWdodGVkID0gTlVMTCwgZGlhZyA9IEZBTFNFLCAgYWRkLmNvbG5hbWVzID0gTkEsIGFkZC5yb3duYW1lcyA9IE5BKQ0KZ2F0bW5ldDMgPC0gZ3JhcGhfZnJvbV9hZGphY2VuY3lfbWF0cml4KGF0bW5ldFssLDNdLCBtb2RlID0gImRpcmVjdGVkIiwgd2VpZ2h0ZWQgPSBOVUxMLCBkaWFnID0gRkFMU0UsICBhZGQuY29sbmFtZXMgPSBOQSwgYWRkLnJvd25hbWVzID0gTkEpDQoNCmFzbWF0WzEsMV0gPC0gYXNzb3J0YXRpdml0eV9ub21pbmFsKGdmbmV0MSwgdHlwZXM9cGFydGlqX2ludCwgZGlyZWN0ZWQgPSBUUlVFKQ0KYXNtYXRbMSwyXSA8LSBhc3NvcnRhdGl2aXR5X25vbWluYWwoZ2ZuZXQyLCB0eXBlcz1wYXJ0aWpfaW50LCBkaXJlY3RlZCA9IFRSVUUpDQphc21hdFsxLDNdIDwtIGFzc29ydGF0aXZpdHlfbm9taW5hbChnZm5ldDMsIHR5cGVzPXBhcnRpal9pbnQsIGRpcmVjdGVkID0gVFJVRSkNCmFzbWF0WzIsMV0gPC0gYXNzb3J0YXRpdml0eV9ub21pbmFsKGdmbmV0MSwgdHlwZXM9dnJvdXdfaW50LCBkaXJlY3RlZCA9IFRSVUUpDQphc21hdFsyLDJdIDwtIGFzc29ydGF0aXZpdHlfbm9taW5hbChnZm5ldDIsIHR5cGVzPXZyb3V3X2ludCwgZGlyZWN0ZWQgPSBUUlVFKQ0KYXNtYXRbMiwzXSA8LSBhc3NvcnRhdGl2aXR5X25vbWluYWwoZ2ZuZXQzLCB0eXBlcz12cm91d19pbnQsIGRpcmVjdGVkID0gVFJVRSkNCmFzbWF0WzMsMV0gPC0gYXNzb3J0YXRpdml0eV9ub21pbmFsKGdmbmV0MSwgdHlwZXM9ZXRobWlueiwgZGlyZWN0ZWQgPSBUUlVFKQ0KYXNtYXRbMywyXSA8LSBhc3NvcnRhdGl2aXR5X25vbWluYWwoZ2ZuZXQyLCB0eXBlcz1ldGhtaW56LCBkaXJlY3RlZCA9IFRSVUUpDQphc21hdFszLDNdIDwtIGFzc29ydGF0aXZpdHlfbm9taW5hbChnZm5ldDMsIHR5cGVzPWV0aG1pbnosIGRpcmVjdGVkID0gVFJVRSkNCmFzbWF0WzQsMV0gPC0gYXNzb3J0YXRpdml0eShnZm5ldDEsIHR5cGVzMT1sZnQsIGRpcmVjdGVkID0gVFJVRSkNCmFzbWF0WzQsMl0gPC0gYXNzb3J0YXRpdml0eShnZm5ldDIsIHR5cGVzMT1sZnQsIGRpcmVjdGVkID0gVFJVRSkNCmFzbWF0WzQsM10gPC0gYXNzb3J0YXRpdml0eShnZm5ldDMsIHR5cGVzMT1sZnQsIGRpcmVjdGVkID0gVFJVRSkNCg0KYXNtYXRbMSw0XSA8LSBhc3NvcnRhdGl2aXR5X25vbWluYWwoZ3J0bmV0MSwgdHlwZXM9cGFydGlqX2ludCwgZGlyZWN0ZWQgPSBUUlVFKQ0KYXNtYXRbMSw1XSA8LSBhc3NvcnRhdGl2aXR5X25vbWluYWwoZ3J0bmV0MiwgdHlwZXM9cGFydGlqX2ludCwgZGlyZWN0ZWQgPSBUUlVFKQ0KYXNtYXRbMSw2XSA8LSBhc3NvcnRhdGl2aXR5X25vbWluYWwoZ3J0bmV0MywgdHlwZXM9cGFydGlqX2ludCwgZGlyZWN0ZWQgPSBUUlVFKQ0KYXNtYXRbMiw0XSA8LSBhc3NvcnRhdGl2aXR5X25vbWluYWwoZ3J0bmV0MSwgdHlwZXM9dnJvdXdfaW50LCBkaXJlY3RlZCA9IFRSVUUpDQphc21hdFsyLDVdIDwtIGFzc29ydGF0aXZpdHlfbm9taW5hbChncnRuZXQyLCB0eXBlcz12cm91d19pbnQsIGRpcmVjdGVkID0gVFJVRSkNCmFzbWF0WzIsNl0gPC0gYXNzb3J0YXRpdml0eV9ub21pbmFsKGdydG5ldDMsIHR5cGVzPXZyb3V3X2ludCwgZGlyZWN0ZWQgPSBUUlVFKQ0KYXNtYXRbMyw0XSA8LSBhc3NvcnRhdGl2aXR5X25vbWluYWwoZ3J0bmV0MSwgdHlwZXM9ZXRobWlueiwgZGlyZWN0ZWQgPSBUUlVFKQ0KYXNtYXRbMyw1XSA8LSBhc3NvcnRhdGl2aXR5X25vbWluYWwoZ3J0bmV0MiwgdHlwZXM9ZXRobWlueiwgZGlyZWN0ZWQgPSBUUlVFKQ0KYXNtYXRbMyw2XSA8LSBhc3NvcnRhdGl2aXR5X25vbWluYWwoZ3J0bmV0MywgdHlwZXM9ZXRobWlueiwgZGlyZWN0ZWQgPSBUUlVFKQ0KYXNtYXRbNCw0XSA8LSBhc3NvcnRhdGl2aXR5KGdydG5ldDEsIHR5cGVzMT1sZnQsIGRpcmVjdGVkID0gVFJVRSkNCmFzbWF0WzQsNV0gPC0gYXNzb3J0YXRpdml0eShncnRuZXQyLCB0eXBlczE9bGZ0LCBkaXJlY3RlZCA9IFRSVUUpDQphc21hdFs0LDZdIDwtIGFzc29ydGF0aXZpdHkoZ3J0bmV0MywgdHlwZXMxPWxmdCwgZGlyZWN0ZWQgPSBUUlVFKQ0KDQphc21hdFsxLDddIDwtIGFzc29ydGF0aXZpdHlfbm9taW5hbChnYXRtbmV0MSwgdHlwZXM9cGFydGlqX2ludCwgZGlyZWN0ZWQgPSBUUlVFKQ0KYXNtYXRbMSw4XSA8LSBhc3NvcnRhdGl2aXR5X25vbWluYWwoZ2F0bW5ldDIsIHR5cGVzPXBhcnRpal9pbnQsIGRpcmVjdGVkID0gVFJVRSkNCmFzbWF0WzEsOV0gPC0gYXNzb3J0YXRpdml0eV9ub21pbmFsKGdhdG1uZXQzLCB0eXBlcz1wYXJ0aWpfaW50LCBkaXJlY3RlZCA9IFRSVUUpDQphc21hdFsyLDddIDwtIGFzc29ydGF0aXZpdHlfbm9taW5hbChnYXRtbmV0MSwgdHlwZXM9dnJvdXdfaW50LCBkaXJlY3RlZCA9IFRSVUUpDQphc21hdFsyLDhdIDwtIGFzc29ydGF0aXZpdHlfbm9taW5hbChnYXRtbmV0MiwgdHlwZXM9dnJvdXdfaW50LCBkaXJlY3RlZCA9IFRSVUUpDQphc21hdFsyLDldIDwtIGFzc29ydGF0aXZpdHlfbm9taW5hbChnYXRtbmV0MywgdHlwZXM9dnJvdXdfaW50LCBkaXJlY3RlZCA9IFRSVUUpDQphc21hdFszLDddIDwtIGFzc29ydGF0aXZpdHlfbm9taW5hbChnYXRtbmV0MSwgdHlwZXM9ZXRobWlueiwgZGlyZWN0ZWQgPSBUUlVFKQ0KYXNtYXRbMyw4XSA8LSBhc3NvcnRhdGl2aXR5X25vbWluYWwoZ2F0bW5ldDIsIHR5cGVzPWV0aG1pbnosIGRpcmVjdGVkID0gVFJVRSkNCmFzbWF0WzMsOV0gPC0gYXNzb3J0YXRpdml0eV9ub21pbmFsKGdhdG1uZXQzLCB0eXBlcz1ldGhtaW56LCBkaXJlY3RlZCA9IFRSVUUpDQphc21hdFs0LDddIDwtIGFzc29ydGF0aXZpdHkoZ2F0bW5ldDEsIHR5cGVzMT1sZnQsIGRpcmVjdGVkID0gVFJVRSkNCmFzbWF0WzQsOF0gPC0gYXNzb3J0YXRpdml0eShnYXRtbmV0MiwgdHlwZXMxPWxmdCwgZGlyZWN0ZWQgPSBUUlVFKQ0KYXNtYXRbNCw5XSA8LSBhc3NvcnRhdGl2aXR5KGdhdG1uZXQzLCB0eXBlczE9bGZ0LCBkaXJlY3RlZCA9IFRSVUUpDQoNCmNvbG5hbWVzKGFzbWF0KSA8LSBjKCJmcmllbmRzIHcxIiwgImZyaWVuZHMgdzIiLCAiZnJpZW5kcyB3MyIsImF0bWVudGlvbnMgdzEiLCJhdG1lbnRpb25zIHcyIiwiYXRtZW50aW9ucyB3MyIsInJldHdlZXRzIHcxIiwicmV0d2VldHMgdzIiLCJyZXR3ZWV0cyB3MyIpIA0Kcm93bmFtZXMoYXNtYXQpIDwtIGMoInBhcnR5IiwgInNleCIsICJldGhuaWNpdHkiLCAiYWdlIikNCiNhc21hdA0KI3dyaXRlLmNzdjIoYXNtYXQsICIyMDE5MDgyOGFzbWF0LmNzdiIpDQoNCmFzbWF0a2FibGUgPC0ga2JsKGFzbWF0LCBib29rdGFicz1UUlVFLCBkaWdpdHM9MiwgY2FwdGlvbj0iVGFibGUgMjogQXNzb3J0YXRpdml0eSIsIGFsaWduID0gImMiKSAlPiUNCiAga2FibGVfY2xhc3NpYyhmdWxsX3dpZHRoID0gRiwgaHRtbF9mb250ID0gIkNhbWJyaWEiKSAlPiUNCiAga2FibGVfc3R5bGluZyhib290c3RyYXBfb3B0aW9ucyA9IGMoInN0cmlwZWQiLCAiaG92ZXIiLCAiY29uZGVuc2VkIiwgInJlc3BvbnNpdmUiKSkgJT4lDQogIGNvbHVtbl9zcGVjKGNvbHVtbiA9IDEsIHdpZHRoID0gIjNpbiIpDQogIA0KYXNtYXRrYWJsZQ0KDQoNCmBgYA0KDQoNCi0tLSAgIA0KDQoNCg0K</div>
+<style>
+.center {
+  text-align: center;
+  color: red;
+}
+</style>
+
+<hr>
+<br>
+<p class="center">Copyright &copy; 2021 Jochem Tolsma</p>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeSourceEmbed("index.rmd");
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

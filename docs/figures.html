@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Jochem Tolsma - Radboud University / University of Groningen, the Netherlands" />
+
+
+<title>Replication package-Figures</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<script src="site_libs/navigation-1.1/sourceembed.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/clipboard-1.7.1/clipboard.min.js"></script>
+<link href="site_libs/primer-tooltips-1.4.0/build.css" rel="stylesheet" />
+<link href="site_libs/klippy-0.0.0.9500/css/klippy.min.css" rel="stylesheet" />
+<script src="site_libs/klippy-0.0.0.9500/js/klippy.min.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+#rmd-source-code {
+  display: none;
+}
+</style>
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 60px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h2 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h3 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h4 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h5 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h6 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Replication package</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Tables 1 &amp; 2</a>
+</li>
+<li>
+  <a href="figures.html">Figures</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/JochemTolsma/Twitter">
+    <span class="fab fa-github"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+<div class="btn-group pull-right">
+<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+<li role="separator" class="divider"></li>
+<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Replication package-Figures</h1>
+<h4 class="author"><a href="https://www.jochemtolsma.nl">Jochem Tolsma</a> - Radboud University / University of Groningen, the Netherlands</h4>
+<h4 class="date">Last compiled on augustus, 2021</h4>
+
+</div>
+
+
+<script>
+  addClassKlippyTo("pre.r, pre.markdown");
+  addKlippy('right', 'top', 'auto', '1', 'Copy code', 'Copied!');
+</script>
+<style type="text/css">
+pre.test {
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: auto;
+  margin: 0px;
+}
+
+pre.test2 {
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: auto;
+  margin: 0px;
+  background-color: white;
+  color: rgb(201, 76, 76);
+}
+
+
+h1, .h1, h2, .h2, h3, .h3 {
+  margin-top: 24px;
+}
+
+
+</style>
+<hr />
+<!---als figuurtjes goed zijn, zet dan eval=FALSE--->
+<div id="intro" class="section level1">
+<h1>Intro</h1>
+<p>This <a href="https://jochemtolsma.github.io/Twitter/">website</a> is a replication package for the paper “Twitter” by <span class="citation">Tolsma, Spierings, and Jacobs (n.d.)</span>.</p>
+<p>It contains R code to replicate all Tables/Figures/Results in the manuscript.</p>
+<p>To copy the code click the button in the upper right corner of the code-chunks.</p>
+<p>Use the top menu to navigate to the section of interest.</p>
+<p>The source code of this website can be found on <a href="https://github.com/JochemTolsma/Twitter">Github</a></p>
+<p>Questions can be addressed to <a href="mailto:jochem.tolsma@ru.nl">Jochem Tolsma</a>.</p>
+<hr />
+<div id="packages" class="section level2">
+<h2>Packages</h2>
+<pre class="r test"><code># install if necessary
+if (!require(&quot;dplyr&quot;, character.only = TRUE)) {
+    install.packages(&quot;dplyr&quot;, dependencies = TRUE)
+}
+if (!require(&quot;foreign&quot;, character.only = TRUE)) {
+    install.packages(&quot;foreign&quot;, dependencies = TRUE)
+}
+if (!require(&quot;igraph&quot;, character.only = TRUE)) {
+    install.packages(&quot;igraph&quot;, dependencies = TRUE)
+}
+
+# load packages.
+library(tidyverse)
+library(dplyr)
+library(foreign)
+library(igraph)
+library(knitr)
+library(kableExtra)</code></pre>
+<hr />
+</div>
+<div id="load-data-objects" class="section level2 tabset tabset-fade">
+<h2>Load data objects</h2>
+<p>See … for construction of data objects.</p>
+<p>Data objects:</p>
+<ul>
+<li>key: information on all politicians on election list<br />
+</li>
+<li>keyf: information on all 147 MPs with twitter handle<br />
+</li>
+<li>mydata: RSiena object with all kind of goodies inside<br />
+</li>
+<li>seats: seating coordinates of HoP (used for plotting)</li>
+</ul>
+<pre class="r test"><code># STAP 1: read in data
+key &lt;- read.spss(&quot;data-processed\\key moederbestand 20171114.sav&quot;, use.value.labels = T, to.data.frame = T)
+
+
+load(&quot;data-processed\\twitter_20190919.RData&quot;)
+# str(twitter_20190919,1)
+keyf &lt;- twitter_20190919[[1]]
+mydata &lt;- twitter_20190919[[2]]
+seats &lt;- twitter_20190919[[3]]
+
+fnet &lt;- mydata$depvars$fnet  #following network
+atmnet &lt;- mydata$depvars$atmnet  #atmention network
+rtnet &lt;- mydata$depvars$rtnet  #retweet network
+
+fnet1 &lt;- fnet[, , 1]  #first wave
+atmnet1 &lt;- atmnet[, , 1]  #first wave
+rtnet1 &lt;- rtnet[, , 1]  #first wave
+
+fnet1[fnet1 == 10] &lt;- 0  #replace missings with 0 for plotting
+atmnet1[atmnet1 == 10] &lt;- 0  #replace missings with 0 for plotting
+rtnet1[rtnet1 == 10] &lt;- 0  #replace missings with 0 for plotting
+
+# define undirected networks of reciprocated ties
+fnet1_un &lt;- fnet1 == 1 &amp; t(fnet1) == 1
+atmnet1_un &lt;- atmnet1 == 1 &amp; t(atmnet1) == 1
+rtnet1_un &lt;- rtnet1 == 1 &amp; t(rtnet1) == 1
+
+vrouw &lt;- mydata$cCovars$vrouw
+partij &lt;- mydata$cCovars$partij
+ethminz &lt;- mydata$cCovars$ethminz
+lft &lt;- mydata$cCovars$lft
+
+ethminz &lt;- ethminz + attributes(ethminz)$mean
+partij &lt;- partij + attributes(partij)$mean
+vrouw &lt;- vrouw + attributes(vrouw)$mean
+lft &lt;- lft + attributes(lft)$mean</code></pre>
+<hr />
+</div>
+<div id="build-plots" class="section level2 tabset tabset-fade">
+<h2>Build plots</h2>
+<p>The first step is to make a ‘graph object’.</p>
+<pre class="r test"><code># define directed network
+G1d &lt;- graph_from_adjacency_matrix(fnet1, mode = &quot;directed&quot;, weighted = NULL, diag = TRUE, add.colnames = NA, 
+    add.rownames = NA)
+G2d &lt;- graph_from_adjacency_matrix(atmnet1, mode = &quot;directed&quot;, weighted = NULL, diag = TRUE, add.colnames = NA, 
+    add.rownames = NA)
+G3d &lt;- graph_from_adjacency_matrix(rtnet1, mode = &quot;directed&quot;, weighted = NULL, diag = TRUE, add.colnames = NA, 
+    add.rownames = NA)
+
+# define undirected network
+G1u &lt;- graph_from_adjacency_matrix(fnet1_un, mode = &quot;undirected&quot;, weighted = NULL, diag = TRUE, add.colnames = NA, 
+    add.rownames = NA)
+G2u &lt;- graph_from_adjacency_matrix(atmnet1_un, mode = &quot;undirected&quot;, weighted = NULL, diag = TRUE, add.colnames = NA, 
+    add.rownames = NA)
+G3u &lt;- graph_from_adjacency_matrix(rtnet1_un, mode = &quot;undirected&quot;, weighted = NULL, diag = TRUE, add.colnames = NA, 
+    add.rownames = NA)</code></pre>
+<div id="followers" class="section level3">
+<h3>Followers</h3>
+<p>Reciprocated</p>
+<pre class="r test"><code>G1 &lt;- G1u
+
+E(G1)$curved = 0.1
+
+V(G1)$color &lt;- keyf$Partij_col
+V(G1)$size = degree(G1) * 0.3 + 6
+V(G1)$label = &quot;&quot;
+
+owncoords &lt;- cbind(keyf$X, keyf$Y)
+owncoords &lt;- owncoords/8
+owncoords[, 1] &lt;- (owncoords[, 1] - mean(owncoords[, 1]))
+owncoords[, 2] &lt;- (owncoords[, 2] - mean(owncoords[, 2]))
+
+# change color of edges based on intra or interparty ties for transparant black: #0000007D
+edges &lt;- get.adjacency(G1)
+edges_mat &lt;- matrix(as.numeric(edges), nrow = nrow(edges))
+edges_mat[lower.tri(edges_mat)] &lt;- 0
+teller &lt;- 1
+coloredges &lt;- NA
+for (i in 1:nrow(edges)) {
+    for (j in 1:ncol(edges)) {
+        if (edges_mat[i, j] == 1) {
+            if (keyf$Partij_col[i] == keyf$Partij_col[j]) {
+                coloredges[teller] &lt;- keyf$Partij_col[i]
+            }
+            if (keyf$Partij_col[i] != keyf$Partij_col[j]) {
+                coloredges[teller] &lt;- &quot;#0000004B&quot;
+            }
+            teller &lt;- teller + 1
+        }
+    }
+}
+E(G1)$color = coloredges
+
+# prepare a legend
+Party_names &lt;- unique(keyf$Partij)
+Party_cols &lt;- unique(keyf$Partij_col)
+
+png(&quot;MPplotG1.png&quot;, width = 900, height = 900)
+{
+    plot.igraph(G1, mode = &quot;undirected&quot;, layout = owncoords, rescale = F, margin = c(0, 0, 0, 0), xlim = c(min(owncoords[, 
+        1]), max(owncoords[, 1])), ylim = c(min(owncoords[, 2]), max(owncoords[, 2])), main = &quot;Reciprocated follower relations between Dutch MPs (2017)&quot;)
+    
+    legend(&quot;topleft&quot;, legend = Party_names, pch = 21, col = &quot;#777777&quot;, pt.bg = Party_cols, pt.cex = 2, 
+        cex = 0.8, bty = &quot;n&quot;, ncol = 3)
+    
+    text(-2.2, -1.2, &quot;Note 1: Node size based on degree&quot;, adj = 0, cex = 0.8)
+    text(-2.2, -1.3, &quot;Note 2: Edge color based on Party of MPs, black if MPs from different party&quot;, adj = 0, 
+        cex = 0.8)
+}
+dev.off()</code></pre>
+<pre class="test2"><code>#&gt; png 
+#&gt;   2</code></pre>
+<p><img src="MPplotG1.png" width="100%" /></p>
+<hr />
+</div>
+<div id="at-mention" class="section level3">
+<h3>at-mention</h3>
+<p>Reciprocated ties</p>
+<pre class="r test"><code>G2 &lt;- G2u
+
+E(G2)$curved = 0.1
+
+V(G2)$color &lt;- keyf$Partij_col
+V(G2)$size = degree(G2) * 1.05 + 6
+V(G2)$label = &quot;&quot;
+
+owncoords &lt;- cbind(keyf$X, keyf$Y)
+owncoords &lt;- owncoords/8
+owncoords[, 1] &lt;- (owncoords[, 1] - mean(owncoords[, 1]))
+owncoords[, 2] &lt;- (owncoords[, 2] - mean(owncoords[, 2]))
+
+# change color of edges based on intra or interparty ties
+edges &lt;- get.adjacency(G2)
+edges_mat &lt;- matrix(as.numeric(edges), nrow = nrow(edges))
+edges_mat[lower.tri(edges_mat)] &lt;- 0
+teller &lt;- 1
+coloredges &lt;- NA
+for (i in 1:nrow(edges)) {
+    for (j in 1:ncol(edges)) {
+        if (edges_mat[i, j] == 1) {
+            if (keyf$Partij_col[i] == keyf$Partij_col[j]) {
+                coloredges[teller] &lt;- keyf$Partij_col[i]
+            }
+            if (keyf$Partij_col[i] != keyf$Partij_col[j]) {
+                coloredges[teller] &lt;- &quot;#0000004B&quot;
+            }
+            teller &lt;- teller + 1
+        }
+    }
+}
+E(G2)$color = coloredges
+
+# prepare a legend
+Party_names &lt;- unique(keyf$Partij)
+Party_cols &lt;- unique(keyf$Partij_col)
+
+png(&quot;MPplotG2u.png&quot;, width = 900, height = 900)
+{
+    plot.igraph(G2, mode = &quot;undirected&quot;, layout = owncoords, rescale = F, margin = c(0, 0, 0, 0), xlim = c(min(owncoords[, 
+        1]), max(owncoords[, 1])), ylim = c(min(owncoords[, 2]), max(owncoords[, 2])), main = &quot;Reciprocated @mention relations between Dutch MPs (2017)&quot;)
+    
+    legend(&quot;topleft&quot;, legend = Party_names, pch = 21, col = &quot;#777777&quot;, pt.bg = Party_cols, pt.cex = 2, 
+        cex = 0.8, bty = &quot;n&quot;, ncol = 3)
+    
+    text(-2.2, -1.2, &quot;Note 1: Node size based on degree&quot;, adj = 0, cex = 0.8)
+    text(-2.2, -1.3, &quot;Note 2: Edge colar based on Party of MPs, black if MPs from different party&quot;, adj = 0, 
+        cex = 0.8)
+}
+dev.off()</code></pre>
+<pre class="test2"><code>#&gt; png 
+#&gt;   2</code></pre>
+<p><img src="MPplotG2u.png" width="100%" /></p>
+<p>Directed ties</p>
+<pre class="test2"><code>#&gt; png 
+#&gt;   2</code></pre>
+<p><img src="MPplotG2d.png" width="100%" /></p>
+<hr />
+</div>
+<div id="retweet" class="section level3">
+<h3>retweet</h3>
+<p>Reciprocated</p>
+<pre class="r test"><code>G3 &lt;- G3u
+
+E(G3)$curved = 0.1
+
+V(G3)$color &lt;- keyf$Partij_col
+V(G3)$size = degree(G3) * 1.05 + 6
+V(G3)$label = &quot;&quot;
+
+owncoords &lt;- cbind(keyf$X, keyf$Y)
+owncoords &lt;- owncoords/8
+owncoords[, 1] &lt;- (owncoords[, 1] - mean(owncoords[, 1]))
+owncoords[, 2] &lt;- (owncoords[, 2] - mean(owncoords[, 2]))
+
+# change color of edges based on intra or interparty ties
+edges &lt;- get.adjacency(G3)
+edges_mat &lt;- matrix(as.numeric(edges), nrow = nrow(edges))
+edges_mat[lower.tri(edges_mat)] &lt;- 0
+teller &lt;- 1
+coloredges &lt;- NA
+for (i in 1:nrow(edges)) {
+    for (j in 1:ncol(edges)) {
+        if (edges_mat[i, j] == 1) {
+            if (keyf$Partij_col[i] == keyf$Partij_col[j]) {
+                coloredges[teller] &lt;- keyf$Partij_col[i]
+            }
+            if (keyf$Partij_col[i] != keyf$Partij_col[j]) {
+                coloredges[teller] &lt;- &quot;#0000004B&quot;
+            }
+            teller &lt;- teller + 1
+        }
+    }
+}
+E(G3)$color = coloredges
+
+# prepare a legend
+Party_names &lt;- unique(keyf$Partij)
+Party_cols &lt;- unique(keyf$Partij_col)
+
+png(&quot;MPplotG3u.png&quot;, width = 900, height = 900)
+{
+    plot.igraph(G3, mode = &quot;undirected&quot;, layout = owncoords, rescale = F, margin = c(0, 0, 0, 0), xlim = c(min(owncoords[, 
+        1]), max(owncoords[, 1])), ylim = c(min(owncoords[, 2]), max(owncoords[, 2])), main = &quot;Reciprocated retweet relations between Dutch MPs (2017)&quot;)
+    
+    legend(&quot;topleft&quot;, legend = Party_names, pch = 21, col = &quot;#777777&quot;, pt.bg = Party_cols, pt.cex = 2, 
+        cex = 0.8, bty = &quot;n&quot;, ncol = 3)
+    
+    text(-2.2, -1.2, &quot;Note 1: Node size based on degree&quot;, adj = 0, cex = 0.8)
+    text(-2.2, -1.3, &quot;Note 2: Edge colar based on Party of MPs, black if MPs from different party&quot;, adj = 0, 
+        cex = 0.8)
+}
+dev.off()</code></pre>
+<pre class="test2"><code>#&gt; png 
+#&gt;   2</code></pre>
+<p><img src="MPplotG3u.png" width="100%" /></p>
+<p>Directed</p>
+<pre class="r test"><code>G3 &lt;- G3d
+
+E(G3)$curved = 0.1
+E(G3)$arrow.size = 0.1
+
+V(G3)$color &lt;- keyf$Partij_col
+V(G3)$size = degree(G3) * 0.5 + 6
+V(G3)$label = &quot;&quot;
+
+owncoords &lt;- cbind(keyf$X, keyf$Y)
+owncoords &lt;- owncoords/8
+owncoords[, 1] &lt;- (owncoords[, 1] - mean(owncoords[, 1]))
+owncoords[, 2] &lt;- (owncoords[, 2] - mean(owncoords[, 2]))
+
+# change color of edges based on intra or interparty ties
+edges &lt;- get.adjacency(G3)
+edges_mat &lt;- matrix(as.numeric(edges), nrow = nrow(edges))
+# edges_mat[lower.tri(edges_mat)] &lt;- 0
+teller &lt;- 1
+coloredges &lt;- NA
+for (i in 1:nrow(edges)) {
+    for (j in 1:ncol(edges)) {
+        if (edges_mat[i, j] == 1) {
+            if (keyf$Partij_col[i] == keyf$Partij_col[j]) {
+                coloredges[teller] &lt;- keyf$Partij_col[i]
+            }
+            if (keyf$Partij_col[i] != keyf$Partij_col[j]) {
+                coloredges[teller] &lt;- &quot;#0000004B&quot;
+            }
+            teller &lt;- teller + 1
+        }
+    }
+}
+E(G3)$color = coloredges
+
+# prepare a legend
+Party_names &lt;- unique(keyf$Partij)
+Party_cols &lt;- unique(keyf$Partij_col)
+
+png(&quot;MPplotG3d.png&quot;, width = 900, height = 900)
+{
+    plot.igraph(G3, mode = &quot;undirected&quot;, layout = owncoords, rescale = F, margin = c(0, 0, 0, 0), xlim = c(min(owncoords[, 
+        1]), max(owncoords[, 1])), ylim = c(min(owncoords[, 2]), max(owncoords[, 2])), main = &quot;Retweet relations between Dutch MPs (2017)&quot;)
+    
+    legend(&quot;topleft&quot;, legend = Party_names, pch = 21, col = &quot;#777777&quot;, pt.bg = Party_cols, pt.cex = 2, 
+        cex = 0.8, bty = &quot;n&quot;, ncol = 3)
+    
+    text(-2.2, -1.2, &quot;Note 1: Node size based on degree&quot;, adj = 0, cex = 0.8)
+    text(-2.2, -1.3, &quot;Note 2: Edge colar based on Party of MPs, black if MPs from different party&quot;, adj = 0, 
+        cex = 0.8)
+}
+dev.off()</code></pre>
+<pre class="test2"><code>#&gt; png 
+#&gt;   2</code></pre>
+<p><img src="MPplotG3d.png" width="100%" /></p>
+<div id="refs" class="references">
+<div id="ref-Tolsma2021">
+<p>Tolsma, Jochem, Niels Spierings, and Kristof Jacobs. n.d. “Twitter.” <em>-</em> - (-): –. <a href="-">-</a>.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIlJlcGxpY2F0aW9uIHBhY2thZ2UtRmlndXJlcyINCmF1dGhvcjogJ1tKb2NoZW0gVG9sc21hXShodHRwczovL3d3dy5qb2NoZW10b2xzbWEubmwpIC0gUmFkYm91ZCBVbml2ZXJzaXR5IC8gVW5pdmVyc2l0eSBvZiBHcm9uaW5nZW4sIHRoZSBOZXRoZXJsYW5kcycNCmJpYmxpb2dyYXBoeTogcmVmZXJlbmNlcy5iaWINCmRhdGU6ICJMYXN0IGNvbXBpbGVkIG9uIGByIGZvcm1hdChTeXMudGltZSgpLCAnJUIsICVZJylgIg0Kb3V0cHV0OiANCiAgaHRtbF9kb2N1bWVudDoNCiAgICB0b2M6ICB0cnVlDQogICAgdG9jX2Zsb2F0OiB0cnVlDQogICAgbnVtYmVyX3NlY3Rpb25zOiBmYWxzZQ0KICAgIGNvZGVfZm9sZGluZzogaGlkZQ0KICAgIGNvZGVfZG93bmxvYWQ6IHllcw0KLS0tDQoNCmBgYHtyIGdsb2JhbHNldHRpbmdzLCBlY2hvPUZBTFNFLCB3YXJuaW5nPUZBTFNFfQ0KbGlicmFyeShrbml0cikNCm9wdHNfY2h1bmskc2V0KHRpZHkub3B0cz1saXN0KHdpZHRoLmN1dG9mZj0xMDApLHRpZHk9VFJVRSwgd2FybmluZyA9IEZBTFNFLCBtZXNzYWdlID0gRkFMU0UsY29tbWVudCA9ICIjPiIsIGNhY2hlPVRSVUUsIGVjaG89RkFMU0UsIGNsYXNzLnNvdXJjZT1jKCJ0ZXN0IiksIGNsYXNzLm91dHB1dD1jKCJ0ZXN0MiIpKQ0Kb3B0aW9ucyh3aWR0aCA9IDEwMCkNCnJnbDo6c2V0dXBLbml0cigpDQpgYGANCg0KYGBge3IgY29sb3JpemUsIGVjaG89RkFMU0V9DQpjb2xvcml6ZSA8LSBmdW5jdGlvbih4LCBjb2xvcikgew0KICBpZiAoa25pdHI6OmlzX2xhdGV4X291dHB1dCgpKSB7DQogICAgc3ByaW50ZigiXFx0ZXh0Y29sb3J7JXN9eyVzfSIsIGNvbG9yLCB4KQ0KICB9IGVsc2UgaWYgKGtuaXRyOjppc19odG1sX291dHB1dCgpKSB7DQogICAgc3ByaW50ZigiPHNwYW4gc3R5bGU9J2NvbG9yOiAlczsnPiVzPC9zcGFuPiIsIGNvbG9yLCANCiAgICAgICAgICAgIHgpDQogIH0gZWxzZSB4DQp9DQoNCmBgYA0KDQpgYGB7ciBrbGlwcHksIGVjaG89RkFMU0UsIGluY2x1ZGU9VFJVRX0NCmtsaXBweTo6a2xpcHB5KHBvc2l0aW9uID0gYygndG9wJywgJ3JpZ2h0JykpDQoja2xpcHB5OjprbGlwcHkoY29sb3IgPSAnZGFya3JlZCcpDQoja2xpcHB5OjprbGlwcHkodG9vbHRpcF9tZXNzYWdlID0gJ0NsaWNrIHRvIGNvcHknLCB0b29sdGlwX3N1Y2Nlc3MgPSAnRG9uZScpDQpgYGANCg0KYGBge2NzcywgZWNobz1GQUxTRX0NCnByZS50ZXN0IHsNCiAgbWF4LWhlaWdodDogMzAwcHg7DQogIG92ZXJmbG93LXk6IGF1dG87DQogIG92ZXJmbG93LXg6IGF1dG87DQogIG1hcmdpbjogMHB4Ow0KfQ0KDQpwcmUudGVzdDIgew0KICBtYXgtaGVpZ2h0OiAzMDBweDsNCiAgb3ZlcmZsb3cteTogYXV0bzsNCiAgb3ZlcmZsb3cteDogYXV0bzsNCiAgbWFyZ2luOiAwcHg7DQogIGJhY2tncm91bmQtY29sb3I6IHdoaXRlOw0KICBjb2xvcjogcmdiKDIwMSwgNzYsIDc2KTsNCn0NCg0KDQpoMSwgLmgxLCBoMiwgLmgyLCBoMywgLmgzIHsNCiAgbWFyZ2luLXRvcDogMjRweDsNCn0NCg0KDQpgYGANCg0KDQoNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KDQo8IS0tLWFscyBmaWd1dXJ0amVzIGdvZWQgemlqbiwgemV0IGRhbiBldmFsPUZBTFNFLS0tPg0KDQoNCiMgSW50cm8gIA0KDQoNClRoaXMgW3dlYnNpdGVdKGh0dHBzOi8vam9jaGVtdG9sc21hLmdpdGh1Yi5pby9Ud2l0dGVyLykgaXMgYSByZXBsaWNhdGlvbiBwYWNrYWdlIGZvciB0aGUgcGFwZXIgIlR3aXR0ZXIiIGJ5IEBUb2xzbWEyMDIxLg0KDQpJdCBjb250YWlucyBSIGNvZGUgdG8gcmVwbGljYXRlIGFsbCBUYWJsZXMvRmlndXJlcy9SZXN1bHRzIGluIHRoZSBtYW51c2NyaXB0Lg0KDQpUbyBjb3B5IHRoZSBjb2RlIGNsaWNrIHRoZSBidXR0b24gaW4gdGhlIHVwcGVyIHJpZ2h0IGNvcm5lciBvZiB0aGUgY29kZS1jaHVua3MuDQoNClVzZSB0aGUgdG9wIG1lbnUgdG8gbmF2aWdhdGUgdG8gdGhlIHNlY3Rpb24gb2YgaW50ZXJlc3QuIA0KDQpUaGUgc291cmNlIGNvZGUgb2YgdGhpcyB3ZWJzaXRlIGNhbiBiZSBmb3VuZCBvbiBbR2l0aHViXShodHRwczovL2dpdGh1Yi5jb20vSm9jaGVtVG9sc21hL1R3aXR0ZXIpDQoNClF1ZXN0aW9ucyBjYW4gYmUgYWRkcmVzc2VkIHRvIFtKb2NoZW0gVG9sc21hXShtYWlsdG86am9jaGVtLnRvbHNtYUBydS5ubCkuDQoNCi0tLSAgDQoNCiMjIFBhY2thZ2VzICANCg0KYGBge3IgcGFja2FnZXMsIGVjaG89VFJVRX0NCiNpbnN0YWxsIGlmIG5lY2Vzc2FyeSANCmlmICghcmVxdWlyZSgiZHBseXIiLCBjaGFyYWN0ZXIub25seSA9IFRSVUUpKSB7aW5zdGFsbC5wYWNrYWdlcygiZHBseXIiLCBkZXBlbmRlbmNpZXM9VFJVRSl9DQppZiAoIXJlcXVpcmUoImZvcmVpZ24iLCBjaGFyYWN0ZXIub25seSA9IFRSVUUpKSB7aW5zdGFsbC5wYWNrYWdlcygiZm9yZWlnbiIsIGRlcGVuZGVuY2llcz1UUlVFKX0NCmlmICghcmVxdWlyZSgiaWdyYXBoIiwgY2hhcmFjdGVyLm9ubHkgPSBUUlVFKSkge2luc3RhbGwucGFja2FnZXMoImlncmFwaCIsIGRlcGVuZGVuY2llcz1UUlVFKX0NCg0KI2xvYWQgcGFja2FnZXMuDQpsaWJyYXJ5KHRpZHl2ZXJzZSkNCmxpYnJhcnkoZHBseXIpDQpsaWJyYXJ5KGZvcmVpZ24pDQpsaWJyYXJ5KGlncmFwaCkNCmxpYnJhcnkoa25pdHIpDQpsaWJyYXJ5KGthYmxlRXh0cmEpDQoNCmBgYA0KDQoNCi0tLSAgIA0KDQoNCiMjIExvYWQgZGF0YSBvYmplY3RzIHsudGFic2V0IC50YWJzZXQtZmFkZX0gIA0KDQpTZWUgLi4uIGZvciBjb25zdHJ1Y3Rpb24gb2YgZGF0YSBvYmplY3RzLiAgDQoNCkRhdGEgb2JqZWN0czogIA0KDQotIGtleTogaW5mb3JtYXRpb24gb24gYWxsIHBvbGl0aWNpYW5zIG9uIGVsZWN0aW9uIGxpc3QgIA0KLSBrZXlmOiBpbmZvcm1hdGlvbiBvbiBhbGwgMTQ3IE1QcyB3aXRoIHR3aXR0ZXIgaGFuZGxlICANCi0gbXlkYXRhOiBSU2llbmEgb2JqZWN0IHdpdGggYWxsIGtpbmQgb2YgZ29vZGllcyBpbnNpZGUgIA0KLSBzZWF0czogc2VhdGluZyBjb29yZGluYXRlcyBvZiBIb1AgKHVzZWQgZm9yIHBsb3R0aW5nKQ0KDQpgYGB7ciBkYXRhLCBlY2hvPVRSVUV9DQojU1RBUCAxOiByZWFkIGluIGRhdGENCmtleSA8LSByZWFkLnNwc3MoJ2RhdGEtcHJvY2Vzc2VkXFxrZXkgbW9lZGVyYmVzdGFuZCAyMDE3MTExNC5zYXYnLCB1c2UudmFsdWUubGFiZWxzPVQsIHRvLmRhdGEuZnJhbWU9VCkNCg0KDQpsb2FkKCJkYXRhLXByb2Nlc3NlZFxcdHdpdHRlcl8yMDE5MDkxOS5SRGF0YSIpDQojc3RyKHR3aXR0ZXJfMjAxOTA5MTksMSkNCmtleWYgPC0gdHdpdHRlcl8yMDE5MDkxOVtbMV1dDQpteWRhdGEgPC0gdHdpdHRlcl8yMDE5MDkxOVtbMl1dDQpzZWF0cyA8LSB0d2l0dGVyXzIwMTkwOTE5W1szXV0NCg0KZm5ldCA8LSBteWRhdGEkZGVwdmFycyRmbmV0ICNmb2xsb3dpbmcgbmV0d29yaw0KYXRtbmV0IDwtIG15ZGF0YSRkZXB2YXJzJGF0bW5ldCAjYXRtZW50aW9uIG5ldHdvcmsNCnJ0bmV0IDwtIG15ZGF0YSRkZXB2YXJzJHJ0bmV0ICNyZXR3ZWV0IG5ldHdvcmsNCg0KZm5ldDEgPC0gZm5ldFssLDFdICNmaXJzdCB3YXZlDQphdG1uZXQxIDwtIGF0bW5ldFssLDFdICNmaXJzdCB3YXZlDQpydG5ldDEgPC0gcnRuZXRbLCwxXSAjZmlyc3Qgd2F2ZQ0KDQpmbmV0MVtmbmV0MT09MTBdIDwtIDAgI3JlcGxhY2UgbWlzc2luZ3Mgd2l0aCAwIGZvciBwbG90dGluZw0KYXRtbmV0MVthdG1uZXQxPT0xMF0gPC0gMCAjcmVwbGFjZSBtaXNzaW5ncyB3aXRoIDAgZm9yIHBsb3R0aW5nDQpydG5ldDFbcnRuZXQxPT0xMF0gPC0gMCAjcmVwbGFjZSBtaXNzaW5ncyB3aXRoIDAgZm9yIHBsb3R0aW5nDQoNCiNkZWZpbmUgdW5kaXJlY3RlZCBuZXR3b3JrcyBvZiByZWNpcHJvY2F0ZWQgdGllcyANCmZuZXQxX3VuIDwtIGZuZXQxID09MSAmIHQoZm5ldDEpPT0xDQphdG1uZXQxX3VuIDwtIGF0bW5ldDEgPT0xICYgdChhdG1uZXQxKT09MQ0KcnRuZXQxX3VuIDwtIHJ0bmV0MSA9PTEgJiB0KHJ0bmV0MSk9PTENCg0KdnJvdXcgPC0gbXlkYXRhJGNDb3ZhcnMkdnJvdXcNCnBhcnRpaiA8LSBteWRhdGEkY0NvdmFycyRwYXJ0aWoNCmV0aG1pbnogPC0gbXlkYXRhJGNDb3ZhcnMkZXRobWlueg0KbGZ0IDwtIG15ZGF0YSRjQ292YXJzJGxmdA0KDQpldGhtaW56IDwtIGV0aG1pbnogKyBhdHRyaWJ1dGVzKGV0aG1pbnopJG1lYW4NCnBhcnRpaiA8LSBwYXJ0aWogKyBhdHRyaWJ1dGVzKHBhcnRpaikkbWVhbg0KdnJvdXcgPC0gdnJvdXcgKyBhdHRyaWJ1dGVzKHZyb3V3KSRtZWFuDQpsZnQgPC0gbGZ0ICsgYXR0cmlidXRlcyhsZnQpJG1lYW4NCg0KDQpgYGANCg0KLS0tICANCg0KDQoNCiMjIEJ1aWxkIHBsb3RzIHsudGFic2V0IC50YWJzZXQtZmFkZX0NCg0KVGhlIGZpcnN0IHN0ZXAgaXMgdG8gbWFrZSBhICdncmFwaCBvYmplY3QnLiANCg0KYGBge3IsIGVjaG89VFJVRX0NCiNkZWZpbmUgZGlyZWN0ZWQgbmV0d29yayANCkcxZCA8LSBncmFwaF9mcm9tX2FkamFjZW5jeV9tYXRyaXgoZm5ldDEsIG1vZGUgPSAiZGlyZWN0ZWQiLCB3ZWlnaHRlZCA9IE5VTEwsIGRpYWcgPSBUUlVFLCAgYWRkLmNvbG5hbWVzID0gTkEsIGFkZC5yb3duYW1lcyA9IE5BKQ0KRzJkIDwtIGdyYXBoX2Zyb21fYWRqYWNlbmN5X21hdHJpeChhdG1uZXQxLCBtb2RlID0gImRpcmVjdGVkIiwgd2VpZ2h0ZWQgPSBOVUxMLCBkaWFnID0gVFJVRSwgIGFkZC5jb2xuYW1lcyA9IE5BLCBhZGQucm93bmFtZXMgPSBOQSkNCkczZCA8LSBncmFwaF9mcm9tX2FkamFjZW5jeV9tYXRyaXgocnRuZXQxLCBtb2RlID0gImRpcmVjdGVkIiwgd2VpZ2h0ZWQgPSBOVUxMLCBkaWFnID0gVFJVRSwgIGFkZC5jb2xuYW1lcyA9IE5BLCBhZGQucm93bmFtZXMgPSBOQSkNCg0KI2RlZmluZSB1bmRpcmVjdGVkIG5ldHdvcmsgDQpHMXUgPC0gZ3JhcGhfZnJvbV9hZGphY2VuY3lfbWF0cml4KGZuZXQxX3VuLCBtb2RlID0gInVuZGlyZWN0ZWQiLCB3ZWlnaHRlZCA9IE5VTEwsIGRpYWcgPSBUUlVFLCAgYWRkLmNvbG5hbWVzID0gTkEsIGFkZC5yb3duYW1lcyA9IE5BKQ0KRzJ1IDwtIGdyYXBoX2Zyb21fYWRqYWNlbmN5X21hdHJpeChhdG1uZXQxX3VuLCBtb2RlID0gInVuZGlyZWN0ZWQiLCB3ZWlnaHRlZCA9IE5VTEwsIGRpYWcgPSBUUlVFLCAgYWRkLmNvbG5hbWVzID0gTkEsIGFkZC5yb3duYW1lcyA9IE5BKQ0KRzN1IDwtIGdyYXBoX2Zyb21fYWRqYWNlbmN5X21hdHJpeChydG5ldDFfdW4sIG1vZGUgPSAidW5kaXJlY3RlZCIsIHdlaWdodGVkID0gTlVMTCwgZGlhZyA9IFRSVUUsICBhZGQuY29sbmFtZXMgPSBOQSwgYWRkLnJvd25hbWVzID0gTkEpDQoNCmBgYA0KDQoNCg0KIyMjIEZvbGxvd2Vycw0KDQpSZWNpcHJvY2F0ZWQNCmBgYHtyIEcxLCBlY2hvPVRSVUV9DQpHMSA8LSBHMXUNCg0KRShHMSkkY3VydmVkPS4xDQoNClYoRzEpJGNvbG9yIDwtIGtleWYkUGFydGlqX2NvbA0KVihHMSkkc2l6ZT0gZGVncmVlKEcxKSouMyArIDYNClYoRzEpJGxhYmVsPSIiDQoNCm93bmNvb3JkcyA8LSBjYmluZChrZXlmJFgsIGtleWYkWSkNCm93bmNvb3JkcyA8LSBvd25jb29yZHMvOA0Kb3duY29vcmRzWywxXSA8LSAob3duY29vcmRzWywxXSAtIG1lYW4ob3duY29vcmRzWywxXSkpDQpvd25jb29yZHNbLDJdIDwtIChvd25jb29yZHNbLDJdIC0gbWVhbihvd25jb29yZHNbLDJdKSkNCg0KI2NoYW5nZSBjb2xvciBvZiBlZGdlcyBiYXNlZCBvbiBpbnRyYSBvciBpbnRlcnBhcnR5IHRpZXMNCiNmb3IgdHJhbnNwYXJhbnQgYmxhY2s6ICMwMDAwMDA3RA0KZWRnZXMgPC0gZ2V0LmFkamFjZW5jeShHMSkNCmVkZ2VzX21hdCA8LSBtYXRyaXgoYXMubnVtZXJpYyhlZGdlcyksIG5yb3c9bnJvdyhlZGdlcykpDQplZGdlc19tYXRbbG93ZXIudHJpKGVkZ2VzX21hdCldIDwtIDANCnRlbGxlciA8LSAxDQpjb2xvcmVkZ2VzIDwtIE5BDQpmb3IgKGkgaW4gMTpucm93KGVkZ2VzKSkgew0KICBmb3IgKGogaW4gMTpuY29sKGVkZ2VzKSkgew0KICAgIGlmIChlZGdlc19tYXRbaSxqXT09MSkgew0KICAgICAgaWYgKGtleWYkUGFydGlqX2NvbFtpXSA9PSBrZXlmJFBhcnRpal9jb2xbal0pIHtjb2xvcmVkZ2VzW3RlbGxlcl0gPC0ga2V5ZiRQYXJ0aWpfY29sW2ldfQ0KICAgICAgaWYgKGtleWYkUGFydGlqX2NvbFtpXSAhPSBrZXlmJFBhcnRpal9jb2xbal0pIHtjb2xvcmVkZ2VzW3RlbGxlcl0gPC0gIiMwMDAwMDA0QiJ9DQogICAgICB0ZWxsZXIgPC0gdGVsbGVyICsgMQ0KICAgIH0NCiAgfQ0KfQ0KRShHMSkkY29sb3I9Y29sb3JlZGdlcw0KDQojcHJlcGFyZSBhIGxlZ2VuZA0KUGFydHlfbmFtZXMgPC0gdW5pcXVlKGtleWYkUGFydGlqKQ0KUGFydHlfY29scyA8LSB1bmlxdWUoa2V5ZiRQYXJ0aWpfY29sKQ0KDQpwbmcoIk1QcGxvdEcxLnBuZyIsd2lkdGggPSA5MDAsIGhlaWdodD0gOTAwKQ0KeyANCiAgcGxvdC5pZ3JhcGgoRzEsIG1vZGU9InVuZGlyZWN0ZWQiLCBsYXlvdXQ9b3duY29vcmRzLCByZXNjYWxlPUYsIG1hcmdpbj1jKDAsMCwwLDApLCB4bGltPWMobWluKG93bmNvb3Jkc1ssMV0pLG1heChvd25jb29yZHNbLDFdKSksICB5bGltPWMobWluKG93bmNvb3Jkc1ssMl0pLG1heChvd25jb29yZHNbLDJdKSksIG1haW49IlJlY2lwcm9jYXRlZCBmb2xsb3dlciByZWxhdGlvbnMgYmV0d2VlbiBEdXRjaCBNUHMgKDIwMTcpIikNCg0KbGVnZW5kKCJ0b3BsZWZ0IiwgbGVnZW5kPVBhcnR5X25hbWVzLCBwY2g9MjEsIGNvbD0iIzc3Nzc3NyIsIHB0LmJnPVBhcnR5X2NvbHMsIHB0LmNleD0yLCBjZXg9LjgsIGJ0eT0ibiIsIG5jb2w9MykNCg0KdGV4dCgtMi4yLC0xLjIsICJOb3RlIDE6IE5vZGUgc2l6ZSBiYXNlZCBvbiBkZWdyZWUiLCBhZGo9MCwgY2V4PTAuOCkNCnRleHQoLTIuMiwtMS4zLCAiTm90ZSAyOiBFZGdlIGNvbG9yIGJhc2VkIG9uIFBhcnR5IG9mIE1QcywgYmxhY2sgaWYgTVBzIGZyb20gZGlmZmVyZW50IHBhcnR5IiwgYWRqPTAsIGNleD0wLjgpDQp9ICANCmRldi5vZmYoKQ0KIA0KDQpgYGANCg0KYGBge3IgZWNobz1GQUxTRSwgb3V0LndpZHRoPScxMDAlJ30NCmtuaXRyOjppbmNsdWRlX2dyYXBoaWNzKCdNUHBsb3RHMS5wbmcnKQ0KYGBgDQoNCg0KLS0tICANCg0KDQoNCg0KIyMjIGF0LW1lbnRpb24NCg0KUmVjaXByb2NhdGVkIHRpZXMgDQoNCmBgYHtyIEcyLCBlY2hvPVRSVUV9DQpHMiA8LSBHMnUNCg0KRShHMikkY3VydmVkPS4xDQoNClYoRzIpJGNvbG9yIDwtIGtleWYkUGFydGlqX2NvbA0KVihHMikkc2l6ZT0gZGVncmVlKEcyKSoxLjA1ICsgNg0KVihHMikkbGFiZWw9IiINCg0Kb3duY29vcmRzIDwtIGNiaW5kKGtleWYkWCwga2V5ZiRZKQ0Kb3duY29vcmRzIDwtIG93bmNvb3Jkcy84DQpvd25jb29yZHNbLDFdIDwtIChvd25jb29yZHNbLDFdIC0gbWVhbihvd25jb29yZHNbLDFdKSkNCm93bmNvb3Jkc1ssMl0gPC0gKG93bmNvb3Jkc1ssMl0gLSBtZWFuKG93bmNvb3Jkc1ssMl0pKQ0KDQojY2hhbmdlIGNvbG9yIG9mIGVkZ2VzIGJhc2VkIG9uIGludHJhIG9yIGludGVycGFydHkgdGllcw0KZWRnZXMgPC0gZ2V0LmFkamFjZW5jeShHMikNCmVkZ2VzX21hdCA8LSBtYXRyaXgoYXMubnVtZXJpYyhlZGdlcyksIG5yb3c9bnJvdyhlZGdlcykpDQplZGdlc19tYXRbbG93ZXIudHJpKGVkZ2VzX21hdCldIDwtIDANCnRlbGxlciA8LSAxDQpjb2xvcmVkZ2VzIDwtIE5BDQpmb3IgKGkgaW4gMTpucm93KGVkZ2VzKSkgew0KICBmb3IgKGogaW4gMTpuY29sKGVkZ2VzKSkgew0KICAgIGlmIChlZGdlc19tYXRbaSxqXT09MSkgew0KICAgICAgaWYgKGtleWYkUGFydGlqX2NvbFtpXSA9PSBrZXlmJFBhcnRpal9jb2xbal0pIHtjb2xvcmVkZ2VzW3RlbGxlcl0gPC0ga2V5ZiRQYXJ0aWpfY29sW2ldfQ0KICAgICAgaWYgKGtleWYkUGFydGlqX2NvbFtpXSAhPSBrZXlmJFBhcnRpal9jb2xbal0pIHtjb2xvcmVkZ2VzW3RlbGxlcl0gPC0gIiMwMDAwMDA0QiJ9DQogICAgICB0ZWxsZXIgPC0gdGVsbGVyICsgMQ0KICAgIH0NCiAgfQ0KfQ0KRShHMikkY29sb3I9Y29sb3JlZGdlcw0KDQojcHJlcGFyZSBhIGxlZ2VuZA0KUGFydHlfbmFtZXMgPC0gdW5pcXVlKGtleWYkUGFydGlqKQ0KUGFydHlfY29scyA8LSB1bmlxdWUoa2V5ZiRQYXJ0aWpfY29sKQ0KDQpwbmcoIk1QcGxvdEcydS5wbmciLHdpZHRoID0gOTAwLCBoZWlnaHQ9IDkwMCkNCnsgDQogIHBsb3QuaWdyYXBoKEcyLCBtb2RlPSJ1bmRpcmVjdGVkIiwgbGF5b3V0PW93bmNvb3JkcywgcmVzY2FsZT1GLCBtYXJnaW49YygwLDAsMCwwKSwgeGxpbT1jKG1pbihvd25jb29yZHNbLDFdKSxtYXgob3duY29vcmRzWywxXSkpLCAgeWxpbT1jKG1pbihvd25jb29yZHNbLDJdKSxtYXgob3duY29vcmRzWywyXSkpLCBtYWluPSJSZWNpcHJvY2F0ZWQgQG1lbnRpb24gcmVsYXRpb25zIGJldHdlZW4gRHV0Y2ggTVBzICgyMDE3KSIpDQoNCmxlZ2VuZCgidG9wbGVmdCIsIGxlZ2VuZD1QYXJ0eV9uYW1lcywgcGNoPTIxLCBjb2w9IiM3Nzc3NzciLCBwdC5iZz1QYXJ0eV9jb2xzLCBwdC5jZXg9MiwgY2V4PS44LCBidHk9Im4iLCBuY29sPTMpDQoNCnRleHQoLTIuMiwtMS4yLCAiTm90ZSAxOiBOb2RlIHNpemUgYmFzZWQgb24gZGVncmVlIiwgYWRqPTAsIGNleD0wLjgpDQp0ZXh0KC0yLjIsLTEuMywgIk5vdGUgMjogRWRnZSBjb2xhciBiYXNlZCBvbiBQYXJ0eSBvZiBNUHMsIGJsYWNrIGlmIE1QcyBmcm9tIGRpZmZlcmVudCBwYXJ0eSIsIGFkaj0wLCBjZXg9MC44KQ0KfSAgDQpkZXYub2ZmKCkNCg0KYGBgDQoNCg0KYGBge3IgZWNobz1GQUxTRSwgb3V0LndpZHRoPScxMDAlJ30NCmtuaXRyOjppbmNsdWRlX2dyYXBoaWNzKCdNUHBsb3RHMnUucG5nJykNCmBgYA0KDQpEaXJlY3RlZCB0aWVzDQoNCmBgYHtyfQ0KDQpHMiA8LSBHMmQNCg0KRShHMikkY3VydmVkPS4xDQpFKEcyKSRhcnJvdy5zaXplPS4xDQpWKEcyKSRjb2xvciA8LSBrZXlmJFBhcnRpal9jb2wNClYoRzIpJHNpemU9IGRlZ3JlZShHMikqLjUgKyA2DQpWKEcyKSRsYWJlbD0iIg0KDQpvd25jb29yZHMgPC0gY2JpbmQoa2V5ZiRYLCBrZXlmJFkpDQpvd25jb29yZHMgPC0gb3duY29vcmRzLzgNCm93bmNvb3Jkc1ssMV0gPC0gKG93bmNvb3Jkc1ssMV0gLSBtZWFuKG93bmNvb3Jkc1ssMV0pKQ0Kb3duY29vcmRzWywyXSA8LSAob3duY29vcmRzWywyXSAtIG1lYW4ob3duY29vcmRzWywyXSkpDQoNCiNjaGFuZ2UgY29sb3Igb2YgZWRnZXMgYmFzZWQgb24gaW50cmEgb3IgaW50ZXJwYXJ0eSB0aWVzDQplZGdlcyA8LSBnZXQuYWRqYWNlbmN5KEcyKQ0KZWRnZXNfbWF0IDwtIG1hdHJpeChhcy5udW1lcmljKGVkZ2VzKSwgbnJvdz1ucm93KGVkZ2VzKSkNCiNlZGdlc19tYXRbbG93ZXIudHJpKGVkZ2VzX21hdCldIDwtIDANCnRlbGxlciA8LSAxDQpjb2xvcmVkZ2VzIDwtIE5BDQpmb3IgKGkgaW4gMTpucm93KGVkZ2VzKSkgew0KICBmb3IgKGogaW4gMTpuY29sKGVkZ2VzKSkgew0KICAgIGlmIChlZGdlc19tYXRbaSxqXT09MSkgew0KICAgICAgaWYgKGtleWYkUGFydGlqX2NvbFtpXSA9PSBrZXlmJFBhcnRpal9jb2xbal0pIHtjb2xvcmVkZ2VzW3RlbGxlcl0gPC0ga2V5ZiRQYXJ0aWpfY29sW2ldfQ0KICAgICAgaWYgKGtleWYkUGFydGlqX2NvbFtpXSAhPSBrZXlmJFBhcnRpal9jb2xbal0pIHtjb2xvcmVkZ2VzW3RlbGxlcl0gPC0gIiMwMDAwMDA0QiJ9DQogICAgICB0ZWxsZXIgPC0gdGVsbGVyICsgMQ0KICAgIH0NCiAgfQ0KfQ0KRShHMikkY29sb3I9Y29sb3JlZGdlcw0KDQojcHJlcGFyZSBhIGxlZ2VuZA0KUGFydHlfbmFtZXMgPC0gdW5pcXVlKGtleWYkUGFydGlqKQ0KUGFydHlfY29scyA8LSB1bmlxdWUoa2V5ZiRQYXJ0aWpfY29sKQ0KDQpwbmcoIk1QcGxvdEcyZC5wbmciLHdpZHRoID0gOTAwLCBoZWlnaHQ9IDkwMCkNCnsgDQogIHBsb3QuaWdyYXBoKEcyLCBtb2RlPSJkaXJlY3RlZCIsIGxheW91dD1vd25jb29yZHMsIHJlc2NhbGU9RiwgbWFyZ2luPWMoMCwwLDAsMCksIHhsaW09YyhtaW4ob3duY29vcmRzWywxXSksbWF4KG93bmNvb3Jkc1ssMV0pKSwgIHlsaW09YyhtaW4ob3duY29vcmRzWywyXSksbWF4KG93bmNvb3Jkc1ssMl0pKSwgbWFpbj0iQG1lbnRpb24gcmVsYXRpb25zIGJldHdlZW4gRHV0Y2ggTVBzICgyMDE3KSIpDQoNCmxlZ2VuZCgidG9wbGVmdCIsIGxlZ2VuZD1QYXJ0eV9uYW1lcywgcGNoPTIxLCBjb2w9IiM3Nzc3NzciLCBwdC5iZz1QYXJ0eV9jb2xzLCBwdC5jZXg9MiwgY2V4PS44LCBidHk9Im4iLCBuY29sPTMpDQoNCnRleHQoLTIuMiwtMS4yLCAiTm90ZSAxOiBOb2RlIHNpemUgYmFzZWQgb24gZGVncmVlIiwgYWRqPTAsIGNleD0wLjgpDQp0ZXh0KC0yLjIsLTEuMywgIk5vdGUgMjogRWRnZSBjb2xhciBiYXNlZCBvbiBQYXJ0eSBvZiBNUHMsIGJsYWNrIGlmIE1QcyBmcm9tIGRpZmZlcmVudCBwYXJ0eSIsIGFkaj0wLCBjZXg9MC44KQ0KfSAgDQpkZXYub2ZmKCkNCiANCg0KIA0KDQpgYGANCg0KYGBge3IgZWNobz1GQUxTRSwgb3V0LndpZHRoPScxMDAlJ30NCmtuaXRyOjppbmNsdWRlX2dyYXBoaWNzKCdNUHBsb3RHMmQucG5nJykNCmBgYA0KDQotLS0gIA0KDQojIyMgcmV0d2VldA0KDQpSZWNpcHJvY2F0ZWQNCmBgYHtyIEczdSwgZWNobz1UUlVFfQ0KRzMgPC0gRzN1DQoNCkUoRzMpJGN1cnZlZD0uMQ0KDQpWKEczKSRjb2xvciA8LSBrZXlmJFBhcnRpal9jb2wNClYoRzMpJHNpemU9IGRlZ3JlZShHMykqMS4wNSArIDYNClYoRzMpJGxhYmVsPSIiDQoNCm93bmNvb3JkcyA8LSBjYmluZChrZXlmJFgsIGtleWYkWSkNCm93bmNvb3JkcyA8LSBvd25jb29yZHMvOA0Kb3duY29vcmRzWywxXSA8LSAob3duY29vcmRzWywxXSAtIG1lYW4ob3duY29vcmRzWywxXSkpDQpvd25jb29yZHNbLDJdIDwtIChvd25jb29yZHNbLDJdIC0gbWVhbihvd25jb29yZHNbLDJdKSkNCg0KI2NoYW5nZSBjb2xvciBvZiBlZGdlcyBiYXNlZCBvbiBpbnRyYSBvciBpbnRlcnBhcnR5IHRpZXMNCmVkZ2VzIDwtIGdldC5hZGphY2VuY3koRzMpDQplZGdlc19tYXQgPC0gbWF0cml4KGFzLm51bWVyaWMoZWRnZXMpLCBucm93PW5yb3coZWRnZXMpKQ0KZWRnZXNfbWF0W2xvd2VyLnRyaShlZGdlc19tYXQpXSA8LSAwDQp0ZWxsZXIgPC0gMQ0KY29sb3JlZGdlcyA8LSBOQQ0KZm9yIChpIGluIDE6bnJvdyhlZGdlcykpIHsNCiAgZm9yIChqIGluIDE6bmNvbChlZGdlcykpIHsNCiAgICBpZiAoZWRnZXNfbWF0W2ksal09PTEpIHsNCiAgICAgIGlmIChrZXlmJFBhcnRpal9jb2xbaV0gPT0ga2V5ZiRQYXJ0aWpfY29sW2pdKSB7Y29sb3JlZGdlc1t0ZWxsZXJdIDwtIGtleWYkUGFydGlqX2NvbFtpXX0NCiAgICAgIGlmIChrZXlmJFBhcnRpal9jb2xbaV0gIT0ga2V5ZiRQYXJ0aWpfY29sW2pdKSB7Y29sb3JlZGdlc1t0ZWxsZXJdIDwtICIjMDAwMDAwNEIifQ0KICAgICAgdGVsbGVyIDwtIHRlbGxlciArIDENCiAgICB9DQogIH0NCn0NCkUoRzMpJGNvbG9yPWNvbG9yZWRnZXMNCg0KI3ByZXBhcmUgYSBsZWdlbmQNClBhcnR5X25hbWVzIDwtIHVuaXF1ZShrZXlmJFBhcnRpaikNClBhcnR5X2NvbHMgPC0gdW5pcXVlKGtleWYkUGFydGlqX2NvbCkNCg0KcG5nKCJNUHBsb3RHM3UucG5nIix3aWR0aCA9IDkwMCwgaGVpZ2h0PSA5MDApDQp7IA0KICBwbG90LmlncmFwaChHMywgbW9kZT0idW5kaXJlY3RlZCIsIGxheW91dD1vd25jb29yZHMsIHJlc2NhbGU9RiwgbWFyZ2luPWMoMCwwLDAsMCksIHhsaW09YyhtaW4ob3duY29vcmRzWywxXSksbWF4KG93bmNvb3Jkc1ssMV0pKSwgIHlsaW09YyhtaW4ob3duY29vcmRzWywyXSksbWF4KG93bmNvb3Jkc1ssMl0pKSwgbWFpbj0iUmVjaXByb2NhdGVkIHJldHdlZXQgcmVsYXRpb25zIGJldHdlZW4gRHV0Y2ggTVBzICgyMDE3KSIpDQoNCmxlZ2VuZCgidG9wbGVmdCIsIGxlZ2VuZD1QYXJ0eV9uYW1lcywgcGNoPTIxLCBjb2w9IiM3Nzc3NzciLCBwdC5iZz1QYXJ0eV9jb2xzLCBwdC5jZXg9MiwgY2V4PS44LCBidHk9Im4iLCBuY29sPTMpDQoNCnRleHQoLTIuMiwtMS4yLCAiTm90ZSAxOiBOb2RlIHNpemUgYmFzZWQgb24gZGVncmVlIiwgYWRqPTAsIGNleD0wLjgpDQp0ZXh0KC0yLjIsLTEuMywgIk5vdGUgMjogRWRnZSBjb2xhciBiYXNlZCBvbiBQYXJ0eSBvZiBNUHMsIGJsYWNrIGlmIE1QcyBmcm9tIGRpZmZlcmVudCBwYXJ0eSIsIGFkaj0wLCBjZXg9MC44KQ0KfSAgDQpkZXYub2ZmKCkNCiANCg0KYGBgDQoNCg0KYGBge3IgZWNobz1GQUxTRSwgb3V0LndpZHRoPScxMDAlJ30NCmtuaXRyOjppbmNsdWRlX2dyYXBoaWNzKCdNUHBsb3RHM3UucG5nJykNCmBgYA0KDQoNCkRpcmVjdGVkIA0KDQpgYGB7ciBHM2QsIGVjaG89VFJVRX0NCkczIDwtIEczZA0KDQpFKEczKSRjdXJ2ZWQ9LjENCkUoRzMpJGFycm93LnNpemU9LjENCg0KVihHMykkY29sb3IgPC0ga2V5ZiRQYXJ0aWpfY29sDQpWKEczKSRzaXplPSBkZWdyZWUoRzMpKi41ICsgNg0KVihHMykkbGFiZWw9IiINCg0Kb3duY29vcmRzIDwtIGNiaW5kKGtleWYkWCwga2V5ZiRZKQ0Kb3duY29vcmRzIDwtIG93bmNvb3Jkcy84DQpvd25jb29yZHNbLDFdIDwtIChvd25jb29yZHNbLDFdIC0gbWVhbihvd25jb29yZHNbLDFdKSkNCm93bmNvb3Jkc1ssMl0gPC0gKG93bmNvb3Jkc1ssMl0gLSBtZWFuKG93bmNvb3Jkc1ssMl0pKQ0KDQojY2hhbmdlIGNvbG9yIG9mIGVkZ2VzIGJhc2VkIG9uIGludHJhIG9yIGludGVycGFydHkgdGllcw0KZWRnZXMgPC0gZ2V0LmFkamFjZW5jeShHMykNCmVkZ2VzX21hdCA8LSBtYXRyaXgoYXMubnVtZXJpYyhlZGdlcyksIG5yb3c9bnJvdyhlZGdlcykpDQojZWRnZXNfbWF0W2xvd2VyLnRyaShlZGdlc19tYXQpXSA8LSAwDQp0ZWxsZXIgPC0gMQ0KY29sb3JlZGdlcyA8LSBOQQ0KZm9yIChpIGluIDE6bnJvdyhlZGdlcykpIHsNCiAgZm9yIChqIGluIDE6bmNvbChlZGdlcykpIHsNCiAgICBpZiAoZWRnZXNfbWF0W2ksal09PTEpIHsNCiAgICAgIGlmIChrZXlmJFBhcnRpal9jb2xbaV0gPT0ga2V5ZiRQYXJ0aWpfY29sW2pdKSB7Y29sb3JlZGdlc1t0ZWxsZXJdIDwtIGtleWYkUGFydGlqX2NvbFtpXX0NCiAgICAgIGlmIChrZXlmJFBhcnRpal9jb2xbaV0gIT0ga2V5ZiRQYXJ0aWpfY29sW2pdKSB7Y29sb3JlZGdlc1t0ZWxsZXJdIDwtICIjMDAwMDAwNEIifQ0KICAgICAgdGVsbGVyIDwtIHRlbGxlciArIDENCiAgICB9DQogIH0NCn0NCkUoRzMpJGNvbG9yPWNvbG9yZWRnZXMNCg0KI3ByZXBhcmUgYSBsZWdlbmQNClBhcnR5X25hbWVzIDwtIHVuaXF1ZShrZXlmJFBhcnRpaikNClBhcnR5X2NvbHMgPC0gdW5pcXVlKGtleWYkUGFydGlqX2NvbCkNCg0KcG5nKCJNUHBsb3RHM2QucG5nIix3aWR0aCA9IDkwMCwgaGVpZ2h0PSA5MDApDQp7IA0KICBwbG90LmlncmFwaChHMywgbW9kZT0idW5kaXJlY3RlZCIsIGxheW91dD1vd25jb29yZHMsIHJlc2NhbGU9RiwgbWFyZ2luPWMoMCwwLDAsMCksIHhsaW09YyhtaW4ob3duY29vcmRzWywxXSksbWF4KG93bmNvb3Jkc1ssMV0pKSwgIHlsaW09YyhtaW4ob3duY29vcmRzWywyXSksbWF4KG93bmNvb3Jkc1ssMl0pKSwgbWFpbj0iUmV0d2VldCByZWxhdGlvbnMgYmV0d2VlbiBEdXRjaCBNUHMgKDIwMTcpIikNCg0KbGVnZW5kKCJ0b3BsZWZ0IiwgbGVnZW5kPVBhcnR5X25hbWVzLCBwY2g9MjEsIGNvbD0iIzc3Nzc3NyIsIHB0LmJnPVBhcnR5X2NvbHMsIHB0LmNleD0yLCBjZXg9LjgsIGJ0eT0ibiIsIG5jb2w9MykNCg0KdGV4dCgtMi4yLC0xLjIsICJOb3RlIDE6IE5vZGUgc2l6ZSBiYXNlZCBvbiBkZWdyZWUiLCBhZGo9MCwgY2V4PTAuOCkNCnRleHQoLTIuMiwtMS4zLCAiTm90ZSAyOiBFZGdlIGNvbGFyIGJhc2VkIG9uIFBhcnR5IG9mIE1QcywgYmxhY2sgaWYgTVBzIGZyb20gZGlmZmVyZW50IHBhcnR5IiwgYWRqPTAsIGNleD0wLjgpDQp9ICANCmRldi5vZmYoKQ0KIA0KDQpgYGANCg0KDQpgYGB7ciBlY2hvPUZBTFNFLCBvdXQud2lkdGg9JzEwMCUnfQ0Ka25pdHI6OmluY2x1ZGVfZ3JhcGhpY3MoJ01QcGxvdEczZC5wbmcnKQ0KYGBgDQo=</div>
+<style>
+.center {
+  text-align: center;
+  color: red;
+}
+</style>
+
+<hr>
+<br>
+<p class="center">Copyright &copy; 2021 Jochem Tolsma</p>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeSourceEmbed("figures.rmd");
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
