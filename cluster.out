@@ -1,32 +1,10 @@
-starting worker pid=5820 on localhost:11176 at 17:46:57.851
-starting worker pid=14804 on localhost:11176 at 17:46:57.919
-starting worker pid=8976 on localhost:11176 at 17:46:57.949
-starting worker pid=1340 on localhost:11176 at 17:46:57.952
-starting worker pid=16696 on localhost:11176 at 17:46:57.966
-starting worker pid=20168 on localhost:11176 at 17:46:57.973
-starting worker pid=9824 on localhost:11176 at 17:46:57.965
-starting worker pid=13920 on localhost:11176 at 17:46:58.025
-Error in unserialize(node$con) : error reading from connection
-Calls: <Anonymous> ... doTryCatch -> recvData -> recvData.SOCKnode -> unserialize
-Execution halted
-Error in unserialize(node$con) : error reading from connection
-Calls: <Anonymous> ... doTryCatch -> recvData -> recvData.SOCKnode -> unserialize
-Execution halted
-Error in unserialize(node$con) : error reading from connection
-Calls: <Anonymous> ... doTryCatch -> recvData -> recvData.SOCKnode -> unserialize
-Execution halted
-Error in unserialize(node$con) : error reading from connection
-Calls: <Anonymous> ... doTryCatch -> recvData -> recvData.SOCKnode -> unserialize
-Execution halted
-Error in unserialize(node$con) : error reading from connection
-Calls: <Anonymous> ... doTryCatch -> recvData -> recvData.SOCKnode -> unserialize
-Execution halted
-Error in unserialize(node$con) : error reading from connection
-Calls: <Anonymous> ... doTryCatch -> recvData -> recvData.SOCKnode -> unserialize
-Execution halted
-Error in unserialize(node$con) : error reading from connection
-Calls: <Anonymous> ... doTryCatch -> recvData -> recvData.SOCKnode -> unserialize
-Execution halted
-Error in unserialize(node$con) : error reading from connection
-Calls: <Anonymous> ... doTryCatch -> recvData -> recvData.SOCKnode -> unserialize
-Execution halted
+starting worker pid=752 on localhost:11763 at 17:56:21.506
+
+starting worker pid=13240 on localhost:11763 at 17:56:21.515
+starting worker pid=18548 on localhost:11763 at 17:56:21.526
+starting worker pid=18612 on localhost:11763 at 17:56:21.535
+starting worker pid=18644 on localhost:11763 at 17:56:21.539
+starting worker pid=18632 on localhost:11763 at 17:56:21.545
+starting worker pid=19948 on localhost:11763 at 17:56:21.548
+starting worker pid=1328 on localhost:11763 at 17:56:21.552
+starting worker pid=20244 on localhost:11763 at 17:56:21.555
