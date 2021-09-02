@@ -2248,10 +2248,19 @@ save(ansM12c, file=paste("ansM12c",".RData",sep=""))
 
 ```
 
+## Time heterogeneity
+
+```{r}
+load("ansM12.RData")
+ansM12
+tt <- sienaTimeTest(ansM12)
+tt$EffectTest
+```
+
 <!---
 
 
-###model 6 : time heterogeneity
+###model 6 : Time heterogeneity
 
 {
 tt <- sienaTimeTest(ansM5i)
