@@ -2639,3 +2639,191 @@ covariance/correlation matrix of X can be found using
 summary(ans) within R, or by using the 'verbose' option in Siena07.
  
 Total computation time 5169.53 seconds.
+
+
+-----------------------------------
+New Analysis started.
+Date and time: 02/09/2021 16:36:47
+New results follow.
+-----------------------------------
+
+RSiena version 1.3.0 (02 May 21)
+
+
+@1
+Estimation by stochastic approximation algorithm.
+=================================================
+
+Random initialization of random number stream.
+Current random number seed is 681613.
+
+
+-----------------------------------
+New Analysis started.
+Date and time: 02/09/2021 16:37:47
+New results follow.
+-----------------------------------
+
+RSiena version 1.3.0 (02 May 21)
+
+
+@1
+Estimation by stochastic approximation algorithm.
+=================================================
+
+Random initialization of random number stream.
+Current random number seed is 876497.
+Effects object used: myeff_m4 
+Model Type:
+Network 1 fnet : Standard actor-oriented model
+Network 2 atmnet : Standard actor-oriented model
+Network 3 rtnet : Standard actor-oriented model
+Estimation method: unconditional moment estimation
+.
+
+Time duration for simulations in each period is 1.0.
+Standard errors are estimated with the likelihood ratio method.
+Dolby method (regression on scores) is used.
+Initial value of gain parameter is  0.6324555.
+Reduction factor for gain parameter is  0.5000000.
+Number of subphases in Phase 2 is 4.
+
+Initial parameter values are 
+  1. rate:  constant fnet rate (period 1)                   4.6671
+  2. rate:  constant fnet rate (period 2)                   2.0366
+  3. eval:  fnet: outdegree (density)                     -13.8507
+  4. eval:  fnet: reciprocity                               0.8110
+  5. eval:  fnet: transitive triplets                       0.0370
+  6. eval:  fnet: shared popularity                        -0.0007
+  7. eval:  fnet: indegree - popularity (sqrt)              0.3423
+  8. eval:  fnet: outdegree - popularity (sqrt)            -0.2002
+  9. eval:  fnet: outdegree - activity (sqrt)               1.4228
+ 10. eval:  fnet: afstand                                  -0.0224
+ 11. eval:  fnet: same partij                               0.7539
+ 12. eval:  fnet: same ethminz                             -0.4096
+ 13. eval:  fnet: vrouw alter                               0.2362
+ 14. eval:  fnet: same vrouw                                0.1309
+ 15. eval:  fnet: lft alter                                -0.0157
+ 16. eval:  fnet: lft ego                                  -0.1382
+ 17. eval:  fnet: lft abs. difference                       0.0340
+ 18. eval:  fnet: kamerlid2016 alter                       -0.3937
+ 19. eval:  fnet: same kamerlid2016                         0.1808
+ 20. eval:  fnet: pleklijst ego                             0.5916
+ 21. eval:  fnet: rtnet                                     1.7266
+ 22. eval:  fnet: reciprocity with rtnet                    0.6723
+ 23. rate:  constant atmnet rate (period 1)                94.4045
+ 24. rate:  constant atmnet rate (period 2)                14.0962
+ 25. eval:  atmnet: outdegree (density)                    -4.3887
+ 26. eval:  atmnet: reciprocity                             1.2123
+ 27. eval:  atmnet: transitive triplets                     0.0293
+ 28. eval:  atmnet: shared popularity                      -0.0046
+ 29. eval:  atmnet: indegree - popularity (sqrt)            0.3925
+ 30. eval:  atmnet: outdegree - popularity (sqrt)          -0.1026
+ 31. eval:  atmnet: outdegree - activity (sqrt)             0.2541
+ 32. eval:  atmnet: same partij                             0.4135
+ 33. eval:  atmnet: d66 alter                              -0.1521
+ 34. eval:  atmnet: gl alter                               -0.1331
+ 35. eval:  atmnet: gl ego                                  0.1339
+ 36. eval:  atmnet: pleklijst alter                        -0.0050
+ 37. eval:  atmnet: pleklijst1 ego                         -0.3028
+ 38. eval:  atmnet: fnet                                    0.3809
+ 39. eval:  atmnet: reciprocity with fnet                   0.1684
+ 40. eval:  atmnet: rtnet                                   0.4529
+ 41. eval:  atmnet: reciprocity with rtnet                  0.2525
+ 42. rate:  constant rtnet rate (period 1)                 20.7525
+ 43. rate:  constant rtnet rate (period 2)                 19.5660
+ 44. eval:  rtnet: outdegree (density)                     -4.1063
+ 45. eval:  rtnet: reciprocity                              0.1751
+ 46. eval:  rtnet: transitive triplets                      0.1404
+ 47. eval:  rtnet: shared popularity                       -0.0087
+ 48. eval:  rtnet: indegree - popularity (sqrt)             0.3557
+ 49. eval:  rtnet: outdegree - popularity (sqrt)           -0.3584
+ 50. eval:  rtnet: outdegree - activity (sqrt)              0.1014
+ 51. eval:  rtnet: afstand                                 -0.0194
+ 52. eval:  rtnet: same partij                              1.1117
+ 53. eval:  rtnet: d66 ego                                 -0.3916
+ 54. eval:  rtnet: pvv ego                                  0.3231
+ 55. eval:  rtnet: ethminz ego                              0.1791
+ 56. eval:  rtnet: same ethminz                             0.1202
+ 57. eval:  rtnet: vrouw alter                              0.1154
+ 58. eval:  rtnet: vrouw ego                                0.1282
+ 59. eval:  rtnet: same vrouw                               0.1067
+ 60. eval:  rtnet: lft alter                               -0.0071
+ 61. eval:  rtnet: kamerlid2016 ego                        -0.1303
+ 62. eval:  rtnet: pleklijst1 alter                         0.1489
+ 63. eval:  rtnet: fnet                                     0.6434
+ 64. eval:  rtnet: reciprocity with fnet                    0.2507
+ 65. eval:  rtnet: atmnet                                   0.8030
+ 66. eval:  rtnet: reciprocity with atmnet                  0.9910
+
+
+Observed values of target statistics are
+  1. Amount of network change in period 1                               527.0000
+  2. Amount of network change in period 2                               277.0000
+  3. fnet: Number of ties                                              11887.0000
+  4. fnet: Number of reciprocated ties                                 6712.0000
+  5. fnet: Number of transitive triplets                               290390.0000
+  6. fnet: (Number 2-2PU)^1/1)                                         4181487.0000
+  7. fnet: Sum of indegrees x sqrt(indegree)                           83554.5067
+  8. fnet: Sum of indegrees x sqrt(outdegree)                          75168.1958
+  9. fnet: Sum of outdegrees^(1.5)                                     88645.6438
+ 10. fnet: Sum of ties x afstand                                       -39658.8172
+ 11. fnet: Same values on partij                                       3636.0000
+ 12. fnet: Same values on ethminz                                      9860.0000
+ 13. fnet: Sum indegrees x vrouw                                        -11.6531
+ 14. fnet: Same values on vrouw                                        6510.0000
+ 15. fnet: Sum indegrees x lft                                         -4536.9524
+ 16. fnet: Sum outdegrees x lft                                        -17464.9524
+ 17. fnet: Sum_ties abs.diff lft                                       110992.0000
+ 18. fnet: Sum indegrees x kamerlid2016                                1368.4762
+ 19. fnet: Same values on kamerlid2016                                 6925.0000
+ 20. fnet: Sum outdegrees x pleklijst                                  1224.3673
+ 21. fnet: sum crprod. with rtnet                                      1548.0000
+ 22. fnet: sum crprod. with recipr. rtnet                              1422.0000
+ 23. Amount of network change in period 1                              1187.0000
+ 24. Amount of network change in period 2                               670.0000
+ 25. atmnet: Number of ties                                            1030.0000
+ 26. atmnet: Number of reciprocated ties                                376.0000
+ 27. atmnet: Number of transitive triplets                             1121.0000
+ 28. atmnet: (Number 2-2PU)^1/1)                                       1963.0000
+ 29. atmnet: Sum of indegrees x sqrt(indegree)                         2607.3391
+ 30. atmnet: Sum of indegrees x sqrt(outdegree)                        2242.4625
+ 31. atmnet: Sum of outdegrees^(1.5)                                   3142.0807
+ 32. atmnet: Same values on partij                                      509.0000
+ 33. atmnet: Sum indegrees x d66                                         29.8707
+ 34. atmnet: Sum indegrees x gl                                          25.9048
+ 35. atmnet: Sum outdegrees x gl                                         58.9048
+ 36. atmnet: Sum indegrees x pleklijst                                 -1255.9184
+ 37. atmnet: Sum outdegrees x pleklijst1                                -50.0884
+ 38. atmnet: sum crprod. with fnet                                      753.0000
+ 39. atmnet: sum crprod. with recipr. fnet                              679.0000
+ 40. atmnet: sum crprod. with rtnet                                     328.0000
+ 41. atmnet: sum crprod. with recipr. rtnet                             327.0000
+ 42. Amount of network change in period 1                               802.0000
+ 43. Amount of network change in period 2                               686.0000
+ 44. rtnet: Number of ties                                             1454.0000
+ 45. rtnet: Number of reciprocated ties                                 638.0000
+ 46. rtnet: Number of transitive triplets                              4708.0000
+ 47. rtnet: (Number 2-2PU)^1/1)                                        9313.0000
+ 48. rtnet: Sum of indegrees x sqrt(indegree)                          4116.3936
+ 49. rtnet: Sum of indegrees x sqrt(outdegree)                         3572.7996
+ 50. rtnet: Sum of outdegrees^(1.5)                                    4132.0553
+ 51. rtnet: Sum of ties x afstand                                      -11283.4948
+ 52. rtnet: Same values on partij                                      1238.0000
+ 53. rtnet: Sum outdegrees x d66                                         30.0680
+ 54. rtnet: Sum outdegrees x pvv                                        141.9592
+ 55. rtnet: Sum outdegrees x ethminz                                     11.7415
+ 56. rtnet: Same values on ethminz                                     1187.0000
+ 57. rtnet: Sum indegrees x vrouw                                        22.8776
+ 58. rtnet: Sum outdegrees x vrouw                                       87.8776
+ 59. rtnet: Same values on vrouw                                        759.0000
+ 60. rtnet: Sum indegrees x lft                                        -2393.7619
+ 61. rtnet: Sum outdegrees x kamerlid2016                               -29.6190
+ 62. rtnet: Sum indegrees x pleklijst1                                   30.4150
+ 63. rtnet: sum crprod. with fnet                                      1268.0000
+ 64. rtnet: sum crprod. with recipr. fnet                              1151.0000
+ 65. rtnet: sum crprod. with atmnet                                     461.0000
+ 66. rtnet: sum crprod. with recipr. atmnet                             437.0000
+
+ 66 parameters, 66 statistics
+
