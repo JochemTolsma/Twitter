@@ -14,12 +14,22 @@
 
 <title>Replication package-Tables</title>
 
+<script src="site_libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
@@ -47,11 +57,6 @@
     </style>
 
 <style type="text/css">code{white-space: pre;}</style>
-<style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
 <script type="text/javascript">
 if (window.hljs) {
   hljs.configure({languages: []});
@@ -65,35 +70,33 @@ if (window.hljs) {
 
 
 <style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
 #rmd-source-code {
   display: none;
 }
 </style>
 
+<style type="text/css">
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 
 
@@ -103,10 +106,6 @@ h6 {
   max-width: 940px;
   margin-left: auto;
   margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
 }
 img {
   max-width:100%;
@@ -123,40 +122,13 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+pre code {
+  padding: 0;
+}
 </style>
 
 
 <style type="text/css">
-/* padding for bootstrap navbar */
-body {
-  padding-top: 60px;
-  padding-bottom: 40px;
-}
-/* offset scroll position for anchor links (for fixed navbar)  */
-.section h1 {
-  padding-top: 65px;
-  margin-top: -65px;
-}
-.section h2 {
-  padding-top: 65px;
-  margin-top: -65px;
-}
-.section h3 {
-  padding-top: 65px;
-  margin-top: -65px;
-}
-.section h4 {
-  padding-top: 65px;
-  margin-top: -65px;
-}
-.section h5 {
-  padding-top: 65px;
-  margin-top: -65px;
-}
-.section h6 {
-  padding-top: 65px;
-  margin-top: -65px;
-}
 .dropdown-submenu {
   position: relative;
 }
@@ -184,7 +156,7 @@ body {
   margin-right: -10px;
 }
 .dropdown-submenu:hover>a:after {
-  border-left-color: #ffffff;
+  border-left-color: #adb5bd;
 }
 .dropdown-submenu.pull-left {
   float: none;
@@ -196,7 +168,7 @@ body {
 }
 </style>
 
-<script>
+<script type="text/javascript">
 // manage active state of menu based on current page
 $(document).ready(function () {
   // active menu anchor
@@ -207,10 +179,23 @@ $(document).ready(function () {
   var menuAnchor = $('a[href="' + href + '"]');
 
   // mark it active
-  menuAnchor.parent().addClass('active');
+  menuAnchor.tab('show');
 
   // if it's got a parent navbar menu mark it active as well
   menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
 });
 </script>
 
@@ -222,7 +207,6 @@ $(document).ready(function () {
   max-height: 500px;
   min-height: 44px;
   overflow-y: auto;
-  background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
@@ -351,7 +335,7 @@ div.tocify {
 
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row-fluid">
+<div class="row">
 <div class="col-xs-12 col-sm-4 col-md-3">
 <div id="TOC" class="tocify">
 </div>
@@ -396,11 +380,11 @@ div.tocify {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<div class="fluid-row" id="header">
+<div id="header">
 
-<div class="btn-group pull-right">
-<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu" style="min-width: 50px;">
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
 <li role="separator" class="divider"></li>
@@ -412,11 +396,12 @@ div.tocify {
 
 <h1 class="title toc-ignore">Replication package-Tables</h1>
 <h4 class="author"><a href="https://www.jochemtolsma.nl">Jochem Tolsma</a> - Radboud University / University of Groningen, the Netherlands</h4>
-<h4 class="date">Last compiled on augustus, 2021</h4>
+<h4 class="date">Last compiled on October, 2021</h4>
 
 </div>
 
 
+<pre><code>## NULL</code></pre>
 <script>
   addClassKlippyTo("pre.r, pre.markdown");
   addKlippy('right', 'top', 'auto', '1', 'Copy code', 'Copied!');
@@ -448,7 +433,7 @@ h1, .h1, h2, .h2, h3, .h3 {
 <hr />
 <div id="intro" class="section level1">
 <h1>Intro</h1>
-<p>This <a href="https://jochemtolsma.github.io/Twitter/">website</a> is a replication package for the paper “Twitter” by <span class="citation">Tolsma, Spierings, and Jacobs (n.d.)</span>.</p>
+<p>This <a href="https://jochemtolsma.github.io/Twitter/">website</a> is a replication package for the paper “Twitter” by <span class="citation">Tolsma, Spierings, and Jacobs (submitted)</span>.</p>
 <p>It contains R code to replicate all Tables/Figures/Results in the manuscript.</p>
 <p>To copy the code click the button in the upper right corner of the code-chunks.</p>
 <p>Use the top menu to navigate to the section of interest.</p>
@@ -478,7 +463,7 @@ library(kableExtra)</code></pre>
 <hr />
 </div>
 <div id="custom-segregation-functions" class="section level2 tabset tabset-fade">
-<h2>Custom segregation functions</h2>
+<h2 class="tabset tabset-fade">Custom segregation functions</h2>
 <p>Define custom functions to calculate network-segregation:</p>
 <ul>
 <li>fdensity: density of network<br />
@@ -494,8 +479,8 @@ library(kableExtra)</code></pre>
 <li>fndayds2: count number of within subgroup dyads</li>
 </ul>
 <pre class="r test"><code>fdensity &lt;- function(x) {
-    # x is your nomination network should be relationship, divided by all possible off diagonal ties.
-    # make sure diagonal cells are NA
+    # x is your nomination network should be relationship, divided by all possible off diagonal
+    # ties.  make sure diagonal cells are NA
     diag(x) &lt;- NA
     x[x == 10] &lt;- NA
     sum(x == 1, na.rm = T)/(sum(x == 1 | x == 0, na.rm = T))
@@ -541,14 +526,14 @@ fndyads2 &lt;- function(x, A) {
 fscolnet &lt;- function(network, ccovar) {
     # Calculate coleman on network level:
     # https://reader.elsevier.com/reader/sd/pii/S0378873314000239?token=A42F99FF6E2B750436DD2CB0DB7B1F41BDEC16052A45683C02644DAF88215A3379636B2AA197B65941D6373E9E2EE413
-    
+
     fhomomat &lt;- function(x) {
         xmat &lt;- matrix(x, nrow = length(x), ncol = length(x))
         xmatt &lt;- t(xmat)
         xhomo &lt;- xmat == xmatt
         return(xhomo)
     }
-    
+
     fsumintra &lt;- function(x, A) {
         # A is matrix indicating whether nodes constituting dyad have same characteristics
         diag(x) &lt;- NA
@@ -556,7 +541,7 @@ fscolnet &lt;- function(network, ccovar) {
         diag(A) &lt;- NA
         sum(x == 1 &amp; A == 1, na.rm = T)
     }
-    
+
     # expecation w*=sum_g sum_i (ni((ng-1)/(N-1)))
     network[network == 10] &lt;- NA
     ni &lt;- rowSums(network, na.rm = T)
@@ -566,18 +551,18 @@ fscolnet &lt;- function(network, ccovar) {
     }
     N &lt;- length(ccovar)
     wexp &lt;- sum(ni * ((ng - 1)/(N - 1)), na.rm = T)
-    
+
     # wgg1 how many intragroup ties
     w &lt;- fsumintra(network, fhomomat(ccovar))
-    
+
     Scol_net &lt;- ifelse(w &gt;= wexp, (w - wexp)/(sum(ni, na.rm = T) - wexp), (w - wexp)/wexp)
     return(Scol_net)
-    
+
 }</code></pre>
 <hr />
 </div>
 <div id="load-data-objects" class="section level2 tabset tabset-fade">
-<h2>Load data objects</h2>
+<h2 class="tabset tabset-fade">Load data objects</h2>
 <p>See … for construction of data objects.</p>
 <p>Data objects:</p>
 <ul>
@@ -603,9 +588,11 @@ seats &lt;- twitter_20190919[[3]]</code></pre>
 <div id="summary-of-dataset-used." class="section level2">
 <h2>Summary of dataset used.</h2>
 <pre class="r test"><code># select all MPs (we need to filter the correct EGOhandle)
-data_mp &lt;- key %&gt;% filter(Elected20170315 == &quot;yes, verkozen&quot; &amp; !(EGOhandle %in% c(10401, 10403, 13102, 
-    15102, 106101, 41400))) %&gt;% select(&quot;Naam&quot;, &quot;Partij&quot;, &quot;Geslacht&quot;, &quot;GebJaar&quot;, &quot;EthMinZ&quot;, &quot;PlekLijst&quot;, 
-    &quot;Kamerlid20161123&quot;, &quot;ZetelSegment20170315&quot;, &quot;ZetelRij20170315&quot;, &quot;ZetelKolom20170315&quot;)
+data_mp &lt;- key %&gt;%
+    filter(Elected20170315 == &quot;yes, verkozen&quot; &amp; !(EGOhandle %in% c(10401, 10403, 13102, 15102, 106101,
+        41400))) %&gt;%
+    select(&quot;Naam&quot;, &quot;Partij&quot;, &quot;Geslacht&quot;, &quot;GebJaar&quot;, &quot;EthMinZ&quot;, &quot;PlekLijst&quot;, &quot;Kamerlid20161123&quot;, &quot;ZetelSegment20170315&quot;,
+        &quot;ZetelRij20170315&quot;, &quot;ZetelKolom20170315&quot;)
 
 # not necessary: &#39;Twitterhandle&#39; &#39;Elected20170315&#39;
 
@@ -613,12 +600,12 @@ seats$ZetelSegment20170315 &lt;- seats$segments
 seats$ZetelRij20170315 &lt;- seats$rows
 seats$ZetelKolom20170315 &lt;- seats$columns
 
-data_mp &lt;- inner_join(data_mp, seats) %&gt;% select(&quot;Naam&quot;, &quot;Partij&quot;, &quot;Geslacht&quot;, &quot;GebJaar&quot;, &quot;EthMinZ&quot;, 
-    &quot;PlekLijst&quot;, &quot;Kamerlid20161123&quot;, &quot;ZetelSegment20170315&quot;, &quot;ZetelRij20170315&quot;, &quot;ZetelKolom20170315&quot;, 
-    &quot;X&quot;, &quot;Y&quot;)
+data_mp &lt;- inner_join(data_mp, seats) %&gt;%
+    select(&quot;Naam&quot;, &quot;Partij&quot;, &quot;Geslacht&quot;, &quot;GebJaar&quot;, &quot;EthMinZ&quot;, &quot;PlekLijst&quot;, &quot;Kamerlid20161123&quot;, &quot;ZetelSegment20170315&quot;,
+        &quot;ZetelRij20170315&quot;, &quot;ZetelKolom20170315&quot;, &quot;X&quot;, &quot;Y&quot;)
 
 
-colnames(data_mp) &lt;- c(&quot;Name&quot;, &quot;Party&quot;, &quot;Sex&quot;, &quot;Birth Year&quot;, &quot;Visible Minority&quot;, &quot;List Position&quot;, &quot;Incumbency status&quot;, 
+colnames(data_mp) &lt;- c(&quot;Name&quot;, &quot;Party&quot;, &quot;Sex&quot;, &quot;Birth Year&quot;, &quot;Visible Minority&quot;, &quot;List Position&quot;, &quot;Incumbency status&quot;,
     &quot;Seating Segment&quot;, &quot;Seating Row&quot;, &quot;Seating Column&quot;, &quot;X-coord.&quot;, &quot;Y-coord&quot;)
 
 data_mp$Sex &lt;- as.character(data_mp$Sex)
@@ -626,8 +613,9 @@ data_mp$Sex[data_mp$Sex == &quot;vrouw&quot;] &lt;- &quot;female&quot;
 data_mp$Sex[data_mp$Sex == &quot;man&quot;] &lt;- &quot;male&quot;
 
 
-sumdat &lt;- kbl(data_mp, booktabs = TRUE, digits = 2, caption = &quot;Dataset summary&quot;, align = &quot;c&quot;) %&gt;% kable_classic(full_width = F, 
-    html_font = &quot;Cambria&quot;) %&gt;% kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;, &quot;condensed&quot;, &quot;responsive&quot;))
+sumdat &lt;- kbl(data_mp, booktabs = TRUE, digits = 2, caption = &quot;Dataset summary&quot;, align = &quot;c&quot;) %&gt;%
+    kable_classic(full_width = F, html_font = &quot;Cambria&quot;) %&gt;%
+    kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;, &quot;condensed&quot;, &quot;responsive&quot;))
 
 scroll_box(sumdat, width = &quot;100%&quot;, height = &quot;500px&quot;)</code></pre>
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:500px; overflow-x: scroll; width:100%; ">
@@ -6386,42 +6374,69 @@ male
 <div id="table-1-in-manuscript" class="section level2">
 <h2>Table 1 in manuscript</h2>
 <pre class="r test"><code># select all MPs (we need to filter the correct EGOhandle)
-data_mp &lt;- key %&gt;% filter(Elected20170315 == &quot;yes, verkozen&quot; &amp; !(EGOhandle %in% c(10401, 10403, 13102, 
-    15102, 106101, 41400)))
+data_mp &lt;- key %&gt;%
+    filter(Elected20170315 == &quot;yes, verkozen&quot; &amp; !(EGOhandle %in% c(10401, 10403, 13102, 15102, 106101,
+        41400)))
 
-dg &lt;- data_mp %&gt;% group_by(Geslacht) %&gt;% summarize(count = n(), freq = count/150)
+dg &lt;- data_mp %&gt;%
+    group_by(Geslacht) %&gt;%
+    summarize(count = n(), freq = count/150)
 
-de &lt;- data_mp %&gt;% group_by(EthMinZ) %&gt;% summarize(count = n(), freq = count/150)
+de &lt;- data_mp %&gt;%
+    group_by(EthMinZ) %&gt;%
+    summarize(count = n(), freq = count/150)
 
-da &lt;- data_mp %&gt;% mutate(variable = &quot;AGE&quot;) %&gt;% summarize(age = first(variable), mean = mean(2017 - GebJaar, 
-    na.rm = T), sd = sd(2017 - GebJaar, na.rm = T))
+da &lt;- data_mp %&gt;%
+    mutate(variable = &quot;AGE&quot;) %&gt;%
+    summarize(age = first(variable), mean = mean(2017 - GebJaar, na.rm = T), sd = sd(2017 - GebJaar,
+        na.rm = T))
 
-dp &lt;- data_mp %&gt;% group_by(Partij) %&gt;% summarize(count = n(), freq = count/150) %&gt;% arrange(desc(count))
+dp &lt;- data_mp %&gt;%
+    group_by(Partij) %&gt;%
+    summarize(count = n(), freq = count/150) %&gt;%
+    arrange(desc(count))
 
 # by party
-dgp &lt;- data_mp %&gt;% group_by(Partij) %&gt;% add_tally() %&gt;% group_by(Partij, Geslacht) %&gt;% summarize(count = n(), 
-    freq = count/first(n), first = first(n)) %&gt;% arrange(desc(first)) %&gt;% select(&quot;Partij&quot;, &quot;Geslacht&quot;, 
-    &quot;count&quot;, &quot;freq&quot;)
+dgp &lt;- data_mp %&gt;%
+    group_by(Partij) %&gt;%
+    add_tally() %&gt;%
+    group_by(Partij, Geslacht) %&gt;%
+    summarize(count = n(), freq = count/first(n), first = first(n)) %&gt;%
+    arrange(desc(first)) %&gt;%
+    select(&quot;Partij&quot;, &quot;Geslacht&quot;, &quot;count&quot;, &quot;freq&quot;)
 
-dep &lt;- data_mp %&gt;% group_by(Partij) %&gt;% add_tally() %&gt;% group_by(Partij, EthMinZ) %&gt;% summarize(count = n(), 
-    freq = count/first(n), first = first(n)) %&gt;% arrange(desc(first)) %&gt;% select(&quot;Partij&quot;, &quot;EthMinZ&quot;, 
-    &quot;count&quot;, &quot;freq&quot;)
+dep &lt;- data_mp %&gt;%
+    group_by(Partij) %&gt;%
+    add_tally() %&gt;%
+    group_by(Partij, EthMinZ) %&gt;%
+    summarize(count = n(), freq = count/first(n), first = first(n)) %&gt;%
+    arrange(desc(first)) %&gt;%
+    select(&quot;Partij&quot;, &quot;EthMinZ&quot;, &quot;count&quot;, &quot;freq&quot;)
 
-dap &lt;- data_mp %&gt;% mutate(variable = &quot;AGE&quot;) %&gt;% group_by(Partij) %&gt;% add_tally() %&gt;% summarize(age = first(variable), 
-    mean = mean(2017 - GebJaar, na.rm = T), sd = sd(2017 - GebJaar, na.rm = T), first = first(n)) %&gt;% 
-    arrange(desc(first)) %&gt;% select(&quot;Partij&quot;, &quot;age&quot;, &quot;mean&quot;, &quot;sd&quot;)
+dap &lt;- data_mp %&gt;%
+    mutate(variable = &quot;AGE&quot;) %&gt;%
+    group_by(Partij) %&gt;%
+    add_tally() %&gt;%
+    summarize(age = first(variable), mean = mean(2017 - GebJaar, na.rm = T), sd = sd(2017 - GebJaar,
+        na.rm = T), first = first(n)) %&gt;%
+    arrange(desc(first)) %&gt;%
+    select(&quot;Partij&quot;, &quot;age&quot;, &quot;mean&quot;, &quot;sd&quot;)
 
-dg &lt;- dg %&gt;% add_column(grouping = &quot;NO&quot;, .before = &quot;Geslacht&quot;)
-da &lt;- da %&gt;% add_column(grouping = &quot;NO&quot;, .before = &quot;age&quot;)
-de &lt;- de %&gt;% add_column(grouping = &quot;NO&quot;, .before = &quot;EthMinZ&quot;)
-dp &lt;- dp %&gt;% add_column(grouping = &quot;NO&quot;, .before = &quot;Partij&quot;)
+dg &lt;- dg %&gt;%
+    add_column(grouping = &quot;NO&quot;, .before = &quot;Geslacht&quot;)
+da &lt;- da %&gt;%
+    add_column(grouping = &quot;NO&quot;, .before = &quot;age&quot;)
+de &lt;- de %&gt;%
+    add_column(grouping = &quot;NO&quot;, .before = &quot;EthMinZ&quot;)
+dp &lt;- dp %&gt;%
+    add_column(grouping = &quot;NO&quot;, .before = &quot;Partij&quot;)
 
 
 # dgp dap dep
 
 # write_csv(dg, &#39;table.csv&#39;) write_csv(da, &#39;table.csv&#39;, append = TRUE) write_csv(de, &#39;table.csv&#39;,
-# append = TRUE) write_csv(dp, &#39;table.csv&#39;, append = TRUE) write_csv(dgp, &#39;table.csv&#39;, append = TRUE)
-# write_csv(dap, &#39;table.csv&#39;, append = TRUE) write_csv(dep, &#39;table.csv&#39;, append = TRUE)
+# append = TRUE) write_csv(dp, &#39;table.csv&#39;, append = TRUE) write_csv(dgp, &#39;table.csv&#39;, append =
+# TRUE) write_csv(dap, &#39;table.csv&#39;, append = TRUE) write_csv(dep, &#39;table.csv&#39;, append = TRUE)
 
 test &lt;- read_csv(&quot;table.csv&quot;)
 
@@ -6433,8 +6448,9 @@ test[test == &quot;0&quot;] &lt;- &quot;no visible minority&quot;
 test[, 2][test[, 2] == &quot;1&quot;] &lt;- &quot;visible minority&quot;
 
 
-table1 &lt;- kbl(test, booktabs = TRUE, digits = 2, caption = &quot;Table 1&quot;, align = &quot;c&quot;) %&gt;% kable_classic(full_width = F, 
-    html_font = &quot;Cambria&quot;) %&gt;% kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;, &quot;condensed&quot;, &quot;responsive&quot;))
+table1 &lt;- kbl(test, booktabs = TRUE, digits = 2, caption = &quot;Table 1&quot;, align = &quot;c&quot;) %&gt;%
+    kable_classic(full_width = F, html_font = &quot;Cambria&quot;) %&gt;%
+    kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;, &quot;condensed&quot;, &quot;responsive&quot;))
 
 scroll_box(table1, width = &quot;100%&quot;, height = &quot;500px&quot;)</code></pre>
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:500px; overflow-x: scroll; width:100%; ">
@@ -7503,7 +7519,7 @@ no visible minority
 <hr />
 </div>
 <div id="table-2-in-manuscript" class="section level2 tabset tabset-fade">
-<h2>Table 2 in manuscript</h2>
+<h2 class="tabset tabset-fade">Table 2 in manuscript</h2>
 <p>We retrieve the data from the RSiena data-object</p>
 <pre class="r test"><code>fnet &lt;- mydata$depvars$fnet
 atmnet &lt;- mydata$depvars$atmnet
@@ -7631,16 +7647,17 @@ desmat[10, 1 + 6] &lt;- fdensityinter(rtnet[, , 1], lftm)
 desmat[10, 2 + 6] &lt;- fdensityinter(rtnet[, , 2], lftm)
 desmat[10, 3 + 6] &lt;- fdensityinter(rtnet[, , 3], lftm)
 
-colnames(desmat) &lt;- c(&quot;friends w1&quot;, &quot;friends w2&quot;, &quot;friends w3&quot;, &quot;atmentions w1&quot;, &quot;atmentions w2&quot;, &quot;atmentions w3&quot;, 
+colnames(desmat) &lt;- c(&quot;friends w1&quot;, &quot;friends w2&quot;, &quot;friends w3&quot;, &quot;atmentions w1&quot;, &quot;atmentions w2&quot;, &quot;atmentions w3&quot;,
     &quot;retweets w1&quot;, &quot;retweets w2&quot;, &quot;retweets w3&quot;)
-rownames(desmat) &lt;- c(&quot;total&quot;, &quot;same sex&quot;, &quot;different sex&quot;, &quot;same party&quot;, &quot;different party&quot;, &quot;same ethnicity&quot;, 
+rownames(desmat) &lt;- c(&quot;total&quot;, &quot;same sex&quot;, &quot;different sex&quot;, &quot;same party&quot;, &quot;different party&quot;, &quot;same ethnicity&quot;,
     &quot;different ethnicity&quot;, &quot;both minority&quot;, &quot;same age (&lt;6)&quot;, &quot;different age (&gt;5)&quot;)
 
 # desmat write.csv2(desmat, &#39;20190829desmat.csv&#39;)
 
-desmatkable &lt;- kbl(desmat, booktabs = TRUE, digits = 2, caption = &quot;Table 2: Density&quot;, align = &quot;c&quot;) %&gt;% 
-    kable_classic(full_width = F, html_font = &quot;Cambria&quot;) %&gt;% kable_styling(bootstrap_options = c(&quot;striped&quot;, 
-    &quot;hover&quot;, &quot;condensed&quot;, &quot;responsive&quot;)) %&gt;% column_spec(column = 1, width = &quot;3in&quot;)
+desmatkable &lt;- kbl(desmat, booktabs = TRUE, digits = 2, caption = &quot;Table 2: Density&quot;, align = &quot;c&quot;) %&gt;%
+    kable_classic(full_width = F, html_font = &quot;Cambria&quot;) %&gt;%
+    kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;, &quot;condensed&quot;, &quot;responsive&quot;)) %&gt;%
+    column_spec(column = 1, width = &quot;3in&quot;)
 
 desmatkable</code></pre>
 <table class=" lightable-classic table table-striped table-hover table-condensed table-responsive" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
@@ -8043,16 +8060,17 @@ colmat[3, 7] &lt;- fscolnet(rtnet[, , 1], ethminz)
 colmat[3, 8] &lt;- fscolnet(rtnet[, , 2], ethminz)
 colmat[3, 9] &lt;- fscolnet(rtnet[, , 3], ethminz)
 
-colnames(colmat) &lt;- c(&quot;friends w1&quot;, &quot;friends w2&quot;, &quot;friends w3&quot;, &quot;atmentions w1&quot;, &quot;atmentions w2&quot;, &quot;atmentions w3&quot;, 
+colnames(colmat) &lt;- c(&quot;friends w1&quot;, &quot;friends w2&quot;, &quot;friends w3&quot;, &quot;atmentions w1&quot;, &quot;atmentions w2&quot;, &quot;atmentions w3&quot;,
     &quot;retweets w1&quot;, &quot;retweets w2&quot;, &quot;retweets w3&quot;)
 rownames(colmat) &lt;- c(&quot;party&quot;, &quot;sex&quot;, &quot;ethnicity&quot;)
 # colmat
 
 # write.csv2(colmat, &#39;20190829colmat.csv&#39;)
 
-colmatkable &lt;- kbl(colmat, booktabs = TRUE, digits = 2, caption = &quot;Table 2: Coleman&quot;, align = &quot;c&quot;) %&gt;% 
-    kable_classic(full_width = F, html_font = &quot;Cambria&quot;) %&gt;% kable_styling(bootstrap_options = c(&quot;striped&quot;, 
-    &quot;hover&quot;, &quot;condensed&quot;, &quot;responsive&quot;)) %&gt;% column_spec(column = 1, width = &quot;3in&quot;)
+colmatkable &lt;- kbl(colmat, booktabs = TRUE, digits = 2, caption = &quot;Table 2: Coleman&quot;, align = &quot;c&quot;) %&gt;%
+    kable_classic(full_width = F, html_font = &quot;Cambria&quot;) %&gt;%
+    kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;, &quot;condensed&quot;, &quot;responsive&quot;)) %&gt;%
+    column_spec(column = 1, width = &quot;3in&quot;)
 
 colmatkable</code></pre>
 <table class=" lightable-classic table table-striped table-hover table-condensed table-responsive" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
@@ -8205,25 +8223,25 @@ ethminz &lt;- ethminz + 1
 
 asmat &lt;- matrix(NA, nrow = 4, ncol = 9)
 
-gfnet1 &lt;- graph_from_adjacency_matrix(fnet[, , 1], mode = &quot;directed&quot;, weighted = NULL, diag = FALSE, 
+gfnet1 &lt;- graph_from_adjacency_matrix(fnet[, , 1], mode = &quot;directed&quot;, weighted = NULL, diag = FALSE,
     add.colnames = NA, add.rownames = NA)
-gfnet2 &lt;- graph_from_adjacency_matrix(fnet[, , 2], mode = &quot;directed&quot;, weighted = NULL, diag = FALSE, 
+gfnet2 &lt;- graph_from_adjacency_matrix(fnet[, , 2], mode = &quot;directed&quot;, weighted = NULL, diag = FALSE,
     add.colnames = NA, add.rownames = NA)
-gfnet3 &lt;- graph_from_adjacency_matrix(fnet[, , 3], mode = &quot;directed&quot;, weighted = NULL, diag = FALSE, 
-    add.colnames = NA, add.rownames = NA)
-
-grtnet1 &lt;- graph_from_adjacency_matrix(rtnet[, , 1], mode = &quot;directed&quot;, weighted = NULL, diag = FALSE, 
-    add.colnames = NA, add.rownames = NA)
-grtnet2 &lt;- graph_from_adjacency_matrix(rtnet[, , 2], mode = &quot;directed&quot;, weighted = NULL, diag = FALSE, 
-    add.colnames = NA, add.rownames = NA)
-grtnet3 &lt;- graph_from_adjacency_matrix(rtnet[, , 3], mode = &quot;directed&quot;, weighted = NULL, diag = FALSE, 
+gfnet3 &lt;- graph_from_adjacency_matrix(fnet[, , 3], mode = &quot;directed&quot;, weighted = NULL, diag = FALSE,
     add.colnames = NA, add.rownames = NA)
 
-gatmnet1 &lt;- graph_from_adjacency_matrix(atmnet[, , 1], mode = &quot;directed&quot;, weighted = NULL, diag = FALSE, 
+grtnet1 &lt;- graph_from_adjacency_matrix(rtnet[, , 1], mode = &quot;directed&quot;, weighted = NULL, diag = FALSE,
     add.colnames = NA, add.rownames = NA)
-gatmnet2 &lt;- graph_from_adjacency_matrix(atmnet[, , 2], mode = &quot;directed&quot;, weighted = NULL, diag = FALSE, 
+grtnet2 &lt;- graph_from_adjacency_matrix(rtnet[, , 2], mode = &quot;directed&quot;, weighted = NULL, diag = FALSE,
     add.colnames = NA, add.rownames = NA)
-gatmnet3 &lt;- graph_from_adjacency_matrix(atmnet[, , 3], mode = &quot;directed&quot;, weighted = NULL, diag = FALSE, 
+grtnet3 &lt;- graph_from_adjacency_matrix(rtnet[, , 3], mode = &quot;directed&quot;, weighted = NULL, diag = FALSE,
+    add.colnames = NA, add.rownames = NA)
+
+gatmnet1 &lt;- graph_from_adjacency_matrix(atmnet[, , 1], mode = &quot;directed&quot;, weighted = NULL, diag = FALSE,
+    add.colnames = NA, add.rownames = NA)
+gatmnet2 &lt;- graph_from_adjacency_matrix(atmnet[, , 2], mode = &quot;directed&quot;, weighted = NULL, diag = FALSE,
+    add.colnames = NA, add.rownames = NA)
+gatmnet3 &lt;- graph_from_adjacency_matrix(atmnet[, , 3], mode = &quot;directed&quot;, weighted = NULL, diag = FALSE,
     add.colnames = NA, add.rownames = NA)
 
 asmat[1, 1] &lt;- assortativity_nominal(gfnet1, types = partij_int, directed = TRUE)
@@ -8265,14 +8283,15 @@ asmat[4, 7] &lt;- assortativity(gatmnet1, types1 = lft, directed = TRUE)
 asmat[4, 8] &lt;- assortativity(gatmnet2, types1 = lft, directed = TRUE)
 asmat[4, 9] &lt;- assortativity(gatmnet3, types1 = lft, directed = TRUE)
 
-colnames(asmat) &lt;- c(&quot;friends w1&quot;, &quot;friends w2&quot;, &quot;friends w3&quot;, &quot;atmentions w1&quot;, &quot;atmentions w2&quot;, &quot;atmentions w3&quot;, 
+colnames(asmat) &lt;- c(&quot;friends w1&quot;, &quot;friends w2&quot;, &quot;friends w3&quot;, &quot;atmentions w1&quot;, &quot;atmentions w2&quot;, &quot;atmentions w3&quot;,
     &quot;retweets w1&quot;, &quot;retweets w2&quot;, &quot;retweets w3&quot;)
 rownames(asmat) &lt;- c(&quot;party&quot;, &quot;sex&quot;, &quot;ethnicity&quot;, &quot;age&quot;)
 # asmat write.csv2(asmat, &#39;20190828asmat.csv&#39;)
 
-asmatkable &lt;- kbl(asmat, booktabs = TRUE, digits = 2, caption = &quot;Table 2: Assortativity&quot;, align = &quot;c&quot;) %&gt;% 
-    kable_classic(full_width = F, html_font = &quot;Cambria&quot;) %&gt;% kable_styling(bootstrap_options = c(&quot;striped&quot;, 
-    &quot;hover&quot;, &quot;condensed&quot;, &quot;responsive&quot;)) %&gt;% column_spec(column = 1, width = &quot;3in&quot;)
+asmatkable &lt;- kbl(asmat, booktabs = TRUE, digits = 2, caption = &quot;Table 2: Assortativity&quot;, align = &quot;c&quot;) %&gt;%
+    kable_classic(full_width = F, html_font = &quot;Cambria&quot;) %&gt;%
+    kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;, &quot;condensed&quot;, &quot;responsive&quot;)) %&gt;%
+    column_spec(column = 1, width = &quot;3in&quot;)
 
 asmatkable</code></pre>
 <table class=" lightable-classic table table-striped table-hover table-condensed table-responsive" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
@@ -8444,12 +8463,12 @@ age
 </tbody>
 </table>
 <hr />
-<div id="refs" class="references">
-<div id="ref-BOJANOWSKI201414">
-<p>Bojanowski, Michał, and Rense Corten. 2014. “Measuring Segregation in Social Networks.” <em>Social Networks</em> 39: 14–32. <a href="https://doi.org/https://doi.org/10.1016/j.socnet.2014.04.001">https://doi.org/https://doi.org/10.1016/j.socnet.2014.04.001</a>.</p>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-BOJANOWSKI201414" class="csl-entry">
+Bojanowski, Michał, and Rense Corten. 2014. <span>“Measuring Segregation in Social Networks.”</span> <em>Social Networks</em> 39: 14–32. https://doi.org/<a href="https://doi.org/10.1016/j.socnet.2014.04.001">https://doi.org/10.1016/j.socnet.2014.04.001</a>.
 </div>
-<div id="ref-Tolsma2021">
-<p>Tolsma, Jochem, Niels Spierings, and Kristof Jacobs. n.d. “Twitter.” <em>-</em> - (-): –. <a href="-">-</a>.</p>
+<div id="ref-Tolsma2021" class="csl-entry">
+Tolsma, Jochem, Niels Spierings, and Kristof Jacobs. submitted. <span>“Twitter.”</span> <em>-</em> - (-): –. <a href="https://-">-</a>.
 </div>
 </div>
 </div>
@@ -8496,7 +8515,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
+    $(this).parent().toggleClass('nav-tabs-open');
   });
 });
 </script>
@@ -8511,6 +8530,9 @@ $(document).ready(function () {
 
 <script>
 $(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
 
     // move toc-ignore selectors from section div to header
     $('div.section.toc-ignore')

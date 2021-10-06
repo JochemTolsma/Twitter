@@ -1,0 +1,856 @@
+
+
+-----------------------------------
+New Analysis started.
+Date and time: 02/09/2021 13:52:02
+New results follow.
+-----------------------------------
+
+RSiena version 1.3.0 (02 May 21)
+
+
+@1
+Estimation by stochastic approximation algorithm.
+=================================================
+
+Random initialization of random number stream.
+Current random number seed is 715462.
+
+
+-----------------------------------
+New Analysis started.
+Date and time: 02/09/2021 13:52:22
+New results follow.
+-----------------------------------
+
+RSiena version 1.3.0 (02 May 21)
+
+
+@1
+Estimation by stochastic approximation algorithm.
+=================================================
+
+Random initialization of random number stream.
+Current random number seed is 458147.
+Effects object used: myeff_m4 
+Model Type:
+Network 1 fnet : Standard actor-oriented model
+Network 2 atmnet : Standard actor-oriented model
+Network 3 rtnet : Standard actor-oriented model
+Estimation method: unconditional moment estimation
+.
+
+Time duration for simulations in each period is 1.0.
+Standard errors are estimated with the likelihood ratio method.
+Dolby method (regression on scores) is used.
+Initial value of gain parameter is  0.6324555.
+Reduction factor for gain parameter is  0.5000000.
+Number of subphases in Phase 2 is 4.
+
+Initial parameter values are 
+  1. rate:  constant fnet rate (period 1)                   4.6665
+  2. rate:  constant fnet rate (period 2)                   2.0356
+  3. eval:  fnet: outdegree (density)                     -13.7764
+  4. eval:  fnet: reciprocity                               0.8124
+  5. eval:  fnet: transitive triplets                       0.0368
+  6. eval:  fnet: shared popularity                        -0.0007
+  7. eval:  fnet: indegree - popularity (sqrt)              0.3436
+  8. eval:  fnet: outdegree - popularity (sqrt)            -0.1998
+  9. eval:  fnet: outdegree - activity (sqrt)               1.4080
+ 10. eval:  fnet: afstand                                  -0.0223
+ 11. eval:  fnet: same partij                               0.7547
+ 12. eval:  fnet: same ethminz                             -0.4099
+ 13. eval:  fnet: vrouw alter                               0.2355
+ 14. eval:  fnet: same vrouw                                0.1304
+ 15. eval:  fnet: lft alter                                -0.0157
+ 16. eval:  fnet: lft ego                                  -0.1371
+ 17. eval:  fnet: lft abs. difference                       0.0340
+ 18. eval:  fnet: kamerlid2016 alter                       -0.3924
+ 19. eval:  fnet: same kamerlid2016                         0.1819
+ 20. eval:  fnet: pleklijst ego                             0.5845
+ 21. eval:  fnet: rtnet                                     1.7184
+ 22. eval:  fnet: reciprocity with rtnet                    0.6771
+ 23. rate:  constant atmnet rate (period 1)                91.8354
+ 24. rate:  constant atmnet rate (period 2)                14.1123
+ 25. eval:  atmnet: outdegree (density)                    -4.3818
+ 26. eval:  atmnet: reciprocity                             1.2119
+ 27. eval:  atmnet: transitive triplets                     0.0294
+ 28. eval:  atmnet: shared popularity                      -0.0053
+ 29. eval:  atmnet: indegree - popularity (sqrt)            0.4189
+ 30. eval:  atmnet: outdegree - popularity (sqrt)          -0.1176
+ 31. eval:  atmnet: outdegree - activity (sqrt)             0.2575
+ 32. eval:  atmnet: same partij                             0.4064
+ 33. eval:  atmnet: d66 alter                              -0.1490
+ 34. eval:  atmnet: gl alter                               -0.1383
+ 35. eval:  atmnet: gl ego                                  0.1275
+ 36. eval:  atmnet: pleklijst alter                        -0.0062
+ 37. eval:  atmnet: pleklijst1 ego                         -0.2757
+ 38. eval:  atmnet: fnet                                    0.3997
+ 39. eval:  atmnet: reciprocity with fnet                   0.1585
+ 40. eval:  atmnet: rtnet                                   0.4539
+ 41. eval:  atmnet: reciprocity with rtnet                  0.2453
+ 42. rate:  constant rtnet rate (period 1)                 20.6431
+ 43. rate:  constant rtnet rate (period 2)                 19.4538
+ 44. eval:  rtnet: outdegree (density)                     -4.1255
+ 45. eval:  rtnet: reciprocity                              0.1759
+ 46. eval:  rtnet: transitive triplets                      0.1408
+ 47. eval:  rtnet: shared popularity                       -0.0088
+ 48. eval:  rtnet: indegree - popularity (sqrt)             0.3570
+ 49. eval:  rtnet: outdegree - popularity (sqrt)           -0.3574
+ 50. eval:  rtnet: outdegree - activity (sqrt)              0.1010
+ 51. eval:  rtnet: afstand                                 -0.0196
+ 52. eval:  rtnet: same partij                              1.1059
+ 53. eval:  rtnet: d66 ego                                 -0.3916
+ 54. eval:  rtnet: pvv ego                                  0.3224
+ 55. eval:  rtnet: ethminz ego                              0.1760
+ 56. eval:  rtnet: same ethminz                             0.1339
+ 57. eval:  rtnet: vrouw alter                              0.1160
+ 58. eval:  rtnet: vrouw ego                                0.1235
+ 59. eval:  rtnet: same vrouw                               0.1146
+ 60. eval:  rtnet: lft alter                               -0.0070
+ 61. eval:  rtnet: kamerlid2016 ego                        -0.1297
+ 62. eval:  rtnet: pleklijst1 alter                         0.1656
+ 63. eval:  rtnet: fnet                                     0.6467
+ 64. eval:  rtnet: reciprocity with fnet                    0.2506
+ 65. eval:  rtnet: atmnet                                   0.8007
+ 66. eval:  rtnet: reciprocity with atmnet                  0.9880
+
+
+Observed values of target statistics are
+  1. Amount of network change in period 1                               527.0000
+  2. Amount of network change in period 2                               277.0000
+  3. fnet: Number of ties                                              11887.0000
+  4. fnet: Number of reciprocated ties                                 6712.0000
+  5. fnet: Number of transitive triplets                               290390.0000
+  6. fnet: (Number 2-2PU)^1/1)                                         4181487.0000
+  7. fnet: Sum of indegrees x sqrt(indegree)                           83554.5067
+  8. fnet: Sum of indegrees x sqrt(outdegree)                          75168.1958
+  9. fnet: Sum of outdegrees^(1.5)                                     88645.6438
+ 10. fnet: Sum of ties x afstand                                       -39658.8172
+ 11. fnet: Same values on partij                                       3636.0000
+ 12. fnet: Same values on ethminz                                      9860.0000
+ 13. fnet: Sum indegrees x vrouw                                        -11.6531
+ 14. fnet: Same values on vrouw                                        6510.0000
+ 15. fnet: Sum indegrees x lft                                         -4536.9524
+ 16. fnet: Sum outdegrees x lft                                        -17464.9524
+ 17. fnet: Sum_ties abs.diff lft                                       110992.0000
+ 18. fnet: Sum indegrees x kamerlid2016                                1368.4762
+ 19. fnet: Same values on kamerlid2016                                 6925.0000
+ 20. fnet: Sum outdegrees x pleklijst                                  1224.3673
+ 21. fnet: sum crprod. with rtnet                                      1548.0000
+ 22. fnet: sum crprod. with recipr. rtnet                              1422.0000
+ 23. Amount of network change in period 1                              1187.0000
+ 24. Amount of network change in period 2                               670.0000
+ 25. atmnet: Number of ties                                            1030.0000
+ 26. atmnet: Number of reciprocated ties                                376.0000
+ 27. atmnet: Number of transitive triplets                             1121.0000
+ 28. atmnet: (Number 2-2PU)^1/1)                                       1963.0000
+ 29. atmnet: Sum of indegrees x sqrt(indegree)                         2607.3391
+ 30. atmnet: Sum of indegrees x sqrt(outdegree)                        2242.4625
+ 31. atmnet: Sum of outdegrees^(1.5)                                   3142.0807
+ 32. atmnet: Same values on partij                                      509.0000
+ 33. atmnet: Sum indegrees x d66                                         29.8707
+ 34. atmnet: Sum indegrees x gl                                          25.9048
+ 35. atmnet: Sum outdegrees x gl                                         58.9048
+ 36. atmnet: Sum indegrees x pleklijst                                 -1255.9184
+ 37. atmnet: Sum outdegrees x pleklijst1                                -50.0884
+ 38. atmnet: sum crprod. with fnet                                      753.0000
+ 39. atmnet: sum crprod. with recipr. fnet                              679.0000
+ 40. atmnet: sum crprod. with rtnet                                     328.0000
+ 41. atmnet: sum crprod. with recipr. rtnet                             327.0000
+ 42. Amount of network change in period 1                               802.0000
+ 43. Amount of network change in period 2                               686.0000
+ 44. rtnet: Number of ties                                             1454.0000
+ 45. rtnet: Number of reciprocated ties                                 638.0000
+ 46. rtnet: Number of transitive triplets                              4708.0000
+ 47. rtnet: (Number 2-2PU)^1/1)                                        9313.0000
+ 48. rtnet: Sum of indegrees x sqrt(indegree)                          4116.3936
+ 49. rtnet: Sum of indegrees x sqrt(outdegree)                         3572.7996
+ 50. rtnet: Sum of outdegrees^(1.5)                                    4132.0553
+ 51. rtnet: Sum of ties x afstand                                      -11283.4948
+ 52. rtnet: Same values on partij                                      1238.0000
+ 53. rtnet: Sum outdegrees x d66                                         30.0680
+ 54. rtnet: Sum outdegrees x pvv                                        141.9592
+ 55. rtnet: Sum outdegrees x ethminz                                     11.7415
+ 56. rtnet: Same values on ethminz                                     1187.0000
+ 57. rtnet: Sum indegrees x vrouw                                        22.8776
+ 58. rtnet: Sum outdegrees x vrouw                                       87.8776
+ 59. rtnet: Same values on vrouw                                        759.0000
+ 60. rtnet: Sum indegrees x lft                                        -2393.7619
+ 61. rtnet: Sum outdegrees x kamerlid2016                               -29.6190
+ 62. rtnet: Sum indegrees x pleklijst1                                   30.4150
+ 63. rtnet: sum crprod. with fnet                                      1268.0000
+ 64. rtnet: sum crprod. with recipr. fnet                              1151.0000
+ 65. rtnet: sum crprod. with atmnet                                     461.0000
+ 66. rtnet: sum crprod. with recipr. atmnet                             437.0000
+
+ 66 parameters, 66 statistics
+
+
+
+-----------------------------------
+New Analysis started.
+Date and time: 02/09/2021 13:54:21
+New results follow.
+-----------------------------------
+
+RSiena version 1.3.0 (02 May 21)
+
+
+@1
+Estimation by stochastic approximation algorithm.
+=================================================
+
+Random initialization of random number stream.
+Current random number seed is 340713.
+
+
+-----------------------------------
+New Analysis started.
+Date and time: 02/09/2021 13:57:23
+New results follow.
+-----------------------------------
+
+RSiena version 1.3.0 (02 May 21)
+
+
+@1
+Estimation by stochastic approximation algorithm.
+=================================================
+
+Random initialization of random number stream.
+Current random number seed is 882591.
+
+
+-----------------------------------
+New Analysis started.
+Date and time: 02/09/2021 14:11:30
+New results follow.
+-----------------------------------
+
+RSiena version 1.3.0 (02 May 21)
+
+
+@1
+Estimation by stochastic approximation algorithm.
+=================================================
+
+Random initialization of random number stream.
+Current random number seed is 874429.
+
+
+-----------------------------------
+New Analysis started.
+Date and time: 02/09/2021 14:13:19
+New results follow.
+-----------------------------------
+
+RSiena version 1.3.0 (02 May 21)
+
+
+@1
+Estimation by stochastic approximation algorithm.
+=================================================
+
+Random initialization of random number stream.
+Current random number seed is 670194.
+
+
+-----------------------------------
+New Analysis started.
+Date and time: 02/09/2021 14:14:37
+New results follow.
+-----------------------------------
+
+RSiena version 1.3.0 (02 May 21)
+
+
+@1
+Estimation by stochastic approximation algorithm.
+=================================================
+
+Random initialization of random number stream.
+Current random number seed is 492756.
+
+
+-----------------------------------
+New Analysis started.
+Date and time: 02/09/2021 14:15:14
+New results follow.
+-----------------------------------
+
+RSiena version 1.3.0 (02 May 21)
+
+
+@1
+Estimation by stochastic approximation algorithm.
+=================================================
+
+Random initialization of random number stream.
+Current random number seed is 588355.
+
+
+-----------------------------------
+New Analysis started.
+Date and time: 02/09/2021 16:38:59
+New results follow.
+-----------------------------------
+
+RSiena version 1.3.0 (02 May 21)
+
+
+@1
+Estimation by stochastic approximation algorithm.
+=================================================
+
+Random initialization of random number stream.
+Current random number seed is 72937.
+
+
+-----------------------------------
+New Analysis started.
+Date and time: 02/09/2021 16:44:46
+New results follow.
+-----------------------------------
+
+RSiena version 1.3.0 (02 May 21)
+
+
+@1
+Estimation by stochastic approximation algorithm.
+=================================================
+
+Random initialization of random number stream.
+Current random number seed is 188177.
+
+
+-----------------------------------
+New Analysis started.
+Date and time: 02/09/2021 16:45:04
+New results follow.
+-----------------------------------
+
+RSiena version 1.3.0 (02 May 21)
+
+
+@1
+Estimation by stochastic approximation algorithm.
+=================================================
+
+Random initialization of random number stream.
+Current random number seed is 674994.
+
+
+-----------------------------------
+New Analysis started.
+Date and time: 02/09/2021 16:46:48
+New results follow.
+-----------------------------------
+
+RSiena version 1.3.0 (02 May 21)
+
+
+@1
+Estimation by stochastic approximation algorithm.
+=================================================
+
+Random initialization of random number stream.
+Current random number seed is 211884.
+
+
+-----------------------------------
+New Analysis started.
+Date and time: 02/09/2021 20:26:51
+New results follow.
+-----------------------------------
+
+RSiena version 1.3.0 (02 May 21)
+
+
+@1
+Estimation by stochastic approximation algorithm.
+=================================================
+
+Random initialization of random number stream.
+Current random number seed is 608154.
+
+
+-----------------------------------
+New Analysis started.
+Date and time: 02/09/2021 20:32:31
+New results follow.
+-----------------------------------
+
+RSiena version 1.3.0 (02 May 21)
+
+
+@1
+Estimation by stochastic approximation algorithm.
+=================================================
+
+Random initialization of random number stream.
+Current random number seed is 165617.
+
+
+-----------------------------------
+New Analysis started.
+Date and time: 02/09/2021 20:41:22
+New results follow.
+-----------------------------------
+
+RSiena version 1.3.0 (02 May 21)
+
+
+@1
+Estimation by stochastic approximation algorithm.
+=================================================
+
+Random initialization of random number stream.
+Current random number seed is 171699.
+
+
+-----------------------------------
+New Analysis started.
+Date and time: 02/09/2021 20:45:15
+New results follow.
+-----------------------------------
+
+RSiena version 1.3.0 (02 May 21)
+
+
+@1
+Estimation by stochastic approximation algorithm.
+=================================================
+
+Random initialization of random number stream.
+Current random number seed is 337020.
+Effects object used: myeff 
+Model Type:
+ Standard actor-oriented model
+Estimation method: conditional moment estimation
+.
+Conditioning variable is the total number of observed changes ("distance") 
+in the network variable.
+Distance for simulations is  527 .
+Standard errors are estimated with the likelihood ratio method.
+Dolby method (regression on scores) is used.
+Initial value of gain parameter is  0.2000000.
+Reduction factor for gain parameter is  0.5000000.
+Number of subphases in Phase 2 is 4.
+
+Initial parameter values are 
+  0. Rate parameter                           7.2202
+  1. eval:  reciprocity                                     0.0000
+
+
+Observed values of target statistics are
+  1. Number of reciprocated ties                                       3336.0000
+
+ 1 parameters, 1 statistics
+
+Estimation of derivatives by the LR method (type 1).
+
+
+@2
+End of stochastic approximation algorithm, phase 3.
+---------------------------------------------------
+
+Total of 1917 iterations.
+Parameter estimates based on 917 iterations,
+basic rate parameter as well as 
+convergence diagnostics, covariance and derivative matrices based on 1000 iterations.
+
+Information for convergence diagnosis.
+Averages, standard deviations, and t-ratios for deviations from targets:
+  1.  -0.2580  18.9272  -0.0136 
+
+Good convergence is indicated by the t-ratios being close to zero.
+
+Overall maximum convergence ratio =  0.0136 .
+
+
+
+@2
+Estimation Results.
+-------------------
+
+Regular end of estimation algorithm.
+Total of 1917 iteration steps.
+
+
+@3
+Estimates and standard errors
+                             
+Rate parameters:
+ 0. Rate parameter                            3.6762  (   0.1646)
+
+Other parameters:
+ 1. eval:  reciprocity                                             0.7578  (   0.1250)
+
+
+@3
+Covariance matrices
+                   
+Covariance matrix of estimates (correlations below diagonal):
+     0.016
+
+Derivative matrix of expected statistics X by parameters and
+covariance/correlation matrix of X can be found using
+summary(ans) within R, or by using the 'verbose' option in Siena07.
+ 
+Total computation time 22.75 seconds.
+
+
+-----------------------------------
+New Analysis started.
+Date and time: 02/09/2021 20:46:49
+New results follow.
+-----------------------------------
+
+RSiena version 1.3.0 (02 May 21)
+
+
+@1
+Estimation by stochastic approximation algorithm.
+=================================================
+
+Random initialization of random number stream.
+Current random number seed is 147187.
+Effects object used: myeff 
+Model Type:
+ Standard actor-oriented model
+Estimation method: conditional moment estimation
+.
+Conditioning variable is the total number of observed changes ("distance") 
+in the network variable.
+Distance for simulations is  527 .
+Standard errors are estimated with the likelihood ratio method.
+Dolby method (regression on scores) is used.
+Initial value of gain parameter is  0.6324555.
+Reduction factor for gain parameter is  0.5000000.
+Number of subphases in Phase 2 is 4.
+
+Initial parameter values are 
+  0. Rate parameter                           7.2202
+  1. eval:  reciprocity                                     0.0000
+
+
+Observed values of target statistics are
+  1. Number of reciprocated ties                                       3336.0000
+
+ 1 parameters, 1 statistics
+
+Estimation of derivatives by the LR method (type 1).
+
+
+@2
+End of stochastic approximation algorithm, phase 3.
+---------------------------------------------------
+
+Total of 1756 iterations.
+Parameter estimates based on 756 iterations,
+basic rate parameter as well as 
+convergence diagnostics, covariance and derivative matrices based on 1000 iterations.
+
+Information for convergence diagnosis.
+Averages, standard deviations, and t-ratios for deviations from targets:
+  1.  -0.3040  19.1289  -0.0159 
+
+Good convergence is indicated by the t-ratios being close to zero.
+
+Overall maximum convergence ratio =  0.0159 .
+
+
+
+@2
+Estimation Results.
+-------------------
+
+Regular end of estimation algorithm.
+Total of 1756 iteration steps.
+
+
+@3
+Estimates and standard errors
+                             
+Rate parameters:
+ 0. Rate parameter                            3.6751  (   0.1672)
+
+Other parameters:
+ 1. eval:  reciprocity                                             0.7573  (   0.1242)
+
+
+@3
+Covariance matrices
+                   
+Covariance matrix of estimates (correlations below diagonal):
+     0.015
+
+Derivative matrix of expected statistics X by parameters and
+covariance/correlation matrix of X can be found using
+summary(ans) within R, or by using the 'verbose' option in Siena07.
+ 
+Total computation time 22.16 seconds.
+
+
+-----------------------------------
+New Analysis started.
+Date and time: 02/09/2021 20:48:35
+New results follow.
+-----------------------------------
+
+RSiena version 1.3.0 (02 May 21)
+
+
+@1
+Estimation by stochastic approximation algorithm.
+=================================================
+
+Random initialization of random number stream.
+Current random number seed is 347335.
+
+
+-----------------------------------
+New Analysis started.
+Date and time: 02/09/2021 21:04:14
+New results follow.
+-----------------------------------
+
+RSiena version 1.3.0 (02 May 21)
+
+
+@1
+Estimation by stochastic approximation algorithm.
+=================================================
+
+Random initialization of random number stream.
+Current random number seed is 321045.
+Effects object used: myeff 
+Model Type:
+Network 1 fnet : Standard actor-oriented model
+Network 2 atmnet : Standard actor-oriented model
+Network 3 rtnet : Standard actor-oriented model
+Estimation method: unconditional moment estimation
+.
+
+Time duration for simulations is 1.0.
+Standard errors are estimated with the likelihood ratio method.
+Dolby method (regression on scores) is used.
+Initial value of gain parameter is  0.6324555.
+Reduction factor for gain parameter is  0.5000000.
+Number of subphases in Phase 2 is 4.
+
+Initial parameter values are 
+  1. rate:  basic rate parameter fnet                       7.2202
+  2. eval:  fnet: reciprocity                               0.0000
+  3. rate:  basic rate parameter atmnet                    16.2609
+  4. eval:  atmnet: outdegree (density)                    -1.7461
+  5. eval:  atmnet: reciprocity                             0.0000
+  6. rate:  basic rate parameter rtnet                     10.9872
+  7. eval:  rtnet: outdegree (density)                     -1.6451
+  8. eval:  rtnet: reciprocity                              0.0000
+
+
+Observed values of target statistics are
+  1. Amount of network change                                           527.0000
+  2. fnet: Number of reciprocated ties                                 3336.0000
+  3. Amount of network change                                          1187.0000
+  4. atmnet: Number of ties                                             741.0000
+  5. atmnet: Number of reciprocated ties                                272.0000
+  6. Amount of network change                                           802.0000
+  7. rtnet: Number of ties                                              730.0000
+  8. rtnet: Number of reciprocated ties                                 322.0000
+
+ 8 parameters, 8 statistics
+
+
+
+-----------------------------------
+New Analysis started.
+Date and time: 02/09/2021 21:05:05
+New results follow.
+-----------------------------------
+
+RSiena version 1.3.0 (02 May 21)
+
+
+@1
+Estimation by stochastic approximation algorithm.
+=================================================
+
+Random initialization of random number stream.
+Current random number seed is 271242.
+Effects object used: myeff 
+Model Type:
+Network 1 fnet : Standard actor-oriented model
+Network 2 atmnet : Standard actor-oriented model
+Network 3 rtnet : Standard actor-oriented model
+Estimation method: unconditional moment estimation
+.
+
+Time duration for simulations is 1.0.
+Standard errors are estimated with the likelihood ratio method.
+Dolby method (regression on scores) is used.
+Initial value of gain parameter is  0.6324555.
+Reduction factor for gain parameter is  0.5000000.
+Number of subphases in Phase 2 is 4.
+
+Initial parameter values are 
+  1. rate:  basic rate parameter fnet                       4.6665
+  2. eval:  fnet: reciprocity                               0.8124
+  3. rate:  basic rate parameter atmnet                    91.8354
+  4. eval:  atmnet: outdegree (density)                    -4.3818
+  5. eval:  atmnet: reciprocity                             1.2119
+  6. rate:  basic rate parameter rtnet                     20.6431
+  7. eval:  rtnet: outdegree (density)                     -4.1255
+  8. eval:  rtnet: reciprocity                              0.1759
+
+
+Observed values of target statistics are
+  1. Amount of network change                                           527.0000
+  2. fnet: Number of reciprocated ties                                 3336.0000
+  3. Amount of network change                                          1187.0000
+  4. atmnet: Number of ties                                             741.0000
+  5. atmnet: Number of reciprocated ties                                272.0000
+  6. Amount of network change                                           802.0000
+  7. rtnet: Number of ties                                              730.0000
+  8. rtnet: Number of reciprocated ties                                 322.0000
+
+ 8 parameters, 8 statistics
+
+
+
+-----------------------------------
+New Analysis started.
+Date and time: 03/09/2021 12:53:02
+New results follow.
+-----------------------------------
+
+RSiena version 1.3.0 (02 May 21)
+
+
+@1
+Estimation by stochastic approximation algorithm.
+=================================================
+
+Random initialization of random number stream.
+Current random number seed is 150949.
+Effects object used: myeff 
+Model Type:
+Network 1 fnet : Standard actor-oriented model
+Network 2 atmnet : Standard actor-oriented model
+Network 3 rtnet : Standard actor-oriented model
+Estimation method: unconditional moment estimation
+.
+
+Time duration for simulations is 1.0.
+Standard errors are estimated with the likelihood ratio method.
+Dolby method (regression on scores) is used.
+Initial value of gain parameter is  0.6324555.
+Reduction factor for gain parameter is  0.5000000.
+Number of subphases in Phase 2 is 4.
+
+Initial parameter values are 
+  1. rate:  basic rate parameter fnet                       4.6665
+  2. eval:  fnet: reciprocity                               0.8124
+  3. rate:  basic rate parameter atmnet                    91.8354
+  4. eval:  atmnet: outdegree (density)                    -4.3818
+  5. eval:  atmnet: reciprocity                             1.2119
+  6. rate:  basic rate parameter rtnet                     20.6431
+  7. eval:  rtnet: outdegree (density)                     -4.1255
+  8. eval:  rtnet: reciprocity                              0.1759
+
+
+Observed values of target statistics are
+  1. Amount of network change                                           527.0000
+  2. fnet: Number of reciprocated ties                                 3336.0000
+  3. Amount of network change                                          1187.0000
+  4. atmnet: Number of ties                                             741.0000
+  5. atmnet: Number of reciprocated ties                                272.0000
+  6. Amount of network change                                           802.0000
+  7. rtnet: Number of ties                                              730.0000
+  8. rtnet: Number of reciprocated ties                                 322.0000
+
+ 8 parameters, 8 statistics
+
+Estimation of derivatives by the LR method (type 1).
+
+
+@2
+End of stochastic approximation algorithm, phase 3.
+---------------------------------------------------
+
+Total of 2256 iterations.
+Parameter estimates based on 1256 iterations,
+convergence diagnostics, covariance and derivative matrices based on 1000 iterations.
+
+Information for convergence diagnosis.
+Averages, standard deviations, and t-ratios for deviations from targets:
+Overall maximum t-ratio for convergence not computable.
+  1. 15236.3080  13.4471 1133.0570 
+  2. 17521.0360  20.2085  867.0136 
+  3.  -147.0000   0.0000        NA 
+  4.  -741.0000   0.0000        NA 
+  5.  -272.0000   0.0000        NA 
+  6.   262.5370  32.4889    8.0808 
+  7.   844.6030  32.4676   26.0137 
+  8.  -321.9340   0.3792 -848.9964 
+
+Good convergence is indicated by the t-ratios being close to zero.
+
+Overall maximum convergence ratio =  NA .
+One or more of the t-statistics are rather large.
+Convergence of the algorithm is doubtful.
+*** Warning: Covariance matrix not positive definite *** 
+***            Standard errors not reliable           *** 
+The approximate linear combination that has variance 0 is
+-1 * beta[3] + -0.45 * beta[6] + 0.45 * beta[7] + -0.45 * beta[8]
+Do not use any reported standard errors.
+
+
+
+@2
+Estimation Results.
+-------------------
+
+Regular end of estimation algorithm.
+Total of 2256 iteration steps.
+
+
+@3
+Estimates and standard errors
+                             
+ 1. rate:  basic rate parameter fnet                            NANA
+ 2. eval:  fnet: reciprocity                                    NANA
+ 3. rate:  basic rate parameter atmnet                          NANA
+ 4. eval:  atmnet: outdegree (density)                          NANA
+ 5. eval:  atmnet: reciprocity                                  NANA
+ 6. rate:  basic rate parameter rtnet                           NANA
+ 7. eval:  rtnet: outdegree (density)                           NANA
+ 8. eval:  rtnet: reciprocity                                   NANA
+
+
+@3
+Covariance matrices
+                   
+There is a linear dependency between the parameter estimates
+ therefore the covariance matrix should not be used.
+
+Total computation time 4093.42 seconds.
+
+
+-----------------------------------
+New Analysis started.
+Date and time: 03/09/2021 14:01:15
+New results follow.
+-----------------------------------
+
+RSiena version 1.3.0 (02 May 21)
+
+
+@1
+Estimation by stochastic approximation algorithm.
+=================================================
+
+Random initialization of random number stream.
+Current random number seed is 558167.

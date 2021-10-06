@@ -12,9 +12,11 @@ output:
     code_download: yes
 ---
 
+
+<!---to build website, I have set, eval=FALSE for now---> 
 ```{r globalsettings, echo=FALSE, warning=FALSE}
 library(knitr)
-opts_chunk$set(tidy.opts=list(width.cutoff=100),tidy=TRUE, warning = FALSE, message = FALSE,comment = "#>", cache=TRUE, echo=FALSE, class.source=c("test"), class.output=c("test2"))
+opts_chunk$set(tidy.opts=list(width.cutoff=100),tidy=TRUE, warning = FALSE, message = FALSE,comment = "#>", cache=TRUE, echo=FALSE, eval=FALSE, class.source=c("test"), class.output=c("test2"))
 options(width = 100)
 rgl::setupKnitr()
 ```

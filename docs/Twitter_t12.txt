@@ -1,0 +1,551 @@
+							************************
+									 Twitter_t12.txt
+							************************
+
+Filename is Twitter_t12.txt.
+
+This file contains primary output for SIENA project <<Twitter_t12>>.
+
+Date and time: 02/09/2021 20:36:36 
+
+RSiena version 1.3.0 (02 05 2021)
+
+
+@1
+Data input.
+===========
+
+2 observations,
+147 actors,
+3 dependent network variables,
+0 dependent bipartite variables,
+0 dependent discrete behavior variables,
+0 dependent continuous behavior variables,
+24 constant actor covariates,
+0 exogenous changing actor covariates,
+1 constant dyadic covariates,
+0 exogenous changing dyadic covariates,
+0 no files with times of composition change.
+
+
+@2
+Reading network variables.
+--------------------------
+
+Name of this network variable: sienaNet(deps$fnet[, , 1:2]).
+oneMode network.
+For observation moment 1, degree distributions are as follows:
+Nodes
+  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15 
+ 16  17  18  19  20  21  22  23  24  25  26  27  28  29  30 
+ 31  32  33  34  35  36  37  38  39  40  41  42  43  44  45 
+ 46  47  48  49  50  51  52  53  54  55  56  57  58  59  60 
+ 61  62  63  64  65  66  67  68  69  70  71  72  73  74  75 
+ 76  77  78  79  80  81  82  83  84  85  86  87  88  89  90 
+ 91  92  93  94  95  96  97  98  99 100 101 102 103 104 105 
+106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 
+121 122 123 124 125 126 127 128 129 130 131 132 133 134 135 
+136 137 138 139 140 141 142 143 144 145 146 147
+out-degrees
+ 19  29  12  62  45  19  85  42  49  25  58 104  19  42  95 
+ 55  33  34  34  32  19  43  37  25  48 137  12  55  30  24 
+ 33  35  23  16  71  26  21  59   0  54  34  51  46  26  46 
+ 23  49  31   0  30  74  25   1  38  42  38  78 136  28  42 
+ 79  44  49 103  26  71  76  15  67   0  64  53  19   0   0 
+ 32  17  40  34  32  52   7  27  49  36  30  40  25  28  10 
+ 46  45  20  58  21  34  70   0  35   0  30  26  24   0  13 
+ 39  54  42  13  51  46  10  36  28  51   6  26  15   1  32 
+ 52  17 108   5  34  31  36  36  30  31  19  43  26 131   9 
+ 33  41  39   0  14  21  18  13  18  28  46  14
+in-degrees
+ 46  23  55  45  58  30  30  54  27  33  45  75  34  44  66 
+ 52  45  47  42  36  32  25  24  81  56  62  30  32  64  85 
+ 45  47  51  41  52  29  62  47   1  42  43  45  20  13  84 
+ 39  23  98   2  76  51  23   0  41  42  64  49  85  50  54 
+ 56  61  64  41  37  70  40  13  54  79  47  45  67 100   0 
+ 72  62  86  53  49  69  42  29  42  48  21  52  22  19  20 
+ 20  28  42  25  18  13  23   4  17   7  21  22  21  13   6 
+ 14  39  32  13  45  38  16  18  22  15   2  17   6   2  27 
+ 48  28  32  31  42  24  21  38  17  38  15  61   8  21  13 
+ 31  20  18  14  15  16  14  15  26  15  19   6
+
+The input file contains codes for structurally determined values:
+  294 structural zeros were found (code 10).
+  0 structural one was found (code 11).
+Actors 104 139 are inactive at this observation.
+
+
+No missing data for observation 1.
+
+For observation moment 2, degree distributions are as follows:
+Nodes
+  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15 
+ 16  17  18  19  20  21  22  23  24  25  26  27  28  29  30 
+ 31  32  33  34  35  36  37  38  39  40  41  42  43  44  45 
+ 46  47  48  49  50  51  52  53  54  55  56  57  58  59  60 
+ 61  62  63  64  65  66  67  68  69  70  71  72  73  74  75 
+ 76  77  78  79  80  81  82  83  84  85  86  87  88  89  90 
+ 91  92  93  94  95  96  97  98  99 100 101 102 103 104 105 
+106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 
+121 122 123 124 125 126 127 128 129 130 131 132 133 134 135 
+136 137 138 139 140 141 142 143 144 145 146 147
+out-degrees
+ 21  36  12  62  46  24  88  43  52  25  63 116  25  42  97 
+ 57  36  37  41  33  19  44  39  26  51 137  17  56  31  24 
+ 34  38  23  16  72  28  22  59   0  60  36  52  47  27  49 
+ 23  50  31   0  30  75  25   1  41  42  40  79 136  28  42 
+ 86  44  49 103  27  71  79  18  67   0  67  53  19   0   0 
+ 32  17  41  35  32  52   8  30  55  39  32  46 136  37  10 
+ 54  45  20  84  21  34  91   0  38   0  30  26  28   0  13 
+ 58  57  48  13  51  54  13  53  42  51   8  26  15   1  33 
+ 53  18 115   5  52  33  49  36  46  34  21  45  39 132   9 
+ 34  59  44   0  15  22  19  16  21  34  51  16
+in-degrees
+ 48  26  59  47  60  33  33  57  31  36  48  78  38  46  68 
+ 56  47  49  49  38  33  29  26  84  57  63  33  34  65  86 
+ 47  48  55  42  55  31  64  49   1  46  49  52  25  14  84 
+ 42  24  99   2  79  54  25   0  45  44  68  53  87  54  59 
+ 57  64  66  44  42  72  42  17  56  79  48  48  68 102   0 
+ 75  65  89  55  53  70  46  36  45  53  29  57  30  25  21 
+ 24  32  50  33  23  16  30   4  24   7  25  32  27  18   6 
+ 19  44  46  15  47  45  23  29  24  21   2  27  11   2  32 
+ 50  33  41  36  45  26  28  39  23  45  22  63  14  27  16 
+ 33  28  23  19  19  21  17  17  29  22  22  12
+
+The input file contains codes for structurally determined values:
+  294 structural zeros were found (code 10).
+  0 structural one was found (code 11).
+Actors 104 139 are inactive at this observation.
+
+
+No missing data for observation 2.
+
+
+Name of this network variable: sienaNet(deps$atmnet[, , 1:2]).
+oneMode network.
+For observation moment 1, degree distributions are as follows:
+Nodes
+  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15 
+ 16  17  18  19  20  21  22  23  24  25  26  27  28  29  30 
+ 31  32  33  34  35  36  37  38  39  40  41  42  43  44  45 
+ 46  47  48  49  50  51  52  53  54  55  56  57  58  59  60 
+ 61  62  63  64  65  66  67  68  69  70  71  72  73  74  75 
+ 76  77  78  79  80  81  82  83  84  85  86  87  88  89  90 
+ 91  92  93  94  95  96  97  98  99 100 101 102 103 104 105 
+106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 
+121 122 123 124 125 126 127 128 129 130 131 132 133 134 135 
+136 137 138 139 140 141 142 143 144 145 146 147
+out-degrees
+ 10   8   0   0   1   7   6  25   3   5  14  32   2  10   6 
+ 12  33   6   4  12   3  13  13   1   2   0   1  10  11   3 
+  4   6   3   7   7   5  20   2   0  14   7  14   2   0  14 
+  3   1  10   0   3   9   2   0   3   0   7   9   5   2   5 
+  2  18  15   9   5  15   9   5  20   4   2   1   0   0   0 
+  3   9   7  10   1   0   5  14  13  12  16  43  10   4   1 
+  5   7  13  11  12   2  16   0  19   0   5  13   5   5   0 
+  6  17   3   0   0  30   1   4   0   6   1   7   2   0   4 
+ 12   5  17   6  15   0  10   0  12  18   9  24  16   5   5 
+  6   9   3   2   0   0   0   0   1   0   1   0
+in-degrees
+ 13   4  23   1   6   1  11  20   7   4   8  12   5  10   9 
+ 18  13   6   8   8   1  15   5  30   4   2   0   7  15  40 
+  7   9  15  18   4   4  16   3   0  16  11   7   4   3  12 
+  3   1  24   0  15  19   3   0   4   3  13   8  12   3  12 
+  5  15  10   6   5  14   3   4  12  22   1   3   1  22   1 
+ 10  11  23   8   7   9   4   9  11  10   8  22   4   4   9 
+  3   5  12   6   3   1   6   0   6   0   3   6   8   0   0 
+  5   9   7   3   2  16   2   3   4   0   0   4   1   0   2 
+  8   4   5   4   8   2   7   2   8  10   4  16   2   2   4 
+  4   4   1   0   0   0   0   0   0   0   0   0
+
+The input file contains codes for structurally determined values:
+  294 structural zeros were found (code 10).
+  0 structural one was found (code 11).
+
+No missing data for observation 1.
+
+For observation moment 2, degree distributions are as follows:
+Nodes
+  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15 
+ 16  17  18  19  20  21  22  23  24  25  26  27  28  29  30 
+ 31  32  33  34  35  36  37  38  39  40  41  42  43  44  45 
+ 46  47  48  49  50  51  52  53  54  55  56  57  58  59  60 
+ 61  62  63  64  65  66  67  68  69  70  71  72  73  74  75 
+ 76  77  78  79  80  81  82  83  84  85  86  87  88  89  90 
+ 91  92  93  94  95  96  97  98  99 100 101 102 103 104 105 
+106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 
+121 122 123 124 125 126 127 128 129 130 131 132 133 134 135 
+136 137 138 139 140 141 142 143 144 145 146 147
+out-degrees
+  6   5   0   0   2   3   3  15   0   1  13  23   0   8   3 
+  3  18   4   8   4   4   3   7   0   0   0   3  16   7   0 
+  1   9   0   0   2   2  13   0   0   8   4  10   2   0   5 
+  0   0   2   0   3   4   2   0   3   0   6   4   0   3   1 
+  3  11   3   7   4   9   6   3  10   8   0   0   0   0   0 
+  1   0   7   1   1   0   4  16   7   5  15  38   4   0   1 
+  3   3  10  15   6   7  14   0  11   0   6  19   3   4   0 
+  7  12  11   0   0  18   7   1   1   2   0   8   0   0   3 
+  8   6   7   8  16   1   8   0  11  14   7  26  16   2   3 
+  6   8   6   2   1   3   1   0   1   0   2   0
+in-degrees
+  6   6  11   1   5  11   4   9   4   2  13   8   3  12   4 
+  0   9   7   9   4   2   4   3  11   2   1   5   9   8  13 
+  3   7   2   4   3   1   7   2   0   9  11   9   2   3   5 
+  1   0   8   1  10   6   3   0   2   3  10   6   4   0   4 
+  5   6   5  13   3   5   3   3   2  12   0   3   0  15   0 
+  6   4   8   6  11   1  12  10  12   4  10  16   5   2   6 
+  4   9  10   7   5   5   9   0   7   0   7   6   6   0   0 
+  9   8   7   2   2  16   2   3   2   3   0   3   2   1   1 
+  6   6   5   9   9   5   8   1   5   9   4   8   5   3   1 
+  7   2   2   0   4   2   2   0   0   1   0   1
+
+The input file contains codes for structurally determined values:
+  294 structural zeros were found (code 10).
+  0 structural one was found (code 11).
+
+No missing data for observation 2.
+
+
+Name of this network variable: sienaNet(deps$rtnet[, , 1:2]).
+oneMode network.
+For observation moment 1, degree distributions are as follows:
+Nodes
+  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15 
+ 16  17  18  19  20  21  22  23  24  25  26  27  28  29  30 
+ 31  32  33  34  35  36  37  38  39  40  41  42  43  44  45 
+ 46  47  48  49  50  51  52  53  54  55  56  57  58  59  60 
+ 61  62  63  64  65  66  67  68  69  70  71  72  73  74  75 
+ 76  77  78  79  80  81  82  83  84  85  86  87  88  89  90 
+ 91  92  93  94  95  96  97  98  99 100 101 102 103 104 105 
+106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 
+121 122 123 124 125 126 127 128 129 130 131 132 133 134 135 
+136 137 138 139 140 141 142 143 144 145 146 147
+out-degrees
+ 14   7   1   1   9   4   5   8   5   7  13   8   2   9   7 
+ 11  15   4   9   5   7   7  10   4   2  11   4   9  12   0 
+  6   6  13   1   3   2   9  10   0  13  12   8  11   0  14 
+  0   2  11   0   7   4   6   0  10   0   3  15   4   6   5 
+ 10  14   7  17   5  13  11   4  12   9   5   8   0   0   0 
+  1   3   1   5   0   0   5   9  11   6   6  14  12   7   1 
+  8  13  11   9  13  13   9   0  19   0   7   6   4   0   0 
+  2  10   4   0   2  23   1   3   4   0   0   4   2   0   2 
+  8   2  11   8  15   9  12   0  14   9   7   4   6   3   5 
+  6   5  15   0   8   5  12  13  10  11   7  13
+in-degrees
+ 12   6   4   0   5  11   6  18   2  15   4  25   5  11   3 
+ 12  13   8  10  12  13   9   9  11  11   5   7   5  10  12 
+  3   6  10   5   3   3  14   7   0  16   5   9   5   0  21 
+  0   2  17   0  12   7   5   0   7   0   4  19   3   8   5 
+ 11  15  19   7   4  14   9   2  18  15  10   2   0   9   0 
+  2   7   9   5   6   8   1   7   8  10   9  22   5   1   0 
+  7   7  10  15   6   2   7   0   5   0   4   4   1   5   0 
+  2  14   3   0   1   7   0   1   3  10   0   1   1   0   2 
+  5   5  10   7  12   6   5   0   4  10   0   8   5   3   2 
+  4   4   6   1   7  13   2   1  13   9   9   0
+
+The input file contains codes for structurally determined values:
+  294 structural zeros were found (code 10).
+  0 structural one was found (code 11).
+Actors 104 139 are inactive at this observation.
+
+
+No missing data for observation 1.
+
+For observation moment 2, degree distributions are as follows:
+Nodes
+  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15 
+ 16  17  18  19  20  21  22  23  24  25  26  27  28  29  30 
+ 31  32  33  34  35  36  37  38  39  40  41  42  43  44  45 
+ 46  47  48  49  50  51  52  53  54  55  56  57  58  59  60 
+ 61  62  63  64  65  66  67  68  69  70  71  72  73  74  75 
+ 76  77  78  79  80  81  82  83  84  85  86  87  88  89  90 
+ 91  92  93  94  95  96  97  98  99 100 101 102 103 104 105 
+106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 
+121 122 123 124 125 126 127 128 129 130 131 132 133 134 135 
+136 137 138 139 140 141 142 143 144 145 146 147
+out-degrees
+ 14   7   3   0   7   8   0   8   4  11   6   6   1   8   5 
+  2  11   5  10   2  10   2   7   0   1   0   5  10   4   0 
+  5   8   1   2   3   1  12   3   0   6  11  11   6   0  11 
+  0   1   3   0   9   2   6   0   3   0   3   9   6   7   3 
+  4   9   3  12   2   9  10   4   9  14   1   9   0   0   0 
+  1   0   1   3   0   0   0   8   9   4   2   6   9   9   3 
+  6  11   9  10   7   9   4   0  18   0   2   4   3   0   0 
+  3   9   4   0   3  13   3   4   5   3   0   8   1   0   2 
+  3   1   6   2  12   1   2   0   5   3   2   2   5   4   0 
+  7   3  12   0  10  10  11  15  12  11   6  14
+in-degrees
+ 10   2   1   0   8  14   0  11   2  13   3  14   5  10   3 
+  2  11   3   9   6  13   2   4   7   1   0  14   8  10   7 
+  2   4   0   3   1   1  10   5   0  11   7   7   1   0   8 
+  2   0   9   0   7   6   2   0   4   0   3  12   2  11   3 
+  6   9  10   6   7   5   5   3   9  15   0   0   0  12   0 
+  2   1   6   1   1   1   0   7   7  10  10  16   5   2   2 
+  7   3  12  15   8   4   5   0   2   0   1  10   0   5   0 
+  1  11   8   0   2  11   6   1   1   5   0   2   0   0   2 
+  4   2   5   5   4   0   3   0   5   4   0   3   5   1   1 
+  5   4  11   0   8  14  10   3  13  11  10   5
+
+No missing data for observation 2.
+
+
+
+
+@2
+Reading constant actor covariates.
+----------------------------------
+
+24 variables, named:
+egohandle       
+egoid           
+partij          
+coalitie        
+cda             
+cu              
+denk            
+d66             
+fvd             
+gl              
+pvda            
+pvdd            
+pvv             
+sgp             
+sp              
+vvd             
+plus            
+ethminz         
+vrouw           
+lft             
+kamerlid2016    
+kabinet2016     
+pleklijst       
+pleklijst1      
+
+A total of 24 non-changing individual covariates.
+
+Number of missing cases:
+egohandle       0 	( 0.0 %)
+egoid           0 	( 0.0 %)
+partij          0 	( 0.0 %)
+coalitie        0 	( 0.0 %)
+cda             0 	( 0.0 %)
+cu              0 	( 0.0 %)
+denk            0 	( 0.0 %)
+d66             0 	( 0.0 %)
+fvd             0 	( 0.0 %)
+gl              0 	( 0.0 %)
+pvda            0 	( 0.0 %)
+pvdd            0 	( 0.0 %)
+pvv             0 	( 0.0 %)
+sgp             0 	( 0.0 %)
+sp              0 	( 0.0 %)
+vvd             0 	( 0.0 %)
+plus            0 	( 0.0 %)
+ethminz         0 	( 0.0 %)
+vrouw           0 	( 0.0 %)
+lft             0 	( 0.0 %)
+kamerlid2016    0 	( 0.0 %)
+kabinet2016     0 	( 0.0 %)
+pleklijst       0 	( 0.0 %)
+pleklijst1      0 	( 0.0 %)
+
+Information about covariates:
+               minimum  maximum	  mean  centered 
+egohandle     101.0 110001.0  32040.469    N 
+egoid           1.0   147.0     74.000    N 
+partij         -7.9     7.1      0.000    Y 
+coalitie       -0.5     0.5      0.000    Y 
+cda            -0.1     0.9      0.000    Y 
+cu              0.0     1.0      0.000    Y 
+denk            0.0     1.0      0.000    Y 
+d66            -0.1     0.9      0.000    Y 
+fvd             0.0     1.0      0.000    Y 
+gl             -0.1     0.9      0.000    Y 
+pvda           -0.1     0.9      0.000    Y 
+pvdd            0.0     1.0      0.000    Y 
+pvv            -0.1     0.9      0.000    Y 
+sgp             0.0     1.0      0.000    Y 
+sp             -0.1     0.9      0.000    Y 
+vvd            -0.2     0.8      0.000    Y 
+plus            0.0     1.0      0.000    Y 
+ethminz        -0.1     0.9      0.000    Y 
+vrouw          -0.4     0.6      0.000    Y 
+lft           -19.0    30.0      0.000    Y 
+kamerlid2016     -0.5     0.5      0.000    Y 
+kabinet2016     -0.1     0.9      0.000    Y 
+pleklijst      -8.9    34.1      0.000    Y 
+pleklijst1     -0.1     0.9      0.000    Y 
+For the centered variables, the mean values are subtracted from the covariates.
+
+@2
+Reading constant dyadic covariates.
+-----------------------------------
+
+Dyadic covariate named afstand.
+
+A total of 1 dyadic individual covariate.
+
+Number of tie variables with missing data:
+afstand                        0   ( 0.0 %)
+
+Information about dyadic covariates:
+                                  minimum  maximum	  mean  centered 
+afstand                             1.0    34.0     13.295    Y 
+
+The mean value is subtracted from the centered covariate.
+
+
+
+Network fnet:
+All network changes are upward.
+This will be respected in the simulations.
+Therefore, there is no outdegree parameter.
+
+The mean structural dissimilarity values subtracted in the
+balance calculations are
+for network fnet                0.3339.
+for network atmnet              0.0886.
+for network rtnet               0.0846.
+
+For the similarity variable calculated from each actor covariate,
+the mean is subtracted.
+These means are:
+Similarity egohandle                :       0.6905 
+Similarity egoid                    :       0.6621 
+Similarity partij                   :       0.6117 
+Similarity coalitie                 :       0.4968 
+Similarity cda                      :       0.7734 
+Similarity cu                       :       0.9338 
+Similarity denk                     :       0.9597 
+Similarity d66                      :       0.7734 
+Similarity fvd                      :       0.9730 
+Similarity gl                       :       0.8265 
+Similarity pvda                     :       0.8843 
+Similarity pvdd                     :       0.9338 
+Similarity pvv                      :       0.7836 
+Similarity sgp                      :       0.9597 
+Similarity sp                       :       0.8265 
+Similarity vvd                      :       0.6571 
+Similarity plus                     :       0.9467 
+Similarity ethminz                  :       0.8047 
+Similarity vrouw                    :       0.5320 
+Similarity lft                      :       0.7872 
+Similarity kamerlid2016             :       0.4977 
+Similarity kabinet2016              :       0.8964 
+Similarity pleklijst                :       0.7983 
+Similarity pleklijst1               :       0.8377 
+
+
+
+@1
+Initial data description.
+=========================
+
+
+@2
+Change in networks:
+-------------------
+
+
+@3
+Network: fnet
+             
+For the following statistics, missing values (if any) are not counted.
+Further, structurally determined entries are treated as observed entries,
+except for calculating the distances, where missings and structurally determined entries
+at the beginning or end of a period are disregarded.
+This may imply that the columns 0 => 1 and 1 => 0 do not add up to the distance column.
+
+Network density indicators:
+observation time              1      2
+density                    0.251  0.276
+average degree            36.660 40.245
+number of ties              5389   5916
+missing fraction           0.000  0.000
+
+The average degree is 38.452 
+
+
+Tie changes between subsequent observations:
+ periods        0 =>  0   0 =>  1   1 =>  0   1 =>  1   Distance Jaccard   Missing
+  1 ==>   2     15546       527         0      5389       527     0.911         0 (0%)
+
+Directed dyad Counts:
+ observation    total    mutual    asymm.     null
+     1.         21462     3068      4642     13752
+     2.         21462     3336      5160     12966
+
+Standard values for initial parameter values
+-------------------------------------------------
+
+basic rate parameter fnet               7.2202 
+
+@3
+Network: atmnet
+               
+For the following statistics, missing values (if any) are not counted.
+Further, structurally determined entries are treated as observed entries,
+except for calculating the distances, where missings and structurally determined entries
+at the beginning or end of a period are disregarded.
+This may imply that the columns 0 => 1 and 1 => 0 do not add up to the distance column.
+
+Network density indicators:
+observation time              1      2
+density                    0.048  0.035
+average degree             7.075  5.041
+number of ties              1040    741
+missing fraction           0.000  0.000
+
+The average degree is 6.058 
+
+
+Tie changes between subsequent observations:
+ periods        0 =>  0   0 =>  1   1 =>  0   1 =>  1   Distance Jaccard   Missing
+  1 ==>   2     19978       444       743       297      1187     0.200         0 (0%)
+
+Directed dyad Counts:
+ observation    total    mutual    asymm.     null
+     1.         21462      406      1268     19788
+     2.         21462      272       938     20252
+
+Standard values for initial parameter values
+-------------------------------------------------
+
+basic rate parameter atmnet            16.2609 
+atmnet: outdegree (density)                       -1.7461 
+
+@3
+Network: rtnet
+              
+For the following statistics, missing values (if any) are not counted.
+Further, structurally determined entries are treated as observed entries,
+except for calculating the distances, where missings and structurally determined entries
+at the beginning or end of a period are disregarded.
+This may imply that the columns 0 => 1 and 1 => 0 do not add up to the distance column.
+
+Network density indicators:
+observation time              1      2
+density                    0.045  0.034
+average degree             6.626  4.966
+number of ties               974    730
+missing fraction           0.000  0.000
+
+The average degree is 5.796 
+
+
+Tie changes between subsequent observations:
+ periods        0 =>  0   0 =>  1   1 =>  0   1 =>  1   Distance Jaccard   Missing
+  1 ==>   2     20209       279       523       451       802     0.360         0 (0%)
+
+Directed dyad Counts:
+ observation    total    mutual    asymm.     null
+     1.         21462      464      1020     19978
+     2.         21462      322       816     20324
+
+Standard values for initial parameter values
+-------------------------------------------------
+
+basic rate parameter rtnet             10.9872 
+rtnet: outdegree (density)                        -1.6451 
+
+Initialisation of project <<Twitter_t12>> executed succesfully.
