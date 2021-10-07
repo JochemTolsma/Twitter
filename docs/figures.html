@@ -394,7 +394,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Replication package-Figures</h1>
 <h4 class="author"><a href="https://www.jochemtolsma.nl">Jochem Tolsma</a> - Radboud University / University of Groningen, the Netherlands</h4>
-<h4 class="date">Last compiled on October, 2021</h4>
+<h4 class="date">Last compiled on oktober, 2021</h4>
 
 </div>
 
@@ -515,19 +515,19 @@ lft &lt;- lft + attributes(lft)$mean</code></pre>
 <h2 class="tabset tabset-fade">Build plots</h2>
 <p>The first step is to make a ‘graph object.’</p>
 <pre class="r test"><code># define directed network
-G1d &lt;- graph_from_adjacency_matrix(fnet1, mode = &quot;directed&quot;, weighted = NULL, diag = TRUE, add.colnames = NA,
+G1d &lt;- graph_from_adjacency_matrix(fnet1, mode = &quot;directed&quot;, weighted = NULL, diag = TRUE, add.colnames = NA, 
     add.rownames = NA)
-G2d &lt;- graph_from_adjacency_matrix(atmnet1, mode = &quot;directed&quot;, weighted = NULL, diag = TRUE, add.colnames = NA,
+G2d &lt;- graph_from_adjacency_matrix(atmnet1, mode = &quot;directed&quot;, weighted = NULL, diag = TRUE, add.colnames = NA, 
     add.rownames = NA)
-G3d &lt;- graph_from_adjacency_matrix(rtnet1, mode = &quot;directed&quot;, weighted = NULL, diag = TRUE, add.colnames = NA,
+G3d &lt;- graph_from_adjacency_matrix(rtnet1, mode = &quot;directed&quot;, weighted = NULL, diag = TRUE, add.colnames = NA, 
     add.rownames = NA)
 
 # define undirected network
-G1u &lt;- graph_from_adjacency_matrix(fnet1_un, mode = &quot;undirected&quot;, weighted = NULL, diag = TRUE, add.colnames = NA,
+G1u &lt;- graph_from_adjacency_matrix(fnet1_un, mode = &quot;undirected&quot;, weighted = NULL, diag = TRUE, add.colnames = NA, 
     add.rownames = NA)
-G2u &lt;- graph_from_adjacency_matrix(atmnet1_un, mode = &quot;undirected&quot;, weighted = NULL, diag = TRUE, add.colnames = NA,
+G2u &lt;- graph_from_adjacency_matrix(atmnet1_un, mode = &quot;undirected&quot;, weighted = NULL, diag = TRUE, add.colnames = NA, 
     add.rownames = NA)
-G3u &lt;- graph_from_adjacency_matrix(rtnet1_un, mode = &quot;undirected&quot;, weighted = NULL, diag = TRUE, add.colnames = NA,
+G3u &lt;- graph_from_adjacency_matrix(rtnet1_un, mode = &quot;undirected&quot;, weighted = NULL, diag = TRUE, add.colnames = NA, 
     add.rownames = NA)</code></pre>
 <div id="followers" class="section level3">
 <h3>Followers</h3>

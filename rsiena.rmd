@@ -14,7 +14,7 @@ output:
 
 
 <!---to build website, I have set, eval=FALSE for now---> 
-```{r globalsettings, echo=FALSE, warning=FALSE}
+```{r globalsettings, echo=FALSE, warning=FALSE, message=FALSE}
 library(knitr)
 opts_chunk$set(tidy.opts=list(width.cutoff=100),tidy=TRUE, warning = FALSE, message = FALSE,comment = "#>", cache=TRUE, echo=FALSE, eval=FALSE, class.source=c("test"), class.output=c("test2"))
 options(width = 100)
@@ -90,7 +90,7 @@ Questions can be addressed to [Jochem Tolsma](mailto:jochem.tolsma@ru.nl).
 
 ## Packages  
 
-```{r packages, echo=TRUE}
+```{r packages, echo=TRUE, eval=TRUE}
 #install if necessary 
 if (!require("dplyr", character.only = TRUE)) {install.packages("dplyr", dependencies=TRUE)}
 if (!require("foreign", character.only = TRUE)) {install.packages("foreign", dependencies=TRUE)}
@@ -113,7 +113,7 @@ library(kableExtra)
 
 siena07ToConvergence: sie RSiena Manual p 69 
 
-```{r}
+```{r, echo=TRUE, eval=TRUE}
 siena07ToConvergence <- function(alg, dat, eff, ans0=NULL, ...){
   numr <- 0
   ans <- siena07(alg, data=dat, effects=eff, prevAns=ans0, ...) # the first run
@@ -133,6 +133,25 @@ siena07ToConvergence <- function(alg, dat, eff, ans0=NULL, ...){
   }
   ans
 }
+
+
+fanscsv <- function(ans=ans) {
+	ans1_mat <- matrix(NA, nrow=length(ans$effects[,2]),ncol=3)
+	row.names(ans1_mat) <- ans$effects[,2]
+	ans1_mat[,1] <- (ans$theta)
+	ans1_mat[,2] <- (ans$se)
+	ans1_mat[,3] <- (ans$tconv)
+	ans1_mat <- rbind(ans1_mat, c(ans$tconv.max))
+	row.names(ans1_mat)[length(row.names(ans1_mat))] <- "Overall maximum convergence ratio:"
+	colnames(ans1_mat) <- c("Estimate", "Standard Error", "Convergence t-ratio")
+	return(ans1_mat)
+	#print(ans1_mat)
+	#write.csv(ans1_mat, filename)
+}
+
+
+
+
 ```
 
 
@@ -147,7 +166,7 @@ Data objects:
 - mydata: RSiena object with all kind of goodies inside  
 - seats: seating coordinates of HoP (used for plotting)
 
-```{r data, echo=TRUE}
+```{r data, echo=TRUE, eval=TRUE}
 #STAP 1: read in data
 key <- read.spss('data-processed\\key moederbestand 20171114.sav', use.value.labels=T, to.data.frame=T)
 
@@ -273,26 +292,18 @@ Included effects:
 - outdegree-activity (sqrt)  
 - outdegree-popularity (sqrt)  
 - transitive triplets or GWESPP  
-
-We further test for two additional effects: 
--   
 - shared popularity
 
-```{r structural model }
+```{r structural model, echo=TRUE}
 print01Report( mydata, modelname="Twitter")
 #let us have a look at all possible effects
 #effectsDocumentation()
-```
 
-Define the model
+# Define the model
+# 
+# We will compare a model with *transTrip* versus *gwespFF* first. 
 
-We will compare a model with *transTrip* versus *gwespFF* first. 
 
-### transTrip
-
-#### Effects. 
-
-```{r}
 myeff <- getEffects( mydata )
 myeff_m1 <- myeff
 
@@ -318,16 +329,7 @@ myeff_m1 <- includeEffects( myeff_m1, transTrip, name="rtnet" )
 #myeff_m1 <- includeEffects( myeff_m1, cycle3, name="rtnet" )
 
 
-```
-
-#### Estimate. 
-
-Models:  
-
-- ansM1  
-- ansM1b  
-
-```{r, eval=FALSE}
+#estimates
 myalgorithm <- sienaAlgorithmCreate( projname = 'M1')
 ansM1 <- siena07( myalgorithm, data = mydata, effects = myeff_m1, useCluster=TRUE, nbrNodes=4, initC=TRUE, batch=TRUE)
 ansM1
@@ -340,14 +342,12 @@ save(ansM1b, file=paste("ansM1b",".RData",sep=""))
 
 ```
 
----  
-
-### time heterogeneity in outdegree. 
-
-#### Effects  
 
 
-```{r}
+We tested for time heterogeneity in outdegree. Model fit did not improve. 
+
+
+```{r, echo=TRUE}
 
 myeff_m1 <- myeff
 
@@ -355,11 +355,6 @@ meff_m1
 myeff_m1_td <- includeTimeDummy(myeff_m1, density, name="atmnet", timeDummy="2")
 myeff_m1_td <- includeTimeDummy(myeff_m1_td, density, name="rtnet", timeDummy="2")
 
-
-```
-
-#### Estimates
-```{r, eval=FALSE}
 
 ansM2 <- siena07( myalgorithm, data = mydata, prevAns=ansM1b, effects = myeff_m1_td, useCluster=TRUE, nbrNodes=8, initC=TRUE, batch=TRUE)
 ansM2 
@@ -372,14 +367,9 @@ save(ansM2b, file=paste("ansM2b",".RData",sep=""))
 ```
 
 
+Check if model with gwespFF fits better. No similar fit.
 
----  
-
-### gwespFF
-
-#### Effects  
-
-```{r, eval=FALSE}
+```{r, eval=FALSE, echo=TRUE}
 myeff <- getEffects( mydata )
 myeff_m1b <- myeff
 
@@ -402,16 +392,6 @@ myeff_m1b <- includeEffects( myeff_m1b, gwespFF, name="rtnet" )
 
 myeff_m3 <- myeff_m1b
 
-``` 
-
-#### Estimate  
-
-Models:  
-
-- ansM3  
-- ansM3b  
-
-```{r}
 myalgorithm <- sienaAlgorithmCreate( projname = 'M1')
 ansM3 <- siena07( myalgorithm, data = mydata, effects = myeff_m3, useCluster=TRUE, nbrNodes=8, initC=TRUE, batch=TRUE)
 ansM3
@@ -423,14 +403,11 @@ save(ansM1d, file=paste("ansM3b",".RData",sep=""))
 
 ```
 
----  
+
+Include sharedPop (transTrip)
 
 
-### include sharedPop (transTrip)
-
-#### Effects.  
-
-```{r}
+```{r, echo=TRUE}
 myeff <- getEffects( mydata )
 myeff_m1 <- myeff
 
@@ -455,16 +432,6 @@ myeff_m1 <- includeEffects( myeff_m1, sharedPop, name="fnet" )
 myeff_m1 <- includeEffects( myeff_m1, sharedPop, name="atmnet" )
 myeff_m1 <- includeEffects( myeff_m1, sharedPop, name="rtnet" )
 
-```
-
-#### Estimate
-
-Models (build on ansM1b):  
-
-- ansM4  
-- ansM4b  
-
-```{r}
 
 load("ansM1b.RData")
 
@@ -478,18 +445,20 @@ save(ansM4b, file=paste("ansM4b",".RData",sep=""))
 
 ```
 
+```{r, eval=TRUE}
+load("ansM4b.RData")
+ansM4b
+```
+
 ----  
 
 ## Baseline model (with covariates)
 
-### All covariates
-
-#### Effects  
 
 We cannot include all party dummies as covariates for ego and alter. We will thus first check which party deviates significantly with respect to indegree and outdegree. 
 
 First the descriptives. 
-```{r}
+```{r, echo=TRUE, eval=TRUE}
 #check if we observe outdegree differences per partij
 fnet <- mydata$depvars$fnet
 atmnet <- mydata$depvars$atmnet
@@ -527,8 +496,12 @@ degreesum <- keyf %>%
 colnames(degreesum) <- c("Party", "outdegree friends", "indegree friends", "outdegree retweets", "indegree retweets", "outdegree atmentions", "indegree atmentions")
 
 
-write_csv(degreesum, "degreesum.csv")
+#write_csv(degreesum, "degreesum.csv")
+```
 
+```{r, eval=TRUE}
+
+degreesum <- read.csv("degreesum.csv")
 degreesum <- kbl(degreesum, booktabs=TRUE, digits=2, caption="mean degree by party", align = "c") %>%
   kable_classic(full_width = F, html_font = "Cambria") %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) 
@@ -538,7 +511,8 @@ scroll_box(degreesum, width="100%", height="500px")
 ```
 
 Let us use a simple OLS regression with deviation coding (grand mean is ref) to test for significance.
-```{r, results="hold"}
+
+```{r, echo=TRUE, eval=TRUE, results="hold"}
 
 keyf$Partij2 <- as.factor(as.character(keyf$Partij))
 levels(keyf$Partij2)
@@ -573,7 +547,7 @@ levels(keyf$Partij2)[c(4, 10)]
 
 
 
-```{r}
+```{r, echo=TRUE}
 myeff <- getEffects( mydata )
 myeff_m1 <- myeff
 
@@ -732,12 +706,6 @@ myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvv", name="rtnet" )
 #myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "plus", name="rtnet" )
 
 
-
-```
-
-#### Estimates
-
-```{r}
 load("ansM4b.RData")
 myalgorithm <- sienaAlgorithmCreate( projname = 'M2')
 ansM5 <- siena07( myalgorithm, data = mydata, prevAns=ansM4b, effects = myeff_m2, useCluster=TRUE, nbrNodes=8, initC=TRUE, batch=TRUE)
@@ -747,15 +715,10 @@ save(ansM5, file=paste("ansM5",".RData",sep=""))
 ansM5b <- siena07( myalgorithm, data = mydata, prevAns=ansM5, effects = myeff_m2, useCluster=TRUE, nbrNodes=8, initC=TRUE, batch=TRUE)
 ansM5b 
 save(ansM5b, file=paste("ansM5b",".RData",sep=""))
-```
 
----  
+# Lets trim
 
-### lets trim
 
-I forgot to include sameX Party for fnet. will include now. 
-
-```{r}
 myeff <- getEffects( mydata )
 myeff_m1 <- myeff
 
@@ -916,11 +879,6 @@ myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "plus", name="rtnet" 
 
 
 
-```
-
-#### Estimates
-
-```{r}
 load("ansM4b.RData") #start again from ansM4b
 myalgorithm <- sienaAlgorithmCreate( projname = 'M3')
 ansM6 <- siena07( myalgorithm, data = mydata, prevAns=ansM4b, effects = myeff_m2, useCluster=TRUE, nbrNodes=8, initC=TRUE, batch=TRUE)
@@ -930,14 +888,7 @@ save(ansM6, file=paste("ansM6",".RData",sep=""))
 ansM6b <- siena07( myalgorithm, data = mydata, prevAns=ansM6, effects = myeff_m2, useCluster=TRUE, nbrNodes=8, initC=TRUE, batch=TRUE)
 ansM6b 
 save(ansM6b, file=paste("ansM6b",".RData",sep=""))
-```
 
-
-
-### second trim
-
-
-```{r}
 myeff <- getEffects( mydata )
 myeff_m1 <- myeff
 
@@ -1098,11 +1049,6 @@ myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "plus", name="rtnet" 
 
 
 
-```
-
-#### Estimates
-
-```{r}
 load("ansM4b.RData") #start again from ansM4b
 myalgorithm <- sienaAlgorithmCreate( projname = 'M4')
 ansM7 <- siena07( myalgorithm, data = mydata, prevAns=ansM4b, effects = myeff_m2, useCluster=TRUE, nbrNodes=8, initC=TRUE, batch=TRUE)
@@ -1118,14 +1064,9 @@ load("ansM7b.RData")
 ansM7c <- siena07( myalgorithm, data = mydata, prevAns=ansM7, effects = myeff_m2, useCluster=TRUE, nbrNodes=8, initC=TRUE, batch=TRUE)
 ansM7c 
 save(ansM7c, file=paste("ansM7c",".RData",sep=""))
-```
 
+#third trim
 
-### third trim
-
-#### Effects  
-
-```{r}
 myeff <- getEffects( mydata )
 myeff_m1 <- myeff
 
@@ -1287,12 +1228,8 @@ myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvv", name="rtnet" )
 #myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "plus", name="rtnet" )
 
 
+# Estimates
 
-```
-
-#### Estimates
-
-```{r}
 load("ansM8c.RData") #start again from ansM4b
 ansM4b
 myalgorithm <- sienaAlgorithmCreate( projname = 'M5')
@@ -1310,12 +1247,16 @@ ansM8c #Overall maximum convergence ratio:    0.2471
 save(ansM8c, file=paste("ansM8c",".RData",sep=""))
 ```
 
+```{r, eval=TRUE}
+load("ansM8c.RData")
+ansM8c
+```
+
+---  
+
 ## Social inbreeding homophily
 
-### Effects 
-
-
-```{r}
+```{r, echo=TRUE}
 myeff <- getEffects( mydata )
 myeff_m1 <- myeff
 
@@ -1516,11 +1457,8 @@ myeff_m3 <- includeEffects(myeff_m3, altX, interaction1 = "ethminz", name="atmne
 
 
 
-```
+# Estimates
 
-### Estimates
-
-```{r}
 load("ansM8c.RData") 
 
 myalgorithm <- sienaAlgorithmCreate( projname = 'M9')
@@ -1536,17 +1474,14 @@ ansM9c <- siena07( myalgorithm, data = mydata, prevAns=ansM9b, effects = myeff_m
 ansM9c 
 
 save(ansM9c, file=paste("ansM9c",".RData",sep=""))
-```
 
-## Trim social inbreeding homophily 
+# Trim social inbreeding homophily 
 
-Only ego alter. we leave dyad in. 
-Note, we now also exclude rtnet:kamerlid2016 alter
+# Only ego alter. we leave dyad in. 
+# Note, we now also exclude rtnet:kamerlid2016 alter
+# 
+# Effects 
 
-### Effects 
-
-
-```{r}
 myeff <- getEffects( mydata )
 myeff_m1 <- myeff
 
@@ -1746,14 +1681,8 @@ myeff_m3 <- includeEffects(myeff_m3, sameX, interaction1 = "ethminz", name="atmn
 #myeff_m3 <- includeEffects(myeff_m3, altX, interaction1 = "ethminz", name="atmnet" )
 
 
+# Estimates
 
-```
-
-
-
-### Estimates
-
-```{r}
 load("ansM8c.RData") 
 
 myalgorithm <- sienaAlgorithmCreate( projname = 'M10')
@@ -1779,14 +1708,21 @@ ansM10d
 
 save(ansM10d, file=paste("ansM10d",".RData",sep=""))
 
+```
 
+
+```{r, eval=TRUE}
+load("ansM10c.RData")
+ansM10c
+#summary(ansM10c)
 ```
 
 ### Test for significance of difference in segregation. 
 
 Hypothesis 3a: Segregation in atmention is larger than in follow. No because...
 
-```{r}
+```{r, echo=TRUE, eval=TRUE}
+load("ansM10c.RData")
 ans <- ansM10c
 p <- ans$pp
 
@@ -1806,7 +1742,7 @@ print(paste("difference is", round(dif,3), "with s.e.", round(se, 3), ", t-ratio
 
 Hypothesis 3b: Segregation in follow is larger than in retweet. No because...
 
-```{r}
+```{r, echo=TRUE, eval=TRUE}
 ans <- ansM10c
 p <- ans$pp
 
@@ -1823,9 +1759,9 @@ print(paste("difference is", round(dif,3), "with s.e.", round(se, 3), ", t-ratio
 
 ```
 
-Segregation in atmention is larger than in retweet. Yes.
+Segregation in atmention is larger than in retweet. Yes, because...
 
-```{r}
+```{r, echo=TRUE, eval=TRUE}
 ans <- ansM10c
 p <- ans$pp
 
@@ -1841,16 +1777,16 @@ se <- sqrt(mat %*% ans$covtheta %*% t(mat))
 print(paste("difference is", round(dif,3), "with s.e.", round(se, 3), ", t-ratio", round(dif/se, 3)))
 
 ```
+
+---  
+
 ## Cross-network effects. 
 
-### Effects. 
 
-Don't forget to remove the non-significant social inbreeding parameters (t-value < 1): 
-
-- absdiff age atmnet and rtnet. 
+Remove the non-significant social inbreeding parameters (t-value < 1): 
 
 
-```{r}
+```{r, echo=TRUE}
 
 
 myeff <- getEffects( mydata )
@@ -2070,11 +2006,8 @@ myeff_m4 <- includeEffects( myeff_m4, crprodRecip, interaction1="atmnet", name="
 myeff_m4
 
 
-```
+# Estimation
 
-### Estimation
-
-```{r}
 load("ansM10c.RData") 
 ansM10c
 
@@ -2093,14 +2026,9 @@ ansM11c # Overall maximum convergence ratio:    0.2839
 save(ansM11c, file=paste("ansM11c",".RData",sep=""))
 
 
+# lets trim
 
-
-```
-### lets trim
-
-#### effects
-```{r}
-
+# effects
 
 myeff <- getEffects( mydata )
 myeff_m1 <- myeff
@@ -2318,13 +2246,8 @@ myeff_m4 <- includeEffects( myeff_m4, crprodRecip, interaction1="rtnet", name="a
 myeff_m4 <- includeEffects( myeff_m4, crprodRecip, interaction1="atmnet", name="rtnet" )
 myeff_m4
 
+# estimates
 
-```
-
-#### estimates
-
-
-```{r}
 load("ansM11c.RData") 
 ansM11c
 
@@ -2334,12 +2257,15 @@ ansM12 # Overall maximum convergence ratio:    0.2562
 save(ansM12, file=paste("ansM12",".RData",sep=""))
 
 ansM12b <- siena07( myalgorithm, data = mydata, prevAns=ansM12, effects = myeff_m4, useCluster=TRUE, nbrNodes=10, initC=TRUE, batch=TRUE)
-ansM12b 
+ansM12b # Overall maximum convergence ratio:    0.3631 
+
+
 save(ansM12b, file=paste("ansM12b",".RData",sep=""))
 
 
 ansM12c <- siena07( myalgorithm, data = mydata, prevAns=ansM12b, effects = myeff_m4, useCluster=TRUE, nbrNodes=10, initC=TRUE, batch=TRUE)
-ansM12c 
+ansM12c #Overall maximum convergence ratio:    0.2951 
+
 save(ansM12c, file=paste("ansM12c",".RData",sep=""))
 
 
@@ -2347,11 +2273,21 @@ save(ansM12c, file=paste("ansM12c",".RData",sep=""))
 
 ```
 
+```{r, eval=TRUE}
+load("ansM12.RData")
+ansM12
+```
+
+
+---  
+
+
 ## Time heterogeneity
 
 ### Period 1 (wave 1-2)
 
-#### Effects
+**TO DO**
+
 
 ```{r}
 
@@ -2573,10 +2509,8 @@ myeff_m4 <- includeEffects( myeff_m4, crprodRecip, interaction1="atmnet", name="
 myeff_m4
 
 
-```
-#### Estimates
+# Estimates
 
-```{r}
 load("ansM12.RData")
 ansM12
 #tt <- sienaTimeTest(ansM12)
@@ -2592,12 +2526,12 @@ ansM12_t12b <- siena07( myalgorithm, data = mydata12, effects = myeff, prevAns =
 ansM12_t12b 
 save(ansM12_t12b, file=paste("ansM12_t12b",".RData",sep=""))
 
-
-*** Standard errors not reliable ***
-The following is approximately a linear combination 
-for which the data carries no information:
--1 * beta[3] + -0.45 * beta[6] + 0.45 * beta[7] + -0.45 * beta[8]
-It is advisable to drop one or more of these effects.
+# 
+# *** Standard errors not reliable ***
+# The following is approximately a linear combination 
+# for which the data carries no information:
+# -1 * beta[3] + -0.45 * beta[6] + 0.45 * beta[7] + -0.45 * beta[8]
+# It is advisable to drop one or more of these effects.
 
 
 ansM12_t12c <- siena07( myalgorithm, data = mydata12, effects = myeff, prevAns = ansM12_t12b, useCluster=TRUE, nbrNodes=10, initC=TRUE, batch=TRUE)
@@ -2618,6 +2552,100 @@ save(ansM12_t21c, file=paste("ansM12_t21c",".RData",sep=""))
 
 
 ```
+
+```{r, eval=TRUE}
+#show results
+```
+
+
+---  
+
+
+## Summary of results
+
+```{r, eval=TRUE}
+#structural effects only
+load("ansM4b.RData")
+#summary(ansM4b)
+#baseline model
+load("ansM8c.RData")
+#summary(ansM8c)
+#social inbreeding
+load("ansM10c.RData")
+#ansM10c
+#cross network effects
+load("ansM12.RData")
+
+#ansM12
+
+#ansM8c
+# baseline model
+res <- round(fanscsv(ansM8c)[-48,1:2],5)
+mc <- as.character(round(fanscsv(ansM8c)[48,1],3))
+row.names(res) <- c(
+ "rate 1"  ,      
+ "rate 2"   ,     
+ "outdegree"          ,  
+ "reciprocity"         ,           
+ "transitive triplets"  ,          
+ "shared popularity"     ,         
+ "indegree - popularity"   ,
+  " outdegree - popularity" , 
+ "outdegree - activity"    ,
+ "seating distance (dyad)"         ,               
+ "same party (dyad)"                ,    
+"incumbancy status (alter)"          ,   
+"same incumbancy status (dyad)"       ,       
+"position on election list (ego)"      ,            
+ "rate 1"      ,
+ "rate 2"      ,
+"outdegree"          ,
+ "reciprocity"        ,          
+ "transitive triplets" ,         
+ "shared popularity"    ,        
+ "indegree - popularity" ,
+ "outdegree - popularity",
+"outdegree - activity "  ,
+ "same party (dyad)"            ,      
+"party Liberal Democrats (alter)",                    
+"party GreenLeft (alter)"         ,            
+ "party GreenLeft (ego)"           ,            
+ "position on election list (alter)",              
+"party leader (alter)"             ,
+ "party leader (ego)"               ,
+ "rate 1"       ,
+ "rate 2"       ,
+"outdegree"           ,
+"reciprocity"          ,         
+"transitive triplets"   ,        
+"shared popularity"      ,       
+"indegree - popularity ",  
+"outdegree - popularity", 
+"outdegree - activity "   ,
+"seating distance (dyad)"        ,               
+ "same party (dyad)"              ,     
+ "party Liberal Democrats (ego)"   ,                    
+ "party Freedom Party (ego)"        ,               
+ "incumbancy status (alter)"         ,   
+ "incumbancy status (ego)"            ,  
+ "position on election list (alter)"   ,            
+"party leader (alter)"
+)
+  
+asmatkable <- kbl(res, booktabs=TRUE, digits=3, caption="Table 4: RSiena results for hypothesis 1", align = "c") %>%
+  kable_classic(full_width = F, html_font = "Cambria") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(column = 1, width = "3in")   %>%
+  row_spec(c(11, 24,41), bold = T, color = "white", background = "#D7261E") %>%
+  group_rows(index = c("Following" = 14, "Atmention" = 15, "Retweets" = 18)) %>%
+  footnote(general = paste("Overall maximum convergence ratio: ", mc, sep="" ))
+
+
+asmatkable
+
+```
+
+
 
 <!---
 
