@@ -221,7 +221,12 @@ E(G1)$color=coloredges
 Party_names <- unique(keyf$Partij)
 Party_cols <- unique(keyf$Partij_col)
 
-png("MPplotG1d.png",width = 900, height= 900)
+# reorder
+Party_names <- Party_names[c(7, 3, 9, 10, 12, 11, 5, 4, 6, 2, 8, 1, 13)]
+Party_cols <- Party_cols[c(7, 3, 9, 10, 12, 11, 5, 4, 6, 2, 8, 1, 13)]
+
+
+png("MPplotG1dv2.png",width = 900, height= 900)
 { 
   plot.igraph(G1, mode="directed", layout=owncoords, rescale=F, margin=c(0,0,0,0), xlim=c(min(owncoords[,1]),max(owncoords[,1])),  ylim=c(min(owncoords[,2]),max(owncoords[,2])), main="Follower relations between Dutch MPs (2017)")
 
@@ -277,7 +282,11 @@ E(G1)$color=coloredges
 Party_names <- unique(keyf$Partij)
 Party_cols <- unique(keyf$Partij_col)
 
-png("MPplotG1.png",width = 900, height= 900)
+# reorder
+Party_names <- Party_names[c(7, 3, 9, 10, 12, 11, 5, 4, 6, 2, 8, 1, 13)]
+Party_cols <- Party_cols[c(7, 3, 9, 10, 12, 11, 5, 4, 6, 2, 8, 1, 13)]
+
+png("MPplotG1uv2.png",width = 900, height= 900)
 { 
   plot.igraph(G1, mode="undirected", layout=owncoords, rescale=F, margin=c(0,0,0,0), xlim=c(min(owncoords[,1]),max(owncoords[,1])),  ylim=c(min(owncoords[,2]),max(owncoords[,2])), main="Reciprocated follower relations between Dutch MPs (2017)")
 
@@ -337,7 +346,11 @@ E(G2)$color=coloredges
 Party_names <- unique(keyf$Partij)
 Party_cols <- unique(keyf$Partij_col)
 
-png("MPplotG2d.png",width = 900, height= 900)
+# reorder
+Party_names <- Party_names[c(7, 3, 9, 10, 12, 11, 5, 4, 6, 2, 8, 1, 13)]
+Party_cols <- Party_cols[c(7, 3, 9, 10, 12, 11, 5, 4, 6, 2, 8, 1, 13)]
+
+png("MPplotG2dv2.png",width = 900, height= 900)
 { 
   plot.igraph(G2, mode="directed", layout=owncoords, rescale=F, margin=c(0,0,0,0), xlim=c(min(owncoords[,1]),max(owncoords[,1])),  ylim=c(min(owncoords[,2]),max(owncoords[,2])), main="@mention relations between Dutch MPs (2017)")
 
@@ -394,7 +407,11 @@ E(G2)$color=coloredges
 Party_names <- unique(keyf$Partij)
 Party_cols <- unique(keyf$Partij_col)
 
-png("MPplotG2u.png",width = 900, height= 900)
+# reorder
+Party_names <- Party_names[c(7, 3, 9, 10, 12, 11, 5, 4, 6, 2, 8, 1, 13)]
+Party_cols <- Party_cols[c(7, 3, 9, 10, 12, 11, 5, 4, 6, 2, 8, 1, 13)]
+
+png("MPplotG2uv2.png",width = 900, height= 900)
 { 
   plot.igraph(G2, mode="undirected", layout=owncoords, rescale=F, margin=c(0,0,0,0), xlim=c(min(owncoords[,1]),max(owncoords[,1])),  ylim=c(min(owncoords[,2]),max(owncoords[,2])), main="Reciprocated @mention relations between Dutch MPs (2017)")
 
@@ -453,9 +470,13 @@ E(G3)$color=coloredges
 Party_names <- unique(keyf$Partij)
 Party_cols <- unique(keyf$Partij_col)
 
-png("MPplotG3d.png",width = 900, height= 900)
+# reorder
+Party_names <- Party_names[c(7, 3, 9, 10, 12, 11, 5, 4, 6, 2, 8, 1, 13)]
+Party_cols <- Party_cols[c(7, 3, 9, 10, 12, 11, 5, 4, 6, 2, 8, 1, 13)]
+
+png("MPplotG3dv2.png",width = 900, height= 900)
 { 
-  plot.igraph(G3, mode="undirected", layout=owncoords, rescale=F, margin=c(0,0,0,0), xlim=c(min(owncoords[,1]),max(owncoords[,1])),  ylim=c(min(owncoords[,2]),max(owncoords[,2])), main="Retweet relations between Dutch MPs (2017)")
+  plot.igraph(G3, mode="undirected", layout=owncoords, rescale=F, margin=c(0,0,0,0), xlim=c(min(owncoords[,1])-0.2,max(owncoords[,1])) +.2 ,  ylim=c(min(owncoords[,2]),max(owncoords[,2])), main="Retweet relations between Dutch MPs (2017)")
 
 legend("topleft", legend=Party_names, pch=21, col="#777777", pt.bg=Party_cols, pt.cex=2, cex=.8, bty="n", ncol=3)
 
@@ -507,9 +528,13 @@ E(G3)$color=coloredges
 Party_names <- unique(keyf$Partij)
 Party_cols <- unique(keyf$Partij_col)
 
-png("MPplotG3u.png",width = 900, height= 900)
+# reorder
+Party_names <- Party_names[c(7, 3, 9, 10, 12, 11, 5, 4, 6, 2, 8, 1, 13)]
+Party_cols <- Party_cols[c(7, 3, 9, 10, 12, 11, 5, 4, 6, 2, 8, 1, 13)]
+
+png("MPplotG3uv2.png",width = 900, height= 900)
 { 
-  plot.igraph(G3, mode="undirected", layout=owncoords, rescale=F, margin=c(0,0,0,0), xlim=c(min(owncoords[,1]),max(owncoords[,1])),  ylim=c(min(owncoords[,2]),max(owncoords[,2])), main="Reciprocated retweet relations between Dutch MPs (2017)")
+  plot.igraph(G3, mode="undirected", layout=owncoords, rescale=F, margin=c(0,0,0,0), xlim=c(min(owncoords[,1]) - 0.2 ,max(owncoords[,1])) +0.2,  ylim=c(min(owncoords[,2]),max(owncoords[,2])), main="Reciprocated retweet relations between Dutch MPs (2017)")
 
 legend("topleft", legend=Party_names, pch=21, col="#777777", pt.bg=Party_cols, pt.cex=2, cex=.8, bty="n", ncol=3)
 
