@@ -348,10 +348,10 @@ We tested for time heterogeneity in outdegree. Model fit did not improve.
 
 
 ```{r, echo=TRUE}
+#load("ansM1b.RData")
+#myeff_m1 <- ansM1b$effects #this does not work with time dummies
 
-myeff_m1 <- myeff
-
-meff_m1
+myeff_m1
 myeff_m1_td <- includeTimeDummy(myeff_m1, density, name="atmnet", timeDummy="2")
 myeff_m1_td <- includeTimeDummy(myeff_m1_td, density, name="rtnet", timeDummy="2")
 
@@ -1250,7 +1250,141 @@ save(ansM8c, file=paste("ansM8c",".RData",sep=""))
 ```{r, eval=TRUE}
 load("ansM8c.RData")
 ansM8c
+
+require(RSiena)
+xtable.sienaFit(ansM8c, file="ansM8c.html", type="html", digits=3)
 ```
+### Time heterogeneity
+
+
+```{r}
+require(RSiena)
+load("ansM8c.RData")
+
+
+tt <- sienaTimeTest(ansM8c,  effects=c(11,24,41))
+tt
+tt$EffectTest
+tt$IndividualTest
+plot(tt)
+
+```
+
+
+
+
+
+```{r}
+
+myeff_t <- myeff_m2
+
+myeff_t <- includeTimeDummy(myeff_t, sameX, interaction1 = "partij", name="fnet", timeDummy="2")
+myeff_t <- includeTimeDummy(myeff_t, sameX, interaction1 = "partij", name="atmnet", timeDummy="2")
+myeff_t <- includeTimeDummy(myeff_t, sameX, interaction1 = "partij", name="rtnet", timeDummy="2")
+myeff_t
+
+myalgorithm <- sienaAlgorithmCreate( projname = 'M8c_t', nsub=5, n3=5000 )
+ansM8c_t <- siena07( myalgorithm, data = mydata, prevAns=ansM8c, effects = myeff_t, useCluster=TRUE, nbrNodes=10, initC=TRUE, batch=TRUE)
+ansM8c_t 
+save(ansM8c_t, file=paste("ansM8c_t",".RData",sep=""))
+
+load("ansM8c_t.RData")	
+xtable.sienaFit(ansM8c_t, file="ansM8c_t.html", type="html", digits=3)
+
+
+res <- round(fanscsv(ansM8c_t)[c(11,16,26,34,45,53), 1:2],5)
+res
+
+mc <- as.character(round(fanscsv(ansM8c)[48,1],3))
+row.names(res) <- c(
+ "same party (dyad)"  ,      
+ "time*same party"   ,     
+ "same party (dyad)"  ,      
+ "time*same party"   ,     
+ "same party (dyad)"  ,      
+ "time*same party"   
+)
+  
+asmatkable <- kbl(res, booktabs=TRUE, digits=3, caption="Table 4: RSiena results for hypothesis 1", align = "c") %>%
+  kable_classic(full_width = F, html_font = "Cambria") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(column = 1, width = "3in")   %>%
+  row_spec(c(11, 24,41), bold = T, color = "white", background = "#D7261E") %>%
+  group_rows(index = c("Following" = 14, "Atmention" = 15, "Retweets" = 18)) %>%
+  footnote(general = paste("Overall maximum convergence ratio: ", mc, sep="" ))
+
+
+asmatkable
+
+
+
+
+```
+
+
+### Test for significance of difference in segregation. 
+
+Hypothesis 3a: Segregation in atmention is larger than in follow. No because...
+
+```{r, echo=TRUE, eval=TRUE}
+load("ansM8c.RData")
+ans <- ansM8c
+p <- ans$pp
+
+## segregation in atmention is larger than in follow
+mat <- matrix(0,1,p)
+mat[1,24] <- -1
+mat[1,11] <- 1
+Wald.RSiena(mat, ans)
+
+dif <- sum(mat * ans$theta)
+se <- sqrt(mat %*% ans$covtheta %*% t(mat))
+
+print(paste("difference is", round(dif,3), "with s.e.", round(se, 3), ", t-ratio", round(dif/se, 3)))
+
+
+```
+
+Hypothesis 3b: Segregation in follow is larger than in retweet. No because...
+
+```{r, echo=TRUE, eval=TRUE}
+ans <- ansM8c
+p <- ans$pp
+
+## segregation in atmention is larger than in follow
+mat <- matrix(0,1,p)
+mat[1,11] <- -1
+mat[1,41] <- 1
+Wald.RSiena(mat, ans)
+
+dif <- sum(mat * ans$theta)
+se <- sqrt(mat %*% ans$covtheta %*% t(mat))
+
+print(paste("difference is", round(dif,3), "with s.e.", round(se, 3), ", t-ratio", round(dif/se, 3)))
+
+```
+
+Segregation in atmention is larger than in retweet. Yes, because...
+
+```{r, echo=TRUE, eval=TRUE}
+ans <- ansM8c
+p <- ans$pp
+
+## segregation in atmention is larger than in follow
+mat <- matrix(0,1,p)
+mat[1,24] <- -1
+mat[1,41] <- 1
+Wald.RSiena(mat, ans)
+
+dif <- sum(mat * ans$theta)
+se <- sqrt(mat %*% ans$covtheta %*% t(mat))
+
+print(paste("difference is", round(dif,3), "with s.e.", round(se, 3), ", t-ratio", round(dif/se, 3)))
+
+```
+
+
+
 
 ---  
 
@@ -1715,6 +1849,9 @@ save(ansM10d, file=paste("ansM10d",".RData",sep=""))
 load("ansM10c.RData")
 ansM10c
 #summary(ansM10c)
+
+
+xtable.sienaFit(ansM10c, file="ansM10c.html", type="html", digits=3)
 ```
 
 ### Test for significance of difference in segregation. 
@@ -2275,7 +2412,72 @@ save(ansM12c, file=paste("ansM12c",".RData",sep=""))
 
 ```{r, eval=TRUE}
 load("ansM12.RData")
+
 ansM12
+
+xtable.sienaFit(ansM12, file="ansM12.html", type="html", digits=3)
+
+```
+
+### Test for significance of difference in segregation. 
+
+Hypothesis 3a: Segregation in atmention is larger than in follow. No/YES because...
+
+```{r, echo=TRUE, eval=TRUE}
+load("ansM12.RData")
+ans <- ansM12
+p <- ans$pp
+
+## segregation in atmention is larger than in follow
+mat <- matrix(0,1,p)
+mat[1,32] <- -1
+mat[1,11] <- 1
+Wald.RSiena(mat, ans)
+
+dif <- sum(mat * ans$theta)
+se <- sqrt(mat %*% ans$covtheta %*% t(mat))
+
+print(paste("difference is", round(dif,3), "with s.e.", round(se, 3), ", t-ratio", round(dif/se, 3)))
+
+
+```
+
+Hypothesis 3b: Segregation in follow is larger than in retweet. No because...
+
+```{r, echo=TRUE, eval=TRUE}
+ans <- ansM12
+p <- ans$pp
+
+## segregation in atmention is larger than in follow
+mat <- matrix(0,1,p)
+mat[1,11] <- -1
+mat[1,52] <- 1
+Wald.RSiena(mat, ans)
+
+dif <- sum(mat * ans$theta)
+se <- sqrt(mat %*% ans$covtheta %*% t(mat))
+
+print(paste("difference is", round(dif,3), "with s.e.", round(se, 3), ", t-ratio", round(dif/se, 3)))
+
+```
+
+Segregation in atmention is larger than in retweet. Yes, because...
+
+```{r, echo=TRUE, eval=TRUE}
+ans <- ansM12
+p <- ans$pp
+
+## segregation in atmention is larger than in follow
+mat <- matrix(0,1,p)
+mat[1,30] <- -1
+mat[1,50] <- 1
+Wald.RSiena(mat, ans)
+
+dif <- sum(mat * ans$theta)
+se <- sqrt(mat %*% ans$covtheta %*% t(mat))
+
+print(paste("difference is", round(dif,3), "with s.e.", round(se, 3), ", t-ratio", round(dif/se, 3)))
+
 ```
 
 
@@ -2283,6 +2485,149 @@ ansM12
 
 
 ## Time heterogeneity
+
+### Model 1
+```{r}
+require(RSiena)
+load("ansM8c.RData")
+ansM8c
+tt <- sienaTimeTest(ansM8c)
+tt
+ttb <- sienaTimeTest(ansM8c,  effects=c(11,24, 41))
+ttb
+#str(tt)
+ttb$JointTest
+ttb$EffectTest
+ttb$IndividualTest
+plot(ttb)
+
+```
+
+### Model 3
+
+```{r}
+require(RSiena)
+load("ansM12.RData")
+tt <- sienaTimeTest(ansM12)
+tt <- sienaTimeTest(ansM12,  effects=c(11,32,52))
+tt
+str(tt)
+tt$JointTest
+tt$EffectTest
+tt$IndividualTest
+plot(tt)
+
+```
+
+
+```{r}
+# this does not work!! myeff_m4 <- ansM12$effects
+myeff_m5 <- myeff_m4
+
+myeff_m5 <- includeTimeDummy(myeff_m5, sameX, interaction1 = "partij", name="fnet", timeDummy="2")
+myeff_m5 <- includeTimeDummy(myeff_m5, sameX, interaction1 = "partij", name="atmnet", timeDummy="2")
+myeff_m5 <- includeTimeDummy(myeff_m5, sameX, interaction1 = "partij", name="rtnet", timeDummy="2")
+myeff_m5
+
+myalgorithm <- sienaAlgorithmCreate( projname = 'M13')
+ansM13 <- siena07( myalgorithm, data = mydata, prevAns=ansM12, effects = myeff_m5, useCluster=TRUE, nbrNodes=10, initC=TRUE, batch=TRUE)
+ansM13 
+save(ansM13, file=paste("ansM13",".RData",sep=""))
+load("ansM13.RData")
+ansM13
+sienaTimeFix(effects, data)
+
+```
+
+## Summary of results
+
+```{r, eval=TRUE}
+require(tidyverse)
+#structural effects only
+load("ansM4b.RData")
+#summary(ansM4b)
+#baseline model
+load("ansM8c.RData")
+#summary(ansM8c)
+#social inbreeding
+load("ansM10c.RData")
+#ansM10c
+#cross network effects
+load("ansM12.RData")
+
+#ansM12
+
+#ansM8c
+# baseline model
+res <- round(fanscsv(ansM8c)[-48,1:2],5)
+mc <- as.character(round(fanscsv(ansM8c)[48,1],3))
+row.names(res) <- c(
+ "rate 1"  ,      
+ "rate 2"   ,     
+ "outdegree"          ,  
+ "reciprocity"         ,           
+ "transitive triplets"  ,          
+ "shared popularity"     ,         
+ "indegree - popularity"   ,
+  " outdegree - popularity" , 
+ "outdegree - activity"    ,
+ "seating distance (dyad)"         ,               
+ "same party (dyad)"                ,    
+"incumbancy status (alter)"          ,   
+"same incumbancy status (dyad)"       ,       
+"position on election list (ego)"      ,            
+ "rate 1"      ,
+ "rate 2"      ,
+"outdegree"          ,
+ "reciprocity"        ,          
+ "transitive triplets" ,         
+ "shared popularity"    ,        
+ "indegree - popularity" ,
+ "outdegree - popularity",
+"outdegree - activity "  ,
+ "same party (dyad)"            ,      
+"party Liberal Democrats (alter)",                    
+"party GreenLeft (alter)"         ,            
+ "party GreenLeft (ego)"           ,            
+ "position on election list (alter)",              
+"party leader (alter)"             ,
+ "party leader (ego)"               ,
+ "rate 1"       ,
+ "rate 2"       ,
+"outdegree"           ,
+"reciprocity"          ,         
+"transitive triplets"   ,        
+"shared popularity"      ,       
+"indegree - popularity ",  
+"outdegree - popularity", 
+"outdegree - activity "   ,
+"seating distance (dyad)"        ,               
+ "same party (dyad)"              ,     
+ "party Liberal Democrats (ego)"   ,                    
+ "party Freedom Party (ego)"        ,               
+ "incumbancy status (alter)"         ,   
+ "incumbancy status (ego)"            ,  
+ "position on election list (alter)"   ,            
+"party leader (alter)"
+)
+  
+asmatkable <- kbl(res, booktabs=TRUE, digits=3, caption="Table 4: RSiena results for hypothesis 1", align = "c") %>%
+  kable_classic(full_width = F, html_font = "Cambria") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(column = 1, width = "3in")   %>%
+  row_spec(c(11, 24,41), bold = T, color = "white", background = "#D7261E") %>%
+  group_rows(index = c("Following" = 14, "Atmention" = 15, "Retweets" = 18)) %>%
+  footnote(general = paste("Overall maximum convergence ratio: ", mc, sep="" ))
+
+
+asmatkable
+
+```
+
+
+
+<!---
+
 
 ### Period 1 (wave 1-2)
 
@@ -2561,93 +2906,7 @@ save(ansM12_t21c, file=paste("ansM12_t21c",".RData",sep=""))
 ---  
 
 
-## Summary of results
 
-```{r, eval=TRUE}
-#structural effects only
-load("ansM4b.RData")
-#summary(ansM4b)
-#baseline model
-load("ansM8c.RData")
-#summary(ansM8c)
-#social inbreeding
-load("ansM10c.RData")
-#ansM10c
-#cross network effects
-load("ansM12.RData")
-
-#ansM12
-
-#ansM8c
-# baseline model
-res <- round(fanscsv(ansM8c)[-48,1:2],5)
-mc <- as.character(round(fanscsv(ansM8c)[48,1],3))
-row.names(res) <- c(
- "rate 1"  ,      
- "rate 2"   ,     
- "outdegree"          ,  
- "reciprocity"         ,           
- "transitive triplets"  ,          
- "shared popularity"     ,         
- "indegree - popularity"   ,
-  " outdegree - popularity" , 
- "outdegree - activity"    ,
- "seating distance (dyad)"         ,               
- "same party (dyad)"                ,    
-"incumbancy status (alter)"          ,   
-"same incumbancy status (dyad)"       ,       
-"position on election list (ego)"      ,            
- "rate 1"      ,
- "rate 2"      ,
-"outdegree"          ,
- "reciprocity"        ,          
- "transitive triplets" ,         
- "shared popularity"    ,        
- "indegree - popularity" ,
- "outdegree - popularity",
-"outdegree - activity "  ,
- "same party (dyad)"            ,      
-"party Liberal Democrats (alter)",                    
-"party GreenLeft (alter)"         ,            
- "party GreenLeft (ego)"           ,            
- "position on election list (alter)",              
-"party leader (alter)"             ,
- "party leader (ego)"               ,
- "rate 1"       ,
- "rate 2"       ,
-"outdegree"           ,
-"reciprocity"          ,         
-"transitive triplets"   ,        
-"shared popularity"      ,       
-"indegree - popularity ",  
-"outdegree - popularity", 
-"outdegree - activity "   ,
-"seating distance (dyad)"        ,               
- "same party (dyad)"              ,     
- "party Liberal Democrats (ego)"   ,                    
- "party Freedom Party (ego)"        ,               
- "incumbancy status (alter)"         ,   
- "incumbancy status (ego)"            ,  
- "position on election list (alter)"   ,            
-"party leader (alter)"
-)
-  
-asmatkable <- kbl(res, booktabs=TRUE, digits=3, caption="Table 4: RSiena results for hypothesis 1", align = "c") %>%
-  kable_classic(full_width = F, html_font = "Cambria") %>%
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
-  column_spec(column = 1, width = "3in")   %>%
-  row_spec(c(11, 24,41), bold = T, color = "white", background = "#D7261E") %>%
-  group_rows(index = c("Following" = 14, "Atmention" = 15, "Retweets" = 18)) %>%
-  footnote(general = paste("Overall maximum convergence ratio: ", mc, sep="" ))
-
-
-asmatkable
-
-```
-
-
-
-<!---
 
 
 ###model 6 : Time heterogeneity

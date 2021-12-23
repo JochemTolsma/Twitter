@@ -412,6 +412,8 @@ lftm <- (abs(xmat - xmatt) < 6)
 
 ### Density  
 
+<!---order fnet atmnet rtnet --->
+
 ```{r Table2a, echo=TRUE}
 
 desmat <- matrix(NA, nrow=10, ncol=9)
@@ -530,7 +532,7 @@ desmatkable
 
 ### Coleman's  
 
-
+<!---order fnet atmnet rtnet --->
 ```{r Table2b, echo=TRUE}
 
 fnet[fnet==10] <- NA
@@ -590,6 +592,8 @@ colmatkable
 
 ### Assortivity coefficients
 
+
+<!---WATCH OUT NOT YET IN CORRECT ORDER. order fnet atmnet rtnet --->
 ```{r Table2c, echo=TRUE} 
 
 fnet[fnet==10] <- NA
@@ -627,31 +631,31 @@ asmat[4,1] <- assortativity(gfnet1, types1=lft, directed = TRUE)
 asmat[4,2] <- assortativity(gfnet2, types1=lft, directed = TRUE)
 asmat[4,3] <- assortativity(gfnet3, types1=lft, directed = TRUE)
 
-asmat[1,4] <- assortativity_nominal(grtnet1, types=partij_int, directed = TRUE)
-asmat[1,5] <- assortativity_nominal(grtnet2, types=partij_int, directed = TRUE)
-asmat[1,6] <- assortativity_nominal(grtnet3, types=partij_int, directed = TRUE)
-asmat[2,4] <- assortativity_nominal(grtnet1, types=vrouw_int, directed = TRUE)
-asmat[2,5] <- assortativity_nominal(grtnet2, types=vrouw_int, directed = TRUE)
-asmat[2,6] <- assortativity_nominal(grtnet3, types=vrouw_int, directed = TRUE)
-asmat[3,4] <- assortativity_nominal(grtnet1, types=ethminz, directed = TRUE)
-asmat[3,5] <- assortativity_nominal(grtnet2, types=ethminz, directed = TRUE)
-asmat[3,6] <- assortativity_nominal(grtnet3, types=ethminz, directed = TRUE)
-asmat[4,4] <- assortativity(grtnet1, types1=lft, directed = TRUE)
-asmat[4,5] <- assortativity(grtnet2, types1=lft, directed = TRUE)
-asmat[4,6] <- assortativity(grtnet3, types1=lft, directed = TRUE)
+asmat[1,7] <- assortativity_nominal(grtnet1, types=partij_int, directed = TRUE)
+asmat[1,8] <- assortativity_nominal(grtnet2, types=partij_int, directed = TRUE)
+asmat[1,9] <- assortativity_nominal(grtnet3, types=partij_int, directed = TRUE)
+asmat[2,7] <- assortativity_nominal(grtnet1, types=vrouw_int, directed = TRUE)
+asmat[2,8] <- assortativity_nominal(grtnet2, types=vrouw_int, directed = TRUE)
+asmat[2,9] <- assortativity_nominal(grtnet3, types=vrouw_int, directed = TRUE)
+asmat[3,7] <- assortativity_nominal(grtnet1, types=ethminz, directed = TRUE)
+asmat[3,8] <- assortativity_nominal(grtnet2, types=ethminz, directed = TRUE)
+asmat[3,9] <- assortativity_nominal(grtnet3, types=ethminz, directed = TRUE)
+asmat[4,7] <- assortativity(grtnet1, types1=lft, directed = TRUE)
+asmat[4,8] <- assortativity(grtnet2, types1=lft, directed = TRUE)
+asmat[4,9] <- assortativity(grtnet3, types1=lft, directed = TRUE)
 
-asmat[1,7] <- assortativity_nominal(gatmnet1, types=partij_int, directed = TRUE)
-asmat[1,8] <- assortativity_nominal(gatmnet2, types=partij_int, directed = TRUE)
-asmat[1,9] <- assortativity_nominal(gatmnet3, types=partij_int, directed = TRUE)
-asmat[2,7] <- assortativity_nominal(gatmnet1, types=vrouw_int, directed = TRUE)
-asmat[2,8] <- assortativity_nominal(gatmnet2, types=vrouw_int, directed = TRUE)
-asmat[2,9] <- assortativity_nominal(gatmnet3, types=vrouw_int, directed = TRUE)
-asmat[3,7] <- assortativity_nominal(gatmnet1, types=ethminz, directed = TRUE)
-asmat[3,8] <- assortativity_nominal(gatmnet2, types=ethminz, directed = TRUE)
-asmat[3,9] <- assortativity_nominal(gatmnet3, types=ethminz, directed = TRUE)
-asmat[4,7] <- assortativity(gatmnet1, types1=lft, directed = TRUE)
-asmat[4,8] <- assortativity(gatmnet2, types1=lft, directed = TRUE)
-asmat[4,9] <- assortativity(gatmnet3, types1=lft, directed = TRUE)
+asmat[1,4] <- assortativity_nominal(gatmnet1, types=partij_int, directed = TRUE)
+asmat[1,5] <- assortativity_nominal(gatmnet2, types=partij_int, directed = TRUE)
+asmat[1,6] <- assortativity_nominal(gatmnet3, types=partij_int, directed = TRUE)
+asmat[2,4] <- assortativity_nominal(gatmnet1, types=vrouw_int, directed = TRUE)
+asmat[2,5] <- assortativity_nominal(gatmnet2, types=vrouw_int, directed = TRUE)
+asmat[2,6] <- assortativity_nominal(gatmnet3, types=vrouw_int, directed = TRUE)
+asmat[3,4] <- assortativity_nominal(gatmnet1, types=ethminz, directed = TRUE)
+asmat[3,5] <- assortativity_nominal(gatmnet2, types=ethminz, directed = TRUE)
+asmat[3,6] <- assortativity_nominal(gatmnet3, types=ethminz, directed = TRUE)
+asmat[4,4] <- assortativity(gatmnet1, types1=lft, directed = TRUE)
+asmat[4,5] <- assortativity(gatmnet2, types1=lft, directed = TRUE)
+asmat[4,6] <- assortativity(gatmnet3, types1=lft, directed = TRUE)
 
 colnames(asmat) <- c("friends w1", "friends w2", "friends w3","atmentions w1","atmentions w2","atmentions w3","retweets w1","retweets w2","retweets w3") 
 rownames(asmat) <- c("party", "sex", "ethnicity", "age")
