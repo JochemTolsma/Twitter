@@ -14,7 +14,7 @@ output:
 
 ```{r globalsettings, echo=FALSE, warning=FALSE}
 library(knitr)
-opts_chunk$set(tidy.opts=list(width.cutoff=100),tidy=TRUE, warning = FALSE, message = FALSE,comment = "#>", cache=TRUE, echo=FALSE, class.source=c("test"), class.output=c("test2"))
+opts_chunk$set(tidy.opts=list(width.cutoff=100),tidy=TRUE, warning = FALSE, message = FALSE,comment = "#>", cache=TRUE, echo=FALSE, class.source=c("test"), class.output=c("test2"), eval=FALSE)
 options(width = 100)
 rgl::setupKnitr()
 ```
@@ -66,15 +66,13 @@ h1, .h1, h2, .h2, h3, .h3 {
 
 ------------------------------------------------------------------------
 
-<!---als figuurtjes goed zijn, zet dan eval=FALSE--->
-
 
 # Intro  
 
 
-This [website](https://jochemtolsma.github.io/Twitter/) is a replication package for the paper "Twitter" by @Tolsma2021.
+This [website](https://jochemtolsma.github.io/Twitter/) is a replication package for the paper "**How Twitter divides the Dutch parliament: Segregation along party lines and social dimensions in the following, @-mentions and retweets Twitter Networks of Dutch MPs**" by @Tolsma2021.
 
-It contains R code to replicate all Tables/Figures/Results in the manuscript.
+It contains R code to replicate all Tables/Figures/Appendix in the manuscript.
 
 To copy the code click the button in the upper right corner of the code-chunks.
 
@@ -88,11 +86,15 @@ Questions can be addressed to [Jochem Tolsma](mailto:jochem.tolsma@ru.nl).
 
 ## Packages  
 
-```{r packages, echo=TRUE}
+```{r packages, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
 #install if necessary 
+if (!require("tidyverse", character.only = TRUE)) {install.packages("tidyverse", dependencies=TRUE)}
 if (!require("dplyr", character.only = TRUE)) {install.packages("dplyr", dependencies=TRUE)}
 if (!require("foreign", character.only = TRUE)) {install.packages("foreign", dependencies=TRUE)}
 if (!require("igraph", character.only = TRUE)) {install.packages("igraph", dependencies=TRUE)}
+if (!require("knitr", character.only = TRUE)) {install.packages("knitr", dependencies=TRUE)}
+if (!require("kableExtra", character.only = TRUE)) {install.packages("kableExtra", dependencies=TRUE)}
+if (!require("RSiena", character.only = TRUE)) {install.packages("RSiena", dependencies=TRUE)}
 
 #load packages.
 library(tidyverse)
@@ -101,6 +103,7 @@ library(foreign)
 library(igraph)
 library(knitr)
 library(kableExtra)
+library(RSiena)
 
 ```
 
@@ -110,16 +113,17 @@ library(kableExtra)
 
 ## Load data objects {.tabset .tabset-fade}  
 
-See ... for construction of data objects.  
+ 
 
 Data objects:  
 
-- key: information on all politicians on election list  
-- keyf: information on all 147 MPs with twitter handle  
-- mydata: RSiena object with all kind of goodies inside  
-- seats: seating coordinates of HoP (used for plotting)
+- [key](./data-processed/key moederbestand 20171114.sav): information on all politicians on election list  
+- [twitter](./data-processed/twitter_20190919.RData)  
+    - keyf: information on all 147 MPs with twitter handle  
+    - mydata: RSiena object with all kind of goodies inside  
+    - seats: seating coordinates of HoP (used for plotting)
 
-```{r data, echo=TRUE}
+```{r data, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
 #STAP 1: read in data
 key <- read.spss('data-processed\\key moederbestand 20171114.sav', use.value.labels=T, to.data.frame=T)
 
@@ -168,7 +172,7 @@ lft <- lft + attributes(lft)$mean
 
 The first step is to make a 'graph object'. 
 
-```{r, echo=TRUE}
+```{r, echo=TRUE, eval=TRUE}
 #define directed network 
 G1d <- graph_from_adjacency_matrix(fnet1, mode = "directed", weighted = NULL, diag = TRUE,  add.colnames = NA, add.rownames = NA)
 G2d <- graph_from_adjacency_matrix(atmnet1, mode = "directed", weighted = NULL, diag = TRUE,  add.colnames = NA, add.rownames = NA)
@@ -183,7 +187,9 @@ G3u <- graph_from_adjacency_matrix(rtnet1_un, mode = "undirected", weighted = NU
 
 
 
-### Followers
+### Followers (directed)
+
+ 
 
 ```{r G1d, echo=TRUE, eval=FALSE}
 G1 <- G1d
@@ -240,11 +246,15 @@ dev.off()
 
 ```
 
-```{r echo=FALSE, out.width='100%'}
+```{r echo=FALSE, eval=TRUE, out.width='100%'}
 knitr::include_graphics('MPplotG1d.png')
 ```
 
+---  
 
+
+
+### Followers (undirected)
 
 ```{r G1, echo=TRUE, eval=FALSE}
 G1 <- G1u
@@ -300,15 +310,16 @@ dev.off()
 
 ```
 
-```{r echo=FALSE, out.width='100%'}
-knitr::include_graphics('MPplotG1.png')
+```{r echo=FALSE, eval=TRUE, out.width='100%'}
+knitr::include_graphics('MPplotG1uv2.png')
 ```
 
 
 ---  
 
 
-### at-mention
+### at-mention (directed) 
+
 
 ```{r, eval=FALSE}
 
@@ -366,10 +377,14 @@ dev.off()
 
 ```
 
-```{r echo=FALSE, out.width='100%'}
+```{r echo=FALSE, eval=TRUE, out.width='100%'}
 knitr::include_graphics('MPplotG2d.png')
 ```
 
+---   
+
+
+### atmentions (undirected)
 
 
 ```{r G2, echo=TRUE, eval=FALSE}
@@ -425,13 +440,13 @@ dev.off()
 ```
 
 
-```{r echo=FALSE, out.width='100%'}
+```{r echo=FALSE, eval=TRUE, out.width='100%'}
 knitr::include_graphics('MPplotG2u.png')
 ```
 
 ---  
 
-### retweet
+### retweet (directed)
 
 
 ```{r G3d, echo=TRUE, eval=FALSE}
@@ -489,9 +504,12 @@ dev.off()
 ```
 
 
-```{r echo=FALSE, out.width='100%'}
+```{r echo=FALSE, eval=TRUE, out.width='100%'}
 knitr::include_graphics('MPplotG3d.png')
 ```
+
+
+### retweet (undirected)
 
 ```{r G3u, echo=TRUE, eval=FALSE}
 G3 <- G3u
@@ -547,7 +565,7 @@ dev.off()
 ```
 
 
-```{r echo=FALSE, out.width='100%'}
+```{r echo=FALSE, eval=TRUE, out.width='100%'}
 knitr::include_graphics('MPplotG3u.png')
 ```
 
@@ -555,41 +573,65 @@ knitr::include_graphics('MPplotG3u.png')
 
 ## Rank orders and description  
 
-```{r}
+Most follower outdegrees:
+```{r, echo=TRUE, eval=TRUE, results='hold'}
 
-#most follower outdegrees
+
 G1 <- G1d
 foutdegree <- degree(G1, mode="out")
 keyf$Partij[which(foutdegree==max(foutdegree))]
 keyf$Naam[which(foutdegree==max(foutdegree))]
+```
 
-#most atmention outdegrees
+
+Most atmention outdegrees: 
+```{r, echo=TRUE, eval=TRUE, results='hold'}
+
 G2 <- G2d
 atmdegree <- degree(G2, mode="out")
 keyf$Partij[which(atmdegree==max(atmdegree))]
 keyf$Naam[which(atmdegree==max(atmdegree))]
+```
 
-#most retweet outdegrees
+Most retweet outdegrees: 
+
+```{r, echo=TRUE, eval=TRUE, results='hold'}
 G3 <- G3d
 rtdegree <- degree(G3, mode="out")
 keyf$Partij[which(rtdegree==max(rtdegree))]
 keyf$Naam[which(rtdegree==max(rtdegree))]
-
-cor.test(foutdegree, atmdegree, method="spearman")
-cor.test(foutdegree, rtdegree, method="spearman")
-cor.test(rtdegree, atmdegree, method="spearman")
-
 ```
 
+Spearman's rank correlation rho  
+
+**follower outdegree and atmention outdegree**
+
+```{r, echo=TRUE, eval=TRUE}
+cor.test(foutdegree, atmdegree, method="spearman")
+```
+
+**follower outdegree and retweet outdegree**
+```{r, echo=TRUE, eval=TRUE}
+cor.test(foutdegree, rtdegree, method="spearman")
+```
+
+**retweet outdegree and atmention outdegree**
+```{r, echo=TRUE, eval=TRUE}
+cor.test(rtdegree, atmdegree, method="spearman")
+```
+
+
+<!---
 Plotjes voor outdegree distribution
 
 try to combine the three deps in one graph and then combine also outdegree and indegree. 
 
 https://www.r-graph-gallery.com/135-stacked-density-graph.html
 https://www.r-graph-gallery.com/density_mirror_ggplot2.html
+--->  
+
+---  
 
 
-```{r}
 
-```
 

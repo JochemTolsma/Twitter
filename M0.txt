@@ -1,0 +1,175 @@
+
+
+-----------------------------------
+New Analysis started.
+Date and time: 25/12/2021 14:33:09
+New results follow.
+-----------------------------------
+
+RSiena version 1.3.0 (02 mei 21)
+
+
+@1
+Estimation by stochastic approximation algorithm.
+=================================================
+
+Random initialization of random number stream.
+Current random number seed is 187624.
+Effects object used: myeff_m0 
+Model Type:
+Network 1 fnet : Standard actor-oriented model
+Network 2 atmnet : Standard actor-oriented model
+Network 3 rtnet : Standard actor-oriented model
+Estimation method: unconditional moment estimation
+.
+
+Time duration for simulations in each period is 1.0.
+Standard errors are estimated with the likelihood ratio method.
+Dolby method (regression on scores) is used.
+Initial value of gain parameter is  0.4000000.
+Reduction factor for gain parameter is  0.5000000.
+Number of subphases in Phase 2 is 4.
+
+Initial parameter values are 
+  1. rate:  constant fnet rate (period 1)                   7.2202
+  2. rate:  constant fnet rate (period 2)                   3.7957
+  3. eval:  fnet: outdegree (density)                       0.0000
+  4. eval:  fnet: same partij                               0.0000
+  5. eval:  Dummy2:fnet ego                                 0.0000  (fixed) 
+  6. eval:  int.  Dummy2:fnet ego x same partij             0.0000
+  7. rate:  constant atmnet rate (period 1)                16.2609
+  8. rate:  constant atmnet rate (period 2)                 9.1790
+  9. eval:  atmnet: outdegree (density)                    -1.7614
+ 10. eval:  atmnet: same partij                             0.0000
+ 11. eval:  Dummy2:atmnet ego                               0.0000  (fixed) 
+ 12. eval:  int.  Dummy2:atmnet ego x same partij           0.0000
+ 13. rate:  constant rtnet rate (period 1)                 10.9872
+ 14. rate:  constant rtnet rate (period 2)                  9.3982
+ 15. eval:  rtnet: outdegree (density)                     -1.6139
+ 16. eval:  rtnet: same partij                              0.0000
+ 17. eval:  Dummy2:rtnet ego                                0.0000  (fixed) 
+ 18. eval:  int.  Dummy2:rtnet ego x same partij            0.0000
+
+
+Observed values of target statistics are
+  1. Amount of network change in period 1                               527.0000
+  2. Amount of network change in period 2                               277.0000
+  3. fnet: Number of ties                                              11887.0000
+  4. fnet: Same values on partij                                       3636.0000
+  5. Sum outdegrees x Dummy2:fnet                                        27.5000
+  6. int.  Dummy2:fnet ego x same partij                                 10.0000
+  7. Amount of network change in period 1                              1187.0000
+  8. Amount of network change in period 2                               670.0000
+  9. atmnet: Number of ties                                            1030.0000
+ 10. atmnet: Same values on partij                                      509.0000
+ 11. Sum outdegrees x Dummy2:atmnet                                    -226.0000
+ 12. int.  Dummy2:atmnet ego x same partij                              -96.5000
+ 13. Amount of network change in period 1                               802.0000
+ 14. Amount of network change in period 2                               686.0000
+ 15. rtnet: Number of ties                                             1454.0000
+ 16. rtnet: Same values on partij                                      1238.0000
+ 17. Sum outdegrees x Dummy2:rtnet                                       -3.0000
+ 18. int.  Dummy2:rtnet ego x same partij                                -3.0000
+
+ 18 parameters, 18 statistics
+
+Estimation of derivatives by the LR method (type 1).
+
+
+@2
+End of stochastic approximation algorithm, phase 3.
+---------------------------------------------------
+
+Total of 2243 iterations.
+Parameter estimates based on 1243 iterations,
+convergence diagnostics, covariance and derivative matrices based on 1000 iterations.
+
+Information for convergence diagnosis.
+Averages, standard deviations, and t-ratios for deviations from targets:
+  1.  -1.8030  24.1612  -0.0746                      
+  2.   0.1120  17.1858   0.0065                      
+  3.  -0.4070  29.1712  -0.0140                      
+  4.   0.2710   9.7919   0.0277                      
+  5.   1.5995  14.6166   0.1094     (fixed parameter)
+  6.  -0.1715   4.8067  -0.0357                      
+  7.  -0.0250  22.2666  -0.0011                      
+  8.  -0.8200  19.1147  -0.0429                      
+  9.  -0.5490  30.3291  -0.0181                      
+ 10.  -0.4500  19.7380  -0.0228                      
+ 11. 168.6925  14.7241  11.4569     (fixed parameter)
+ 12.   0.1440   9.6056   0.0150                      
+ 13.  -0.5540  22.6642  -0.0244                      
+ 14.   1.3330  20.5834   0.0648                      
+ 15.  -1.0890  31.5348  -0.0345                      
+ 16.  -1.8140  27.1552  -0.0668                      
+ 17.   1.2975  15.6893   0.0827     (fixed parameter)
+ 18.   0.6470  13.9317   0.0464                      
+
+Good convergence is indicated by the t-ratios of non-fixed parameters being close to zero.
+
+Overall maximum convergence ratio =  0.1941 .
+
+
+
+@2
+Estimation Results.
+-------------------
+
+Regular end of estimation algorithm.
+Total of 2243 iteration steps.
+
+
+@3
+Estimates and standard errors
+                             
+ 1. rate:  constant fnet rate (period 1)                           3.7021  (   0.1556)
+ 2. rate:  constant fnet rate (period 2)                           1.9633  (   0.1134)
+ 3. eval:  fnet: outdegree (density)                              -0.5750  (   0.0811)
+ 4. eval:  fnet: same partij                                       1.4204  (   0.1244)
+ 5. eval:  Dummy2:fnet ego                                         0.0000  (  fixed  )
+ 6. eval:  int.  Dummy2:fnet ego x same partij                     0.4735  (   0.2401)
+ 7. rate:  constant atmnet rate (period 1)                        22.8623  (   1.3444)
+ 8. rate:  constant atmnet rate (period 2)                         9.3531  (   0.4912)
+ 9. eval:  atmnet: outdegree (density)                            -2.4375  (   0.0342)
+10. eval:  atmnet: same partij                                     0.8555  (   0.0530)
+11. eval:  Dummy2:atmnet ego                                       0.0000  (  fixed  )
+12. eval:  int.  Dummy2:atmnet ego x same partij                  -1.0104  (   0.0913)
+13. rate:  constant rtnet rate (period 1)                         12.2384  (   0.6003)
+14. rate:  constant rtnet rate (period 2)                         10.8618  (   0.7101)
+15. eval:  rtnet: outdegree (density)                             -2.8112  (   0.0458)
+16. eval:  rtnet: same partij                                      2.1228  (   0.0558)
+17. eval:  Dummy2:rtnet ego                                        0.0000  (  fixed  )
+18. eval:  int.  Dummy2:rtnet ego x same partij                    0.1850  (   0.0660)
+
+
+@3
+Covariance matrices
+                   
+(Values of the covariance matrix of estimates
+  are meaningless for the fixed parameters.)
+
+Covariance matrix of estimates (correlations below diagonal):
+     0.024     -0.001     -0.001      0.001         NA      0.000     -0.027      0.001      0.000      0.000         NA      0.000      0.002      0.001      0.000      0.001         NA      0.000
+    -0.042      0.013      0.000      0.000         NA     -0.001     -0.004      0.001      0.000      0.000         NA      0.001     -0.001      0.002      0.000      0.000         NA      0.000
+    -0.045     -0.029      0.007     -0.002         NA     -0.003     -0.001      0.000      0.000      0.000         NA      0.000      0.003     -0.011      0.000      0.000         NA      0.000
+     0.071     -0.028     -0.242      0.015         NA      0.005     -0.005      0.003      0.000      0.001         NA      0.000      0.002      0.007      0.000      0.000         NA      0.000
+        NA         NA         NA         NA         NA         NA         NA         NA         NA         NA         NA         NA         NA         NA         NA         NA         NA         NA
+    -0.005     -0.029     -0.145      0.176         NA      0.058      0.022     -0.002      0.000      0.000         NA      0.001      0.005      0.006      0.000     -0.001         NA     -0.001
+    -0.131     -0.025     -0.012     -0.033         NA      0.067      1.807     -0.089      0.009     -0.010         NA     -0.017      0.036      0.010     -0.001      0.006         NA     -0.010
+     0.010      0.015     -0.005      0.044         NA     -0.014     -0.134      0.241      0.001      0.005         NA      0.013     -0.020     -0.036     -0.001      0.001         NA     -0.001
+    -0.040      0.021      0.002     -0.053         NA      0.000      0.189      0.056      0.001     -0.001         NA      0.000     -0.003      0.001      0.000      0.000         NA      0.000
+    -0.007      0.006      0.031      0.087         NA     -0.037     -0.146      0.186     -0.523      0.003         NA      0.002      0.002      0.000      0.000      0.000         NA      0.000
+        NA         NA         NA         NA         NA         NA         NA         NA         NA         NA         NA         NA         NA         NA         NA         NA         NA         NA
+     0.023      0.051      0.042      0.034         NA      0.025     -0.137      0.299      0.082      0.475         NA      0.008      0.000      0.001      0.000      0.000         NA      0.000
+     0.019     -0.018      0.067      0.025         NA      0.035      0.045     -0.068     -0.123      0.049         NA     -0.007      0.360     -0.002      0.005      0.000         NA     -0.010
+     0.012      0.024     -0.189      0.077         NA      0.037      0.011     -0.104      0.030     -0.006         NA      0.013     -0.006      0.504      0.007     -0.010         NA     -0.004
+    -0.043     -0.006      0.061      0.009         NA      0.042     -0.014     -0.063      0.010     -0.010         NA      0.025      0.198      0.220      0.002     -0.002         NA      0.000
+     0.059     -0.004     -0.054     -0.018         NA     -0.045      0.083      0.037     -0.031     -0.003         NA     -0.038     -0.008     -0.251     -0.816      0.003         NA      0.000
+        NA         NA         NA         NA         NA         NA         NA         NA         NA         NA         NA         NA         NA         NA         NA         NA         NA         NA
+     0.003     -0.005      0.008     -0.020         NA     -0.079     -0.116     -0.041      0.020     -0.040         NA     -0.042     -0.260     -0.085     -0.053      0.002         NA      0.004
+
+Derivative matrix of expected statistics X by parameters and
+covariance/correlation matrix of X can be found using
+summary(ans) within R, or by using the 'verbose' option in Siena07.
+ 
+Total computation time 1061.82 seconds.

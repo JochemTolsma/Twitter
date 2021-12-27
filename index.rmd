@@ -1,5 +1,5 @@
 ---
-title: "Replication package-Tables"
+title: "Replication package-Descriptives"
 author: '[Jochem Tolsma](https://www.jochemtolsma.nl) - Radboud University / University of Groningen, the Netherlands'
 bibliography: references.bib
 date: "Last compiled on `r format(Sys.time(), '%B, %Y')`"
@@ -12,9 +12,9 @@ output:
     code_download: yes
 ---
 
-```{r globalsettings, echo=FALSE, warning=FALSE}
+```{r globalsettings, echo=FALSE, warning=FALSE, results='hide'}
 library(knitr)
-opts_chunk$set(tidy.opts=list(width.cutoff=100),tidy=TRUE, warning = FALSE, message = FALSE,comment = "#>", cache=TRUE, echo=FALSE, class.source=c("test"), class.output=c("test2"))
+opts_chunk$set(tidy.opts=list(width.cutoff=100),tidy=TRUE, warning = FALSE, message = FALSE,comment = "#>", cache=TRUE, echo=FALSE, class.source=c("test"), results = "hold", class.output=c("test2"))
 options(width = 100)
 rgl::setupKnitr()
 ```
@@ -70,9 +70,9 @@ h1, .h1, h2, .h2, h3, .h3 {
 # Intro  
 
 
-This [website](https://jochemtolsma.github.io/Twitter/) is a replication package for the paper "Twitter" by @Tolsma2021.
+This [website](https://jochemtolsma.github.io/Twitter/) is a replication package for the paper "**How Twitter divides the Dutch parliament: Segregation along party lines and social dimensions in the following, @-mentions and retweets Twitter Networks of Dutch MPs**" by @Tolsma2021.  
 
-It contains R code to replicate all Tables/Figures/Results in the manuscript.
+It contains R code to replicate all Tables/Figures/Appendix in the manuscript.
 
 To copy the code click the button in the upper right corner of the code-chunks.
 
@@ -86,11 +86,15 @@ Questions can be addressed to [Jochem Tolsma](mailto:jochem.tolsma@ru.nl).
 
 ## Packages  
 
-```{r packages, echo=TRUE}
+```{r packages, echo=TRUE, message=FALSE, warning=FALSE}
 #install if necessary 
+if (!require("tidyverse", character.only = TRUE)) {install.packages("tidyverse", dependencies=TRUE)}
 if (!require("dplyr", character.only = TRUE)) {install.packages("dplyr", dependencies=TRUE)}
 if (!require("foreign", character.only = TRUE)) {install.packages("foreign", dependencies=TRUE)}
 if (!require("igraph", character.only = TRUE)) {install.packages("igraph", dependencies=TRUE)}
+if (!require("knitr", character.only = TRUE)) {install.packages("knitr", dependencies=TRUE)}
+if (!require("kableExtra", character.only = TRUE)) {install.packages("kableExtra", dependencies=TRUE)}
+if (!require("RSiena", character.only = TRUE)) {install.packages("RSiena", dependencies=TRUE)}
 
 #load packages.
 library(tidyverse)
@@ -99,6 +103,7 @@ library(foreign)
 library(igraph)
 library(knitr)
 library(kableExtra)
+library(RSiena)
 
 ```
 
@@ -106,7 +111,7 @@ library(kableExtra)
 ---   
 
 
-## Custom segregation functions {.tabset .tabset-fade}
+## Custom segregation functions 
 
 Define custom functions to calculate network-segregation:  
 
@@ -205,16 +210,17 @@ fscolnet <- function(network, ccovar) {
 
 ## Load data objects {.tabset .tabset-fade}  
 
-See ... for construction of data objects.  
+ 
 
 Data objects:  
 
-- key: information on all politicians on election list  
-- keyf: information on all 147 MPs with twitter handle  
-- mydata: RSiena object with all kind of goodies inside  
-- seats: seating coordinates of HoP (used for plotting)
+- [key](./data-processed/key moederbestand 20171114.sav): information on all politicians on election list  
+- [twitter](./data-processed/twitter_20190919.RData)  
+    - keyf: information on all 147 MPs with twitter handle  
+    - mydata: RSiena object with all kind of goodies inside  
+    - seats: seating coordinates of HoP (used for plotting)
 
-```{r data, echo=TRUE}
+```{r data, echo=TRUE, warning=FALSE}
 #STAP 1: read in data
 key <- read.spss('data-processed\\key moederbestand 20171114.sav', use.value.labels=T, to.data.frame=T)
 
@@ -261,15 +267,13 @@ sumdat <- kbl(data_mp, booktabs=TRUE, digits=2, caption="Dataset summary", align
 scroll_box(sumdat, width="100%", height="500px")
 
 
-
-
 ```
 
 ---  
 
 
 
-## Table 1 in manuscript  
+## Appendix A. 
 
 
 ```{r table1, echo=TRUE}
@@ -349,14 +353,13 @@ test[test=="0"] <- "no visible minority"
 test[,2][test[,2]=="1"] <- "visible minority"
 
 
-table1 <- kbl(test, booktabs=TRUE, digits=2, caption="Table 1", align = "c") %>%
+AppendixA <- kbl(test, booktabs=TRUE, digits=2, caption="Appendix A. Composition of parliament and political parties in the Netherlands (2017)", align = "c") %>%
   kable_classic(full_width = F, html_font = "Cambria") %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) 
 
-scroll_box(table1, width="100%", height="500px")
+scroll_box(AppendixA, width="100%", height="500px")
 
- # %>%  pack_rows(index=c("sex"=2, "age"=1, "minority status"=2, "party"=13)) 
-#save_kable(table1, "table1.html")
+#save_kable(AppendixA, "AppendixA.html")
  
   
 ```
@@ -366,11 +369,12 @@ scroll_box(table1, width="100%", height="500px")
 
 
 
-## Table 2 in manuscript {.tabset .tabset-fade} 
+## SEGREGATION - Descriptive statistics {.tabset .tabset-fade} 
 
-We retrieve the data from the RSiena data-object 
+
 
 ```{r datatable2, echo=TRUE}
+#We retrieve the data from the RSiena data-object 
 
 fnet <- mydata$depvars$fnet
 atmnet <- mydata$depvars$atmnet
@@ -410,11 +414,11 @@ lftm <- (abs(xmat - xmatt) < 6)
 
 <br> 
 
-### Density  
+### Table 1   
 
-<!---order fnet atmnet rtnet --->
 
-```{r Table2a, echo=TRUE}
+
+```{r , echo=TRUE}
 
 desmat <- matrix(NA, nrow=10, ncol=9)
 desmat[1,1] <- fdensity(fnet[,,1])
@@ -448,7 +452,7 @@ desmat[10,1] <- fdensityinter(fnet[,,1], lftm)
 desmat[10,2] <- fdensityinter(fnet[,,2], lftm)
 desmat[10,3] <- fdensityinter(fnet[,,3], lftm)
 
-desmat[1,1 +3] <- fdensity(atmnet[,,1])
+desmat[1,1+3] <- fdensity(atmnet[,,1])
 desmat[1,2+3] <- fdensity(atmnet[,,2])
 desmat[1,3+3] <- fdensity(atmnet[,,3])
 desmat[2,1+3] <- fdensityintra(atmnet[,,1], vrouwm)
@@ -479,7 +483,7 @@ desmat[10,1+3] <- fdensityinter(atmnet[,,1], lftm)
 desmat[10,2+3] <- fdensityinter(atmnet[,,2], lftm)
 desmat[10,3+3] <- fdensityinter(atmnet[,,3], lftm)
 
-desmat[1,1 +6] <- fdensity(rtnet[,,1])
+desmat[1,1+6] <- fdensity(rtnet[,,1])
 desmat[1,2+6] <- fdensity(rtnet[,,2])
 desmat[1,3+6] <- fdensity(rtnet[,,3])
 desmat[2,1+6] <- fdensityintra(rtnet[,,1], vrouwm)
@@ -510,13 +514,14 @@ desmat[10,1+6] <- fdensityinter(rtnet[,,1], lftm)
 desmat[10,2+6] <- fdensityinter(rtnet[,,2], lftm)
 desmat[10,3+6] <- fdensityinter(rtnet[,,3], lftm)
 
-colnames(desmat) <- c("friends w1", "friends w2", "friends w3","atmentions w1","atmentions w2","atmentions w3","retweets w1","retweets w2","retweets w3") 
-rownames(desmat) <- c("total", "same sex", "different sex", "same party", "different party", "same ethnicity", "different ethnicity", "both minority", "same age (<6)", "different age (>5)")
+
+colnames(desmat) <- c("following T1", "following T2", "following T3","atmentions T1","atmentions T2","atmentions T3","retweets T1","retweets T2","retweets T3") 
+rownames(desmat) <- c("total",  "same sex", "different sex", "same party", "different party", "same ethnicity", "different ethnicity", "both minority", "same age (<6)", "different age (>5)")
 
 #desmat
 #write.csv2(desmat, "20190829desmat.csv")
 
-desmatkable <- kbl(desmat, booktabs=TRUE, digits=2, caption="Table 2: Density", align = "c") %>%
+desmatkable <- kbl(desmat, booktabs=TRUE, digits=2, caption="Table 1.  Inter- and intra-group densities within the three Twitter layers among Dutch MPs (2017)", align = "c") %>%
   kable_classic(full_width = F, html_font = "Cambria") %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
   column_spec(column = 1, width = "3in")
@@ -526,13 +531,16 @@ desmatkable
 
 
 ``` 
+<br> 
+
+A slightly different order of social dimensions (rows) as compared to manuscript but same numbers. 
 
 ---  
 
 
-### Coleman's  
+### Table 2  
 
-<!---order fnet atmnet rtnet --->
+
 ```{r Table2b, echo=TRUE}
 
 fnet[fnet==10] <- NA
@@ -571,13 +579,13 @@ colmat[3,7] <- fscolnet(rtnet[,,1], ethminz)
 colmat[3,8] <- fscolnet(rtnet[,,2], ethminz) 
 colmat[3,9] <- fscolnet(rtnet[,,3], ethminz) 
 
-colnames(colmat) <- c("friends w1", "friends w2", "friends w3","atmentions w1","atmentions w2","atmentions w3","retweets w1","retweets w2","retweets w3") 
+colnames(colmat) <- c("following T1", "following T2", "following T3","atmentions T1","atmentions T2","atmentions T3","retweets T1","retweets T2","retweets T3") 
 rownames(colmat) <- c("party", "sex", "ethnicity")
 #colmat
  
 #write.csv2(colmat, "20190829colmat.csv")
 
-colmatkable <- kbl(colmat, booktabs=TRUE, digits=2, caption="Table 2: Coleman", align = "c") %>%
+colmatkable <- kbl(colmat, booktabs=TRUE, digits=2, caption="Table 2. Coleman’s Homophily Index within the three Twitter layers among Dutch MPs (2017)", align = "c") %>%
   kable_classic(full_width = F, html_font = "Cambria") %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
   column_spec(column = 1, width = "3in")
@@ -590,11 +598,10 @@ colmatkable
 ---  
 
 
-### Assortivity coefficients
+### Table 3
 
 
-<!---WATCH OUT NOT YET IN CORRECT ORDER. order fnet atmnet rtnet --->
-```{r Table2c, echo=TRUE} 
+```{r , echo=TRUE} 
 
 fnet[fnet==10] <- NA
 rtnet[rtnet==10] <- NA
@@ -657,12 +664,12 @@ asmat[4,4] <- assortativity(gatmnet1, types1=lft, directed = TRUE)
 asmat[4,5] <- assortativity(gatmnet2, types1=lft, directed = TRUE)
 asmat[4,6] <- assortativity(gatmnet3, types1=lft, directed = TRUE)
 
-colnames(asmat) <- c("friends w1", "friends w2", "friends w3","atmentions w1","atmentions w2","atmentions w3","retweets w1","retweets w2","retweets w3") 
+colnames(asmat) <- c("following T1", "following T2", "following T3","atmentions T1","atmentions T2","atmentions T3","retweets T1","retweets T2","retweets T3") 
 rownames(asmat) <- c("party", "sex", "ethnicity", "age")
 #asmat
 #write.csv2(asmat, "20190828asmat.csv")
 
-asmatkable <- kbl(asmat, booktabs=TRUE, digits=2, caption="Table 2: Assortativity", align = "c") %>%
+asmatkable <- kbl(asmat, booktabs=TRUE, digits=2, caption="Table 3. Newman’s Assortativity Coefficient within the three Twitter layers among Dutch MPs (2017)", align = "c") %>%
   kable_classic(full_width = F, html_font = "Cambria") %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
   column_spec(column = 1, width = "3in")

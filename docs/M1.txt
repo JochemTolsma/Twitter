@@ -3717,3 +3717,90 @@ Observed values of target statistics are
 
  76 parameters, 76 statistics
 
+
+
+-----------------------------------
+New Analysis started.
+Date and time: 17/11/2021 10:27:47
+New results follow.
+-----------------------------------
+
+RSiena version 1.3.0 (02 May 21)
+
+
+@1
+Estimation by stochastic approximation algorithm.
+=================================================
+
+Random initialization of random number stream.
+Current random number seed is 375756.
+Effects object used: myeff_m1 
+Model Type:
+Network 1 fnet : Standard actor-oriented model
+Network 2 atmnet : Standard actor-oriented model
+Network 3 rtnet : Standard actor-oriented model
+Estimation method: unconditional moment estimation
+.
+
+Time duration for simulations in each period is 1.0.
+Standard errors are estimated with the likelihood ratio method.
+Dolby method (regression on scores) is used.
+Initial value of gain parameter is  0.4000000.
+Reduction factor for gain parameter is  0.5000000.
+Number of subphases in Phase 2 is 4.
+
+Initial parameter values are 
+  1. rate:  constant fnet rate (period 1)                   7.2202
+  2. rate:  constant fnet rate (period 2)                   3.7957
+  3. eval:  fnet: outdegree (density)                       0.0000
+  4. eval:  fnet: reciprocity                               0.0000
+  5. eval:  fnet: transitive triplets                       0.0000
+  6. eval:  fnet: indegree - popularity (sqrt)              0.0000
+  7. eval:  fnet: outdegree - popularity (sqrt)             0.0000
+  8. eval:  fnet: outdegree - activity (sqrt)               0.0000
+  9. rate:  constant atmnet rate (period 1)                16.2609
+ 10. rate:  constant atmnet rate (period 2)                 9.1790
+ 11. eval:  atmnet: outdegree (density)                    -1.7614
+ 12. eval:  atmnet: reciprocity                             0.0000
+ 13. eval:  atmnet: transitive triplets                     0.0000
+ 14. eval:  atmnet: indegree - popularity (sqrt)            0.0000
+ 15. eval:  atmnet: outdegree - popularity (sqrt)           0.0000
+ 16. eval:  atmnet: outdegree - activity (sqrt)             0.0000
+ 17. rate:  constant rtnet rate (period 1)                 10.9872
+ 18. rate:  constant rtnet rate (period 2)                  9.3982
+ 19. eval:  rtnet: outdegree (density)                     -1.6139
+ 20. eval:  rtnet: reciprocity                              0.0000
+ 21. eval:  rtnet: transitive triplets                      0.0000
+ 22. eval:  rtnet: indegree - popularity (sqrt)             0.0000
+ 23. eval:  rtnet: outdegree - popularity (sqrt)            0.0000
+ 24. eval:  rtnet: outdegree - activity (sqrt)              0.0000
+
+
+Observed values of target statistics are
+  1. Amount of network change in period 1                               527.0000
+  2. Amount of network change in period 2                               277.0000
+  3. fnet: Number of ties                                              11887.0000
+  4. fnet: Number of reciprocated ties                                 6712.0000
+  5. fnet: Number of transitive triplets                               290390.0000
+  6. fnet: Sum of indegrees x sqrt(indegree)                           83554.5067
+  7. fnet: Sum of indegrees x sqrt(outdegree)                          75168.1958
+  8. fnet: Sum of outdegrees^(1.5)                                     88645.6438
+  9. Amount of network change in period 1                              1187.0000
+ 10. Amount of network change in period 2                               670.0000
+ 11. atmnet: Number of ties                                            1030.0000
+ 12. atmnet: Number of reciprocated ties                                376.0000
+ 13. atmnet: Number of transitive triplets                             1121.0000
+ 14. atmnet: Sum of indegrees x sqrt(indegree)                         2607.3391
+ 15. atmnet: Sum of indegrees x sqrt(outdegree)                        2242.4625
+ 16. atmnet: Sum of outdegrees^(1.5)                                   3142.0807
+ 17. Amount of network change in period 1                               802.0000
+ 18. Amount of network change in period 2                               686.0000
+ 19. rtnet: Number of ties                                             1454.0000
+ 20. rtnet: Number of reciprocated ties                                 638.0000
+ 21. rtnet: Number of transitive triplets                              4708.0000
+ 22. rtnet: Sum of indegrees x sqrt(indegree)                          4116.3936
+ 23. rtnet: Sum of indegrees x sqrt(outdegree)                         3572.7996
+ 24. rtnet: Sum of outdegrees^(1.5)                                    4132.0553
+
+ 24 parameters, 24 statistics
+

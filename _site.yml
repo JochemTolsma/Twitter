@@ -1,14 +1,14 @@
 name: "Replication package Twitter"
 output_dir: "docs"
-exclude: "data-raw"
+exclude: ["data-raw", "manuscript"]
 navbar:
   title: "Replication package"
   left:
-    - text: "Descriptive Tables 1 & 2"
+    - text: "Descriptive Statistics"
       href: index.html
     - text: "Figures"
       href: figures.html
-    - text: "RSiena Tables 3 & 4"
+    - text: "RSiena"
       href: rsiena.html
   #  - text: "Data preparation"
   #    href: dataprep.html
