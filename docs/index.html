@@ -14,7 +14,7 @@
 
 <title>Replication package-Descriptives</title>
 
-<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
@@ -66,6 +66,7 @@ if (window.hljs) {
   }
 }
 </script>
+
 
 
 
@@ -121,6 +122,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -349,7 +353,7 @@ div.tocify {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -383,7 +387,7 @@ div.tocify {
 <div id="header">
 
 <div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
 <ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
@@ -395,8 +399,10 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Replication package-Descriptives</h1>
-<h4 class="author"><a href="https://www.jochemtolsma.nl">Jochem Tolsma</a> - Radboud University / University of Groningen, the Netherlands</h4>
-<h4 class="date">Last compiled on december, 2021</h4>
+<h4 class="author"><a href="https://www.jochemtolsma.nl">Jochem
+Tolsma</a> - Radboud University / University of Groningen, the
+Netherlands</h4>
+<h4 class="date">Last compiled on januari, 2023</h4>
 
 </div>
 
@@ -432,12 +438,21 @@ h1, .h1, h2, .h2, h3, .h3 {
 <hr />
 <div id="intro" class="section level1">
 <h1>Intro</h1>
-<p>This <a href="https://jochemtolsma.github.io/Twitter/">website</a> is a replication package for the paper “<strong>How Twitter divides the Dutch parliament: Segregation along party lines and social dimensions in the following, @-mentions and retweets Twitter Networks of Dutch MPs</strong>” by <span class="citation">Tolsma and Spierings ((submitted))</span>.</p>
-<p>It contains R code to replicate all Tables/Figures/Appendix in the manuscript.</p>
-<p>To copy the code click the button in the upper right corner of the code-chunks.</p>
+<p>This <a href="https://jochemtolsma.github.io/Twitter/">website</a> is
+a replication package for the paper “<strong>How Twitter divides the
+Dutch parliament: Segregation along party lines and social dimensions in
+the following, @-mentions and retweets Twitter Networks of Dutch
+MPs</strong>” by <span class="citation">Tolsma and Spierings
+((submitted))</span>.</p>
+<p>It contains R code to replicate all Tables/Figures/Appendix in the
+manuscript.</p>
+<p>To copy the code click the button in the upper right corner of the
+code-chunks.</p>
 <p>Use the top menu to navigate to the section of interest.</p>
-<p>The source code of this website can be found on <a href="https://github.com/JochemTolsma/Twitter">Github</a></p>
-<p>Questions can be addressed to <a href="mailto:jochem.tolsma@ru.nl">Jochem Tolsma</a>.</p>
+<p>The source code of this website can be found on <a
+href="https://github.com/JochemTolsma/Twitter">Github</a></p>
+<p>Questions can be addressed to <a
+href="mailto:jochem.tolsma@ru.nl">Jochem Tolsma</a>.</p>
 <hr />
 <div id="packages" class="section level2">
 <h2>Packages</h2>
@@ -482,7 +497,8 @@ library(RSiena)</code></pre>
 </li>
 <li>fdensityintra: density within subgroups<br />
 </li>
-<li>fscolnet: Coleman’s Homophily Index at the network-level, see <span class="citation">(( Bojanowski and Corten 2014))</span><br />
+<li>fscolnet: Coleman’s Homophily Index at the network-level, see <span
+class="citation">(( Bojanowski and Corten 2014))</span><br />
 </li>
 <li>fhomomat: make a matrix indicating wheter nodes are similar<br />
 </li>
@@ -577,7 +593,9 @@ fscolnet &lt;- function(network, ccovar) {
 <h2 class="tabset tabset-fade">Load data objects</h2>
 <p>Data objects:</p>
 <ul>
-<li><a href="./data-processed/key%20moederbestand%2020171114.sav">key</a>: information on all politicians on election list<br />
+<li><a
+href="./data-processed/key%20moederbestand%2020171114.sav">key</a>:
+information on all politicians on election list<br />
 </li>
 <li><a href="./data-processed/twitter_20190919.RData">twitter</a>
 <ul>
@@ -6470,10 +6488,12 @@ AppendixA &lt;- kbl(test, booktabs = TRUE, digits = 2, caption = &quot;Appendix 
 scroll_box(AppendixA, width = &quot;100%&quot;, height = &quot;500px&quot;)
 
 # save_kable(AppendixA, &#39;AppendixA.html&#39;)</code></pre>
-<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:500px; overflow-x: scroll; width:100%; ">
+<div
+style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:500px; overflow-x: scroll; width:100%; ">
 <table class=" lightable-classic table table-striped table-hover table-condensed table-responsive" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <caption>
-Appendix A. Composition of parliament and political parties in the Netherlands (2017)
+Appendix A. Composition of parliament and political parties in the
+Netherlands (2017)
 </caption>
 <thead>
 <tr>
@@ -7533,7 +7553,8 @@ no visible minority
 </div>
 <hr />
 </div>
-<div id="segregation---descriptive-statistics" class="section level2 tabset tabset-fade">
+<div id="segregation---descriptive-statistics"
+class="section level2 tabset tabset-fade">
 <h2 class="tabset tabset-fade">SEGREGATION - Descriptive statistics</h2>
 <pre class="r test"><code># We retrieve the data from the RSiena data-object
 
@@ -7680,7 +7701,8 @@ desmatkable &lt;- kbl(desmat, booktabs = TRUE, digits = 2, caption = &quot;Table
 desmatkable</code></pre>
 <table class=" lightable-classic table table-striped table-hover table-condensed table-responsive" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <caption>
-Table 1. Inter- and intra-group densities within the three Twitter layers among Dutch MPs (2017)
+Table 1. Inter- and intra-group densities within the three Twitter
+layers among Dutch MPs (2017)
 </caption>
 <thead>
 <tr>
@@ -8039,7 +8061,8 @@ different age (&gt;5)
 </tbody>
 </table>
 <p><br></p>
-<p>A slightly different order of social dimensions (rows) as compared to manuscript but same numbers.</p>
+<p>A slightly different order of social dimensions (rows) as compared to
+manuscript but same numbers.</p>
 <hr />
 </div>
 <div id="table-2" class="section level3">
@@ -8096,7 +8119,8 @@ colmatkable &lt;- kbl(colmat, booktabs = TRUE, digits = 2, caption = &quot;Table
 colmatkable</code></pre>
 <table class=" lightable-classic table table-striped table-hover table-condensed table-responsive" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <caption>
-Table 2. Coleman’s Homophily Index within the three Twitter layers among Dutch MPs (2017)
+Table 2. Coleman’s Homophily Index within the three Twitter layers among
+Dutch MPs (2017)
 </caption>
 <thead>
 <tr>
@@ -8318,7 +8342,8 @@ asmatkable &lt;- kbl(asmat, booktabs = TRUE, digits = 2, caption = &quot;Table 3
 asmatkable</code></pre>
 <table class=" lightable-classic table table-striped table-hover table-condensed table-responsive" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <caption>
-Table 3. Newman’s Assortativity Coefficient within the three Twitter layers among Dutch MPs (2017)
+Table 3. Newman’s Assortativity Coefficient within the three Twitter
+layers among Dutch MPs (2017)
 </caption>
 <thead>
 <tr>
@@ -8487,10 +8512,16 @@ age
 <hr />
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-BOJANOWSKI201414" class="csl-entry">
-Bojanowski, Michał, and Rense Corten. 2014. <span>“Measuring Segregation in Social Networks.”</span> <em>Social Networks</em> 39: 14–32. https://doi.org/<a href="https://doi.org/10.1016/j.socnet.2014.04.001">https://doi.org/10.1016/j.socnet.2014.04.001</a>.
+Bojanowski, Michał, and Rense Corten. 2014. <span>“Measuring Segregation
+in Social Networks.”</span> <em>Social Networks</em> 39: 14–32.
+https://doi.org/<a
+href="https://doi.org/10.1016/j.socnet.2014.04.001">https://doi.org/10.1016/j.socnet.2014.04.001</a>.
 </div>
 <div id="ref-Tolsma2021" class="csl-entry">
-Tolsma, Jochem, and Niels Spierings. (submitted). <span>“How Twitter Divides the Dutch Parliament: Segregation Along Party Lines and Social Dimensions in the Following, @-Mentions and Retweets Twitter Networks of Dutch MPs.”</span> <em>-</em> - (-): –. <a href="https://-">-</a>.
+Tolsma, Jochem, and Niels Spierings. (submitted). <span>“How Twitter
+Divides the Dutch Parliament: Segregation Along Party Lines and Social
+Dimensions in the Following, @-Mentions and Retweets Twitter Networks of
+Dutch MPs.”</span> <em>-</em> - (-): –. <a href="https://-">-</a>.
 </div>
 </div>
 </div>

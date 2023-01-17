@@ -14,7 +14,7 @@
 
 <title>Replication package-RSiena</title>
 
-<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
@@ -66,6 +66,7 @@ if (window.hljs) {
   }
 }
 </script>
+
 
 
 
@@ -121,6 +122,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -349,7 +353,7 @@ div.tocify {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -383,7 +387,7 @@ div.tocify {
 <div id="header">
 
 <div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
 <ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
@@ -395,8 +399,10 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Replication package-RSiena</h1>
-<h4 class="author"><a href="https://www.jochemtolsma.nl">Jochem Tolsma</a> - Radboud University / University of Groningen, the Netherlands</h4>
-<h4 class="date">Last compiled on december, 2021</h4>
+<h4 class="author"><a href="https://www.jochemtolsma.nl">Jochem
+Tolsma</a> - Radboud University / University of Groningen, the
+Netherlands</h4>
+<h4 class="date">Last compiled on januari, 2023</h4>
 
 </div>
 
@@ -408,12 +414,21 @@ div.tocify {
 <hr />
 <div id="intro" class="section level1">
 <h1>Intro</h1>
-<p>This <a href="https://jochemtolsma.github.io/Twitter/">website</a> is a replication package for the paper “<strong>How Twitter divides the Dutch parliament: Segregation along party lines and social dimensions in the following, @-mentions and retweets Twitter Networks of Dutch MPs</strong>” by <span class="citation">Tolsma and Spierings ((submitted))</span>.</p>
-<p>It contains R code to replicate all Tables/Figures/Appendix in the manuscript.</p>
-<p>To copy the code click the button in the upper right corner of the code-chunks.</p>
+<p>This <a href="https://jochemtolsma.github.io/Twitter/">website</a> is
+a replication package for the paper “<strong>How Twitter divides the
+Dutch parliament: Segregation along party lines and social dimensions in
+the following, @-mentions and retweets Twitter Networks of Dutch
+MPs</strong>” by <span class="citation">Tolsma and Spierings
+((submitted))</span>.</p>
+<p>It contains R code to replicate all Tables/Figures/Appendix in the
+manuscript.</p>
+<p>To copy the code click the button in the upper right corner of the
+code-chunks.</p>
 <p>Use the top menu to navigate to the section of interest.</p>
-<p>The source code of this website can be found on <a href="https://github.com/JochemTolsma/Twitter">Github</a></p>
-<p>Questions can be addressed to <a href="mailto:jochem.tolsma@ru.nl">Jochem Tolsma</a>.</p>
+<p>The source code of this website can be found on <a
+href="https://github.com/JochemTolsma/Twitter">Github</a></p>
+<p>Questions can be addressed to <a
+href="mailto:jochem.tolsma@ru.nl">Jochem Tolsma</a>.</p>
 <hr />
 <div id="packages" class="section level2">
 <h2>Packages</h2>
@@ -470,7 +485,9 @@ library(RSiena)</code></pre>
 <h2 class="tabset tabset-fade">Load data objects</h2>
 <p>Data objects:</p>
 <ul>
-<li><a href="./data-processed/key%20moederbestand%2020171114.sav">key</a>: information on all politicians on election list<br />
+<li><a
+href="./data-processed/key%20moederbestand%2020171114.sav">key</a>:
+information on all politicians on election list<br />
 </li>
 <li><a href="./data-processed/twitter_20190919.RData">twitter</a>
 <ul>
@@ -681,9 +698,11 @@ ansM1b &lt;- siena07(myalgorithm, data = mydata, prevAns = ansM1, effects = myef
 <p><span style="color: red;">Interpretation:</span></p>
 <p>Please be aware that we are looking at period interactions:</p>
 <ul>
-<li>atmention degrees decreased faster in period 2 than in period 1, hence negative interaction<br />
+<li>atmention degrees decreased faster in period 2 than in period 1,
+hence negative interaction<br />
 </li>
-<li>retweet degrees decreased faster in period 1 than in period 2, hence positive interaction</li>
+<li>retweet degrees decreased faster in period 1 than in period 2, hence
+positive interaction</li>
 </ul>
 <hr />
 </div>
@@ -752,7 +771,8 @@ ansM3b &lt;- siena07(myalgorithm, data = mydata, prevAns = ansM3, effects = myef
 #&gt; 
 #&gt; 
 #&gt; Total of 2250 iteration steps.</code></pre>
-<p>Don’t think it will matter much whether we include gwespFF or TranTrip.</p>
+<p>Don’t think it will matter much whether we include gwespFF or
+TranTrip.</p>
 <hr />
 </div>
 <div id="model-0-1" class="section level3 active">
@@ -838,7 +858,9 @@ save(ansM4b, file = paste(&quot;ansM4b&quot;, &quot;.RData&quot;, sep = &quot;&q
 <p>Baseline model (with covariates).</p>
 <div id="relevant-party-dummies" class="section level3">
 <h3>Relevant party dummies</h3>
-<p>We cannot include all party dummies as covariates for ego and alter. We will thus first check which party deviates significantly with respect to indegree and outdegree.</p>
+<p>We cannot include all party dummies as covariates for ego and alter.
+We will thus first check which party deviates significantly with respect
+to indegree and outdegree.</p>
 <p>First the descriptives.</p>
 <pre class="r test"><code># check if we observe outdegree differences per partij
 fnet &lt;- mydata$depvars$fnet
@@ -875,7 +897,8 @@ colnames(degreesum) &lt;- c(&quot;Party&quot;, &quot;outdegree friends&quot;, &q
 
 
 # write_csv(degreesum, &#39;degreesum.csv&#39;)</code></pre>
-<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:500px; overflow-x: scroll; width:100%; ">
+<div
+style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:500px; overflow-x: scroll; width:100%; ">
 <table class=" lightable-classic table table-striped table-hover table-condensed table-responsive" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <caption>
 mean degree by party
@@ -1208,7 +1231,8 @@ FvD
 </tbody>
 </table>
 </div>
-<p>Let us use a simple OLS regression with deviation coding (grand mean is ref) to test for significance.</p>
+<p>Let us use a simple OLS regression with deviation coding (grand mean
+is ref) to test for significance.</p>
 <pre class="r test"><code>keyf$Partij2 &lt;- as.factor(as.character(keyf$Partij))
 levels(keyf$Partij2)
 contrasts(keyf$Partij2) &lt;- contr.sum(13)  #let us use VVD as omitted party
@@ -2697,8 +2721,10 @@ party leader (alter)
 </div>
 <div id="hypothesis-3-model-1" class="section level3">
 <h3>Hypothesis 3 (Model 1)</h3>
-<p>Test for significance of difference in segregation based on Model 1.</p>
-<p>Hypothesis 3a: Segregation in atmention is larger than in follow. No because…</p>
+<p>Test for significance of difference in segregation based on Model
+1.</p>
+<p>Hypothesis 3a: Segregation in atmention is larger than in follow. No
+because…</p>
 <pre class="r test"><code>load(&quot;ansM8c.RData&quot;)
 ans &lt;- ansM8c
 p &lt;- ans$pp
@@ -2715,7 +2741,8 @@ se &lt;- sqrt(mat %*% ans$covtheta %*% t(mat))
 print(paste(&quot;difference is&quot;, round(dif, 3), &quot;with s.e.&quot;, round(se, 3), &quot;, t-ratio&quot;, round(dif/se, 3)))</code></pre>
 <pre class="test2"><code>#&gt; chi-squared = 1.16, d.f. = 1; one-sided Z = 1.08; two-sided p = 0.281. 
 #&gt; [1] &quot;difference is 0.165 with s.e. 0.154 , t-ratio 1.078&quot;</code></pre>
-<p>Hypothesis 3b: Segregation in follow is larger than in retweet. No because…</p>
+<p>Hypothesis 3b: Segregation in follow is larger than in retweet. No
+because…</p>
 <pre class="r test"><code>ans &lt;- ansM8c
 p &lt;- ans$pp
 
@@ -3273,7 +3300,8 @@ save(ansM10d, file = paste(&quot;ansM10d&quot;, &quot;.RData&quot;, sep = &quot;
 <hr />
 <div id="hypothesis-3-model-2" class="section level3">
 <h3>Hypothesis 3 (Model 2)</h3>
-<p>Hypothesis 3a: Segregation in atmention is larger than in follow. No because…</p>
+<p>Hypothesis 3a: Segregation in atmention is larger than in follow. No
+because…</p>
 <pre class="r test"><code>load(&quot;ansM10c.RData&quot;)
 ans &lt;- ansM10c
 p &lt;- ans$pp
@@ -3290,7 +3318,8 @@ se &lt;- sqrt(mat %*% ans$covtheta %*% t(mat))
 print(paste(&quot;difference is&quot;, round(dif, 3), &quot;with s.e.&quot;, round(se, 3), &quot;, t-ratio&quot;, round(dif/se, 3)))</code></pre>
 <pre class="test2"><code>#&gt; chi-squared = 0.99, d.f. = 1; one-sided Z = 1.00; two-sided p = 0.319. 
 #&gt; [1] &quot;difference is 0.165 with s.e. 0.166 , t-ratio 0.997&quot;</code></pre>
-<p>Hypothesis 3b: Segregation in follow is larger than in retweet. No because…</p>
+<p>Hypothesis 3b: Segregation in follow is larger than in retweet. No
+because…</p>
 <pre class="r test"><code>ans &lt;- ansM10c
 p &lt;- ans$pp
 
@@ -3328,7 +3357,8 @@ print(paste(&quot;difference is&quot;, round(dif, 3), &quot;with s.e.&quot;, rou
 <div id="model-3" class="section level2">
 <h2>Model 3</h2>
 <p>Cross-network effects.</p>
-<p>Remove the non-significant social inbreeding parameters (t-value &lt; 1):</p>
+<p>Remove the non-significant social inbreeding parameters (t-value &lt;
+1):</p>
 <pre class="r test"><code>myeff &lt;- getEffects(mydata)
 myeff_m1 &lt;- myeff
 
@@ -3887,7 +3917,8 @@ save(ansM12c, file = paste(&quot;ansM12c&quot;, &quot;.RData&quot;, sep = &quot;
 <hr />
 <div id="hypothesis-3-model-2-1" class="section level3">
 <h3>Hypothesis 3 (Model 2)</h3>
-<p>Hypothesis 3a: Segregation in atmention is larger than in follow. No/YES because…</p>
+<p>Hypothesis 3a: Segregation in atmention is larger than in follow.
+No/YES because…</p>
 <pre class="r test"><code>load(&quot;ansM12.RData&quot;)
 ans &lt;- ansM12
 p &lt;- ans$pp
@@ -3904,7 +3935,8 @@ se &lt;- sqrt(mat %*% ans$covtheta %*% t(mat))
 print(paste(&quot;difference is&quot;, round(dif, 3), &quot;with s.e.&quot;, round(se, 3), &quot;, t-ratio&quot;, round(dif/se, 3)))</code></pre>
 <pre class="test2"><code>#&gt; chi-squared = 2.80, d.f. = 1; one-sided Z = 1.67; two-sided p = 0.094. 
 #&gt; [1] &quot;difference is 0.348 with s.e. 0.208 , t-ratio 1.675&quot;</code></pre>
-<p>Hypothesis 3b: Segregation in follow is larger than in retweet. No because…</p>
+<p>Hypothesis 3b: Segregation in follow is larger than in retweet. No
+because…</p>
 <pre class="r test"><code>ans &lt;- ansM12
 p &lt;- ans$pp
 
@@ -4164,7 +4196,10 @@ save(ansM0, file = paste(&quot;ansM0&quot;, &quot;.RData&quot;, sep = &quot;&quo
 <hr />
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-Tolsma2021" class="csl-entry">
-Tolsma, Jochem, and Niels Spierings. (submitted). <span>“How Twitter Divides the Dutch Parliament: Segregation Along Party Lines and Social Dimensions in the Following, @-Mentions and Retweets Twitter Networks of Dutch MPs.”</span> <em>-</em> - (-): –. <a href="https://-">-</a>.
+Tolsma, Jochem, and Niels Spierings. (submitted). <span>“How Twitter
+Divides the Dutch Parliament: Segregation Along Party Lines and Social
+Dimensions in the Following, @-Mentions and Retweets Twitter Networks of
+Dutch MPs.”</span> <em>-</em> - (-): –. <a href="https://-">-</a>.
 </div>
 </div>
 </div>
