@@ -301,7 +301,7 @@ dev.off()
 
 ```
 ```{r echo=FALSE, eval=TRUE, out.width='100%'}
-knitr::include_graphics('RR_followers_directed.png')
+knitr::include_graphics('RRfollowersdirected.png')
 ```
 
 ---  
@@ -419,7 +419,7 @@ dev.off()
 ```
 
 ```{r echo=FALSE, eval=TRUE, out.width='100%'}
-knitr::include_graphics('RR_followers_undirected.png')
+knitr::include_graphics('RRfollowersundirected.png')
 ```
 
 ---  
@@ -534,7 +534,7 @@ dev.off()
 
 ```
 ```{r echo=FALSE, eval=TRUE, out.width='100%'}
-knitr::include_graphics('RR_atmention_directed.png')
+knitr::include_graphics('RRatmentiondirected.png')
 ```
 
 ---   
@@ -647,7 +647,7 @@ dev.off()
 
 ```
 ```{r echo=FALSE, eval=TRUE, out.width='100%'}
-knitr::include_graphics('RR_atmention_undirected.png')
+knitr::include_graphics('RRatmentionundirected.png')
 ```
 
 
@@ -761,7 +761,7 @@ dev.off()
 ```
 
 ```{r echo=FALSE, eval=TRUE, out.width='100%'}
-knitr::include_graphics('RR_retweet_directed.png')
+knitr::include_graphics('RRretweetdirected.png')
 ```
 
 ---  
@@ -873,7 +873,7 @@ dev.off()
 ```
 
 ```{r echo=FALSE, eval=TRUE, out.width='100%'}
-knitr::include_graphics('RR_retweet_undirected.png')
+knitr::include_graphics('RRretweetundirected.png')
 ```
 
 ---  
