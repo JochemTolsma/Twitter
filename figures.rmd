@@ -282,11 +282,10 @@ c4 = layout_with_fr(G1_sel)
 #c4[72,1] <- 5
 #c4[27,1] <- 5.5
 
-#plot(G1_sel, layout=c4, margin=c(0,0,0,0), rescale=FALSE, xlim=c(min(c4[,1]),max(c4[,1])),  ylim=c(min(c4[,2]),max(c4[,2])), main="Follower relations between Dutch MPs (2017)")
 
 #plot
 
-png("RR_followers_directed.png",width = 900, height= 900)
+#png("RR_followers_directed.png",width = 900, height= 900)
 {
 plot(G1_sel, layout=c4, margin=c(0,0,0,0),  main="Followers relations between Dutch MPs (2017)")
 
@@ -297,9 +296,18 @@ text(-1.2,-1.25, "Note 2: Edge colar based on Party of MPs, black if MPs from di
 text(-1.2,-1.3, "Note 3: Isolates removed", adj=0, cex=0.8)
 
 }  
+#dev.off()
+
+png("RR_followers_directedv2.png",width = 900, height= 900)
+{
+plot(G1_sel, layout=c4, margin=c(0,0,0,0))
+}  
 dev.off()
 
+
+
 ```
+
 ```{r echo=FALSE, eval=TRUE, out.width='100%'}
 knitr::include_graphics('RRfollowersdirected.png')
 ```
@@ -399,11 +407,9 @@ c4 = layout_with_fr(G1_sel)
 #c4[72,1] <- 5
 #c4[27,1] <- 5.5
 
-plot(G1_sel, layout=c4, margin=c(0,0,0,0), rescale=FALSE, xlim=c(min(c4[,1]),max(c4[,1])),  ylim=c(min(c4[,2]),max(c4[,2])), main="Follower relations between Dutch MPs (2017)")
-
 #plot
 
-png("RR_followers_undirected.png",width = 900, height= 900)
+#png("RR_followers_undirected.png",width = 900, height= 900)
 {
 plot(G1_sel, layout=c4, margin=c(0,0,0,0),  main="Reciprocated followers relations between Dutch MPs (2017)")
 
@@ -414,7 +420,16 @@ text(-1.2,-1.25, "Note 2: Edge colar based on Party of MPs, black if MPs from di
 text(-1.2,-1.3, "Note 3: Isolates removed", adj=0, cex=0.8)
 
 }  
+#dev.off()
+
+png("RR_followers_undirectedv2.png",width = 900, height= 900)
+{
+plot(G1_sel, layout=c4, margin=c(0,0,0,0))
+}  
 dev.off()
+
+
+
 
 ```
 
@@ -532,7 +547,14 @@ text(-1.2,-1.3, "Note 3: Isolates removed", adj=0, cex=0.8)
 }  
 dev.off()
 
+png("RR_atmention_directedv2.png",width = 900, height= 900)
+{
+plot(G2_sel, layout=c4, margin=c(0,0,0,0))
+}  
+dev.off()
+
 ```
+
 ```{r echo=FALSE, eval=TRUE, out.width='100%'}
 knitr::include_graphics('RRatmentiondirected.png')
 ```
@@ -632,7 +654,7 @@ c4 = layout_with_fr(G2_sel)
 plot(G2_sel, layout=c4, margin=c(0,0,0,0), rescale=FALSE, xlim=c(min(c4[,1]),max(c4[,1])),  ylim=c(min(c4[,2]),max(c4[,2])), main="@mention relations between Dutch MPs (2017)")
 #plot
 
-png("RR_atmention_undirected.png",width = 900, height= 900)
+#png("RR_atmention_undirected.png",width = 900, height= 900)
 {
 plot(G2_sel, layout=c4, margin=c(0,0,0,.15),  main="Reciprocated @mention relations between Dutch MPs (2017)")
 
@@ -643,9 +665,17 @@ text(-1.2,-1.25, "Note 2: Edge colar based on Party of MPs, black if MPs from di
 text(-1.2,-1.3, "Note 3: Isolates removed", adj=0, cex=0.8)
 
 }  
+#dev.off()
+
+png("RR_atmention_undirectedv2.png",width = 900, height= 900)
+{
+plot(G2_sel, layout=c4, margin=c(0,0,0,.15))
+}  
 dev.off()
 
+
 ```
+
 ```{r echo=FALSE, eval=TRUE, out.width='100%'}
 knitr::include_graphics('RRatmentionundirected.png')
 ```
@@ -745,7 +775,7 @@ V(G3_sel)$size= 0.7*V(G3_sel)$size
 set.seed(2435677)
 c4 = layout_with_fr(G3_sel)
 
-png("RR_retweet_directed.png",width = 900, height= 900)
+#png("RR_retweet_directed.png",width = 900, height= 900)
 {
 plot(G3_sel, layout=c4, margin=c(0,0,0,.15),  main="Retweet relations between Dutch MPs (2017)")
 
@@ -756,7 +786,15 @@ text(-1.2,-1.25, "Note 2: Edge colar based on Party of MPs, black if MPs from di
 text(-1.2,-1.3, "Note 3: Isolates removed", adj=0, cex=0.8)
 
 }  
+#dev.off()
+
+png("RR_retweet_directedv2.png",width = 900, height= 900)
+{
+plot(G3_sel, layout=c4, margin=c(0,0,0,.15))
+}  
 dev.off()
+
+
 
 ```
 
@@ -809,7 +847,7 @@ Party_cols <- unique(keyf$Partij_col)
 Party_names <- Party_names[c(7, 3, 9, 10, 12, 11, 5, 4, 6, 2, 8, 1, 13)]
 Party_cols <- Party_cols[c(7, 3, 9, 10, 12, 11, 5, 4, 6, 2, 8, 1, 13)]
 
-png("MPplotG3uv2.png",width = 900, height= 900)
+#png("MPplotG3uv2.png",width = 900, height= 900)
 { 
   plot.igraph(G3, mode="undirected", layout=owncoords, rescale=F, margin=c(0,0,0,0), xlim=c(min(owncoords[,1]) - 0.2 ,max(owncoords[,1])) +0.2,  ylim=c(min(owncoords[,2]),max(owncoords[,2])), main="Reciprocated retweet relations between Dutch MPs (2017)")
 
@@ -818,7 +856,7 @@ legend("topleft", legend=Party_names, pch=21, col="#777777", pt.bg=Party_cols, p
 text(-2.2,-1.2, "Note 1: Node size based on degree", adj=0, cex=0.8)
 text(-2.2,-1.3, "Note 2: Edge colar based on Party of MPs, black if MPs from different party", adj=0, cex=0.8)
 }  
-dev.off()
+#dev.off()
  
 
 ```
@@ -857,7 +895,7 @@ V(G3_sel)$size= 0.7*V(G3_sel)$size
 set.seed(2435677)
 c4 = layout_with_fr(G3_sel)
 
-png("RR_retweet_undirected.png",width = 900, height= 900)
+#png("RR_retweet_undirected.png",width = 900, height= 900)
 {
 plot(G3_sel, layout=c4, margin=c(0,0,0,.15),  main="Reciprocated retweet relations between Dutch MPs (2017)")
 
@@ -868,7 +906,14 @@ text(-1.2,-1.25, "Note 2: Edge colar based on Party of MPs, black if MPs from di
 text(-1.2,-1.3, "Note 3: Isolates removed", adj=0, cex=0.8)
 
 }  
+#dev.off()
+
+png("RR_retweet_undirectedv2.png",width = 900, height= 900)
+{
+plot(G3_sel, layout=c4, margin=c(.1,.1,.1,.2))
+}  
 dev.off()
+
 
 ```
 
