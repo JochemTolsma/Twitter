@@ -1,0 +1,1530 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Jochem Tolsma - Radboud University / University of Groningen, the Netherlands" />
+
+
+<title>Replication package-RSiena</title>
+
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<script src="site_libs/navigation-1.1/sourceembed.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/clipboard-1.7.1/clipboard.min.js"></script>
+<link href="site_libs/primer-tooltips-1.4.0/build.css" rel="stylesheet" />
+<link href="site_libs/klippy-0.0.0.9500/css/klippy.min.css" rel="stylesheet" />
+<script src="site_libs/klippy-0.0.0.9500/js/klippy.min.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+<style type="text/css">
+#rmd-source-code {
+  display: none;
+}
+</style>
+
+<style type="text/css">
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Replication package</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Descriptive Statistics</a>
+</li>
+<li>
+  <a href="figures.html">Figures</a>
+</li>
+<li>
+  <a href="rsiena.html">RSiena</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/JochemTolsma/Twitter">
+    <span class="fab fa-github"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+<li role="separator" class="divider"></li>
+<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Replication package-RSiena</h1>
+<h4 class="author"><a href="https://www.jochemtolsma.nl">Jochem
+Tolsma</a> - Radboud University / University of Groningen, the
+Netherlands</h4>
+<h4 class="date">Last compiled on februari, 2023</h4>
+
+</div>
+
+
+<script>
+  addClassKlippyTo("pre.r, pre.markdown");
+  addKlippy('right', 'top', 'auto', '1', 'Copy code', 'Copied!');
+</script>
+<hr />
+<div id="intro" class="section level1">
+<h1>Intro</h1>
+<p>This <a href="https://jochemtolsma.github.io/Twitter/">website</a> is
+a replication package for the paper “<strong>How Twitter divides the
+Dutch parliament: Segregation along party lines and social dimensions in
+the following, @-mentions and retweets Twitter Networks of Dutch
+MPs</strong>” by <span class="citation">Tolsma and Spierings
+((submitted))</span>.</p>
+<p>It contains R code to replicate all Tables/Figures/Appendix in the
+manuscript.</p>
+<p>To copy the code click the button in the upper right corner of the
+code-chunks.</p>
+<p>Use the top menu to navigate to the section of interest.</p>
+<p>The source code of this website can be found on <a
+href="https://github.com/JochemTolsma/Twitter">Github</a></p>
+<p>Questions can be addressed to <a
+href="mailto:jochem.tolsma@ru.nl">Jochem Tolsma</a>.</p>
+<hr />
+<div id="packages" class="section level2">
+<h2>Packages</h2>
+<pre class="r test"><code># install if necessary
+if (!require(&quot;tidyverse&quot;, character.only = TRUE)) {
+    install.packages(&quot;tidyverse&quot;, dependencies = TRUE)
+}
+if (!require(&quot;dplyr&quot;, character.only = TRUE)) {
+    install.packages(&quot;dplyr&quot;, dependencies = TRUE)
+}
+if (!require(&quot;foreign&quot;, character.only = TRUE)) {
+    install.packages(&quot;foreign&quot;, dependencies = TRUE)
+}
+if (!require(&quot;igraph&quot;, character.only = TRUE)) {
+    install.packages(&quot;igraph&quot;, dependencies = TRUE)
+}
+if (!require(&quot;knitr&quot;, character.only = TRUE)) {
+    install.packages(&quot;knitr&quot;, dependencies = TRUE)
+}
+if (!require(&quot;kableExtra&quot;, character.only = TRUE)) {
+    install.packages(&quot;kableExtra&quot;, dependencies = TRUE)
+}
+if (!require(&quot;RSiena&quot;, character.only = TRUE)) {
+    install.packages(&quot;RSiena&quot;, dependencies = TRUE)
+}
+if (!require(&quot;haven&quot;, character.only = TRUE)) {
+    install.packages(&quot;haven&quot;, dependencies = TRUE)
+}
+
+# load packages.
+library(tidyverse)
+library(dplyr)
+library(foreign)
+library(igraph)
+library(knitr)
+library(kableExtra)
+library(RSiena)
+library(haven)</code></pre>
+<hr />
+</div>
+<div id="custom-functions-tweaking-output" class="section level2">
+<h2>Custom functions: tweaking output</h2>
+<pre class="r test"><code>fanscsv &lt;- function(ans = ans) {
+    ans1_mat &lt;- matrix(NA, nrow = length(ans$effects[, 2]), ncol = 3)
+    row.names(ans1_mat) &lt;- ans$effects[, 2]
+    ans1_mat[, 1] &lt;- (ans$theta)
+    ans1_mat[, 2] &lt;- (ans$se)
+    ans1_mat[, 3] &lt;- (ans$tconv)
+    ans1_mat &lt;- rbind(ans1_mat, c(ans$tconv.max))
+    row.names(ans1_mat)[length(row.names(ans1_mat))] &lt;- &quot;Overall maximum convergence ratio:&quot;
+    colnames(ans1_mat) &lt;- c(&quot;Estimate&quot;, &quot;Standard Error&quot;, &quot;Convergence t-ratio&quot;)
+    return(ans1_mat)
+    # print(ans1_mat) write.csv(ans1_mat, filename)
+}</code></pre>
+<hr />
+</div>
+<div id="load-data-objects" class="section level2 tabset tabset-fade">
+<h2 class="tabset tabset-fade">Load data objects</h2>
+<p>Data objects:</p>
+<ul>
+<li><a
+href="./data-processed/key%20moederbestand%2020171114.sav">key</a>:
+information on all politicians on election list<br />
+</li>
+<li><a href="./data-processed/twitter_20190919.RData">twitter</a>
+<ul>
+<li>keyf: information on all 147 MPs with twitter handle<br />
+</li>
+<li>mydata: RSiena object with all kind of goodies inside<br />
+</li>
+<li>seats: seating coordinates of HoP (used for plotting)<br />
+</li>
+</ul></li>
+<li><a href="https://www.chesdata.eu/ches-europe">CHES</a>: information
+on party positions see also <span class="citation">(Jolly et al.
+2022)</span></li>
+</ul>
+<p>As the ideological position of parties was not included in our
+original data object we need to fix that.</p>
+<pre class="r test"><code># STAP 1: read in data
+key &lt;- read.spss(&quot;data-processed\\key moederbestand 20171114.sav&quot;, use.value.labels = T, to.data.frame = T)
+
+
+load(&quot;data-processed\\twitter_20190919.RData&quot;)
+# str(twitter_20190919,1)
+keyf &lt;- twitter_20190919[[1]]
+mydata &lt;- twitter_20190919[[2]]
+seats &lt;- twitter_20190919[[3]]
+
+ches$Partij &lt;- ches$party
+
+keyf &lt;- left_join(keyf, ches)
+
+# deconstruct dataobject
+deps &lt;- mydata$depvars
+covariates &lt;- mydata$cCovars
+codyadcovar &lt;- mydata$dycCovars
+
+fnet &lt;- sienaNet(deps$fnet)
+atmnet &lt;- sienaNet(deps$atmnet)
+rtnet &lt;- sienaNet(deps$rtnet)
+afstand &lt;- codyadcovar$afstand
+egohandle &lt;- covariates$egohandle
+egoid &lt;- covariates$egoid
+partij &lt;- covariates$partij
+coalitie &lt;- covariates$coalitie
+cda &lt;- covariates$cda
+cu &lt;- covariates$cu
+denk &lt;- covariates$denk
+d66 &lt;- covariates$d66
+fvd &lt;- covariates$fvd
+gl &lt;- covariates$gl
+pvda &lt;- covariates$pvda
+pvdd &lt;- covariates$pvdd
+pvv &lt;- covariates$pvv
+sgp &lt;- covariates$sgp
+sp &lt;- covariates$sp
+vvd &lt;- covariates$vvd
+plus &lt;- covariates$plus
+ethminz &lt;- covariates$ethminz
+vrouw &lt;- covariates$vrouw
+lft &lt;- covariates$lft
+kamerlid2016 &lt;- covariates$kamerlid2016
+kabinet2016 &lt;- covariates$kabinet2016
+pleklijst &lt;- covariates$pleklijst
+pleklijst1 &lt;- covariates$pleklijst1
+# add new variable
+partypos &lt;- coCovar(keyf$lrgen)
+
+# reconstruct dataobject
+mydata_RR &lt;- sienaDataCreate(fnet, atmnet, rtnet, afstand, egohandle, egoid, partij, coalitie, cda, cu,
+    denk, d66, fvd, gl, pvda, pvdd, pvv, sgp, sp, vvd, plus, ethminz, vrouw, lft, kamerlid2016, kabinet2016,
+    pleklijst, pleklijst1, partypos)</code></pre>
+<hr />
+</div>
+</div>
+<div id="impact-of-ideological-distance" class="section level1">
+<h1>Impact of ideological distance</h1>
+<p>An anonymous reviewer suggested to try to disentangle the impact of
+physical seating distance from ideological distance. We therefore added
+to the party to which each MP belongs a general left-right position
+according to the Chapel Hill Survey <span class="citation">(Jolly et al.
+2022)</span>.</p>
+<div id="define-effects" class="section level2">
+<h2>define effects</h2>
+<pre class="r test"><code>myeff &lt;- getEffects(mydata_RR)
+myeff_m1 &lt;- myeff
+
+# according to suggestion of rsiena manual
+myeff_m1 &lt;- includeEffects(myeff_m1, inPopSqrt, name = &quot;fnet&quot;)
+myeff_m1 &lt;- includeEffects(myeff_m1, inPopSqrt, name = &quot;atmnet&quot;)
+myeff_m1 &lt;- includeEffects(myeff_m1, inPopSqrt, name = &quot;rtnet&quot;)
+
+myeff_m1 &lt;- includeEffects(myeff_m1, outActSqrt, name = &quot;fnet&quot;)
+myeff_m1 &lt;- includeEffects(myeff_m1, outActSqrt, name = &quot;atmnet&quot;)
+myeff_m1 &lt;- includeEffects(myeff_m1, outActSqrt, name = &quot;rtnet&quot;)
+
+myeff_m1 &lt;- includeEffects(myeff_m1, outPopSqrt, name = &quot;fnet&quot;)
+myeff_m1 &lt;- includeEffects(myeff_m1, outPopSqrt, name = &quot;atmnet&quot;)
+myeff_m1 &lt;- includeEffects(myeff_m1, outPopSqrt, name = &quot;rtnet&quot;)
+
+myeff_m1 &lt;- includeEffects(myeff_m1, transTrip, name = &quot;fnet&quot;)
+myeff_m1 &lt;- includeEffects(myeff_m1, transTrip, name = &quot;atmnet&quot;)
+myeff_m1 &lt;- includeEffects(myeff_m1, transTrip, name = &quot;rtnet&quot;)
+
+myeff_m1 &lt;- includeEffects(myeff_m1, sharedPop, name = &quot;fnet&quot;)
+myeff_m1 &lt;- includeEffects(myeff_m1, sharedPop, name = &quot;atmnet&quot;)
+myeff_m1 &lt;- includeEffects(myeff_m1, sharedPop, name = &quot;rtnet&quot;)
+
+myeff_m2 &lt;- myeff_m1
+
+#&#39;kamerlid2016&#39; &#39;pleklijst&#39;    &#39;pleklijst1&#39;
+
+myeff_m2 &lt;- includeEffects(myeff_m2, interaction1 = &quot;kamerlid2016&quot;, altX, name = &quot;fnet&quot;)
+# myeff_m2 &lt;- includeEffects( myeff_m2, interaction1=&#39;kamerlid2016&#39;, altX, name=&#39;atmnet&#39; )
+myeff_m2 &lt;- includeEffects(myeff_m2, interaction1 = &quot;kamerlid2016&quot;, altX, name = &quot;rtnet&quot;)
+
+# myeff_m2 &lt;- includeEffects( myeff_m2, interaction1=&#39;kamerlid2016&#39;, egoX, name=&#39;fnet&#39; ) myeff_m2
+# &lt;- setEffect( myeff_m2, interaction1=&#39;kamerlid2016&#39;, egoX, name=&#39;fnet&#39;, fix=TRUE, initialValue =
+# -3, test=TRUE )
+
+# myeff_m2 &lt;- includeEffects( myeff_m2, interaction1=&#39;kamerlid2016&#39;, egoX, name=&#39;atmnet&#39; )
+myeff_m2 &lt;- includeEffects(myeff_m2, interaction1 = &quot;kamerlid2016&quot;, egoX, name = &quot;rtnet&quot;)
+
+myeff_m2 &lt;- includeEffects(myeff_m2, interaction1 = &quot;kamerlid2016&quot;, sameX, name = &quot;fnet&quot;)
+# myeff_m2 &lt;- includeEffects( myeff_m2, interaction1=&#39;kamerlid2016&#39;, sameX, name=&#39;atmnet&#39; )
+# myeff_m2 &lt;- includeEffects( myeff_m2, interaction1=&#39;kamerlid2016&#39;, sameX, name=&#39;rtnet&#39; )
+
+# myeff_m2 &lt;- includeEffects( myeff_m2, interaction1=&#39;pleklijst1&#39;, altX, name=&#39;fnet&#39; )
+myeff_m2 &lt;- includeEffects(myeff_m2, interaction1 = &quot;pleklijst1&quot;, altX, name = &quot;atmnet&quot;)
+myeff_m2 &lt;- includeEffects(myeff_m2, interaction1 = &quot;pleklijst1&quot;, altX, name = &quot;rtnet&quot;)
+
+# myeff_m2 &lt;- includeEffects( myeff_m2, interaction1=&#39;pleklijst1&#39;, egoX, name=&#39;fnet&#39; )
+myeff_m2 &lt;- includeEffects(myeff_m2, interaction1 = &quot;pleklijst1&quot;, egoX, name = &quot;atmnet&quot;)
+# myeff_m2 &lt;- includeEffects( myeff_m2, interaction1=&#39;pleklijst1&#39;, egoX, name=&#39;rtnet&#39; )
+
+myeff_m2 &lt;- includeEffects(myeff_m2, interaction1 = &quot;pleklijst&quot;, egoX, name = &quot;fnet&quot;)
+# myeff_m2 &lt;- includeEffects( myeff_m2, interaction1=&#39;pleklijst&#39;, egoX, name=&#39;atmnet&#39; ) myeff_m2 &lt;-
+# includeEffects( myeff_m2, interaction1=&#39;pleklijst&#39;, egoX, name=&#39;rtnet&#39; )
+
+# myeff_m2 &lt;- includeEffects( myeff_m2, interaction1=&#39;pleklijst&#39;, altX, name=&#39;fnet&#39; )
+myeff_m2 &lt;- includeEffects(myeff_m2, interaction1 = &quot;pleklijst&quot;, altX, name = &quot;atmnet&quot;)
+myeff_m2 &lt;- includeEffects(myeff_m2, interaction1 = &quot;pleklijst&quot;, altX, name = &quot;rtnet&quot;)
+
+# these need to be dropped due to collinearity myeff_m2 &lt;- includeEffects( myeff_m2,
+# interaction1=&#39;pleklijst&#39;, diffX, name=&#39;fnet&#39; ) myeff_m2 &lt;- includeEffects( myeff_m2,
+# interaction1=&#39;pleklijst&#39;, diffX, name=&#39;atmnet&#39; ) myeff_m2 &lt;- includeEffects( myeff_m2,
+# interaction1=&#39;pleklijst&#39;, diffX, name=&#39;rtnet&#39; )
+
+# afstand
+myeff_m2 &lt;- includeEffects(myeff_m2, X, interaction1 = &quot;afstand&quot;, name = &quot;fnet&quot;)
+# myeff_m2 &lt;- includeEffects( myeff_m2, X, interaction1=&#39;afstand&#39;, name=&#39;atmnet&#39; )
+myeff_m2 &lt;- includeEffects(myeff_m2, X, interaction1 = &quot;afstand&quot;, name = &quot;rtnet&quot;)
+
+
+
+myeff_m2 &lt;- includeEffects(myeff_m2, sameX, interaction1 = &quot;partij&quot;, name = &quot;fnet&quot;)
+
+# myeff_m2 &lt;- includeEffects( myeff_m2, egoX, interaction1 = &#39;cda&#39;, name=&#39;fnet&#39; ) myeff_m2 &lt;-
+# includeEffects( myeff_m2, egoX, interaction1 = &#39;cu&#39;, name=&#39;fnet&#39; ) myeff_m2 &lt;- includeEffects(
+# myeff_m2, egoX, interaction1 = &#39;denk&#39;, name=&#39;fnet&#39; ) myeff_m2 &lt;- includeEffects( myeff_m2, egoX,
+# interaction1 = &#39;d66&#39;, name=&#39;fnet&#39; ) myeff_m2 &lt;- includeEffects( myeff_m2, egoX, interaction1 =
+# &#39;fvd&#39;, name=&#39;fnet&#39; ) myeff_m2 &lt;- includeEffects( myeff_m2, egoX, interaction1 = &#39;gl&#39;, name=&#39;fnet&#39;
+# ) myeff_m2 &lt;- includeEffects( myeff_m2, egoX, interaction1 = &#39;pvda&#39;, name=&#39;fnet&#39; ) myeff_m2 &lt;-
+# includeEffects( myeff_m2, egoX, interaction1 = &#39;pvdd&#39;, name=&#39;fnet&#39; ) myeff_m2 &lt;- includeEffects(
+# myeff_m2, egoX, interaction1 = &#39;pvv&#39;, name=&#39;fnet&#39; ) myeff_m2 &lt;- includeEffects( myeff_m2, egoX,
+# interaction1 = &#39;sgp&#39;, name=&#39;fnet&#39; ) myeff_m2 &lt;- includeEffects( myeff_m2, egoX, interaction1 =
+# &#39;sp&#39;, name=&#39;fnet&#39; ) myeff_m2 &lt;- includeEffects( myeff_m2, egoX, interaction1 = &#39;vvd&#39;, name=&#39;fnet&#39;
+# ) myeff_m2 &lt;- includeEffects( myeff_m2, egoX, interaction1 = &#39;plus&#39;, name=&#39;fnet&#39; )
+
+# myeff_m2 &lt;- includeEffects( myeff_m2, altX, interaction1 = &#39;cda&#39;, name=&#39;fnet&#39; ) myeff_m2 &lt;-
+# includeEffects( myeff_m2, altX, interaction1 = &#39;cu&#39;, name=&#39;fnet&#39; ) myeff_m2 &lt;- includeEffects(
+# myeff_m2, altX, interaction1 = &#39;denk&#39;, name=&#39;fnet&#39; ) myeff_m2 &lt;- includeEffects( myeff_m2, altX,
+# interaction1 = &#39;d66&#39;, name=&#39;fnet&#39; ) myeff_m2 &lt;- includeEffects( myeff_m2, altX, interaction1 =
+# &#39;fvd&#39;, name=&#39;fnet&#39; ) myeff_m2 &lt;- includeEffects( myeff_m2, altX, interaction1 = &#39;gl&#39;, name=&#39;fnet&#39;
+# ) myeff_m2 &lt;- includeEffects( myeff_m2, altX, interaction1 = &#39;pvda&#39;, name=&#39;fnet&#39; ) myeff_m2 &lt;-
+# includeEffects( myeff_m2, altX, interaction1 = &#39;pvdd&#39;, name=&#39;fnet&#39; ) myeff_m2 &lt;- includeEffects(
+# myeff_m2, altX, interaction1 = &#39;pvv&#39;, name=&#39;fnet&#39; ) myeff_m2 &lt;- includeEffects( myeff_m2, altX,
+# interaction1 = &#39;sgp&#39;, name=&#39;fnet&#39; ) myeff_m2 &lt;- includeEffects( myeff_m2, altX, interaction1 =
+# &#39;sp&#39;, name=&#39;fnet&#39; ) myeff_m2 &lt;- includeEffects( myeff_m2, altX, interaction1 = &#39;vvd&#39;, name=&#39;fnet&#39;
+# ) myeff_m2 &lt;- includeEffects( myeff_m2, altX, interaction1 = &#39;plus&#39;, name=&#39;fnet&#39; )
+
+myeff_m2 &lt;- includeEffects(myeff_m2, sameX, interaction1 = &quot;partij&quot;, name = &quot;atmnet&quot;)
+
+# myeff_m2 &lt;- includeEffects( myeff_m2, egoX, interaction1 = &#39;cda&#39;, name=&#39;atmnet&#39; ) myeff_m2 &lt;-
+# includeEffects( myeff_m2, egoX, interaction1 = &#39;cu&#39;, name=&#39;atmnet&#39; ) myeff_m2 &lt;- includeEffects(
+# myeff_m2, egoX, interaction1 = &#39;denk&#39;, name=&#39;atmnet&#39; ) myeff_m2 &lt;- includeEffects( myeff_m2,
+# egoX, interaction1 = &#39;d66&#39;, name=&#39;atmnet&#39; ) myeff_m2 &lt;- includeEffects( myeff_m2, egoX,
+# interaction1 = &#39;fvd&#39;, name=&#39;atmnet&#39; )
+myeff_m2 &lt;- includeEffects(myeff_m2, egoX, interaction1 = &quot;gl&quot;, name = &quot;atmnet&quot;)
+# myeff_m2 &lt;- includeEffects( myeff_m2, egoX, interaction1 = &#39;pvda&#39;, name=&#39;atmnet&#39; ) myeff_m2 &lt;-
+# includeEffects( myeff_m2, egoX, interaction1 = &#39;pvdd&#39;, name=&#39;atmnet&#39; ) myeff_m2 &lt;-
+# includeEffects( myeff_m2, egoX, interaction1 = &#39;pvv&#39;, name=&#39;atmnet&#39; ) myeff_m2 &lt;- includeEffects(
+# myeff_m2, egoX, interaction1 = &#39;sgp&#39;, name=&#39;atmnet&#39; ) myeff_m2 &lt;- includeEffects( myeff_m2, egoX,
+# interaction1 = &#39;sp&#39;, name=&#39;atmnet&#39; ) myeff_m2 &lt;- includeEffects( myeff_m2, egoX, interaction1 =
+# &#39;vvd&#39;, name=&#39;atmnet&#39; ) myeff_m2 &lt;- includeEffects( myeff_m2, egoX, interaction1 = &#39;plus&#39;,
+# name=&#39;atmnet&#39; )
+
+# myeff_m2 &lt;- includeEffects( myeff_m2, altX, interaction1 = &#39;cda&#39;, name=&#39;atmnet&#39; ) myeff_m2 &lt;-
+# includeEffects( myeff_m2, altX, interaction1 = &#39;cu&#39;, name=&#39;atmnet&#39; ) myeff_m2 &lt;- includeEffects(
+# myeff_m2, altX, interaction1 = &#39;denk&#39;, name=&#39;atmnet&#39; )
+myeff_m2 &lt;- includeEffects(myeff_m2, altX, interaction1 = &quot;d66&quot;, name = &quot;atmnet&quot;)
+# myeff_m2 &lt;- includeEffects( myeff_m2, altX, interaction1 = &#39;fvd&#39;, name=&#39;atmnet&#39; )
+myeff_m2 &lt;- includeEffects(myeff_m2, altX, interaction1 = &quot;gl&quot;, name = &quot;atmnet&quot;)
+# myeff_m2 &lt;- includeEffects( myeff_m2, altX, interaction1 = &#39;pvda&#39;, name=&#39;atmnet&#39; ) myeff_m2 &lt;-
+# includeEffects( myeff_m2, altX, interaction1 = &#39;pvdd&#39;, name=&#39;atmnet&#39; ) myeff_m2 &lt;-
+# includeEffects( myeff_m2, altX, interaction1 = &#39;pvv&#39;, name=&#39;atmnet&#39; ) myeff_m2 &lt;- includeEffects(
+# myeff_m2, altX, interaction1 = &#39;sgp&#39;, name=&#39;atmnet&#39; ) myeff_m2 &lt;- includeEffects( myeff_m2, altX,
+# interaction1 = &#39;sp&#39;, name=&#39;atmnet&#39; ) myeff_m2 &lt;- includeEffects( myeff_m2, altX, interaction1 =
+# &#39;vvd&#39;, name=&#39;atmnet&#39; ) #referentie myeff_m2 &lt;- includeEffects( myeff_m2, altX, interaction1 =
+# &#39;plus&#39;, name=&#39;atmnet&#39; )
+
+myeff_m2 &lt;- includeEffects(myeff_m2, sameX, interaction1 = &quot;partij&quot;, name = &quot;rtnet&quot;)
+
+# myeff_m2 &lt;- includeEffects( myeff_m2, egoX, interaction1 = &#39;cda&#39;, name=&#39;rtnet&#39; ) myeff_m2 &lt;-
+# includeEffects( myeff_m2, egoX, interaction1 = &#39;cu&#39;, name=&#39;rtnet&#39; ) myeff_m2 &lt;- includeEffects(
+# myeff_m2, egoX, interaction1 = &#39;denk&#39;, name=&#39;rtnet&#39; )
+myeff_m2 &lt;- includeEffects(myeff_m2, egoX, interaction1 = &quot;d66&quot;, name = &quot;rtnet&quot;)
+# myeff_m2 &lt;- includeEffects( myeff_m2, egoX, interaction1 = &#39;fvd&#39;, name=&#39;rtnet&#39; ) myeff_m2 &lt;-
+# includeEffects( myeff_m2, egoX, interaction1 = &#39;gl&#39;, name=&#39;rtnet&#39; ) myeff_m2 &lt;- includeEffects(
+# myeff_m2, egoX, interaction1 = &#39;pvda&#39;, name=&#39;rtnet&#39; ) myeff_m2 &lt;- includeEffects( myeff_m2, egoX,
+# interaction1 = &#39;pvdd&#39;, name=&#39;rtnet&#39; )
+myeff_m2 &lt;- includeEffects(myeff_m2, egoX, interaction1 = &quot;pvv&quot;, name = &quot;rtnet&quot;)
+# myeff_m2 &lt;- includeEffects( myeff_m2, egoX, interaction1 = &#39;sgp&#39;, name=&#39;rtnet&#39; ) myeff_m2 &lt;-
+# includeEffects( myeff_m2, egoX, interaction1 = &#39;sp&#39;, name=&#39;rtnet&#39; ) myeff_m2 &lt;- includeEffects(
+# myeff_m2, egoX, interaction1 = &#39;vvd&#39;, name=&#39;rtnet&#39; ) #referentie myeff_m2 &lt;- includeEffects(
+# myeff_m2, egoX, interaction1 = &#39;plus&#39;, name=&#39;rtnet&#39; )
+
+# myeff_m2 &lt;- includeEffects( myeff_m2, altX, interaction1 = &#39;cda&#39;, name=&#39;rtnet&#39; ) myeff_m2 &lt;-
+# includeEffects( myeff_m2, altX, interaction1 = &#39;cu&#39;, name=&#39;rtnet&#39; ) myeff_m2 &lt;- includeEffects(
+# myeff_m2, altX, interaction1 = &#39;denk&#39;, name=&#39;rtnet&#39; ) myeff_m2 &lt;- includeEffects( myeff_m2, altX,
+# interaction1 = &#39;d66&#39;, name=&#39;rtnet&#39; ) myeff_m2 &lt;- includeEffects( myeff_m2, altX, interaction1 =
+# &#39;fvd&#39;, name=&#39;rtnet&#39; ) myeff_m2 &lt;- includeEffects( myeff_m2, altX, interaction1 = &#39;gl&#39;,
+# name=&#39;rtnet&#39; ) myeff_m2 &lt;- includeEffects( myeff_m2, altX, interaction1 = &#39;pvda&#39;, name=&#39;rtnet&#39; )
+# myeff_m2 &lt;- includeEffects( myeff_m2, altX, interaction1 = &#39;pvdd&#39;, name=&#39;rtnet&#39; ) myeff_m2 &lt;-
+# includeEffects( myeff_m2, altX, interaction1 = &#39;pvv&#39;, name=&#39;rtnet&#39; ) myeff_m2 &lt;- includeEffects(
+# myeff_m2, altX, interaction1 = &#39;sgp&#39;, name=&#39;rtnet&#39; ) myeff_m2 &lt;- includeEffects( myeff_m2, altX,
+# interaction1 = &#39;sp&#39;, name=&#39;rtnet&#39; ) myeff_m2 &lt;- includeEffects( myeff_m2, altX, interaction1 =
+# &#39;vvd&#39;, name=&#39;rtnet&#39; ) #referentie myeff_m2 &lt;- includeEffects( myeff_m2, altX, interaction1 =
+# &#39;plus&#39;, name=&#39;rtnet&#39; )
+
+myeff_RR &lt;- myeff_m2
+myeff_RR &lt;- includeEffects(myeff_RR, interaction1 = &quot;partypos&quot;, absDiffX, name = &quot;fnet&quot;)
+myeff_RR &lt;- includeEffects(myeff_RR, interaction1 = &quot;partypos&quot;, absDiffX, name = &quot;rtnet&quot;)</code></pre>
+<pre class="r test"><code>myeff_RR</code></pre>
+<pre class="test2"><code>#&gt;    name   effectName                            include fix   test  initialValue parm
+#&gt; 1  fnet   constant fnet rate (period 1)         TRUE    FALSE FALSE    7.22021   0   
+#&gt; 2  fnet   constant fnet rate (period 2)         TRUE    FALSE FALSE    3.79571   0   
+#&gt; 3  fnet   fnet: outdegree (density)             TRUE    FALSE FALSE    0.00000   0   
+#&gt; 4  fnet   fnet: reciprocity                     TRUE    FALSE FALSE    0.00000   0   
+#&gt; 5  fnet   fnet: transitive triplets             TRUE    FALSE FALSE    0.00000   0   
+#&gt; 6  fnet   fnet: shared popularity               TRUE    FALSE FALSE    0.00000   1   
+#&gt; 7  fnet   fnet: indegree - popularity (sqrt)    TRUE    FALSE FALSE    0.00000   0   
+#&gt; 8  fnet   fnet: outdegree - popularity (sqrt)   TRUE    FALSE FALSE    0.00000   0   
+#&gt; 9  fnet   fnet: outdegree - activity (sqrt)     TRUE    FALSE FALSE    0.00000   1   
+#&gt; 10 fnet   fnet: afstand                         TRUE    FALSE FALSE    0.00000   0   
+#&gt; 11 fnet   fnet: same partij                     TRUE    FALSE FALSE    0.00000   0   
+#&gt; 12 fnet   fnet: kamerlid2016 alter              TRUE    FALSE FALSE    0.00000   0   
+#&gt; 13 fnet   fnet: same kamerlid2016               TRUE    FALSE FALSE    0.00000   0   
+#&gt; 14 fnet   fnet: pleklijst ego                   TRUE    FALSE FALSE    0.00000   0   
+#&gt; 15 fnet   fnet: partypos abs. difference        TRUE    FALSE FALSE    0.00000   0   
+#&gt; 16 atmnet constant atmnet rate (period 1)       TRUE    FALSE FALSE   16.26089   0   
+#&gt; 17 atmnet constant atmnet rate (period 2)       TRUE    FALSE FALSE    9.17902   0   
+#&gt; 18 atmnet atmnet: outdegree (density)           TRUE    FALSE FALSE   -1.76137   0   
+#&gt; 19 atmnet atmnet: reciprocity                   TRUE    FALSE FALSE    0.00000   0   
+#&gt; 20 atmnet atmnet: transitive triplets           TRUE    FALSE FALSE    0.00000   0   
+#&gt; 21 atmnet atmnet: shared popularity             TRUE    FALSE FALSE    0.00000   1   
+#&gt; 22 atmnet atmnet: indegree - popularity (sqrt)  TRUE    FALSE FALSE    0.00000   0   
+#&gt; 23 atmnet atmnet: outdegree - popularity (sqrt) TRUE    FALSE FALSE    0.00000   0   
+#&gt; 24 atmnet atmnet: outdegree - activity (sqrt)   TRUE    FALSE FALSE    0.00000   1   
+#&gt; 25 atmnet atmnet: same partij                   TRUE    FALSE FALSE    0.00000   0   
+#&gt; 26 atmnet atmnet: d66 alter                     TRUE    FALSE FALSE    0.00000   0   
+#&gt; 27 atmnet atmnet: gl alter                      TRUE    FALSE FALSE    0.00000   0   
+#&gt; 28 atmnet atmnet: gl ego                        TRUE    FALSE FALSE    0.00000   0   
+#&gt; 29 atmnet atmnet: pleklijst alter               TRUE    FALSE FALSE    0.00000   0   
+#&gt; 30 atmnet atmnet: pleklijst1 alter              TRUE    FALSE FALSE    0.00000   0   
+#&gt; 31 atmnet atmnet: pleklijst1 ego                TRUE    FALSE FALSE    0.00000   0   
+#&gt; 32 rtnet  constant rtnet rate (period 1)        TRUE    FALSE FALSE   10.98716   0   
+#&gt; 33 rtnet  constant rtnet rate (period 2)        TRUE    FALSE FALSE    9.39819   0   
+#&gt; 34 rtnet  rtnet: outdegree (density)            TRUE    FALSE FALSE   -1.61392   0   
+#&gt; 35 rtnet  rtnet: reciprocity                    TRUE    FALSE FALSE    0.00000   0   
+#&gt; 36 rtnet  rtnet: transitive triplets            TRUE    FALSE FALSE    0.00000   0   
+#&gt; 37 rtnet  rtnet: shared popularity              TRUE    FALSE FALSE    0.00000   1   
+#&gt; 38 rtnet  rtnet: indegree - popularity (sqrt)   TRUE    FALSE FALSE    0.00000   0   
+#&gt; 39 rtnet  rtnet: outdegree - popularity (sqrt)  TRUE    FALSE FALSE    0.00000   0   
+#&gt; 40 rtnet  rtnet: outdegree - activity (sqrt)    TRUE    FALSE FALSE    0.00000   1   
+#&gt; 41 rtnet  rtnet: afstand                        TRUE    FALSE FALSE    0.00000   0   
+#&gt; 42 rtnet  rtnet: same partij                    TRUE    FALSE FALSE    0.00000   0   
+#&gt; 43 rtnet  rtnet: d66 ego                        TRUE    FALSE FALSE    0.00000   0   
+#&gt; 44 rtnet  rtnet: pvv ego                        TRUE    FALSE FALSE    0.00000   0   
+#&gt; 45 rtnet  rtnet: kamerlid2016 alter             TRUE    FALSE FALSE    0.00000   0   
+#&gt; 46 rtnet  rtnet: kamerlid2016 ego               TRUE    FALSE FALSE    0.00000   0   
+#&gt; 47 rtnet  rtnet: pleklijst alter                TRUE    FALSE FALSE    0.00000   0   
+#&gt; 48 rtnet  rtnet: pleklijst1 alter               TRUE    FALSE FALSE    0.00000   0   
+#&gt; 49 rtnet  rtnet: partypos abs. difference       TRUE    FALSE FALSE    0.00000   0</code></pre>
+</div>
+<div id="estimate-model" class="section level2">
+<h2>estimate model</h2>
+<pre class="r test"><code>myalgorithmRR &lt;- sienaAlgorithmCreate(projname = &quot;RR&quot;)
+
+ansRR1 &lt;- siena07(myalgorithmRR, data = mydata_RR, prevAns = ansM8c, effects = myeff_RR, useCluster = TRUE,
+    nbrNodes = 8, initC = TRUE, batch = TRUE)
+
+# save(ansRR1, file=paste(&#39;ansRR1&#39;,&#39;.RData&#39;,sep=&#39;&#39;))</code></pre>
+</div>
+<div id="results" class="section level2">
+<h2>results</h2>
+<p>The parameters of interest are in red.</p>
+<pre class="r test"><code>load(&quot;ansRR1.RData&quot;)
+
+
+res &lt;- round(fanscsv(ansRR1)[, 1:2], 5)
+mcpos &lt;- length(res[, 1])
+res &lt;- res[-mcpos, ]
+mc &lt;- as.character(round(fanscsv(ansRR1)[mcpos, 1], 3))
+row.names(res) &lt;- c(&quot;rate 1&quot;, &quot;rate 2&quot;, &quot;outdegree&quot;, &quot;reciprocity&quot;, &quot;transitive triplets&quot;, &quot;shared popularity&quot;,
+    &quot;indegree - popularity&quot;, &quot; outdegree - popularity&quot;, &quot;outdegree - activity&quot;, &quot;seating distance (dyad)&quot;,
+    &quot;same party (dyad)&quot;, &quot;incumbancy status (alter)&quot;, &quot;same incumbancy status (dyad)&quot;, &quot;position on election list (ego)&quot;,
+    &quot;ideological distance (dyad)&quot;, &quot;rate 1&quot;, &quot;rate 2&quot;, &quot;outdegree&quot;, &quot;reciprocity&quot;, &quot;transitive triplets&quot;,
+    &quot;shared popularity&quot;, &quot;indegree - popularity&quot;, &quot;outdegree - popularity&quot;, &quot;outdegree - activity &quot;,
+    &quot;same party (dyad)&quot;, &quot;party Liberal Democrats (alter)&quot;, &quot;party GreenLeft (alter)&quot;, &quot;party GreenLeft (ego)&quot;,
+    &quot;position on election list (alter)&quot;, &quot;party leader (alter)&quot;, &quot;party leader (ego)&quot;, &quot;rate 1&quot;, &quot;rate 2&quot;,
+    &quot;outdegree&quot;, &quot;reciprocity&quot;, &quot;transitive triplets&quot;, &quot;shared popularity&quot;, &quot;indegree - popularity &quot;,
+    &quot;outdegree - popularity&quot;, &quot;outdegree - activity &quot;, &quot;seating distance (dyad)&quot;, &quot;same party (dyad)&quot;,
+    &quot;party Liberal Democrats (ego)&quot;, &quot;party Freedom Party (ego)&quot;, &quot;incumbancy status (alter)&quot;, &quot;incumbancy status (ego)&quot;,
+    &quot;position on election list (alter)&quot;, &quot;party leader (alter)&quot;, &quot;ideological distance (dyad)&quot;)
+
+asmatkable &lt;- kbl(res, booktabs = TRUE, digits = 3, caption = &quot;Model RR: including ideological distance&quot;,
+    align = &quot;c&quot;) %&gt;%
+    kable_classic(full_width = F, html_font = &quot;Cambria&quot;) %&gt;%
+    kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;, &quot;condensed&quot;, &quot;responsive&quot;)) %&gt;%
+    column_spec(column = 1, width = &quot;3in&quot;) %&gt;%
+    row_spec(c(10, 15, 41, 49), bold = T, color = &quot;white&quot;, background = &quot;#D7261E&quot;) %&gt;%
+    group_rows(index = c(Following = 15, Atmention = 16, Retweets = 18)) %&gt;%
+    footnote(general = paste(&quot;Overall maximum convergence ratio: &quot;, mc, sep = &quot;&quot;))
+
+
+asmatkable</code></pre>
+<table class=" lightable-classic table table-striped table-hover table-condensed table-responsive" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;border-bottom: 0;">
+<caption>
+Model RR: including ideological distance
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+Estimate
+</th>
+<th style="text-align:center;">
+Standard Error
+</th>
+</tr>
+</thead>
+<tbody>
+<tr grouplength="15">
+<td colspan="3" style="border-bottom: 0;">
+<strong>Following</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; padding-left: 2em;" indentlevel="1">
+rate 1
+</td>
+<td style="text-align:center;">
+4.625
+</td>
+<td style="text-align:center;">
+0.239
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; padding-left: 2em;" indentlevel="1">
+rate 2
+</td>
+<td style="text-align:center;">
+2.033
+</td>
+<td style="text-align:center;">
+0.129
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; padding-left: 2em;" indentlevel="1">
+outdegree
+</td>
+<td style="text-align:center;">
+-13.152
+</td>
+<td style="text-align:center;">
+2.155
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; padding-left: 2em;" indentlevel="1">
+reciprocity
+</td>
+<td style="text-align:center;">
+0.842
+</td>
+<td style="text-align:center;">
+0.119
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; padding-left: 2em;" indentlevel="1">
+transitive triplets
+</td>
+<td style="text-align:center;">
+0.037
+</td>
+<td style="text-align:center;">
+0.007
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; padding-left: 2em;" indentlevel="1">
+shared popularity
+</td>
+<td style="text-align:center;">
+-0.001
+</td>
+<td style="text-align:center;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; padding-left: 2em;" indentlevel="1">
+indegree - popularity
+</td>
+<td style="text-align:center;">
+0.362
+</td>
+<td style="text-align:center;">
+0.061
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; padding-left: 2em;" indentlevel="1">
+outdegree - popularity
+</td>
+<td style="text-align:center;">
+-0.189
+</td>
+<td style="text-align:center;">
+0.035
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; padding-left: 2em;" indentlevel="1">
+outdegree - activity
+</td>
+<td style="text-align:center;">
+1.329
+</td>
+<td style="text-align:center;">
+0.279
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; font-weight: bold;color: white !important;background-color: #D7261E !important;padding-left: 2em;" indentlevel="1">
+seating distance (dyad)
+</td>
+<td style="text-align:center;font-weight: bold;color: white !important;background-color: #D7261E !important;">
+-0.014
+</td>
+<td style="text-align:center;font-weight: bold;color: white !important;background-color: #D7261E !important;">
+0.007
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; padding-left: 2em;" indentlevel="1">
+same party (dyad)
+</td>
+<td style="text-align:center;">
+0.943
+</td>
+<td style="text-align:center;">
+0.165
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; padding-left: 2em;" indentlevel="1">
+incumbancy status (alter)
+</td>
+<td style="text-align:center;">
+-0.506
+</td>
+<td style="text-align:center;">
+0.090
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; padding-left: 2em;" indentlevel="1">
+same incumbancy status (dyad)
+</td>
+<td style="text-align:center;">
+0.169
+</td>
+<td style="text-align:center;">
+0.080
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; padding-left: 2em;" indentlevel="1">
+position on election list (ego)
+</td>
+<td style="text-align:center;">
+0.535
+</td>
+<td style="text-align:center;">
+0.138
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; font-weight: bold;color: white !important;background-color: #D7261E !important;padding-left: 2em;" indentlevel="1">
+ideological distance (dyad)
+</td>
+<td style="text-align:center;font-weight: bold;color: white !important;background-color: #D7261E !important;">
+-0.092
+</td>
+<td style="text-align:center;font-weight: bold;color: white !important;background-color: #D7261E !important;">
+0.047
+</td>
+</tr>
+<tr grouplength="16">
+<td colspan="3" style="border-bottom: 0;">
+<strong>Atmention</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; padding-left: 2em;" indentlevel="1">
+rate 1
+</td>
+<td style="text-align:center;">
+66.540
+</td>
+<td style="text-align:center;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; padding-left: 2em;" indentlevel="1">
+rate 2
+</td>
+<td style="text-align:center;">
+13.352
+</td>
+<td style="text-align:center;">
+1.185
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; padding-left: 2em;" indentlevel="1">
+outdegree
+</td>
+<td style="text-align:center;">
+-4.213
+</td>
+<td style="text-align:center;">
+0.122
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; padding-left: 2em;" indentlevel="1">
+reciprocity
+</td>
+<td style="text-align:center;">
+1.406
+</td>
+<td style="text-align:center;">
+0.112
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; padding-left: 2em;" indentlevel="1">
+transitive triplets
+</td>
+<td style="text-align:center;">
+0.065
+</td>
+<td style="text-align:center;">
+0.027
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; padding-left: 2em;" indentlevel="1">
+shared popularity
+</td>
+<td style="text-align:center;">
+-0.008
+</td>
+<td style="text-align:center;">
+0.007
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; padding-left: 2em;" indentlevel="1">
+indegree - popularity
+</td>
+<td style="text-align:center;">
+0.397
+</td>
+<td style="text-align:center;">
+0.046
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; padding-left: 2em;" indentlevel="1">
+outdegree - popularity
+</td>
+<td style="text-align:center;">
+-0.098
+</td>
+<td style="text-align:center;">
+0.042
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; padding-left: 2em;" indentlevel="1">
+outdegree - activity
+</td>
+<td style="text-align:center;">
+0.255
+</td>
+<td style="text-align:center;">
+0.018
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; padding-left: 2em;" indentlevel="1">
+same party (dyad)
+</td>
+<td style="text-align:center;">
+0.918
+</td>
+<td style="text-align:center;">
+0.062
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; padding-left: 2em;" indentlevel="1">
+party Liberal Democrats (alter)
+</td>
+<td style="text-align:center;">
+-0.104
+</td>
+<td style="text-align:center;">
+0.062
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; padding-left: 2em;" indentlevel="1">
+party GreenLeft (alter)
+</td>
+<td style="text-align:center;">
+-0.171
+</td>
+<td style="text-align:center;">
+0.074
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; padding-left: 2em;" indentlevel="1">
+party GreenLeft (ego)
+</td>
+<td style="text-align:center;">
+0.136
+</td>
+<td style="text-align:center;">
+0.062
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; padding-left: 2em;" indentlevel="1">
+position on election list (alter)
+</td>
+<td style="text-align:center;">
+-0.012
+</td>
+<td style="text-align:center;">
+0.003
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; padding-left: 2em;" indentlevel="1">
+party leader (alter)
+</td>
+<td style="text-align:center;">
+0.124
+</td>
+<td style="text-align:center;">
+0.087
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; padding-left: 2em;" indentlevel="1">
+party leader (ego)
+</td>
+<td style="text-align:center;">
+-0.305
+</td>
+<td style="text-align:center;">
+0.109
+</td>
+</tr>
+<tr grouplength="18">
+<td colspan="3" style="border-bottom: 0;">
+<strong>Retweets</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; padding-left: 2em;" indentlevel="1">
+rate 1
+</td>
+<td style="text-align:center;">
+18.399
+</td>
+<td style="text-align:center;">
+1.465
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; padding-left: 2em;" indentlevel="1">
+rate 2
+</td>
+<td style="text-align:center;">
+17.266
+</td>
+<td style="text-align:center;">
+1.486
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; padding-left: 2em;" indentlevel="1">
+outdegree
+</td>
+<td style="text-align:center;">
+-3.844
+</td>
+<td style="text-align:center;">
+0.161
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; padding-left: 2em;" indentlevel="1">
+reciprocity
+</td>
+<td style="text-align:center;">
+0.616
+</td>
+<td style="text-align:center;">
+0.102
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; padding-left: 2em;" indentlevel="1">
+transitive triplets
+</td>
+<td style="text-align:center;">
+0.158
+</td>
+<td style="text-align:center;">
+0.024
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; padding-left: 2em;" indentlevel="1">
+shared popularity
+</td>
+<td style="text-align:center;">
+-0.014
+</td>
+<td style="text-align:center;">
+0.005
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; padding-left: 2em;" indentlevel="1">
+indegree - popularity
+</td>
+<td style="text-align:center;">
+0.394
+</td>
+<td style="text-align:center;">
+0.046
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; padding-left: 2em;" indentlevel="1">
+outdegree - popularity
+</td>
+<td style="text-align:center;">
+-0.270
+</td>
+<td style="text-align:center;">
+0.061
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; padding-left: 2em;" indentlevel="1">
+outdegree - activity
+</td>
+<td style="text-align:center;">
+0.163
+</td>
+<td style="text-align:center;">
+0.025
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; font-weight: bold;color: white !important;background-color: #D7261E !important;padding-left: 2em;" indentlevel="1">
+seating distance (dyad)
+</td>
+<td style="text-align:center;font-weight: bold;color: white !important;background-color: #D7261E !important;">
+-0.029
+</td>
+<td style="text-align:center;font-weight: bold;color: white !important;background-color: #D7261E !important;">
+0.007
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; padding-left: 2em;" indentlevel="1">
+same party (dyad)
+</td>
+<td style="text-align:center;">
+1.318
+</td>
+<td style="text-align:center;">
+0.103
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; padding-left: 2em;" indentlevel="1">
+party Liberal Democrats (ego)
+</td>
+<td style="text-align:center;">
+-0.427
+</td>
+<td style="text-align:center;">
+0.084
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; padding-left: 2em;" indentlevel="1">
+party Freedom Party (ego)
+</td>
+<td style="text-align:center;">
+-0.179
+</td>
+<td style="text-align:center;">
+0.084
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; padding-left: 2em;" indentlevel="1">
+incumbancy status (alter)
+</td>
+<td style="text-align:center;">
+-0.084
+</td>
+<td style="text-align:center;">
+0.048
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; padding-left: 2em;" indentlevel="1">
+incumbancy status (ego)
+</td>
+<td style="text-align:center;">
+-0.114
+</td>
+<td style="text-align:center;">
+0.045
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; padding-left: 2em;" indentlevel="1">
+position on election list (alter)
+</td>
+<td style="text-align:center;">
+-0.012
+</td>
+<td style="text-align:center;">
+0.004
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; padding-left: 2em;" indentlevel="1">
+party leader (alter)
+</td>
+<td style="text-align:center;">
+0.119
+</td>
+<td style="text-align:center;">
+0.084
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 3in; font-weight: bold;color: white !important;background-color: #D7261E !important;padding-left: 2em;" indentlevel="1">
+ideological distance (dyad)
+</td>
+<td style="text-align:center;font-weight: bold;color: white !important;background-color: #D7261E !important;">
+-0.035
+</td>
+<td style="text-align:center;font-weight: bold;color: white !important;background-color: #D7261E !important;">
+0.038
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; " colspan="100%">
+<span style="font-style: italic;">Note: </span>
+</td>
+</tr>
+<tr>
+<td style="padding: 0; " colspan="100%">
+<sup></sup> Overall maximum convergence ratio: 0.217
+</td>
+</tr>
+</tfoot>
+</table>
+<hr />
+</div>
+</div>
+<div id="references" class="section level1 unnumbered">
+<h1 class="unnumbered">References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-jolly2022chapel" class="csl-entry">
+Jolly, Seth, Ryan Bakker, Liesbet Hooghe, Gary Marks, Jonathan Polk, Jan
+Rovny, Marco Steenbergen, and Milada Anna Vachudova. 2022. <span>“Chapel
+Hill Expert Survey Trend File, 1999–2019.”</span> <em>Electoral
+Studies</em> 75: 102420.
+</div>
+<div id="ref-Tolsma2021" class="csl-entry">
+Tolsma, Jochem, and Niels Spierings. (submitted). <span>“How Twitter
+Divides the Dutch Parliament: Segregation Along Party Lines and Social
+Dimensions in the Following, @-Mentions and Retweets Twitter Networks of
+Dutch MPs.”</span> <em>-</em> - (-): –. <a href="https://-">-</a>.
+</div>
+</div>
+</div>
+
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIlJlcGxpY2F0aW9uIHBhY2thZ2UtUlNpZW5hIg0KYXV0aG9yOiAnW0pvY2hlbSBUb2xzbWFdKGh0dHBzOi8vd3d3LmpvY2hlbXRvbHNtYS5ubCkgLSBSYWRib3VkIFVuaXZlcnNpdHkgLyBVbml2ZXJzaXR5IG9mIEdyb25pbmdlbiwgdGhlIE5ldGhlcmxhbmRzJw0KYmlibGlvZ3JhcGh5OiByZWZlcmVuY2VzLmJpYg0KZGF0ZTogIkxhc3QgY29tcGlsZWQgb24gYHIgZm9ybWF0KFN5cy50aW1lKCksICclQiwgJVknKWAiDQpvdXRwdXQ6IA0KICBodG1sX2RvY3VtZW50Og0KICAgIHRvYzogIHRydWUNCiAgICB0b2NfZmxvYXQ6IHRydWUNCiAgICBudW1iZXJfc2VjdGlvbnM6IGZhbHNlDQogICAgY29kZV9mb2xkaW5nOiBoaWRlDQogICAgY29kZV9kb3dubG9hZDogeWVzDQotLS0NCg0KDQpgYGB7ciBnbG9iYWxzZXR0aW5ncywgZWNobz1GQUxTRSwgd2FybmluZz1GQUxTRSwgbWVzc2FnZT1GQUxTRSwgcmVzdWx0cz0naGlkZSd9DQpsaWJyYXJ5KGtuaXRyKQ0Kb3B0c19jaHVuayRzZXQodGlkeS5vcHRzPWxpc3Qod2lkdGguY3V0b2ZmPTEwMCksdGlkeT1UUlVFLCB3YXJuaW5nID0gRkFMU0UsIG1lc3NhZ2UgPSBGQUxTRSxjb21tZW50ID0gIiM+IiwgY2FjaGU9VFJVRSwgZWNobz1GQUxTRSwgZXZhbD1GQUxTRSwgY2xhc3Muc291cmNlPWMoInRlc3QiKSwgY2xhc3Mub3V0cHV0PWMoInRlc3QyIikpDQpvcHRpb25zKHdpZHRoID0gMTAwKQ0KcmdsOjpzZXR1cEtuaXRyKCkNCmBgYA0KDQpgYGB7ciBjb2xvcml6ZSwgZWNobz1GQUxTRSwgZXZhbD1UUlVFfQ0KY29sb3JpemUgPC0gZnVuY3Rpb24oeCwgY29sb3IpIHsNCiAgaWYgKGtuaXRyOjppc19sYXRleF9vdXRwdXQoKSkgew0KICAgIHNwcmludGYoIlxcdGV4dGNvbG9yeyVzfXslc30iLCBjb2xvciwgeCkNCiAgfSBlbHNlIGlmIChrbml0cjo6aXNfaHRtbF9vdXRwdXQoKSkgew0KICAgIHNwcmludGYoIjxzcGFuIHN0eWxlPSdjb2xvcjogJXM7Jz4lczwvc3Bhbj4iLCBjb2xvciwgDQogICAgICAgICAgICB4KQ0KICB9IGVsc2UgeA0KfQ0KDQpgYGANCg0KYGBge3Iga2xpcHB5LCBlY2hvPUZBTFNFLCBpbmNsdWRlPVRSVUUsIGV2YWw9VFJVRX0NCmtsaXBweTo6a2xpcHB5KHBvc2l0aW9uID0gYygndG9wJywgJ3JpZ2h0JykpDQoja2xpcHB5OjprbGlwcHkoY29sb3IgPSAnZGFya3JlZCcpDQoja2xpcHB5OjprbGlwcHkodG9vbHRpcF9tZXNzYWdlID0gJ0NsaWNrIHRvIGNvcHknLCB0b29sdGlwX3N1Y2Nlc3MgPSAnRG9uZScpDQpgYGANCg0KYGBge2NzcywgZWNobz1GQUxTRX0NCg0KcHJlLnRlc3Qgew0KICBtYXgtaGVpZ2h0OiAzMDBweDsNCiAgb3ZlcmZsb3cteTogYXV0bzsNCiAgb3ZlcmZsb3cteDogYXV0bzsNCiAgbWFyZ2luOiAwcHg7DQp9DQoNCnByZS50ZXN0MiB7DQogIG1heC1oZWlnaHQ6IDMwMHB4Ow0KICBvdmVyZmxvdy15OiBhdXRvOw0KICBvdmVyZmxvdy14OiBhdXRvOw0KICBtYXJnaW46IDBweDsNCiAgYmFja2dyb3VuZC1jb2xvcjogd2hpdGU7DQogIGNvbG9yOiByZ2IoMjAxLCA3NiwgNzYpOw0KfQ0KDQoNCmgxLCAuaDEsIGgyLCAuaDIsIGgzLCAuaDMgew0KICBtYXJnaW4tdG9wOiAyNHB4Ow0KfQ0KDQpgYGANCg0KDQoNCi0tLSAgDQoNCg0KIyBJbnRybyAgDQoNCg0KVGhpcyBbd2Vic2l0ZV0oaHR0cHM6Ly9qb2NoZW10b2xzbWEuZ2l0aHViLmlvL1R3aXR0ZXIvKSBpcyBhIHJlcGxpY2F0aW9uIHBhY2thZ2UgZm9yIHRoZSBwYXBlciAiKipIb3cgVHdpdHRlciBkaXZpZGVzIHRoZSBEdXRjaCBwYXJsaWFtZW50OiBTZWdyZWdhdGlvbiBhbG9uZyBwYXJ0eSBsaW5lcyBhbmQgc29jaWFsIGRpbWVuc2lvbnMgaW4gdGhlIGZvbGxvd2luZywgQC1tZW50aW9ucyBhbmQgcmV0d2VldHMgVHdpdHRlciBOZXR3b3JrcyBvZiBEdXRjaCBNUHMqKiIgYnkgQFRvbHNtYTIwMjEuDQoNCkl0IGNvbnRhaW5zIFIgY29kZSB0byByZXBsaWNhdGUgYWxsIFRhYmxlcy9GaWd1cmVzL0FwcGVuZGl4IGluIHRoZSBtYW51c2NyaXB0Lg0KDQpUbyBjb3B5IHRoZSBjb2RlIGNsaWNrIHRoZSBidXR0b24gaW4gdGhlIHVwcGVyIHJpZ2h0IGNvcm5lciBvZiB0aGUgY29kZS1jaHVua3MuDQoNClVzZSB0aGUgdG9wIG1lbnUgdG8gbmF2aWdhdGUgdG8gdGhlIHNlY3Rpb24gb2YgaW50ZXJlc3QuIA0KDQpUaGUgc291cmNlIGNvZGUgb2YgdGhpcyB3ZWJzaXRlIGNhbiBiZSBmb3VuZCBvbiBbR2l0aHViXShodHRwczovL2dpdGh1Yi5jb20vSm9jaGVtVG9sc21hL1R3aXR0ZXIpDQoNClF1ZXN0aW9ucyBjYW4gYmUgYWRkcmVzc2VkIHRvIFtKb2NoZW0gVG9sc21hXShtYWlsdG86am9jaGVtLnRvbHNtYUBydS5ubCkuDQoNCi0tLSAgDQoNCiMjIFBhY2thZ2VzICANCg0KYGBge3IgcGFja2FnZXMsIGVjaG89VFJVRSwgbWVzc2FnZT1GQUxTRSwgd2FybmluZz1GQUxTRSwgZXZhbD1UUlVFfQ0KI2luc3RhbGwgaWYgbmVjZXNzYXJ5IA0KaWYgKCFyZXF1aXJlKCJ0aWR5dmVyc2UiLCBjaGFyYWN0ZXIub25seSA9IFRSVUUpKSB7aW5zdGFsbC5wYWNrYWdlcygidGlkeXZlcnNlIiwgZGVwZW5kZW5jaWVzPVRSVUUpfQ0KaWYgKCFyZXF1aXJlKCJkcGx5ciIsIGNoYXJhY3Rlci5vbmx5ID0gVFJVRSkpIHtpbnN0YWxsLnBhY2thZ2VzKCJkcGx5ciIsIGRlcGVuZGVuY2llcz1UUlVFKX0NCmlmICghcmVxdWlyZSgiZm9yZWlnbiIsIGNoYXJhY3Rlci5vbmx5ID0gVFJVRSkpIHtpbnN0YWxsLnBhY2thZ2VzKCJmb3JlaWduIiwgZGVwZW5kZW5jaWVzPVRSVUUpfQ0KaWYgKCFyZXF1aXJlKCJpZ3JhcGgiLCBjaGFyYWN0ZXIub25seSA9IFRSVUUpKSB7aW5zdGFsbC5wYWNrYWdlcygiaWdyYXBoIiwgZGVwZW5kZW5jaWVzPVRSVUUpfQ0KaWYgKCFyZXF1aXJlKCJrbml0ciIsIGNoYXJhY3Rlci5vbmx5ID0gVFJVRSkpIHtpbnN0YWxsLnBhY2thZ2VzKCJrbml0ciIsIGRlcGVuZGVuY2llcz1UUlVFKX0NCmlmICghcmVxdWlyZSgia2FibGVFeHRyYSIsIGNoYXJhY3Rlci5vbmx5ID0gVFJVRSkpIHtpbnN0YWxsLnBhY2thZ2VzKCJrYWJsZUV4dHJhIiwgZGVwZW5kZW5jaWVzPVRSVUUpfQ0KaWYgKCFyZXF1aXJlKCJSU2llbmEiLCBjaGFyYWN0ZXIub25seSA9IFRSVUUpKSB7aW5zdGFsbC5wYWNrYWdlcygiUlNpZW5hIiwgZGVwZW5kZW5jaWVzPVRSVUUpfQ0KaWYgKCFyZXF1aXJlKCJoYXZlbiIsIGNoYXJhY3Rlci5vbmx5ID0gVFJVRSkpIHtpbnN0YWxsLnBhY2thZ2VzKCJoYXZlbiIsIGRlcGVuZGVuY2llcz1UUlVFKX0NCg0KI2xvYWQgcGFja2FnZXMuDQpsaWJyYXJ5KHRpZHl2ZXJzZSkNCmxpYnJhcnkoZHBseXIpDQpsaWJyYXJ5KGZvcmVpZ24pDQpsaWJyYXJ5KGlncmFwaCkNCmxpYnJhcnkoa25pdHIpDQpsaWJyYXJ5KGthYmxlRXh0cmEpDQpsaWJyYXJ5KFJTaWVuYSkNCmxpYnJhcnkoaGF2ZW4pDQoNCg0KYGBgDQoNCg0KLS0tICAgDQoNCg0KDQojIyBDdXN0b20gZnVuY3Rpb25zOiB0d2Vha2luZyBvdXRwdXQNCg0KDQpgYGB7ciwgZWNobz1UUlVFLCBldmFsPVRSVUV9DQoNCmZhbnNjc3YgPC0gZnVuY3Rpb24oYW5zPWFucykgew0KCWFuczFfbWF0IDwtIG1hdHJpeChOQSwgbnJvdz1sZW5ndGgoYW5zJGVmZmVjdHNbLDJdKSxuY29sPTMpDQoJcm93Lm5hbWVzKGFuczFfbWF0KSA8LSBhbnMkZWZmZWN0c1ssMl0NCglhbnMxX21hdFssMV0gPC0gKGFucyR0aGV0YSkNCglhbnMxX21hdFssMl0gPC0gKGFucyRzZSkNCglhbnMxX21hdFssM10gPC0gKGFucyR0Y29udikNCglhbnMxX21hdCA8LSByYmluZChhbnMxX21hdCwgYyhhbnMkdGNvbnYubWF4KSkNCglyb3cubmFtZXMoYW5zMV9tYXQpW2xlbmd0aChyb3cubmFtZXMoYW5zMV9tYXQpKV0gPC0gIk92ZXJhbGwgbWF4aW11bSBjb252ZXJnZW5jZSByYXRpbzoiDQoJY29sbmFtZXMoYW5zMV9tYXQpIDwtIGMoIkVzdGltYXRlIiwgIlN0YW5kYXJkIEVycm9yIiwgIkNvbnZlcmdlbmNlIHQtcmF0aW8iKQ0KCXJldHVybihhbnMxX21hdCkNCgkjcHJpbnQoYW5zMV9tYXQpDQoJI3dyaXRlLmNzdihhbnMxX21hdCwgZmlsZW5hbWUpDQp9DQoNCg0KDQoNCmBgYA0KDQotLS0gIA0KDQojIyBMb2FkIGRhdGEgb2JqZWN0cyB7LnRhYnNldCAudGFic2V0LWZhZGV9ICANCg0KDQpEYXRhIG9iamVjdHM6ICANCg0KLSBba2V5XSguL2RhdGEtcHJvY2Vzc2VkL2tleSBtb2VkZXJiZXN0YW5kIDIwMTcxMTE0LnNhdik6IGluZm9ybWF0aW9uIG9uIGFsbCBwb2xpdGljaWFucyBvbiBlbGVjdGlvbiBsaXN0ICANCi0gW3R3aXR0ZXJdKC4vZGF0YS1wcm9jZXNzZWQvdHdpdHRlcl8yMDE5MDkxOS5SRGF0YSkgIA0KICAgIC0ga2V5ZjogaW5mb3JtYXRpb24gb24gYWxsIDE0NyBNUHMgd2l0aCB0d2l0dGVyIGhhbmRsZSAgDQogICAgLSBteWRhdGE6IFJTaWVuYSBvYmplY3Qgd2l0aCBhbGwga2luZCBvZiBnb29kaWVzIGluc2lkZSAgDQogICAgLSBzZWF0czogc2VhdGluZyBjb29yZGluYXRlcyBvZiBIb1AgKHVzZWQgZm9yIHBsb3R0aW5nKSAgDQotIFtDSEVTXShodHRwczovL3d3dy5jaGVzZGF0YS5ldS9jaGVzLWV1cm9wZSk6IGluZm9ybWF0aW9uIG9uIHBhcnR5IHBvc2l0aW9ucyBzZWUgYWxzbyBbQGpvbGx5MjAyMmNoYXBlbF0NCg0KDQpgYGB7ciwgZXZhbD1UUlVFfQ0KbGlicmFyeShoYXZlbikNCmNoZXMgPC0gcmVhZF9kdGEoIi4vZGF0YS1yYXcvQ0hFU19tZWFuc18yMDE3LmR0YSIpDQpjaGVzIDwtIGFzLmRhdGEuZnJhbWUoY2hlcykNCmNoZXMgPC0gY2hlc1tjaGVzJGNvdW50cnk9PTEwLF0NCmBgYA0KDQoNCkFzIHRoZSBpZGVvbG9naWNhbCBwb3NpdGlvbiBvZiBwYXJ0aWVzIHdhcyBub3QgaW5jbHVkZWQgaW4gb3VyIG9yaWdpbmFsIGRhdGEgb2JqZWN0IHdlIG5lZWQgdG8gZml4IHRoYXQuIA0KDQpgYGB7ciBkYXRhLCBlY2hvPVRSVUUsIGV2YWw9VFJVRSwgd2FybmluZz1GQUxTRSwgbWVzc2FnZT1GQUxTRX0NCiNTVEFQIDE6IHJlYWQgaW4gZGF0YQ0Ka2V5IDwtIHJlYWQuc3BzcygnZGF0YS1wcm9jZXNzZWRcXGtleSBtb2VkZXJiZXN0YW5kIDIwMTcxMTE0LnNhdicsIHVzZS52YWx1ZS5sYWJlbHM9VCwgdG8uZGF0YS5mcmFtZT1UKQ0KDQoNCmxvYWQoImRhdGEtcHJvY2Vzc2VkXFx0d2l0dGVyXzIwMTkwOTE5LlJEYXRhIikNCiNzdHIodHdpdHRlcl8yMDE5MDkxOSwxKQ0Ka2V5ZiA8LSB0d2l0dGVyXzIwMTkwOTE5W1sxXV0NCm15ZGF0YSA8LSB0d2l0dGVyXzIwMTkwOTE5W1syXV0NCnNlYXRzIDwtIHR3aXR0ZXJfMjAxOTA5MTlbWzNdXQ0KDQpjaGVzJFBhcnRpaiA8LSBjaGVzJHBhcnR5DQoNCmtleWYgPC0gbGVmdF9qb2luKGtleWYsIGNoZXMpDQoNCiNkZWNvbnN0cnVjdCBkYXRhb2JqZWN0DQpkZXBzIDwtIG15ZGF0YSRkZXB2YXJzDQpjb3ZhcmlhdGVzIDwtIG15ZGF0YSRjQ292YXJzDQpjb2R5YWRjb3ZhciA8LSBteWRhdGEkZHljQ292YXJzDQoNCmZuZXQgPC0gc2llbmFOZXQoZGVwcyRmbmV0KSANCmF0bW5ldCA8LSBzaWVuYU5ldChkZXBzJGF0bW5ldCkNCnJ0bmV0IDwtIHNpZW5hTmV0KGRlcHMkcnRuZXQpDQphZnN0YW5kIDwtIGNvZHlhZGNvdmFyJGFmc3RhbmQNCmVnb2hhbmRsZSA8LSBjb3ZhcmlhdGVzJGVnb2hhbmRsZQ0KZWdvaWQgPC0gY292YXJpYXRlcyRlZ29pZA0KcGFydGlqIDwtIGNvdmFyaWF0ZXMkcGFydGlqDQpjb2FsaXRpZSA8LSBjb3ZhcmlhdGVzJGNvYWxpdGllDQpjZGEgPC0gY292YXJpYXRlcyRjZGENCmN1IDwtIGNvdmFyaWF0ZXMkY3UNCmRlbmsgPC0gY292YXJpYXRlcyRkZW5rDQpkNjYgPC0gY292YXJpYXRlcyRkNjYNCmZ2ZCA8LSBjb3ZhcmlhdGVzJGZ2ZA0KZ2wgPC0gY292YXJpYXRlcyRnbA0KcHZkYSA8LSBjb3ZhcmlhdGVzJHB2ZGENCnB2ZGQgPC0gY292YXJpYXRlcyRwdmRkDQpwdnYgPC0gY292YXJpYXRlcyRwdnYNCnNncCA8LSBjb3ZhcmlhdGVzJHNncA0Kc3AgPC0gY292YXJpYXRlcyRzcA0KdnZkIDwtIGNvdmFyaWF0ZXMkdnZkDQpwbHVzIDwtIGNvdmFyaWF0ZXMkcGx1cw0KZXRobWlueiA8LSBjb3ZhcmlhdGVzJGV0aG1pbnoNCnZyb3V3IDwtIGNvdmFyaWF0ZXMkdnJvdXcNCmxmdCA8LSBjb3ZhcmlhdGVzJGxmdA0Ka2FtZXJsaWQyMDE2IDwtIGNvdmFyaWF0ZXMka2FtZXJsaWQyMDE2DQprYWJpbmV0MjAxNiA8LSBjb3ZhcmlhdGVzJGthYmluZXQyMDE2DQpwbGVrbGlqc3QgPC0gY292YXJpYXRlcyRwbGVrbGlqc3QNCnBsZWtsaWpzdDEgPC0gY292YXJpYXRlcyRwbGVrbGlqc3QxDQojYWRkIG5ldyB2YXJpYWJsZQ0KcGFydHlwb3MgPC0gY29Db3ZhcihrZXlmJGxyZ2VuKSAgDQoNCiNyZWNvbnN0cnVjdCBkYXRhb2JqZWN0DQpteWRhdGFfUlIgPC0gc2llbmFEYXRhQ3JlYXRlKGZuZXQsDQogICAgICAgICAgICAgICAgICAgICAgICAgIGF0bW5ldCwgDQogICAgICAgICAgICAgICAgICAgICAgICAgIHJ0bmV0LCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgYWZzdGFuZCwgDQogICAgICAgICAgICAgICAgICAgICAgICAgIGVnb2hhbmRsZSwgDQogICAgICAgICAgICAgICAgICAgICAgICAgIGVnb2lkLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgcGFydGlqLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgY29hbGl0aWUsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICBjZGEsDQogICAgICAgICAgICAgICAgICAgICAgICAgIGN1LA0KICAgICAgICAgICAgICAgICAgICAgICAgICBkZW5rLA0KICAgICAgICAgICAgICAgICAgICAgICAgICBkNjYsDQogICAgICAgICAgICAgICAgICAgICAgICAgIGZ2ZCwNCiAgICAgICAgICAgICAgICAgICAgICAgICAgZ2wsDQogICAgICAgICAgICAgICAgICAgICAgICAgIHB2ZGEsDQogICAgICAgICAgICAgICAgICAgICAgICAgIHB2ZGQsDQogICAgICAgICAgICAgICAgICAgICAgICAgIHB2diwNCiAgICAgICAgICAgICAgICAgICAgICAgICAgc2dwLA0KICAgICAgICAgICAgICAgICAgICAgICAgICBzcCwNCiAgICAgICAgICAgICAgICAgICAgICAgICAgdnZkLA0KICAgICAgICAgICAgICAgICAgICAgICAgICBwbHVzLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgZXRobWlueiwNCiAgICAgICAgICAgICAgICAgICAgICAgICAgdnJvdXcsDQogICAgICAgICAgICAgICAgICAgICAgICAgIGxmdCwNCiAgICAgICAgICAgICAgICAgICAgICAgICAga2FtZXJsaWQyMDE2LA0KICAgICAgICAgICAgICAgICAgICAgICAgICBrYWJpbmV0MjAxNiwNCiAgICAgICAgICAgICAgICAgICAgICAgICAgcGxla2xpanN0LA0KICAgICAgICAgICAgICAgICAgICAgICAgICBwbGVrbGlqc3QxLA0KICAgICAgICAgICAgICAgICAgICAgICAgICBwYXJ0eXBvcykNCg0KDQpgYGANCg0KDQotLS0gIA0KDQojIEltcGFjdCBvZiBpZGVvbG9naWNhbCBkaXN0YW5jZSANCg0KQW4gYW5vbnltb3VzIHJldmlld2VyIHN1Z2dlc3RlZCB0byB0cnkgdG8gZGlzZW50YW5nbGUgdGhlIGltcGFjdCBvZiBwaHlzaWNhbCBzZWF0aW5nIGRpc3RhbmNlIGZyb20gaWRlb2xvZ2ljYWwgZGlzdGFuY2UuIFdlIHRoZXJlZm9yZSBhZGRlZCB0byB0aGUgcGFydHkgdG8gd2hpY2ggZWFjaCBNUCBiZWxvbmdzIGEgZ2VuZXJhbCBsZWZ0LXJpZ2h0IHBvc2l0aW9uIGFjY29yZGluZyB0byB0aGUgQ2hhcGVsIEhpbGwgU3VydmV5IFtAam9sbHkyMDIyY2hhcGVsXS4gDQoNCiMjIGRlZmluZSBlZmZlY3RzICANCg0KYGBge3IgZWNobz1UUlVFLCBldmFsPVRSVUUsIHJlc3VsdHM9J2hpZGUnfQ0KbXllZmYgPC0gZ2V0RWZmZWN0cyggbXlkYXRhX1JSICkNCm15ZWZmX20xIDwtIG15ZWZmDQoNCiNhY2NvcmRpbmcgdG8gc3VnZ2VzdGlvbiBvZiByc2llbmEgbWFudWFsDQpteWVmZl9tMSA8LSBpbmNsdWRlRWZmZWN0cyggbXllZmZfbTEsIGluUG9wU3FydCwgbmFtZT0iZm5ldCIgKQ0KbXllZmZfbTEgPC0gaW5jbHVkZUVmZmVjdHMoIG15ZWZmX20xLCBpblBvcFNxcnQsIG5hbWU9ImF0bW5ldCIgKQ0KbXllZmZfbTEgPC0gaW5jbHVkZUVmZmVjdHMoIG15ZWZmX20xLCBpblBvcFNxcnQsIG5hbWU9InJ0bmV0IiApDQoNCm15ZWZmX20xIDwtIGluY2x1ZGVFZmZlY3RzKCBteWVmZl9tMSwgb3V0QWN0U3FydCwgbmFtZT0iZm5ldCIgKQ0KbXllZmZfbTEgPC0gaW5jbHVkZUVmZmVjdHMoIG15ZWZmX20xLCBvdXRBY3RTcXJ0LCBuYW1lPSJhdG1uZXQiICkNCm15ZWZmX20xIDwtIGluY2x1ZGVFZmZlY3RzKCBteWVmZl9tMSwgb3V0QWN0U3FydCwgbmFtZT0icnRuZXQiICkNCg0KbXllZmZfbTEgPC0gaW5jbHVkZUVmZmVjdHMoIG15ZWZmX20xLCBvdXRQb3BTcXJ0LCBuYW1lPSJmbmV0IiApDQpteWVmZl9tMSA8LSBpbmNsdWRlRWZmZWN0cyggbXllZmZfbTEsIG91dFBvcFNxcnQsIG5hbWU9ImF0bW5ldCIgKQ0KbXllZmZfbTEgPC0gaW5jbHVkZUVmZmVjdHMoIG15ZWZmX20xLCBvdXRQb3BTcXJ0LCBuYW1lPSJydG5ldCIgKQ0KDQpteWVmZl9tMSA8LSBpbmNsdWRlRWZmZWN0cyggbXllZmZfbTEsIHRyYW5zVHJpcCwgbmFtZT0iZm5ldCIgKQ0KbXllZmZfbTEgPC0gaW5jbHVkZUVmZmVjdHMoIG15ZWZmX20xLCB0cmFuc1RyaXAsIG5hbWU9ImF0bW5ldCIgKQ0KbXllZmZfbTEgPC0gaW5jbHVkZUVmZmVjdHMoIG15ZWZmX20xLCB0cmFuc1RyaXAsIG5hbWU9InJ0bmV0IiApDQoNCm15ZWZmX20xIDwtIGluY2x1ZGVFZmZlY3RzKCBteWVmZl9tMSwgc2hhcmVkUG9wLCBuYW1lPSJmbmV0IiApDQpteWVmZl9tMSA8LSBpbmNsdWRlRWZmZWN0cyggbXllZmZfbTEsIHNoYXJlZFBvcCwgbmFtZT0iYXRtbmV0IiApDQpteWVmZl9tMSA8LSBpbmNsdWRlRWZmZWN0cyggbXllZmZfbTEsIHNoYXJlZFBvcCwgbmFtZT0icnRuZXQiICkNCg0KbXllZmZfbTIgPC0gbXllZmZfbTENCg0KIyJrYW1lcmxpZDIwMTYiICJwbGVrbGlqc3QiICAgICJwbGVrbGlqc3QxIg0KDQpteWVmZl9tMiA8LSBpbmNsdWRlRWZmZWN0cyggbXllZmZfbTIsIGludGVyYWN0aW9uMT0ia2FtZXJsaWQyMDE2IiwgYWx0WCwgbmFtZT0iZm5ldCIgKQ0KI215ZWZmX20yIDwtIGluY2x1ZGVFZmZlY3RzKCBteWVmZl9tMiwgaW50ZXJhY3Rpb24xPSJrYW1lcmxpZDIwMTYiLCBhbHRYLCBuYW1lPSJhdG1uZXQiICkNCm15ZWZmX20yIDwtIGluY2x1ZGVFZmZlY3RzKCBteWVmZl9tMiwgaW50ZXJhY3Rpb24xPSJrYW1lcmxpZDIwMTYiLCBhbHRYLCBuYW1lPSJydG5ldCIgKQ0KDQojbXllZmZfbTIgPC0gaW5jbHVkZUVmZmVjdHMoIG15ZWZmX20yLCBpbnRlcmFjdGlvbjE9ImthbWVybGlkMjAxNiIsIGVnb1gsIG5hbWU9ImZuZXQiICkNCiNteWVmZl9tMiA8LSBzZXRFZmZlY3QoIG15ZWZmX20yLCBpbnRlcmFjdGlvbjE9ImthbWVybGlkMjAxNiIsIGVnb1gsIG5hbWU9ImZuZXQiLCBmaXg9VFJVRSwgaW5pdGlhbFZhbHVlID0gLTMsIHRlc3Q9VFJVRSApDQoNCiNteWVmZl9tMiA8LSBpbmNsdWRlRWZmZWN0cyggbXllZmZfbTIsIGludGVyYWN0aW9uMT0ia2FtZXJsaWQyMDE2IiwgZWdvWCwgbmFtZT0iYXRtbmV0IiApDQpteWVmZl9tMiA8LSBpbmNsdWRlRWZmZWN0cyggbXllZmZfbTIsIGludGVyYWN0aW9uMT0ia2FtZXJsaWQyMDE2IiwgZWdvWCwgbmFtZT0icnRuZXQiICkNCg0KbXllZmZfbTIgPC0gaW5jbHVkZUVmZmVjdHMoIG15ZWZmX20yLCBpbnRlcmFjdGlvbjE9ImthbWVybGlkMjAxNiIsIHNhbWVYLCBuYW1lPSJmbmV0IiApDQojbXllZmZfbTIgPC0gaW5jbHVkZUVmZmVjdHMoIG15ZWZmX20yLCBpbnRlcmFjdGlvbjE9ImthbWVybGlkMjAxNiIsIHNhbWVYLCBuYW1lPSJhdG1uZXQiICkNCiNteWVmZl9tMiA8LSBpbmNsdWRlRWZmZWN0cyggbXllZmZfbTIsIGludGVyYWN0aW9uMT0ia2FtZXJsaWQyMDE2Iiwgc2FtZVgsIG5hbWU9InJ0bmV0IiApDQoNCiNteWVmZl9tMiA8LSBpbmNsdWRlRWZmZWN0cyggbXllZmZfbTIsIGludGVyYWN0aW9uMT0icGxla2xpanN0MSIsIGFsdFgsIG5hbWU9ImZuZXQiICkNCm15ZWZmX20yIDwtIGluY2x1ZGVFZmZlY3RzKCBteWVmZl9tMiwgaW50ZXJhY3Rpb24xPSJwbGVrbGlqc3QxIiwgYWx0WCwgbmFtZT0iYXRtbmV0IiApDQpteWVmZl9tMiA8LSBpbmNsdWRlRWZmZWN0cyggbXllZmZfbTIsIGludGVyYWN0aW9uMT0icGxla2xpanN0MSIsIGFsdFgsIG5hbWU9InJ0bmV0IiApDQoNCiNteWVmZl9tMiA8LSBpbmNsdWRlRWZmZWN0cyggbXllZmZfbTIsIGludGVyYWN0aW9uMT0icGxla2xpanN0MSIsIGVnb1gsIG5hbWU9ImZuZXQiICkNCm15ZWZmX20yIDwtIGluY2x1ZGVFZmZlY3RzKCBteWVmZl9tMiwgaW50ZXJhY3Rpb24xPSJwbGVrbGlqc3QxIiwgZWdvWCwgbmFtZT0iYXRtbmV0IiApDQojbXllZmZfbTIgPC0gaW5jbHVkZUVmZmVjdHMoIG15ZWZmX20yLCBpbnRlcmFjdGlvbjE9InBsZWtsaWpzdDEiLCBlZ29YLCBuYW1lPSJydG5ldCIgKQ0KDQpteWVmZl9tMiA8LSBpbmNsdWRlRWZmZWN0cyggbXllZmZfbTIsIGludGVyYWN0aW9uMT0icGxla2xpanN0IiwgZWdvWCwgbmFtZT0iZm5ldCIgKQ0KI215ZWZmX20yIDwtIGluY2x1ZGVFZmZlY3RzKCBteWVmZl9tMiwgaW50ZXJhY3Rpb24xPSJwbGVrbGlqc3QiLCBlZ29YLCBuYW1lPSJhdG1uZXQiICkNCiNteWVmZl9tMiA8LSBpbmNsdWRlRWZmZWN0cyggbXllZmZfbTIsIGludGVyYWN0aW9uMT0icGxla2xpanN0IiwgZWdvWCwgbmFtZT0icnRuZXQiICkNCg0KI215ZWZmX20yIDwtIGluY2x1ZGVFZmZlY3RzKCBteWVmZl9tMiwgaW50ZXJhY3Rpb24xPSJwbGVrbGlqc3QiLCBhbHRYLCBuYW1lPSJmbmV0IiApDQpteWVmZl9tMiA8LSBpbmNsdWRlRWZmZWN0cyggbXllZmZfbTIsIGludGVyYWN0aW9uMT0icGxla2xpanN0IiwgYWx0WCwgbmFtZT0iYXRtbmV0IiApDQpteWVmZl9tMiA8LSBpbmNsdWRlRWZmZWN0cyggbXllZmZfbTIsIGludGVyYWN0aW9uMT0icGxla2xpanN0IiwgYWx0WCwgbmFtZT0icnRuZXQiICkNCg0KI3RoZXNlIG5lZWQgdG8gYmUgZHJvcHBlZCBkdWUgdG8gY29sbGluZWFyaXR5DQojbXllZmZfbTIgPC0gaW5jbHVkZUVmZmVjdHMoIG15ZWZmX20yLCBpbnRlcmFjdGlvbjE9InBsZWtsaWpzdCIsIGRpZmZYLCBuYW1lPSJmbmV0IiApDQojbXllZmZfbTIgPC0gaW5jbHVkZUVmZmVjdHMoIG15ZWZmX20yLCBpbnRlcmFjdGlvbjE9InBsZWtsaWpzdCIsIGRpZmZYLCBuYW1lPSJhdG1uZXQiICkNCiNteWVmZl9tMiA8LSBpbmNsdWRlRWZmZWN0cyggbXllZmZfbTIsIGludGVyYWN0aW9uMT0icGxla2xpanN0IiwgZGlmZlgsIG5hbWU9InJ0bmV0IiApDQoNCiNhZnN0YW5kDQpteWVmZl9tMiA8LSBpbmNsdWRlRWZmZWN0cyggbXllZmZfbTIsIFgsIGludGVyYWN0aW9uMT0iYWZzdGFuZCIsIG5hbWU9ImZuZXQiICkNCiNteWVmZl9tMiA8LSBpbmNsdWRlRWZmZWN0cyggbXllZmZfbTIsIFgsIGludGVyYWN0aW9uMT0iYWZzdGFuZCIsIG5hbWU9ImF0bW5ldCIgKQ0KbXllZmZfbTIgPC0gaW5jbHVkZUVmZmVjdHMoIG15ZWZmX20yLCBYLCBpbnRlcmFjdGlvbjE9ImFmc3RhbmQiLCBuYW1lPSJydG5ldCIgKQ0KDQoNCg0KbXllZmZfbTIgPC0gaW5jbHVkZUVmZmVjdHMobXllZmZfbTIsIHNhbWVYLCBpbnRlcmFjdGlvbjEgPSAicGFydGlqIiwgbmFtZT0iZm5ldCIgKQ0KDQojbXllZmZfbTIgPC0gaW5jbHVkZUVmZmVjdHMoIG15ZWZmX20yLCBlZ29YLCBpbnRlcmFjdGlvbjEgPSAiY2RhIiwgbmFtZT0iZm5ldCIgKQ0KI215ZWZmX20yIDwtIGluY2x1ZGVFZmZlY3RzKCBteWVmZl9tMiwgZWdvWCwgaW50ZXJhY3Rpb24xID0gImN1IiwgbmFtZT0iZm5ldCIgKQ0KI215ZWZmX20yIDwtIGluY2x1ZGVFZmZlY3RzKCBteWVmZl9tMiwgZWdvWCwgaW50ZXJhY3Rpb24xID0gImRlbmsiLCBuYW1lPSJmbmV0IiApDQojbXllZmZfbTIgPC0gaW5jbHVkZUVmZmVjdHMoIG15ZWZmX20yLCBlZ29YLCBpbnRlcmFjdGlvbjEgPSAiZDY2IiwgbmFtZT0iZm5ldCIgKQ0KI215ZWZmX20yIDwtIGluY2x1ZGVFZmZlY3RzKCBteWVmZl9tMiwgZWdvWCwgaW50ZXJhY3Rpb24xID0gImZ2ZCIsIG5hbWU9ImZuZXQiICkNCiNteWVmZl9tMiA8LSBpbmNsdWRlRWZmZWN0cyggbXllZmZfbTIsIGVnb1gsIGludGVyYWN0aW9uMSA9ICJnbCIsIG5hbWU9ImZuZXQiICkNCiNteWVmZl9tMiA8LSBpbmNsdWRlRWZmZWN0cyggbXllZmZfbTIsIGVnb1gsIGludGVyYWN0aW9uMSA9ICJwdmRhIiwgbmFtZT0iZm5ldCIgKQ0KI215ZWZmX20yIDwtIGluY2x1ZGVFZmZlY3RzKCBteWVmZl9tMiwgZWdvWCwgaW50ZXJhY3Rpb24xID0gInB2ZGQiLCBuYW1lPSJmbmV0IiApDQojbXllZmZfbTIgPC0gaW5jbHVkZUVmZmVjdHMoIG15ZWZmX20yLCBlZ29YLCBpbnRlcmFjdGlvbjEgPSAicHZ2IiwgbmFtZT0iZm5ldCIgKQ0KI215ZWZmX20yIDwtIGluY2x1ZGVFZmZlY3RzKCBteWVmZl9tMiwgZWdvWCwgaW50ZXJhY3Rpb24xID0gInNncCIsIG5hbWU9ImZuZXQiICkNCiNteWVmZl9tMiA8LSBpbmNsdWRlRWZmZWN0cyggbXllZmZfbTIsIGVnb1gsIGludGVyYWN0aW9uMSA9ICJzcCIsIG5hbWU9ImZuZXQiICkNCiNteWVmZl9tMiA8LSBpbmNsdWRlRWZmZWN0cyggbXllZmZfbTIsIGVnb1gsIGludGVyYWN0aW9uMSA9ICJ2dmQiLCBuYW1lPSJmbmV0IiApDQojbXllZmZfbTIgPC0gaW5jbHVkZUVmZmVjdHMoIG15ZWZmX20yLCBlZ29YLCBpbnRlcmFjdGlvbjEgPSAicGx1cyIsIG5hbWU9ImZuZXQiICkNCg0KI215ZWZmX20yIDwtIGluY2x1ZGVFZmZlY3RzKCBteWVmZl9tMiwgYWx0WCwgaW50ZXJhY3Rpb24xID0gImNkYSIsIG5hbWU9ImZuZXQiICkNCiNteWVmZl9tMiA8LSBpbmNsdWRlRWZmZWN0cyggbXllZmZfbTIsIGFsdFgsIGludGVyYWN0aW9uMSA9ICJjdSIsIG5hbWU9ImZuZXQiICkNCiNteWVmZl9tMiA8LSBpbmNsdWRlRWZmZWN0cyggbXllZmZfbTIsIGFsdFgsIGludGVyYWN0aW9uMSA9ICJkZW5rIiwgbmFtZT0iZm5ldCIgKQ0KI215ZWZmX20yIDwtIGluY2x1ZGVFZmZlY3RzKCBteWVmZl9tMiwgYWx0WCwgaW50ZXJhY3Rpb24xID0gImQ2NiIsIG5hbWU9ImZuZXQiICkNCiNteWVmZl9tMiA8LSBpbmNsdWRlRWZmZWN0cyggbXllZmZfbTIsIGFsdFgsIGludGVyYWN0aW9uMSA9ICJmdmQiLCBuYW1lPSJmbmV0IiApDQojbXllZmZfbTIgPC0gaW5jbHVkZUVmZmVjdHMoIG15ZWZmX20yLCBhbHRYLCBpbnRlcmFjdGlvbjEgPSAiZ2wiLCBuYW1lPSJmbmV0IiApDQojbXllZmZfbTIgPC0gaW5jbHVkZUVmZmVjdHMoIG15ZWZmX20yLCBhbHRYLCBpbnRlcmFjdGlvbjEgPSAicHZkYSIsIG5hbWU9ImZuZXQiICkNCiNteWVmZl9tMiA8LSBpbmNsdWRlRWZmZWN0cyggbXllZmZfbTIsIGFsdFgsIGludGVyYWN0aW9uMSA9ICJwdmRkIiwgbmFtZT0iZm5ldCIgKQ0KI215ZWZmX20yIDwtIGluY2x1ZGVFZmZlY3RzKCBteWVmZl9tMiwgYWx0WCwgaW50ZXJhY3Rpb24xID0gInB2diIsIG5hbWU9ImZuZXQiICkNCiNteWVmZl9tMiA8LSBpbmNsdWRlRWZmZWN0cyggbXllZmZfbTIsIGFsdFgsIGludGVyYWN0aW9uMSA9ICJzZ3AiLCBuYW1lPSJmbmV0IiApDQojbXllZmZfbTIgPC0gaW5jbHVkZUVmZmVjdHMoIG15ZWZmX20yLCBhbHRYLCBpbnRlcmFjdGlvbjEgPSAic3AiLCBuYW1lPSJmbmV0IiApDQojbXllZmZfbTIgPC0gaW5jbHVkZUVmZmVjdHMoIG15ZWZmX20yLCBhbHRYLCBpbnRlcmFjdGlvbjEgPSAidnZkIiwgbmFtZT0iZm5ldCIgKQ0KI215ZWZmX20yIDwtIGluY2x1ZGVFZmZlY3RzKCBteWVmZl9tMiwgYWx0WCwgaW50ZXJhY3Rpb24xID0gInBsdXMiLCBuYW1lPSJmbmV0IiApDQoNCm15ZWZmX20yIDwtIGluY2x1ZGVFZmZlY3RzKG15ZWZmX20yLCBzYW1lWCwgaW50ZXJhY3Rpb24xID0gInBhcnRpaiIsIG5hbWU9ImF0bW5ldCIgKQ0KDQojbXllZmZfbTIgPC0gaW5jbHVkZUVmZmVjdHMoIG15ZWZmX20yLCBlZ29YLCBpbnRlcmFjdGlvbjEgPSAiY2RhIiwgbmFtZT0iYXRtbmV0IiApDQojbXllZmZfbTIgPC0gaW5jbHVkZUVmZmVjdHMoIG15ZWZmX20yLCBlZ29YLCBpbnRlcmFjdGlvbjEgPSAiY3UiLCBuYW1lPSJhdG1uZXQiICkNCiNteWVmZl9tMiA8LSBpbmNsdWRlRWZmZWN0cyggbXllZmZfbTIsIGVnb1gsIGludGVyYWN0aW9uMSA9ICJkZW5rIiwgbmFtZT0iYXRtbmV0IiApDQojbXllZmZfbTIgPC0gaW5jbHVkZUVmZmVjdHMoIG15ZWZmX20yLCBlZ29YLCBpbnRlcmFjdGlvbjEgPSAiZDY2IiwgbmFtZT0iYXRtbmV0IiApDQojbXllZmZfbTIgPC0gaW5jbHVkZUVmZmVjdHMoIG15ZWZmX20yLCBlZ29YLCBpbnRlcmFjdGlvbjEgPSAiZnZkIiwgbmFtZT0iYXRtbmV0IiApDQpteWVmZl9tMiA8LSBpbmNsdWRlRWZmZWN0cyggbXllZmZfbTIsIGVnb1gsIGludGVyYWN0aW9uMSA9ICJnbCIsIG5hbWU9ImF0bW5ldCIgKQ0KI215ZWZmX20yIDwtIGluY2x1ZGVFZmZlY3RzKCBteWVmZl9tMiwgZWdvWCwgaW50ZXJhY3Rpb24xID0gInB2ZGEiLCBuYW1lPSJhdG1uZXQiICkNCiNteWVmZl9tMiA8LSBpbmNsdWRlRWZmZWN0cyggbXllZmZfbTIsIGVnb1gsIGludGVyYWN0aW9uMSA9ICJwdmRkIiwgbmFtZT0iYXRtbmV0IiApDQojbXllZmZfbTIgPC0gaW5jbHVkZUVmZmVjdHMoIG15ZWZmX20yLCBlZ29YLCBpbnRlcmFjdGlvbjEgPSAicHZ2IiwgbmFtZT0iYXRtbmV0IiApDQojbXllZmZfbTIgPC0gaW5jbHVkZUVmZmVjdHMoIG15ZWZmX20yLCBlZ29YLCBpbnRlcmFjdGlvbjEgPSAic2dwIiwgbmFtZT0iYXRtbmV0IiApDQojbXllZmZfbTIgPC0gaW5jbHVkZUVmZmVjdHMoIG15ZWZmX20yLCBlZ29YLCBpbnRlcmFjdGlvbjEgPSAic3AiLCBuYW1lPSJhdG1uZXQiICkNCiNteWVmZl9tMiA8LSBpbmNsdWRlRWZmZWN0cyggbXllZmZfbTIsIGVnb1gsIGludGVyYWN0aW9uMSA9ICJ2dmQiLCBuYW1lPSJhdG1uZXQiICkNCiNteWVmZl9tMiA8LSBpbmNsdWRlRWZmZWN0cyggbXllZmZfbTIsIGVnb1gsIGludGVyYWN0aW9uMSA9ICJwbHVzIiwgbmFtZT0iYXRtbmV0IiApDQoNCiNteWVmZl9tMiA8LSBpbmNsdWRlRWZmZWN0cyggbXllZmZfbTIsIGFsdFgsIGludGVyYWN0aW9uMSA9ICJjZGEiLCBuYW1lPSJhdG1uZXQiICkNCiNteWVmZl9tMiA8LSBpbmNsdWRlRWZmZWN0cyggbXllZmZfbTIsIGFsdFgsIGludGVyYWN0aW9uMSA9ICJjdSIsIG5hbWU9ImF0bW5ldCIgKQ0KI215ZWZmX20yIDwtIGluY2x1ZGVFZmZlY3RzKCBteWVmZl9tMiwgYWx0WCwgaW50ZXJhY3Rpb24xID0gImRlbmsiLCBuYW1lPSJhdG1uZXQiICkNCm15ZWZmX20yIDwtIGluY2x1ZGVFZmZlY3RzKCBteWVmZl9tMiwgYWx0WCwgaW50ZXJhY3Rpb24xID0gImQ2NiIsIG5hbWU9ImF0bW5ldCIgKQ0KI215ZWZmX20yIDwtIGluY2x1ZGVFZmZlY3RzKCBteWVmZl9tMiwgYWx0WCwgaW50ZXJhY3Rpb24xID0gImZ2ZCIsIG5hbWU9ImF0bW5ldCIgKQ0KbXllZmZfbTIgPC0gaW5jbHVkZUVmZmVjdHMoIG15ZWZmX20yLCBhbHRYLCBpbnRlcmFjdGlvbjEgPSAiZ2wiLCBuYW1lPSJhdG1uZXQiICkNCiNteWVmZl9tMiA8LSBpbmNsdWRlRWZmZWN0cyggbXllZmZfbTIsIGFsdFgsIGludGVyYWN0aW9uMSA9ICJwdmRhIiwgbmFtZT0iYXRtbmV0IiApDQojbXllZmZfbTIgPC0gaW5jbHVkZUVmZmVjdHMoIG15ZWZmX20yLCBhbHRYLCBpbnRlcmFjdGlvbjEgPSAicHZkZCIsIG5hbWU9ImF0bW5ldCIgKQ0KI215ZWZmX20yIDwtIGluY2x1ZGVFZmZlY3RzKCBteWVmZl9tMiwgYWx0WCwgaW50ZXJhY3Rpb24xID0gInB2diIsIG5hbWU9ImF0bW5ldCIgKQ0KI215ZWZmX20yIDwtIGluY2x1ZGVFZmZlY3RzKCBteWVmZl9tMiwgYWx0WCwgaW50ZXJhY3Rpb24xID0gInNncCIsIG5hbWU9ImF0bW5ldCIgKQ0KI215ZWZmX20yIDwtIGluY2x1ZGVFZmZlY3RzKCBteWVmZl9tMiwgYWx0WCwgaW50ZXJhY3Rpb24xID0gInNwIiwgbmFtZT0iYXRtbmV0IiApDQojIG15ZWZmX20yIDwtIGluY2x1ZGVFZmZlY3RzKCBteWVmZl9tMiwgYWx0WCwgaW50ZXJhY3Rpb24xID0gInZ2ZCIsIG5hbWU9ImF0bW5ldCIgKSAjcmVmZXJlbnRpZQ0KI215ZWZmX20yIDwtIGluY2x1ZGVFZmZlY3RzKCBteWVmZl9tMiwgYWx0WCwgaW50ZXJhY3Rpb24xID0gInBsdXMiLCBuYW1lPSJhdG1uZXQiICkNCg0KbXllZmZfbTIgPC0gaW5jbHVkZUVmZmVjdHMobXllZmZfbTIsIHNhbWVYLCBpbnRlcmFjdGlvbjEgPSAicGFydGlqIiwgbmFtZT0icnRuZXQiICkNCg0KI215ZWZmX20yIDwtIGluY2x1ZGVFZmZlY3RzKCBteWVmZl9tMiwgZWdvWCwgaW50ZXJhY3Rpb24xID0gImNkYSIsIG5hbWU9InJ0bmV0IiApDQojbXllZmZfbTIgPC0gaW5jbHVkZUVmZmVjdHMoIG15ZWZmX20yLCBlZ29YLCBpbnRlcmFjdGlvbjEgPSAiY3UiLCBuYW1lPSJydG5ldCIgKQ0KI215ZWZmX20yIDwtIGluY2x1ZGVFZmZlY3RzKCBteWVmZl9tMiwgZWdvWCwgaW50ZXJhY3Rpb24xID0gImRlbmsiLCBuYW1lPSJydG5ldCIgKQ0KbXllZmZfbTIgPC0gaW5jbHVkZUVmZmVjdHMoIG15ZWZmX20yLCBlZ29YLCBpbnRlcmFjdGlvbjEgPSAiZDY2IiwgbmFtZT0icnRuZXQiICkNCiNteWVmZl9tMiA8LSBpbmNsdWRlRWZmZWN0cyggbXllZmZfbTIsIGVnb1gsIGludGVyYWN0aW9uMSA9ICJmdmQiLCBuYW1lPSJydG5ldCIgKQ0KI215ZWZmX20yIDwtIGluY2x1ZGVFZmZlY3RzKCBteWVmZl9tMiwgZWdvWCwgaW50ZXJhY3Rpb24xID0gImdsIiwgbmFtZT0icnRuZXQiICkNCiNteWVmZl9tMiA8LSBpbmNsdWRlRWZmZWN0cyggbXllZmZfbTIsIGVnb1gsIGludGVyYWN0aW9uMSA9ICJwdmRhIiwgbmFtZT0icnRuZXQiICkNCiNteWVmZl9tMiA8LSBpbmNsdWRlRWZmZWN0cyggbXllZmZfbTIsIGVnb1gsIGludGVyYWN0aW9uMSA9ICJwdmRkIiwgbmFtZT0icnRuZXQiICkNCm15ZWZmX20yIDwtIGluY2x1ZGVFZmZlY3RzKCBteWVmZl9tMiwgZWdvWCwgaW50ZXJhY3Rpb24xID0gInB2diIsIG5hbWU9InJ0bmV0IiApDQojbXllZmZfbTIgPC0gaW5jbHVkZUVmZmVjdHMoIG15ZWZmX20yLCBlZ29YLCBpbnRlcmFjdGlvbjEgPSAic2dwIiwgbmFtZT0icnRuZXQiICkNCiNteWVmZl9tMiA8LSBpbmNsdWRlRWZmZWN0cyggbXllZmZfbTIsIGVnb1gsIGludGVyYWN0aW9uMSA9ICJzcCIsIG5hbWU9InJ0bmV0IiApDQojIG15ZWZmX20yIDwtIGluY2x1ZGVFZmZlY3RzKCBteWVmZl9tMiwgZWdvWCwgaW50ZXJhY3Rpb24xID0gInZ2ZCIsIG5hbWU9InJ0bmV0IiApICNyZWZlcmVudGllDQojbXllZmZfbTIgPC0gaW5jbHVkZUVmZmVjdHMoIG15ZWZmX20yLCBlZ29YLCBpbnRlcmFjdGlvbjEgPSAicGx1cyIsIG5hbWU9InJ0bmV0IiApDQoNCiNteWVmZl9tMiA8LSBpbmNsdWRlRWZmZWN0cyggbXllZmZfbTIsIGFsdFgsIGludGVyYWN0aW9uMSA9ICJjZGEiLCBuYW1lPSJydG5ldCIgKQ0KI215ZWZmX20yIDwtIGluY2x1ZGVFZmZlY3RzKCBteWVmZl9tMiwgYWx0WCwgaW50ZXJhY3Rpb24xID0gImN1IiwgbmFtZT0icnRuZXQiICkNCiNteWVmZl9tMiA8LSBpbmNsdWRlRWZmZWN0cyggbXllZmZfbTIsIGFsdFgsIGludGVyYWN0aW9uMSA9ICJkZW5rIiwgbmFtZT0icnRuZXQiICkNCiNteWVmZl9tMiA8LSBpbmNsdWRlRWZmZWN0cyggbXllZmZfbTIsIGFsdFgsIGludGVyYWN0aW9uMSA9ICJkNjYiLCBuYW1lPSJydG5ldCIgKQ0KI215ZWZmX20yIDwtIGluY2x1ZGVFZmZlY3RzKCBteWVmZl9tMiwgYWx0WCwgaW50ZXJhY3Rpb24xID0gImZ2ZCIsIG5hbWU9InJ0bmV0IiApDQojbXllZmZfbTIgPC0gaW5jbHVkZUVmZmVjdHMoIG15ZWZmX20yLCBhbHRYLCBpbnRlcmFjdGlvbjEgPSAiZ2wiLCBuYW1lPSJydG5ldCIgKQ0KI215ZWZmX20yIDwtIGluY2x1ZGVFZmZlY3RzKCBteWVmZl9tMiwgYWx0WCwgaW50ZXJhY3Rpb24xID0gInB2ZGEiLCBuYW1lPSJydG5ldCIgKQ0KI215ZWZmX20yIDwtIGluY2x1ZGVFZmZlY3RzKCBteWVmZl9tMiwgYWx0WCwgaW50ZXJhY3Rpb24xID0gInB2ZGQiLCBuYW1lPSJydG5ldCIgKQ0KI215ZWZmX20yIDwtIGluY2x1ZGVFZmZlY3RzKCBteWVmZl9tMiwgYWx0WCwgaW50ZXJhY3Rpb24xID0gInB2diIsIG5hbWU9InJ0bmV0IiApDQojbXllZmZfbTIgPC0gaW5jbHVkZUVmZmVjdHMoIG15ZWZmX20yLCBhbHRYLCBpbnRlcmFjdGlvbjEgPSAic2dwIiwgbmFtZT0icnRuZXQiICkNCiNteWVmZl9tMiA8LSBpbmNsdWRlRWZmZWN0cyggbXllZmZfbTIsIGFsdFgsIGludGVyYWN0aW9uMSA9ICJzcCIsIG5hbWU9InJ0bmV0IiApDQojIG15ZWZmX20yIDwtIGluY2x1ZGVFZmZlY3RzKCBteWVmZl9tMiwgYWx0WCwgaW50ZXJhY3Rpb24xID0gInZ2ZCIsIG5hbWU9InJ0bmV0IiApICNyZWZlcmVudGllDQojbXllZmZfbTIgPC0gaW5jbHVkZUVmZmVjdHMoIG15ZWZmX20yLCBhbHRYLCBpbnRlcmFjdGlvbjEgPSAicGx1cyIsIG5hbWU9InJ0bmV0IiApDQoNCm15ZWZmX1JSIDwtIG15ZWZmX20yDQpteWVmZl9SUiA8LSBpbmNsdWRlRWZmZWN0cyhteWVmZl9SUiwgaW50ZXJhY3Rpb24xPSJwYXJ0eXBvcyIsIGFic0RpZmZYLCBuYW1lPSJmbmV0IiApDQpteWVmZl9SUiA8LSBpbmNsdWRlRWZmZWN0cyhteWVmZl9SUiwgaW50ZXJhY3Rpb24xPSJwYXJ0eXBvcyIsIGFic0RpZmZYLCBuYW1lPSJydG5ldCIgKQ0KYGBgDQoNCg0KYGBge3IgZWNobz1UUlVFLCBldmFsPVRSVUV9DQpteWVmZl9SUg0KYGBgDQoNCiMjIGVzdGltYXRlIG1vZGVsDQoNCmBgYHtyLCBlY2hvPVRSVUUsIGV2YWw9RkFMU0V9DQpteWFsZ29yaXRobVJSIDwtIHNpZW5hQWxnb3JpdGhtQ3JlYXRlKCBwcm9qbmFtZSA9ICdSUicpDQoNCmFuc1JSMSA8LSBzaWVuYTA3KCBteWFsZ29yaXRobVJSLCBkYXRhID0gbXlkYXRhX1JSLCBwcmV2QW5zPWFuc004YywgZWZmZWN0cyA9IG15ZWZmX1JSLCB1c2VDbHVzdGVyPVRSVUUsIG5ick5vZGVzPTgsIGluaXRDPVRSVUUsIGJhdGNoPVRSVUUpDQoNCiNzYXZlKGFuc1JSMSwgZmlsZT1wYXN0ZSgiYW5zUlIxIiwiLlJEYXRhIixzZXA9IiIpKQ0KYGBgDQojIyByZXN1bHRzICANCg0KVGhlIHBhcmFtZXRlcnMgb2YgaW50ZXJlc3QgYXJlIGluIHJlZC4gDQoNCg0KYGBge3IsIGVjaG89VFJVRSwgZXZhbD1UUlVFfQ0KbG9hZCgiYW5zUlIxLlJEYXRhIikNCg0KDQpyZXMgPC0gcm91bmQoZmFuc2NzdihhbnNSUjEpWywxOjJdLDUpDQptY3BvcyA8LSBsZW5ndGgocmVzWywxXSkNCnJlcyA8LSByZXNbLW1jcG9zLF0NCm1jIDwtIGFzLmNoYXJhY3Rlcihyb3VuZChmYW5zY3N2KGFuc1JSMSlbbWNwb3MsMV0sMykpDQpyb3cubmFtZXMocmVzKSA8LSBjKA0KICJyYXRlIDEiICAsICAgICAgDQogInJhdGUgMiIgICAsICAgICANCiAib3V0ZGVncmVlIiAgICAgICAgICAsICANCiAicmVjaXByb2NpdHkiICAgICAgICAgLCAgICAgICAgICAgDQogInRyYW5zaXRpdmUgdHJpcGxldHMiICAsICAgICAgICAgIA0KICJzaGFyZWQgcG9wdWxhcml0eSIgICAgICwgICAgICAgICANCiAiaW5kZWdyZWUgLSBwb3B1bGFyaXR5IiAgICwNCiAgIiBvdXRkZWdyZWUgLSBwb3B1bGFyaXR5IiAsIA0KICJvdXRkZWdyZWUgLSBhY3Rpdml0eSIgICAgLA0KICJzZWF0aW5nIGRpc3RhbmNlIChkeWFkKSIgICAgICAgICAsICAgICAgICAgICAgICAgDQogInNhbWUgcGFydHkgKGR5YWQpIiAgICAgICAgICAgICAgICAsICAgIA0KImluY3VtYmFuY3kgc3RhdHVzIChhbHRlcikiICAgICAgICAgICwgICANCiJzYW1lIGluY3VtYmFuY3kgc3RhdHVzIChkeWFkKSIgICAgICAgLCAgICAgICANCiJwb3NpdGlvbiBvbiBlbGVjdGlvbiBsaXN0IChlZ28pIiAgICAgICwNCiJpZGVvbG9naWNhbCBkaXN0YW5jZSAoZHlhZCkiICwNCiAicmF0ZSAxIiAgICAgICwNCiAicmF0ZSAyIiAgICAgICwNCiJvdXRkZWdyZWUiICAgICAgICAgICwNCiAicmVjaXByb2NpdHkiICAgICAgICAsICAgICAgICAgIA0KICJ0cmFuc2l0aXZlIHRyaXBsZXRzIiAsICAgICAgICAgDQogInNoYXJlZCBwb3B1bGFyaXR5IiAgICAsICAgICAgICANCiAiaW5kZWdyZWUgLSBwb3B1bGFyaXR5IiAsDQogIm91dGRlZ3JlZSAtIHBvcHVsYXJpdHkiLA0KIm91dGRlZ3JlZSAtIGFjdGl2aXR5ICIgICwNCiAic2FtZSBwYXJ0eSAoZHlhZCkiICAgICAgICAgICAgLCAgICAgIA0KInBhcnR5IExpYmVyYWwgRGVtb2NyYXRzIChhbHRlcikiLCAgICAgICAgICAgICAgICAgICAgDQoicGFydHkgR3JlZW5MZWZ0IChhbHRlcikiICAgICAgICAgLCAgICAgICAgICAgIA0KICJwYXJ0eSBHcmVlbkxlZnQgKGVnbykiICAgICAgICAgICAsICAgICAgICAgICAgDQogInBvc2l0aW9uIG9uIGVsZWN0aW9uIGxpc3QgKGFsdGVyKSIsICAgICAgICAgICAgICANCiJwYXJ0eSBsZWFkZXIgKGFsdGVyKSIgICAgICAgICAgICAgLA0KICJwYXJ0eSBsZWFkZXIgKGVnbykiICAgICAgICAgICAgICAgLA0KICJyYXRlIDEiICAgICAgICwNCiAicmF0ZSAyIiAgICAgICAsDQoib3V0ZGVncmVlIiAgICAgICAgICAgLA0KInJlY2lwcm9jaXR5IiAgICAgICAgICAsICAgICAgICAgDQoidHJhbnNpdGl2ZSB0cmlwbGV0cyIgICAsICAgICAgICANCiJzaGFyZWQgcG9wdWxhcml0eSIgICAgICAsICAgICAgIA0KImluZGVncmVlIC0gcG9wdWxhcml0eSAiLCAgDQoib3V0ZGVncmVlIC0gcG9wdWxhcml0eSIsIA0KIm91dGRlZ3JlZSAtIGFjdGl2aXR5ICIgICAsDQoic2VhdGluZyBkaXN0YW5jZSAoZHlhZCkiICAgICAgICAsICAgICAgICAgICAgICAgDQogInNhbWUgcGFydHkgKGR5YWQpIiAgICAgICAgICAgICAgLCAgICAgDQogInBhcnR5IExpYmVyYWwgRGVtb2NyYXRzIChlZ28pIiAgICwgICAgICAgICAgICAgICAgICAgIA0KICJwYXJ0eSBGcmVlZG9tIFBhcnR5IChlZ28pIiAgICAgICAgLCAgICAgICAgICAgICAgIA0KICJpbmN1bWJhbmN5IHN0YXR1cyAoYWx0ZXIpIiAgICAgICAgICwgICANCiAiaW5jdW1iYW5jeSBzdGF0dXMgKGVnbykiICAgICAgICAgICAgLCAgDQogInBvc2l0aW9uIG9uIGVsZWN0aW9uIGxpc3QgKGFsdGVyKSIgICAsICAgICAgICAgICAgDQoicGFydHkgbGVhZGVyIChhbHRlcikiLCANCiAiaWRlb2xvZ2ljYWwgZGlzdGFuY2UgKGR5YWQpIg0KKQ0KICANCmFzbWF0a2FibGUgPC0ga2JsKHJlcywgYm9va3RhYnM9VFJVRSwgZGlnaXRzPTMsIGNhcHRpb249Ik1vZGVsIFJSOiBpbmNsdWRpbmcgaWRlb2xvZ2ljYWwgZGlzdGFuY2UiLCBhbGlnbiA9ICJjIikgJT4lDQogIGthYmxlX2NsYXNzaWMoZnVsbF93aWR0aCA9IEYsIGh0bWxfZm9udCA9ICJDYW1icmlhIikgJT4lDQogIGthYmxlX3N0eWxpbmcoYm9vdHN0cmFwX29wdGlvbnMgPSBjKCJzdHJpcGVkIiwgImhvdmVyIiwgImNvbmRlbnNlZCIsICJyZXNwb25zaXZlIikpICU+JQ0KICBjb2x1bW5fc3BlYyhjb2x1bW4gPSAxLCB3aWR0aCA9ICIzaW4iKSAgICU+JQ0KICByb3dfc3BlYyhjKDEwLCAxNSw0MSw0OSksIGJvbGQgPSBULCBjb2xvciA9ICJ3aGl0ZSIsIGJhY2tncm91bmQgPSAiI0Q3MjYxRSIpICU+JQ0KICBncm91cF9yb3dzKGluZGV4ID0gYygiRm9sbG93aW5nIiA9IDE1LCAiQXRtZW50aW9uIiA9IDE2LCAiUmV0d2VldHMiID0gMTgpKSAlPiUNCiAgZm9vdG5vdGUoZ2VuZXJhbCA9IHBhc3RlKCJPdmVyYWxsIG1heGltdW0gY29udmVyZ2VuY2UgcmF0aW86ICIsIG1jLCBzZXA9IiIgKSkNCg0KDQphc21hdGthYmxlDQoNCg0KYGBgDQoNCi0tLSAgDQoNCiMgUmVmZXJlbmNlcyAgDQoNCg0K</div>
+<style>
+.center {
+  text-align: center;
+  color: red;
+}
+</style>
+
+<hr>
+<br>
+<p class="center">Copyright &copy; 2021 Jochem Tolsma</p>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeSourceEmbed("RR.rmd");
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
