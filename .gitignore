@@ -37,3 +37,5 @@ vignettes/*.pdf
 
 # Specific directories
 /data-raw/
+/manuscript/
+/literatuur/

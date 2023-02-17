@@ -1,0 +1,525 @@
+---
+title: "Replication package-RSiena"
+author: '[Jochem Tolsma](https://www.jochemtolsma.nl) - Radboud University / University of Groningen, the Netherlands'
+bibliography: references.bib
+date: "Last compiled on `r format(Sys.time(), '%B, %Y')`"
+output: 
+  html_document:
+    toc:  true
+    toc_float: true
+    number_sections: false
+    code_folding: hide
+    code_download: yes
+---
+
+
+```{r globalsettings, echo=FALSE, warning=FALSE, message=FALSE, results='hide'}
+library(knitr)
+opts_chunk$set(tidy.opts=list(width.cutoff=100),tidy=TRUE, warning = FALSE, message = FALSE,comment = "#>", cache=TRUE, echo=FALSE, eval=FALSE, class.source=c("test"), class.output=c("test2"))
+options(width = 100)
+rgl::setupKnitr()
+```
+
+```{r colorize, echo=FALSE, eval=TRUE}
+colorize <- function(x, color) {
+  if (knitr::is_latex_output()) {
+    sprintf("\\textcolor{%s}{%s}", color, x)
+  } else if (knitr::is_html_output()) {
+    sprintf("<span style='color: %s;'>%s</span>", color, 
+            x)
+  } else x
+}
+
+```
+
+```{r klippy, echo=FALSE, include=TRUE, eval=TRUE}
+klippy::klippy(position = c('top', 'right'))
+#klippy::klippy(color = 'darkred')
+#klippy::klippy(tooltip_message = 'Click to copy', tooltip_success = 'Done')
+```
+
+```{css, echo=FALSE}
+
+pre.test {
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: auto;
+  margin: 0px;
+}
+
+pre.test2 {
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: auto;
+  margin: 0px;
+  background-color: white;
+  color: rgb(201, 76, 76);
+}
+
+
+h1, .h1, h2, .h2, h3, .h3 {
+  margin-top: 24px;
+}
+
+```
+
+
+
+---  
+
+
+# Intro  
+
+
+This [website](https://jochemtolsma.github.io/Twitter/) is a replication package for the paper "**How Twitter divides the Dutch parliament: Segregation along party lines and social dimensions in the following, @-mentions and retweets Twitter Networks of Dutch MPs**" by @Tolsma2021.
+
+It contains R code to replicate all Tables/Figures/Appendix in the manuscript.
+
+To copy the code click the button in the upper right corner of the code-chunks.
+
+Use the top menu to navigate to the section of interest. 
+
+The source code of this website can be found on [Github](https://github.com/JochemTolsma/Twitter)
+
+Questions can be addressed to [Jochem Tolsma](mailto:jochem.tolsma@ru.nl).
+
+---  
+
+## Packages  
+
+```{r packages, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+#install if necessary 
+if (!require("tidyverse", character.only = TRUE)) {install.packages("tidyverse", dependencies=TRUE)}
+if (!require("dplyr", character.only = TRUE)) {install.packages("dplyr", dependencies=TRUE)}
+if (!require("foreign", character.only = TRUE)) {install.packages("foreign", dependencies=TRUE)}
+if (!require("igraph", character.only = TRUE)) {install.packages("igraph", dependencies=TRUE)}
+if (!require("knitr", character.only = TRUE)) {install.packages("knitr", dependencies=TRUE)}
+if (!require("kableExtra", character.only = TRUE)) {install.packages("kableExtra", dependencies=TRUE)}
+if (!require("RSiena", character.only = TRUE)) {install.packages("RSiena", dependencies=TRUE)}
+if (!require("haven", character.only = TRUE)) {install.packages("haven", dependencies=TRUE)}
+
+#load packages.
+library(tidyverse)
+library(dplyr)
+library(foreign)
+library(igraph)
+library(knitr)
+library(kableExtra)
+library(RSiena)
+library(haven)
+
+
+```
+
+
+---   
+
+
+
+## Custom functions: tweaking output
+
+
+```{r, echo=TRUE, eval=TRUE}
+
+fanscsv <- function(ans=ans) {
+	ans1_mat <- matrix(NA, nrow=length(ans$effects[,2]),ncol=3)
+	row.names(ans1_mat) <- ans$effects[,2]
+	ans1_mat[,1] <- (ans$theta)
+	ans1_mat[,2] <- (ans$se)
+	ans1_mat[,3] <- (ans$tconv)
+	ans1_mat <- rbind(ans1_mat, c(ans$tconv.max))
+	row.names(ans1_mat)[length(row.names(ans1_mat))] <- "Overall maximum convergence ratio:"
+	colnames(ans1_mat) <- c("Estimate", "Standard Error", "Convergence t-ratio")
+	return(ans1_mat)
+	#print(ans1_mat)
+	#write.csv(ans1_mat, filename)
+}
+
+
+
+
+```
+
+---  
+
+## Load data objects {.tabset .tabset-fade}  
+
+
+Data objects:  
+
+- [key](./data-processed/key moederbestand 20171114.sav): information on all politicians on election list  
+- [twitter](./data-processed/twitter_20190919.RData)  
+    - keyf: information on all 147 MPs with twitter handle  
+    - mydata: RSiena object with all kind of goodies inside  
+    - seats: seating coordinates of HoP (used for plotting)  
+- [CHES](https://www.chesdata.eu/ches-europe): information on party positions see also [@jolly2022chapel]
+
+
+```{r, eval=TRUE}
+library(haven)
+ches <- read_dta("./data-raw/CHES_means_2017.dta")
+ches <- as.data.frame(ches)
+ches <- ches[ches$country==10,]
+```
+
+
+As the ideological position of parties was not included in our original data object we need to fix that. 
+
+```{r data, echo=TRUE, eval=TRUE, warning=FALSE, message=FALSE}
+#STAP 1: read in data
+key <- read.spss('data-processed\\key moederbestand 20171114.sav', use.value.labels=T, to.data.frame=T)
+
+
+load("data-processed\\twitter_20190919.RData")
+#str(twitter_20190919,1)
+keyf <- twitter_20190919[[1]]
+mydata <- twitter_20190919[[2]]
+seats <- twitter_20190919[[3]]
+
+ches$Partij <- ches$party
+
+keyf <- left_join(keyf, ches)
+
+#deconstruct dataobject
+deps <- mydata$depvars
+covariates <- mydata$cCovars
+codyadcovar <- mydata$dycCovars
+
+fnet <- sienaNet(deps$fnet) 
+atmnet <- sienaNet(deps$atmnet)
+rtnet <- sienaNet(deps$rtnet)
+afstand <- codyadcovar$afstand
+egohandle <- covariates$egohandle
+egoid <- covariates$egoid
+partij <- covariates$partij
+coalitie <- covariates$coalitie
+cda <- covariates$cda
+cu <- covariates$cu
+denk <- covariates$denk
+d66 <- covariates$d66
+fvd <- covariates$fvd
+gl <- covariates$gl
+pvda <- covariates$pvda
+pvdd <- covariates$pvdd
+pvv <- covariates$pvv
+sgp <- covariates$sgp
+sp <- covariates$sp
+vvd <- covariates$vvd
+plus <- covariates$plus
+ethminz <- covariates$ethminz
+vrouw <- covariates$vrouw
+lft <- covariates$lft
+kamerlid2016 <- covariates$kamerlid2016
+kabinet2016 <- covariates$kabinet2016
+pleklijst <- covariates$pleklijst
+pleklijst1 <- covariates$pleklijst1
+#add new variable
+partypos <- coCovar(keyf$lrgen)  
+
+#reconstruct dataobject
+mydata_RR <- sienaDataCreate(fnet,
+                          atmnet, 
+                          rtnet, 
+                          afstand, 
+                          egohandle, 
+                          egoid, 
+                          partij, 
+                          coalitie, 
+                          cda,
+                          cu,
+                          denk,
+                          d66,
+                          fvd,
+                          gl,
+                          pvda,
+                          pvdd,
+                          pvv,
+                          sgp,
+                          sp,
+                          vvd,
+                          plus, 
+                          ethminz,
+                          vrouw,
+                          lft,
+                          kamerlid2016,
+                          kabinet2016,
+                          pleklijst,
+                          pleklijst1,
+                          partypos)
+
+
+```
+
+
+---  
+
+# Impact of ideological distance 
+
+An anonymous reviewer suggested to try to disentangle the impact of physical seating distance from ideological distance. We therefore added to the party to which each MP belongs a general left-right position according to the Chapel Hill Survey [@jolly2022chapel]. 
+
+## define effects  
+
+```{r echo=TRUE, eval=TRUE, results='hide'}
+myeff <- getEffects( mydata_RR )
+myeff_m1 <- myeff
+
+#according to suggestion of rsiena manual
+myeff_m1 <- includeEffects( myeff_m1, inPopSqrt, name="fnet" )
+myeff_m1 <- includeEffects( myeff_m1, inPopSqrt, name="atmnet" )
+myeff_m1 <- includeEffects( myeff_m1, inPopSqrt, name="rtnet" )
+
+myeff_m1 <- includeEffects( myeff_m1, outActSqrt, name="fnet" )
+myeff_m1 <- includeEffects( myeff_m1, outActSqrt, name="atmnet" )
+myeff_m1 <- includeEffects( myeff_m1, outActSqrt, name="rtnet" )
+
+myeff_m1 <- includeEffects( myeff_m1, outPopSqrt, name="fnet" )
+myeff_m1 <- includeEffects( myeff_m1, outPopSqrt, name="atmnet" )
+myeff_m1 <- includeEffects( myeff_m1, outPopSqrt, name="rtnet" )
+
+myeff_m1 <- includeEffects( myeff_m1, transTrip, name="fnet" )
+myeff_m1 <- includeEffects( myeff_m1, transTrip, name="atmnet" )
+myeff_m1 <- includeEffects( myeff_m1, transTrip, name="rtnet" )
+
+myeff_m1 <- includeEffects( myeff_m1, sharedPop, name="fnet" )
+myeff_m1 <- includeEffects( myeff_m1, sharedPop, name="atmnet" )
+myeff_m1 <- includeEffects( myeff_m1, sharedPop, name="rtnet" )
+
+myeff_m2 <- myeff_m1
+
+#"kamerlid2016" "pleklijst"    "pleklijst1"
+
+myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", altX, name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", altX, name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", altX, name="rtnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", egoX, name="fnet" )
+#myeff_m2 <- setEffect( myeff_m2, interaction1="kamerlid2016", egoX, name="fnet", fix=TRUE, initialValue = -3, test=TRUE )
+
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", egoX, name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", egoX, name="rtnet" )
+
+myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", sameX, name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", sameX, name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", sameX, name="rtnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", altX, name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", altX, name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", altX, name="rtnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", egoX, name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", egoX, name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", egoX, name="rtnet" )
+
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", egoX, name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", egoX, name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", egoX, name="rtnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", altX, name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", altX, name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", altX, name="rtnet" )
+
+#these need to be dropped due to collinearity
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", diffX, name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", diffX, name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", diffX, name="rtnet" )
+
+#afstand
+myeff_m2 <- includeEffects( myeff_m2, X, interaction1="afstand", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, X, interaction1="afstand", name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, X, interaction1="afstand", name="rtnet" )
+
+
+
+myeff_m2 <- includeEffects(myeff_m2, sameX, interaction1 = "partij", name="fnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "cda", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "cu", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "denk", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "d66", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "fvd", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "gl", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvda", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvdd", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvv", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "sgp", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "sp", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "vvd", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "plus", name="fnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "cda", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "cu", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "denk", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "d66", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "fvd", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "gl", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvda", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvdd", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvv", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "sgp", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "sp", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "vvd", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "plus", name="fnet" )
+
+myeff_m2 <- includeEffects(myeff_m2, sameX, interaction1 = "partij", name="atmnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "cda", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "cu", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "denk", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "d66", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "fvd", name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "gl", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvda", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvdd", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvv", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "sgp", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "sp", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "vvd", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "plus", name="atmnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "cda", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "cu", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "denk", name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "d66", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "fvd", name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "gl", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvda", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvdd", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvv", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "sgp", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "sp", name="atmnet" )
+# myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "vvd", name="atmnet" ) #referentie
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "plus", name="atmnet" )
+
+myeff_m2 <- includeEffects(myeff_m2, sameX, interaction1 = "partij", name="rtnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "cda", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "cu", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "denk", name="rtnet" )
+myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "d66", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "fvd", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "gl", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvda", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvdd", name="rtnet" )
+myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvv", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "sgp", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "sp", name="rtnet" )
+# myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "vvd", name="rtnet" ) #referentie
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "plus", name="rtnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "cda", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "cu", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "denk", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "d66", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "fvd", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "gl", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvda", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvdd", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvv", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "sgp", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "sp", name="rtnet" )
+# myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "vvd", name="rtnet" ) #referentie
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "plus", name="rtnet" )
+
+myeff_RR <- myeff_m2
+myeff_RR <- includeEffects(myeff_RR, interaction1="partypos", absDiffX, name="fnet" )
+myeff_RR <- includeEffects(myeff_RR, interaction1="partypos", absDiffX, name="rtnet" )
+```
+
+
+```{r echo=TRUE, eval=TRUE}
+myeff_RR
+```
+
+## estimate model
+
+```{r, echo=TRUE, eval=FALSE}
+myalgorithmRR <- sienaAlgorithmCreate( projname = 'RR')
+
+ansRR1 <- siena07( myalgorithmRR, data = mydata_RR, prevAns=ansM8c, effects = myeff_RR, useCluster=TRUE, nbrNodes=8, initC=TRUE, batch=TRUE)
+
+#save(ansRR1, file=paste("ansRR1",".RData",sep=""))
+```
+## results  
+
+The parameters of interest are in red. 
+
+
+```{r, echo=TRUE, eval=TRUE}
+load("ansRR1.RData")
+
+
+res <- round(fanscsv(ansRR1)[,1:2],5)
+mcpos <- length(res[,1])
+res <- res[-mcpos,]
+mc <- as.character(round(fanscsv(ansRR1)[mcpos,1],3))
+row.names(res) <- c(
+ "rate 1"  ,      
+ "rate 2"   ,     
+ "outdegree"          ,  
+ "reciprocity"         ,           
+ "transitive triplets"  ,          
+ "shared popularity"     ,         
+ "indegree - popularity"   ,
+  " outdegree - popularity" , 
+ "outdegree - activity"    ,
+ "seating distance (dyad)"         ,               
+ "same party (dyad)"                ,    
+"incumbancy status (alter)"          ,   
+"same incumbancy status (dyad)"       ,       
+"position on election list (ego)"      ,
+"ideological distance (dyad)" ,
+ "rate 1"      ,
+ "rate 2"      ,
+"outdegree"          ,
+ "reciprocity"        ,          
+ "transitive triplets" ,         
+ "shared popularity"    ,        
+ "indegree - popularity" ,
+ "outdegree - popularity",
+"outdegree - activity "  ,
+ "same party (dyad)"            ,      
+"party Liberal Democrats (alter)",                    
+"party GreenLeft (alter)"         ,            
+ "party GreenLeft (ego)"           ,            
+ "position on election list (alter)",              
+"party leader (alter)"             ,
+ "party leader (ego)"               ,
+ "rate 1"       ,
+ "rate 2"       ,
+"outdegree"           ,
+"reciprocity"          ,         
+"transitive triplets"   ,        
+"shared popularity"      ,       
+"indegree - popularity ",  
+"outdegree - popularity", 
+"outdegree - activity "   ,
+"seating distance (dyad)"        ,               
+ "same party (dyad)"              ,     
+ "party Liberal Democrats (ego)"   ,                    
+ "party Freedom Party (ego)"        ,               
+ "incumbancy status (alter)"         ,   
+ "incumbancy status (ego)"            ,  
+ "position on election list (alter)"   ,            
+"party leader (alter)", 
+ "ideological distance (dyad)"
+)
+  
+asmatkable <- kbl(res, booktabs=TRUE, digits=3, caption="Model RR: including ideological distance", align = "c") %>%
+  kable_classic(full_width = F, html_font = "Cambria") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(column = 1, width = "3in")   %>%
+  row_spec(c(10, 15,41,49), bold = T, color = "white", background = "#D7261E") %>%
+  group_rows(index = c("Following" = 15, "Atmention" = 16, "Retweets" = 18)) %>%
+  footnote(general = paste("Overall maximum convergence ratio: ", mc, sep="" ))
+
+
+asmatkable
+
+
+```
+
+---  
+
+# References  
+
+
