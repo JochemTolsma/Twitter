@@ -2920,7 +2920,7 @@ Data objects:
 - [CHES](https://www.chesdata.eu/ches-europe): information on party positions see also [@jolly2022chapel]
 
 
-```{r data2, echo=TRUE, eval=TRUE, warning=FALSE, message=FALSE}
+```{r data3, echo=TRUE, eval=TRUE, warning=FALSE, message=FALSE}
 #STAP 1: read in data
 library(haven)
 ches <- read_dta("./data-raw/CHES_means_2017.dta")
