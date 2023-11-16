@@ -1,0 +1,1039 @@
+---
+title: "Replication package-Figures"
+author: '[Jochem Tolsma](https://www.jochemtolsma.nl) - Radboud University / University of Groningen, the Netherlands'
+bibliography: references.bib
+date: "Last compiled on `r format(Sys.time(), '%B, %Y')`"
+output: 
+  html_document:
+    toc:  true
+    toc_float: true
+    number_sections: false
+    code_folding: hide
+    code_download: yes
+---
+
+```{r globalsettings, echo=FALSE, warning=FALSE}
+library(knitr)
+opts_chunk$set(tidy.opts=list(width.cutoff=100),tidy=TRUE, warning = FALSE, message = FALSE,comment = "#>", cache=TRUE, echo=FALSE, class.source=c("test"), class.output=c("test2"), eval=FALSE)
+options(width = 100)
+rgl::setupKnitr()
+```
+
+```{r colorize, echo=FALSE}
+colorize <- function(x, color) {
+  if (knitr::is_latex_output()) {
+    sprintf("\\textcolor{%s}{%s}", color, x)
+  } else if (knitr::is_html_output()) {
+    sprintf("<span style='color: %s;'>%s</span>", color, 
+            x)
+  } else x
+}
+
+```
+
+```{r klippy, echo=FALSE, include=TRUE, eval=TRUE}
+klippy::klippy(position = c('top', 'right'))
+#klippy::klippy(color = 'darkred')
+#klippy::klippy(tooltip_message = 'Click to copy', tooltip_success = 'Done')
+```
+
+```{css, echo=FALSE}
+pre.test {
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: auto;
+  margin: 0px;
+}
+
+pre.test2 {
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: auto;
+  margin: 0px;
+  background-color: white;
+  color: rgb(201, 76, 76);
+}
+
+
+h1, .h1, h2, .h2, h3, .h3 {
+  margin-top: 24px;
+}
+
+
+```
+
+
+
+------------------------------------------------------------------------
+
+
+# Intro  
+
+
+This [website](https://jochemtolsma.github.io/Twitter/) is a replication package for the paper "**Twitter and divides in the Dutch Parliament: Social and Political Segregation in the following, @-mentions and retweets networks**" by @Tolsma2021.
+
+It contains R code to replicate all Tables/Figures/Appendix in the manuscript.
+
+To copy the code click the button in the upper right corner of the code-chunks.
+
+Use the top menu to navigate to the section of interest. 
+
+The source code of this website can be found on [Github](https://github.com/JochemTolsma/Twitter)
+
+Questions can be addressed to [Jochem Tolsma](mailto:jochem.tolsma@ru.nl).
+
+---  
+
+## Packages  
+
+```{r packages, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+#install if necessary 
+if (!require("tidyverse", character.only = TRUE)) {install.packages("tidyverse", dependencies=TRUE)}
+if (!require("dplyr", character.only = TRUE)) {install.packages("dplyr", dependencies=TRUE)}
+if (!require("foreign", character.only = TRUE)) {install.packages("foreign", dependencies=TRUE)}
+if (!require("igraph", character.only = TRUE)) {install.packages("igraph", dependencies=TRUE)}
+if (!require("knitr", character.only = TRUE)) {install.packages("knitr", dependencies=TRUE)}
+if (!require("kableExtra", character.only = TRUE)) {install.packages("kableExtra", dependencies=TRUE)}
+if (!require("RSiena", character.only = TRUE)) {install.packages("RSiena", dependencies=TRUE)}
+
+#load packages.
+library(tidyverse)
+library(dplyr)
+library(foreign)
+library(igraph)
+library(knitr)
+library(kableExtra)
+library(RSiena)
+
+```
+
+
+---   
+
+
+## Load data objects {.tabset .tabset-fade}  
+
+ 
+
+Data objects:  
+
+- [key](./data-processed/key moederbestand 20171114.sav): information on all politicians on election list  
+- [twitter](./data-processed/twitter_20190919.RData)  
+    - keyf: information on all 147 MPs with twitter handle  
+    - mydata: RSiena object with all kind of goodies inside  
+    - seats: seating coordinates of HoP (used for plotting)
+
+```{r data, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+#STAP 1: read in data
+key <- read.spss('data-processed\\key moederbestand 20171114.sav', use.value.labels=T, to.data.frame=T)
+
+
+load("data-processed\\twitter_20190919.RData")
+#str(twitter_20190919,1)
+keyf <- twitter_20190919[[1]]
+mydata <- twitter_20190919[[2]]
+seats <- twitter_20190919[[3]]
+
+fnet <- mydata$depvars$fnet #following network
+atmnet <- mydata$depvars$atmnet #atmention network
+rtnet <- mydata$depvars$rtnet #retweet network
+
+fnet1 <- fnet[,,1] #first wave
+atmnet1 <- atmnet[,,1] #first wave
+rtnet1 <- rtnet[,,1] #first wave
+
+fnet1[fnet1==10] <- 0 #replace missings with 0 for plotting
+atmnet1[atmnet1==10] <- 0 #replace missings with 0 for plotting
+rtnet1[rtnet1==10] <- 0 #replace missings with 0 for plotting
+
+#define undirected networks of reciprocated ties 
+fnet1_un <- fnet1 ==1 & t(fnet1)==1
+atmnet1_un <- atmnet1 ==1 & t(atmnet1)==1
+rtnet1_un <- rtnet1 ==1 & t(rtnet1)==1
+
+vrouw <- mydata$cCovars$vrouw
+partij <- mydata$cCovars$partij
+ethminz <- mydata$cCovars$ethminz
+lft <- mydata$cCovars$lft
+
+ethminz <- ethminz + attributes(ethminz)$mean
+partij <- partij + attributes(partij)$mean
+vrouw <- vrouw + attributes(vrouw)$mean
+lft <- lft + attributes(lft)$mean
+
+
+```
+
+---  
+
+
+
+## Build plots {.tabset .tabset-fade}
+
+The first step is to make a 'graph object'. 
+
+```{r, echo=TRUE, eval=TRUE}
+#define directed network 
+G1d <- graph_from_adjacency_matrix(fnet1, mode = "directed", weighted = NULL, diag = TRUE,  add.colnames = NA, add.rownames = NA)
+G2d <- graph_from_adjacency_matrix(atmnet1, mode = "directed", weighted = NULL, diag = TRUE,  add.colnames = NA, add.rownames = NA)
+G3d <- graph_from_adjacency_matrix(rtnet1, mode = "directed", weighted = NULL, diag = TRUE,  add.colnames = NA, add.rownames = NA)
+
+#define undirected network 
+G1u <- graph_from_adjacency_matrix(fnet1_un, mode = "undirected", weighted = NULL, diag = TRUE,  add.colnames = NA, add.rownames = NA)
+G2u <- graph_from_adjacency_matrix(atmnet1_un, mode = "undirected", weighted = NULL, diag = TRUE,  add.colnames = NA, add.rownames = NA)
+G3u <- graph_from_adjacency_matrix(rtnet1_un, mode = "undirected", weighted = NULL, diag = TRUE,  add.colnames = NA, add.rownames = NA)
+
+empty <- fnet1
+empty[empty==1] <- 0 
+Gempty <- graph_from_adjacency_matrix(empty, mode = "directed", weighted = NULL, diag = TRUE,  add.colnames = NA, add.rownames = NA)
+
+```
+
+
+## Plots {.tabset .tabset-fade} 
+
+### Followers (directed)
+
+**FIXED LOCATIONS AS IN HoP**
+
+```{r G1d, echo=TRUE, eval=FALSE}
+G1 <- G1d
+
+E(G1)$curved=.1
+E(G1)$arrow.size=.1
+V(G1)$color <- keyf$Partij_col
+#V(G1)$size= degree(G1, mode="out")*.1 + 6
+V(G1)$label=""
+
+owncoords <- cbind(keyf$X, keyf$Y)
+owncoords <- owncoords/8
+owncoords[,1] <- (owncoords[,1] - mean(owncoords[,1]))
+owncoords[,2] <- (owncoords[,2] - mean(owncoords[,2]))
+
+#change color of edges based on intra or interparty ties
+#for transparant black: #0000007D
+edges <- get.adjacency(G1)
+edges_mat <- matrix(as.numeric(edges), nrow=nrow(edges))
+#edges_mat[lower.tri(edges_mat)] <- 0
+teller <- 1
+coloredges <- NA
+for (i in 1:nrow(edges)) {
+  for (j in 1:ncol(edges)) {
+    if (edges_mat[i,j]==1) {
+      if (keyf$Partij_col[i] == keyf$Partij_col[j]) {coloredges[teller] <- keyf$Partij_col[i]}
+      if (keyf$Partij_col[i] != keyf$Partij_col[j]) {coloredges[teller] <- "#0000001B"}
+      teller <- teller + 1
+    }
+  }
+}
+E(G1)$color=coloredges
+
+#prepare a legend
+Party_names <- unique(keyf$Partij)
+Party_cols <- unique(keyf$Partij_col)
+
+# reorder
+Party_names <- Party_names[c(7, 3, 9, 10, 12, 11, 5, 4, 6, 2, 8, 1, 13)]
+Party_cols <- Party_cols[c(7, 3, 9, 10, 12, 11, 5, 4, 6, 2, 8, 1, 13)]
+```
+
+
+```{r G1d, echo=TRUE, eval=FALSE}
+png("MPplotG1dblog.png",width = 900, height= 900)
+{ 
+  plot.igraph(G1, mode="directed", layout=owncoords, rescale=F, margin=c(0,0,0,0), xlim=c(min(owncoords[,1]),max(owncoords[,1])),  ylim=c(min(owncoords[,2]),max(owncoords[,2])), main="")
+
+#legend("topleft", legend=Party_names, pch=21, col="#777777", pt.bg=Party_cols, pt.cex=2, cex=.8, bty="n", ncol=3)
+
+#text(-2.2,-1.2, "Note 1: Node size based on degree", adj=0, cex=0.8)
+#text(-2.2,-1.3, "Note 2: Edge color based on Party of MPs, black if MPs from different party", adj=0, cex=0.8)
+}  
+
+dev.off()
+ 
+
+```
+
+```{r echo=FALSE, eval=TRUE, out.width='100%'}
+knitr::include_graphics('MPplotG1dv2.png')
+```
+
+**Fruchterman-Reingold layout algorithm**
+
+```{r, echo=TRUE, eval=FALSE}
+#change colors a bit
+df_col <- col2rgb(V(G1)$color)
+V(G1)$color2 <- rgb(t(df_col), alpha=100, maxColorValue = 255)
+
+df_col <- col2rgb(E(G1)$color)
+E(G1)$color2 <- rgb(t(df_col), alpha=100, maxColorValue = 255)
+E(G1)$color2[which(E(G1)$color=="#0000001B")] <- "#00000010"
+
+#remove isolates
+Isolated = which(degree(G1)==0)
+G1_sel = delete.vertices(G1, Isolated)
+#G2_sel = delete.vertices(G2_sel, c(72,27)) #only connected to each other
+
+V(G1_sel)$color <- V(G1_sel)$color2
+E(G1_sel)$color <- E(G1_sel)$color2
+
+#smaller arrows
+E(G1)$arrow.size=.01
+
+#bit smaller
+V(G1_sel)$size= 0.5*V(G1_sel)$size
+
+#layout
+set.seed(2435675)
+c4 = layout_with_fr(G1_sel)
+#c4[72,1] <- 5
+#c4[27,1] <- 5.5
+
+
+#plot
+
+#png("RR_followers_directed.png",width = 900, height= 900)
+{
+plot(G1_sel, layout=c4, margin=c(0,0,0,0),  main="Followers relations between Dutch MPs (2017)")
+
+legend("topleft", legend=Party_names, pch=21, col="#777777", pt.bg=Party_cols, pt.cex=2, cex=.8, bty="n", ncol=3)
+
+text(-1.2,-1.2, "Note 1: Node size based on degree", adj=0, cex=0.8)
+text(-1.2,-1.25, "Note 2: Edge colar based on Party of MPs, black if MPs from different party", adj=0, cex=0.8)
+text(-1.2,-1.3, "Note 3: Isolates removed", adj=0, cex=0.8)
+
+}  
+#dev.off()
+
+png("RR_followers_directedv2.png",width = 900, height= 900)
+{
+plot(G1_sel, layout=c4, margin=c(0,0,0,0))
+}  
+dev.off()
+
+
+
+```
+
+```{r echo=FALSE, eval=TRUE, out.width='100%'}
+knitr::include_graphics('RRfollowersdirected.png')
+```
+
+---  
+
+### Followers (undirected)
+
+**FIXED LOCATIONS AS IN HoP**
+
+```{r G1, echo=TRUE, eval=FALSE}
+G1 <- G1u
+
+E(G1)$curved=.1
+
+V(G1)$color <- keyf$Partij_col
+V(G1)$size= degree(G1)*.3 + 6
+V(G1)$label=""
+
+owncoords <- cbind(keyf$X, keyf$Y)
+owncoords <- owncoords/8
+owncoords[,1] <- (owncoords[,1] - mean(owncoords[,1]))
+owncoords[,2] <- (owncoords[,2] - mean(owncoords[,2]))
+
+#change color of edges based on intra or interparty ties
+#for transparant black: #0000007D
+edges <- get.adjacency(G1)
+edges_mat <- matrix(as.numeric(edges), nrow=nrow(edges))
+edges_mat[lower.tri(edges_mat)] <- 0
+teller <- 1
+coloredges <- NA
+for (i in 1:nrow(edges)) {
+  for (j in 1:ncol(edges)) {
+    if (edges_mat[i,j]==1) {
+      if (keyf$Partij_col[i] == keyf$Partij_col[j]) {coloredges[teller] <- keyf$Partij_col[i]}
+      if (keyf$Partij_col[i] != keyf$Partij_col[j]) {coloredges[teller] <- "#0000004B"}
+      teller <- teller + 1
+    }
+  }
+}
+E(G1)$color=coloredges
+
+#prepare a legend
+Party_names <- unique(keyf$Partij)
+Party_cols <- unique(keyf$Partij_col)
+
+# reorder
+Party_names <- Party_names[c(7, 3, 9, 10, 12, 11, 5, 4, 6, 2, 8, 1, 13)]
+Party_cols <- Party_cols[c(7, 3, 9, 10, 12, 11, 5, 4, 6, 2, 8, 1, 13)]
+
+#png("MPplotG1uv2.png",width = 900, height= 900)
+{ 
+  plot.igraph(G1, mode="undirected", layout=owncoords, rescale=F, margin=c(0,0,0,0), xlim=c(min(owncoords[,1]),max(owncoords[,1])),  ylim=c(min(owncoords[,2]),max(owncoords[,2])), main="Reciprocated follower relations between Dutch MPs (2017)")
+
+legend("topleft", legend=Party_names, pch=21, col="#777777", pt.bg=Party_cols, pt.cex=2, cex=.8, bty="n", ncol=3)
+
+text(-2.2,-1.2, "Note 1: Node size based on degree", adj=0, cex=0.8)
+text(-2.2,-1.3, "Note 2: Edge color based on Party of MPs, black if MPs from different party", adj=0, cex=0.8)
+}  
+#dev.off()
+ 
+
+```
+
+```{r echo=FALSE, eval=TRUE, out.width='100%'}
+knitr::include_graphics('MPplotG1uv2.png')
+```
+
+**Fruchterman-Reingold layout algorithm**
+
+```{r, echo=TRUE, eval=FALSE}
+#change colors a bit
+df_col <- col2rgb(V(G1)$color)
+V(G1)$color2 <- rgb(t(df_col), alpha=100, maxColorValue = 255)
+
+df_col <- col2rgb(E(G1)$color)
+E(G1)$color2 <- rgb(t(df_col), alpha=100, maxColorValue = 255)
+E(G1)$color2[which(E(G1)$color=="#0000004B")] <- "#00000010"
+
+#remove isolates
+Isolated = which(degree(G1)==0)
+G1_sel = delete.vertices(G1, Isolated)
+#G2_sel = delete.vertices(G2_sel, c(72,27)) #only connected to each other
+
+V(G1_sel)$color <- V(G1_sel)$color2
+E(G1_sel)$color <- E(G1_sel)$color2
+
+#smaller arrows
+E(G1)$arrow.size=.01
+
+#bit smaller
+V(G1_sel)$size= 0.5*V(G1_sel)$size
+
+#layout
+set.seed(2435675)
+c4 = layout_with_fr(G1_sel)
+#c4[72,1] <- 5
+#c4[27,1] <- 5.5
+
+#plot
+
+#png("RR_followers_undirected.png",width = 900, height= 900)
+{
+plot(G1_sel, layout=c4, margin=c(0,0,0,0),  main="Reciprocated followers relations between Dutch MPs (2017)")
+
+legend("topleft", legend=Party_names, pch=21, col="#777777", pt.bg=Party_cols, pt.cex=2, cex=.8, bty="n", ncol=3)
+
+text(-1.2,-1.2, "Note 1: Node size based on degree", adj=0, cex=0.8)
+text(-1.2,-1.25, "Note 2: Edge colar based on Party of MPs, black if MPs from different party", adj=0, cex=0.8)
+text(-1.2,-1.3, "Note 3: Isolates removed", adj=0, cex=0.8)
+
+}  
+#dev.off()
+
+png("RR_followers_undirectedv2.png",width = 900, height= 900)
+{
+plot(G1_sel, layout=c4, margin=c(0,0,0,0))
+}  
+dev.off()
+
+
+
+
+```
+
+```{r echo=FALSE, eval=TRUE, out.width='100%'}
+knitr::include_graphics('RRfollowersundirected.png')
+```
+
+---  
+
+### at-mention (directed) 
+
+**FIXED LOCATIONS AS IN HoP**
+
+```{r, eval=FALSE}
+
+G2 <- G2d
+
+E(G2)$curved=.1
+E(G2)$arrow.size=.1
+V(G2)$color <- keyf$Partij_col
+#V(G2)$size= degree(G2, mode="out")*.5 + 6
+V(G2)$label=""
+
+owncoords <- cbind(keyf$X, keyf$Y)
+owncoords <- owncoords/8
+owncoords[,1] <- (owncoords[,1] - mean(owncoords[,1]))
+owncoords[,2] <- (owncoords[,2] - mean(owncoords[,2]))
+
+#change color of edges based on intra or interparty ties
+edges <- get.adjacency(G2)
+edges_mat <- matrix(as.numeric(edges), nrow=nrow(edges))
+#edges_mat[lower.tri(edges_mat)] <- 0
+teller <- 1
+coloredges <- NA
+for (i in 1:nrow(edges)) {
+  for (j in 1:ncol(edges)) {
+    if (edges_mat[i,j]==1) {
+      if (keyf$Partij_col[i] == keyf$Partij_col[j]) {coloredges[teller] <- keyf$Partij_col[i]}
+      if (keyf$Partij_col[i] != keyf$Partij_col[j]) {coloredges[teller] <- "#0000004B"}
+      teller <- teller + 1
+    }
+  }
+}
+E(G2)$color=coloredges
+
+#prepare a legend
+Party_names <- unique(keyf$Partij)
+Party_cols <- unique(keyf$Partij_col)
+
+# reorder
+Party_names <- Party_names[c(7, 3, 9, 10, 12, 11, 5, 4, 6, 2, 8, 1, 13)]
+Party_cols <- Party_cols[c(7, 3, 9, 10, 12, 11, 5, 4, 6, 2, 8, 1, 13)]
+
+png("MPplotG2dblog.png",width = 900, height= 900)
+{ 
+  plot.igraph(G2, mode="directed", layout=owncoords, rescale=F, margin=c(0,0,0,0), xlim=c(min(owncoords[,1]),max(owncoords[,1])),  ylim=c(min(owncoords[,2]),max(owncoords[,2])), main="")
+
+# legend("topleft", legend=Party_names, pch=21, col="#777777", pt.bg=Party_cols, pt.cex=2, cex=.8, bty="n", ncol=3)
+# 
+# text(-2.2,-1.2, "Note 1: Node size based on degree", adj=0, cex=0.8)
+# text(-2.2,-1.3, "Note 2: Edge colar based on Party of MPs, black if MPs from different party", adj=0, cex=0.8)
+}  
+#dev.off()
+ 
+```
+
+```{r echo=FALSE, eval=TRUE, out.width='100%'}
+knitr::include_graphics('MPplotG2d.png')
+```
+
+**Fruchterman-Reingold layout algorithm**
+
+```{r, eval=FALSE}
+#change colors a bit
+df_col <- col2rgb(V(G2)$color)
+V(G2)$color2 <- rgb(t(df_col), alpha=175, maxColorValue = 255)
+
+df_col <- col2rgb(E(G2)$color)
+E(G2)$color2 <- rgb(t(df_col), alpha=175, maxColorValue = 255)
+E(G2)$color2[which(E(G2)$color=="#0000004B")] <- "#0000004B"
+
+#remove isolates
+Isolated = which(degree(G2)==0)
+G2_sel = delete.vertices(G2, Isolated)
+#G2_sel = delete.vertices(G2_sel, c(72,27)) #only connected to each other
+
+V(G2_sel)$color <- V(G2_sel)$color2
+E(G2_sel)$color <- E(G2_sel)$color2
+
+#smaller arrows
+E(G2)$arrow.size=.1
+
+#bit smaller
+V(G2_sel)$size= 0.7*V(G2_sel)$size
+
+#layout
+set.seed(2435676)
+c4 = layout_with_fr(G2_sel)
+c4[72,1] <- 5
+c4[27,1] <- 5.5
+
+plot(G2_sel, layout=c4, margin=c(0,0,0,0), rescale=FALSE, xlim=c(min(c4[,1]),max(c4[,1])),  ylim=c(min(c4[,2]),max(c4[,2])), main="@mention relations between Dutch MPs (2017)")
+#plot
+
+png("RR_atmention_directed.png",width = 900, height= 900)
+{
+plot(G2_sel, layout=c4, margin=c(0,0,0,0),  main="@mention relations between Dutch MPs (2017)")
+
+legend("topleft", legend=Party_names, pch=21, col="#777777", pt.bg=Party_cols, pt.cex=2, cex=.8, bty="n", ncol=3)
+
+text(-1.2,-1.2, "Note 1: Node size based on degree", adj=0, cex=0.8)
+text(-1.2,-1.25, "Note 2: Edge colar based on Party of MPs, black if MPs from different party", adj=0, cex=0.8)
+text(-1.2,-1.3, "Note 3: Isolates removed", adj=0, cex=0.8)
+
+}  
+dev.off()
+
+png("RR_atmention_directedv2.png",width = 900, height= 900)
+{
+plot(G2_sel, layout=c4, margin=c(0,0,0,0))
+}  
+dev.off()
+
+```
+
+```{r echo=FALSE, eval=TRUE, out.width='100%'}
+knitr::include_graphics('RRatmentiondirected.png')
+```
+
+---   
+
+### atmentions (undirected)
+
+**FIXED LOCATIONS AS IN HoP**
+
+```{r G2, echo=TRUE, eval=FALSE}
+G2 <- G2u
+
+E(G2)$curved=.1
+
+V(G2)$color <- keyf$Partij_col
+V(G2)$size= degree(G2)*1.05 + 6
+V(G2)$label=""
+
+owncoords <- cbind(keyf$X, keyf$Y)
+owncoords <- owncoords/8
+owncoords[,1] <- (owncoords[,1] - mean(owncoords[,1]))
+owncoords[,2] <- (owncoords[,2] - mean(owncoords[,2]))
+
+#change color of edges based on intra or interparty ties
+edges <- get.adjacency(G2)
+edges_mat <- matrix(as.numeric(edges), nrow=nrow(edges))
+edges_mat[lower.tri(edges_mat)] <- 0
+teller <- 1
+coloredges <- NA
+for (i in 1:nrow(edges)) {
+  for (j in 1:ncol(edges)) {
+    if (edges_mat[i,j]==1) {
+      if (keyf$Partij_col[i] == keyf$Partij_col[j]) {coloredges[teller] <- keyf$Partij_col[i]}
+      if (keyf$Partij_col[i] != keyf$Partij_col[j]) {coloredges[teller] <- "#0000004B"}
+      teller <- teller + 1
+    }
+  }
+}
+E(G2)$color=coloredges
+
+#prepare a legend
+Party_names <- unique(keyf$Partij)
+Party_cols <- unique(keyf$Partij_col)
+
+# reorder
+Party_names <- Party_names[c(7, 3, 9, 10, 12, 11, 5, 4, 6, 2, 8, 1, 13)]
+Party_cols <- Party_cols[c(7, 3, 9, 10, 12, 11, 5, 4, 6, 2, 8, 1, 13)]
+
+#png("MPplotG2uv2.png",width = 900, height= 900)
+{ 
+  plot.igraph(G2, mode="undirected", layout=owncoords, rescale=F, margin=c(0,0,0,0), xlim=c(min(owncoords[,1]),max(owncoords[,1])),  ylim=c(min(owncoords[,2]),max(owncoords[,2])), main="Reciprocated @mention relations between Dutch MPs (2017)")
+
+legend("topleft", legend=Party_names, pch=21, col="#777777", pt.bg=Party_cols, pt.cex=2, cex=.8, bty="n", ncol=3)
+
+text(-2.2,-1.2, "Note 1: Node size based on degree", adj=0, cex=0.8)
+text(-2.2,-1.3, "Note 2: Edge colar based on Party of MPs, black if MPs from different party", adj=0, cex=0.8)
+}  
+#dev.off()
+
+```
+
+
+```{r echo=FALSE, eval=TRUE, out.width='100%'}
+knitr::include_graphics('MPplotG2u.png')
+```
+
+**Fruchterman-Reingold layout algorithm**
+
+```{r, eval=FALSE}
+#change colors a bit
+df_col <- col2rgb(V(G2)$color)
+V(G2)$color2 <- rgb(t(df_col), alpha=175, maxColorValue = 255)
+
+df_col <- col2rgb(E(G2)$color)
+E(G2)$color2 <- rgb(t(df_col), alpha=175, maxColorValue = 255)
+E(G2)$color2[which(E(G2)$color=="#0000004B")] <- "#0000004B"
+
+#remove isolates
+Isolated = which(degree(G2)==0)
+G2_sel = delete.vertices(G2, Isolated)
+#G2_sel = delete.vertices(G2_sel, c(72,27)) #only connected to each other
+
+V(G2_sel)$color <- V(G2_sel)$color2
+E(G2_sel)$color <- E(G2_sel)$color2
+
+#smaller arrows
+E(G2)$arrow.size=.1
+
+#bit smaller
+V(G2_sel)$size= 0.7*V(G2_sel)$size
+
+#layout
+set.seed(2435676)
+c4 = layout_with_fr(G2_sel)
+
+plot(G2_sel, layout=c4, margin=c(0,0,0,0), rescale=FALSE, xlim=c(min(c4[,1]),max(c4[,1])),  ylim=c(min(c4[,2]),max(c4[,2])), main="@mention relations between Dutch MPs (2017)")
+#plot
+
+#png("RR_atmention_undirected.png",width = 900, height= 900)
+{
+plot(G2_sel, layout=c4, margin=c(0,0,0,.15),  main="Reciprocated @mention relations between Dutch MPs (2017)")
+
+legend("topleft", legend=Party_names, pch=21, col="#777777", pt.bg=Party_cols, pt.cex=2, cex=.8, bty="n", ncol=3)
+
+text(-1.2,-1.2, "Note 1: Node size based on degree", adj=0, cex=0.8)
+text(-1.2,-1.25, "Note 2: Edge colar based on Party of MPs, black if MPs from different party", adj=0, cex=0.8)
+text(-1.2,-1.3, "Note 3: Isolates removed", adj=0, cex=0.8)
+
+}  
+#dev.off()
+
+png("RR_atmention_undirectedv2.png",width = 900, height= 900)
+{
+plot(G2_sel, layout=c4, margin=c(0,0,0,.15))
+}  
+dev.off()
+
+
+```
+
+```{r echo=FALSE, eval=TRUE, out.width='100%'}
+knitr::include_graphics('RRatmentionundirected.png')
+```
+
+
+---  
+
+### retweet (directed)
+
+**FIXED LOCATIONS AS IN HoP**
+
+```{r G3d, echo=TRUE, eval=FALSE}
+G3 <- G3d
+
+E(G3)$curved=.1
+E(G3)$arrow.size=.1
+
+V(G3)$color <- keyf$Partij_col
+#V(G3)$size= degree(G3, mode="out")*.5 + 6
+V(G3)$label=""
+
+owncoords <- cbind(keyf$X, keyf$Y)
+owncoords <- owncoords/8
+owncoords[,1] <- (owncoords[,1] - mean(owncoords[,1]))
+owncoords[,2] <- (owncoords[,2] - mean(owncoords[,2]))
+
+#change color of edges based on intra or interparty ties
+edges <- get.adjacency(G3)
+edges_mat <- matrix(as.numeric(edges), nrow=nrow(edges))
+#edges_mat[lower.tri(edges_mat)] <- 0
+teller <- 1
+coloredges <- NA
+for (i in 1:nrow(edges)) {
+  for (j in 1:ncol(edges)) {
+    if (edges_mat[i,j]==1) {
+      if (keyf$Partij_col[i] == keyf$Partij_col[j]) {coloredges[teller] <- keyf$Partij_col[i]}
+      if (keyf$Partij_col[i] != keyf$Partij_col[j]) {coloredges[teller] <- "#0000004B"}
+      teller <- teller + 1
+    }
+  }
+}
+E(G3)$color=coloredges
+
+#prepare a legend
+Party_names <- unique(keyf$Partij)
+Party_cols <- unique(keyf$Partij_col)
+
+# reorder
+Party_names <- Party_names[c(7, 3, 9, 10, 12, 11, 5, 4, 6, 2, 8, 1, 13)]
+Party_cols <- Party_cols[c(7, 3, 9, 10, 12, 11, 5, 4, 6, 2, 8, 1, 13)]
+
+png("MPplotG3dblog.png",width = 900, height= 900)
+{ 
+  plot.igraph(G3, mode="undirected", layout=owncoords, rescale=F, margin=c(0,0,0,0), xlim=c(min(owncoords[,1])-0.2,max(owncoords[,1])) +.2 ,  ylim=c(min(owncoords[,2]),max(owncoords[,2])), main="")
+
+# legend("topleft", legend=Party_names, pch=21, col="#777777", pt.bg=Party_cols, pt.cex=2, cex=.8, bty="n", ncol=3)
+# 
+# text(-2.2,-1.2, "Note 1: Node size based on degree", adj=0, cex=0.8)
+# text(-2.2,-1.3, "Note 2: Edge colar based on Party of MPs, black if MPs from different party", adj=0, cex=0.8)
+}  
+#dev.off()
+ 
+
+```
+
+
+without ties
+
+```{r empty, echo=TRUE, eval=FALSE}
+G3 <- Gempty
+
+E(G3)$curved=.1
+E(G3)$arrow.size=.1
+
+V(G3)$color <- "white"
+#V(G3)$size= degree(G3, mode="out")*.5 + 6
+V(G3)$label=""
+
+owncoords <- cbind(keyf$X, keyf$Y)
+owncoords <- owncoords/8
+owncoords[,1] <- (owncoords[,1] - mean(owncoords[,1]))
+owncoords[,2] <- (owncoords[,2] - mean(owncoords[,2]))
+
+#change color of edges based on intra or interparty ties
+edges <- get.adjacency(G3)
+edges_mat <- matrix(as.numeric(edges), nrow=nrow(edges))
+#edges_mat[lower.tri(edges_mat)] <- 0
+teller <- 1
+coloredges <- "white"
+
+png("emptyblog.png",width = 900, height= 900)
+{ 
+  plot.igraph(G3, mode="undirected", layout=owncoords, rescale=F, margin=c(0,0,0,0), xlim=c(min(owncoords[,1])-0.2,max(owncoords[,1])) +.2 ,  ylim=c(min(owncoords[,2]),max(owncoords[,2])), main="")
+
+# legend("topleft", legend=Party_names, pch=21, col="#777777", pt.bg=Party_cols, pt.cex=2, cex=.8, bty="n", ncol=3)
+# 
+# text(-2.2,-1.2, "Note 1: Node size based on degree", adj=0, cex=0.8)
+# text(-2.2,-1.3, "Note 2: Edge colar based on Party of MPs, black if MPs from different party", adj=0, cex=0.8)
+}  
+#dev.off()
+ 
+
+```
+
+
+
+
+
+
+```{r echo=FALSE, eval=TRUE, out.width='100%'}
+knitr::include_graphics('MPplotG3d.png')
+```
+
+**Fruchterman-Reingold layout algorithm**
+
+```{r, eval=FALSE}
+#change colors a bit
+df_col <- col2rgb(V(G3)$color)
+V(G3)$color2 <- rgb(t(df_col), alpha=175, maxColorValue = 255)
+
+df_col <- col2rgb(E(G3)$color)
+E(G3)$color2 <- rgb(t(df_col), alpha=175, maxColorValue = 255)
+E(G3)$color2[which(E(G3)$color=="#0000004B")] <- "#0000004B"
+
+#remove isolates
+Isolated = which(degree(G3)==0)
+G3_sel = delete.vertices(G3, Isolated)
+#G3_sel = delete.vertices(G3_sel, c(72,27)) #only connected to each other
+
+V(G3_sel)$color <- V(G3_sel)$color2
+E(G3_sel)$color <- E(G3_sel)$color2
+
+#smaller arrows
+E(G3)$arrow.size=.1
+
+#bit smaller
+V(G3_sel)$size= 0.7*V(G3_sel)$size
+
+#layout
+set.seed(2435677)
+c4 = layout_with_fr(G3_sel)
+
+#png("RR_retweet_directed.png",width = 900, height= 900)
+{
+plot(G3_sel, layout=c4, margin=c(0,0,0,.15),  main="Retweet relations between Dutch MPs (2017)")
+
+legend("topleft", legend=Party_names, pch=21, col="#777777", pt.bg=Party_cols, pt.cex=2, cex=.8, bty="n", ncol=3)
+
+text(-1.2,-1.2, "Note 1: Node size based on degree", adj=0, cex=0.8)
+text(-1.2,-1.25, "Note 2: Edge colar based on Party of MPs, black if MPs from different party", adj=0, cex=0.8)
+text(-1.2,-1.3, "Note 3: Isolates removed", adj=0, cex=0.8)
+
+}  
+#dev.off()
+
+png("RR_retweet_directedv2.png",width = 900, height= 900)
+{
+plot(G3_sel, layout=c4, margin=c(0,0,0,.15))
+}  
+dev.off()
+
+
+
+```
+
+```{r echo=FALSE, eval=TRUE, out.width='100%'}
+knitr::include_graphics('RRretweetdirected.png')
+```
+
+---  
+
+### retweet (undirected)
+
+**FIXED LOCATIONS AS IN HoP**
+
+```{r G3u, echo=TRUE, eval=FALSE}
+G3 <- G3u
+
+E(G3)$curved=.1
+
+V(G3)$color <- keyf$Partij_col
+V(G3)$size= degree(G3)*1.05 + 6
+V(G3)$label=""
+
+owncoords <- cbind(keyf$X, keyf$Y)
+owncoords <- owncoords/8
+owncoords[,1] <- (owncoords[,1] - mean(owncoords[,1]))
+owncoords[,2] <- (owncoords[,2] - mean(owncoords[,2]))
+
+#change color of edges based on intra or interparty ties
+edges <- get.adjacency(G3)
+edges_mat <- matrix(as.numeric(edges), nrow=nrow(edges))
+edges_mat[lower.tri(edges_mat)] <- 0
+teller <- 1
+coloredges <- NA
+for (i in 1:nrow(edges)) {
+  for (j in 1:ncol(edges)) {
+    if (edges_mat[i,j]==1) {
+      if (keyf$Partij_col[i] == keyf$Partij_col[j]) {coloredges[teller] <- keyf$Partij_col[i]}
+      if (keyf$Partij_col[i] != keyf$Partij_col[j]) {coloredges[teller] <- "#0000004B"}
+      teller <- teller + 1
+    }
+  }
+}
+E(G3)$color=coloredges
+
+#prepare a legend
+Party_names <- unique(keyf$Partij)
+Party_cols <- unique(keyf$Partij_col)
+
+# reorder
+Party_names <- Party_names[c(7, 3, 9, 10, 12, 11, 5, 4, 6, 2, 8, 1, 13)]
+Party_cols <- Party_cols[c(7, 3, 9, 10, 12, 11, 5, 4, 6, 2, 8, 1, 13)]
+
+#png("MPplotG3uv2.png",width = 900, height= 900)
+{ 
+  plot.igraph(G3, mode="undirected", layout=owncoords, rescale=F, margin=c(0,0,0,0), xlim=c(min(owncoords[,1]) - 0.2 ,max(owncoords[,1])) +0.2,  ylim=c(min(owncoords[,2]),max(owncoords[,2])), main="Reciprocated retweet relations between Dutch MPs (2017)")
+
+legend("topleft", legend=Party_names, pch=21, col="#777777", pt.bg=Party_cols, pt.cex=2, cex=.8, bty="n", ncol=3)
+
+text(-2.2,-1.2, "Note 1: Node size based on degree", adj=0, cex=0.8)
+text(-2.2,-1.3, "Note 2: Edge colar based on Party of MPs, black if MPs from different party", adj=0, cex=0.8)
+}  
+#dev.off()
+ 
+
+```
+
+
+```{r echo=FALSE, eval=TRUE, out.width='100%'}
+knitr::include_graphics('MPplotG3uv2.png')
+```
+
+**Fruchterman-Reingold layout algorithm**
+
+```{r, eval=FALSE}
+#change colors a bit
+df_col <- col2rgb(V(G3)$color)
+V(G3)$color2 <- rgb(t(df_col), alpha=175, maxColorValue = 255)
+
+df_col <- col2rgb(E(G3)$color)
+E(G3)$color2 <- rgb(t(df_col), alpha=175, maxColorValue = 255)
+E(G3)$color2[which(E(G3)$color=="#0000004B")] <- "#0000004B"
+
+#remove isolates
+Isolated = which(degree(G3)==0)
+G3_sel = delete.vertices(G3, Isolated)
+#G3_sel = delete.vertices(G3_sel, c(72,27)) #only connected to each other
+
+V(G3_sel)$color <- V(G3_sel)$color2
+E(G3_sel)$color <- E(G3_sel)$color2
+
+#smaller arrows
+E(G3)$arrow.size=.1
+
+#bit smaller
+V(G3_sel)$size= 0.7*V(G3_sel)$size
+
+#layout
+set.seed(2435677)
+c4 = layout_with_fr(G3_sel)
+
+#png("RR_retweet_undirected.png",width = 900, height= 900)
+{
+plot(G3_sel, layout=c4, margin=c(0,0,0,.15),  main="Reciprocated retweet relations between Dutch MPs (2017)")
+
+legend("topleft", legend=Party_names, pch=21, col="#777777", pt.bg=Party_cols, pt.cex=2, cex=.8, bty="n", ncol=3)
+
+text(-1.2,-1.2, "Note 1: Node size based on degree", adj=0, cex=0.8)
+text(-1.2,-1.25, "Note 2: Edge colar based on Party of MPs, black if MPs from different party", adj=0, cex=0.8)
+text(-1.2,-1.3, "Note 3: Isolates removed", adj=0, cex=0.8)
+
+}  
+#dev.off()
+
+png("RR_retweet_undirectedv2.png",width = 900, height= 900)
+{
+plot(G3_sel, layout=c4, margin=c(.1,.1,.1,.2))
+}  
+dev.off()
+
+
+```
+
+```{r echo=FALSE, eval=TRUE, out.width='100%'}
+knitr::include_graphics('RRretweetundirected.png')
+```
+
+---  
+
+## Rank orders and description  
+
+Most follower outdegrees:
+```{r, echo=TRUE, eval=TRUE, results='hold'}
+
+
+G1 <- G1d
+foutdegree <- degree(G1, mode="out")
+keyf$Partij[which(foutdegree==max(foutdegree))]
+keyf$Naam[which(foutdegree==max(foutdegree))]
+```
+
+
+Most atmention outdegrees: 
+```{r, echo=TRUE, eval=TRUE, results='hold'}
+
+G2 <- G2d
+atmdegree <- degree(G2, mode="out")
+keyf$Partij[which(atmdegree==max(atmdegree))]
+keyf$Naam[which(atmdegree==max(atmdegree))]
+```
+
+Most retweet outdegrees: 
+
+```{r, echo=TRUE, eval=TRUE, results='hold'}
+G3 <- G3d
+rtdegree <- degree(G3, mode="out")
+keyf$Partij[which(rtdegree==max(rtdegree))]
+keyf$Naam[which(rtdegree==max(rtdegree))]
+```
+
+Spearman's rank correlation rho  
+
+**follower outdegree and atmention outdegree**
+
+```{r, echo=TRUE, eval=TRUE}
+cor.test(foutdegree, atmdegree, method="spearman")
+```
+
+**follower outdegree and retweet outdegree**
+```{r, echo=TRUE, eval=TRUE}
+cor.test(foutdegree, rtdegree, method="spearman")
+```
+
+**retweet outdegree and atmention outdegree**
+```{r, echo=TRUE, eval=TRUE}
+cor.test(rtdegree, atmdegree, method="spearman")
+```
+
+
+<!---
+Plotjes voor outdegree distribution
+
+try to combine the three deps in one graph and then combine also outdegree and indegree. 
+
+https://www.r-graph-gallery.com/135-stacked-density-graph.html
+https://www.r-graph-gallery.com/density_mirror_ggplot2.html
+--->  
+
+---  
+
+
+
+

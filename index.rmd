@@ -70,7 +70,7 @@ h1, .h1, h2, .h2, h3, .h3 {
 # Intro  
 
 
-This [website](https://jochemtolsma.github.io/Twitter/) is a replication package for the paper "**How Twitter divides the Dutch parliament: Segregation along party lines and social dimensions in the following, @-mentions and retweets Twitter Networks of Dutch MPs**" by @Tolsma2021.  
+This [website](https://jochemtolsma.github.io/Twitter/) is a replication package for the paper "**Twitter and divides in the Dutch Parliament: Social and Political Segregation in the following, @-mentions and retweets networks**" by @Tolsma2021.  
 
 It contains R code to replicate all Tables/Figures/Appendix in the manuscript.
 
@@ -84,7 +84,7 @@ Questions can be addressed to [Jochem Tolsma](mailto:jochem.tolsma@ru.nl).
 
 ---  
 
-## Packages  
+# Packages  
 
 ```{r packages, echo=TRUE, message=FALSE, warning=FALSE}
 #install if necessary 
@@ -95,6 +95,9 @@ if (!require("igraph", character.only = TRUE)) {install.packages("igraph", depen
 if (!require("knitr", character.only = TRUE)) {install.packages("knitr", dependencies=TRUE)}
 if (!require("kableExtra", character.only = TRUE)) {install.packages("kableExtra", dependencies=TRUE)}
 if (!require("RSiena", character.only = TRUE)) {install.packages("RSiena", dependencies=TRUE)}
+if (!require("netseg", character.only = TRUE)) {install.packages("netseg", dependencies=TRUE)}
+
+
 
 #load packages.
 library(tidyverse)
@@ -104,6 +107,7 @@ library(igraph)
 library(knitr)
 library(kableExtra)
 library(RSiena)
+library(netseg)
 
 ```
 
@@ -111,7 +115,7 @@ library(RSiena)
 ---   
 
 
-## Custom segregation functions 
+# Custom segregation functions 
 
 Define custom functions to calculate network-segregation:  
 
@@ -208,7 +212,7 @@ fscolnet <- function(network, ccovar) {
 
 ---  
 
-## Load data objects {.tabset .tabset-fade}  
+# Load data objects {.tabset .tabset-fade}  
 
  
 
@@ -234,7 +238,7 @@ seats <- twitter_20190919[[3]]
 
 ---  
 
-## Summary of dataset used. 
+# Summary of dataset used. 
 
 
 ```{r dataset, echo=TRUE}
@@ -369,7 +373,7 @@ scroll_box(AppendixA, width="100%", height="500px")
 
 
 
-## SEGREGATION - Descriptive statistics {.tabset .tabset-fade} 
+# SEGREGATION - Descriptive statistics {.tabset .tabset-fade} 
 
 
 
@@ -414,7 +418,7 @@ lftm <- (abs(xmat - xmatt) < 6)
 
 <br> 
 
-### Table 1   
+## Table 1   
 
 
 
@@ -538,7 +542,7 @@ A slightly different order of social dimensions (rows) as compared to manuscript
 ---  
 
 
-### Table 2  
+## Table 2  
 
 
 ```{r Table2b, echo=TRUE}
@@ -598,7 +602,7 @@ colmatkable
 ---  
 
 
-### Table 3
+## Table 3
 
 
 ```{r , echo=TRUE} 
@@ -669,6 +673,8 @@ rownames(asmat) <- c("party", "sex", "ethnicity", "age")
 #asmat
 #write.csv2(asmat, "20190828asmat.csv")
 
+
+
 asmatkable <- kbl(asmat, booktabs=TRUE, digits=2, caption="Table 3. Newman’s Assortativity Coefficient within the three Twitter layers among Dutch MPs (2017)", align = "c") %>%
   kable_classic(full_width = F, html_font = "Cambria") %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
@@ -676,11 +682,62 @@ asmatkable <- kbl(asmat, booktabs=TRUE, digits=2, caption="Table 3. Newman’s A
   
 asmatkable
 
+```
+
+## RR2 Coleman's segregation per party
+
+
+```{r}
+colmat2 <- matrix(NA, nrow=13, ncol=9)
+colmat2[,1] <- netseg::coleman(gfnet1, vattr=partij_int)
+colmat2[,2] <- netseg::coleman(gfnet2, vattr=partij_int)
+colmat2[,3] <- netseg::coleman(gfnet3, vattr=partij_int)
+colmat2[,4] <- netseg::coleman(grtnet1, vattr=partij_int)
+colmat2[,5] <- netseg::coleman(grtnet2, vattr=partij_int)
+colmat2[,6] <- netseg::coleman(grtnet3, vattr=partij_int)
+colmat2[,7] <- netseg::coleman(gatmnet1, vattr=partij_int)
+colmat2[,8] <- netseg::coleman(gatmnet2, vattr=partij_int)
+colmat2[,9] <- netseg::coleman(gatmnet3, vattr=partij_int)
+
+colnames(colmat2) <- c("following T1", "following T2", "following T3","atmentions T1","atmentions T2","atmentions T3","retweets T1","retweets T2","retweets T3") 
+
+rownames(colmat2) <- levels(keyf$Partij)[-c(1,7,9,15,18,19)]
+
+rownames(colmat2) <- c("CDA (19)", "CU (5)", "DENK (3)", "D66 (19)", "FvD (2)", "GroenLinks (14)", "PvdA (9)" ,      "PvdDieren (5)", "PVV (18)" , "SGP (3)", "SP (14)",  "VVD (32)", "50Plus (4)") 
+
+colmat2 <- colmat2[c(12,1,4,9,11,6,7,2,8,13,3,10,5),]
+
+
+# #why NaN e.g. FvD atmentions t2
+# V(gatmnet2)$label <- partij_int
+# V(grtnet2)$label <- partij_int
+# 
+# gatmnet2_subset <- subgraph.edges(graph=gatmnet2, eids=which(partij_int==6), delete.vertices = TRUE)
+# plot(gatmnet2_subset)
+# 
+# gatmnet2_subset <- subgraph(graph=gatmnet2, vids=which(V(gatmnet2)$label==6))
+# plot(gatmnet2_subset)
+# #because no out ties!. 
+# 
+# #why -1 e.g. FvD rtweets t2
+# grtnet2_subset <- subgraph.edges(graph=grtnet2, eids=which(partij_int==6), delete.vertices = TRUE)
+# plot(grtnet2_subset)
+# grtnet2_subset <- subgraph(graph=grtnet2, vids=which(partij_int==6))
+# plot(gatmnet2_subset)
+# #because no ingroup tie. 
+
+
+
+colmat2kable <- kbl(colmat2, booktabs=TRUE, digits=2, caption="RR.Coleman’s Homophily Index within the three Twitter layers among Dutch MPs (2017), per political party (party size between brackets)", align = "c") %>%
+  kable_classic(full_width = F, html_font = "Cambria") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(column = 1, width = "3in")
+  
+colmat2kable
 
 ```
 
-
 ---   
 
-
+# References
 

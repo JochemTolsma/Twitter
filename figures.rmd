@@ -70,7 +70,7 @@ h1, .h1, h2, .h2, h3, .h3 {
 # Intro  
 
 
-This [website](https://jochemtolsma.github.io/Twitter/) is a replication package for the paper "**How Twitter divides the Dutch parliament: Segregation along party lines and social dimensions in the following, @-mentions and retweets Twitter Networks of Dutch MPs**" by @Tolsma2021.
+This [website](https://jochemtolsma.github.io/Twitter/) is a replication package for the paper "**Twitter and divides in the Dutch Parliament: Social and Political Segregation in the following, @-mentions and retweets networks**" by @Tolsma2021.
 
 It contains R code to replicate all Tables/Figures/Appendix in the manuscript.
 

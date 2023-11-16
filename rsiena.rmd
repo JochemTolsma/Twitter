@@ -69,7 +69,7 @@ h1, .h1, h2, .h2, h3, .h3 {
 # Intro  
 
 
-This [website](https://jochemtolsma.github.io/Twitter/) is a replication package for the paper "**How Twitter divides the Dutch parliament: Segregation along party lines and social dimensions in the following, @-mentions and retweets Twitter Networks of Dutch MPs**" by @Tolsma2021.
+This [website](https://jochemtolsma.github.io/Twitter/) is a replication package for the paper "**Twitter and divides in the Dutch Parliament: Social and Political Segregation in the following, @-mentions and retweets networks**" by @Tolsma2021.
 
 It contains R code to replicate all Tables/Figures/Appendix in the manuscript.
 
@@ -117,23 +117,19 @@ library(haven)
 
 
 ```{r, echo=TRUE, eval=TRUE}
-
-fanscsv <- function(ans=ans) {
-	ans1_mat <- matrix(NA, nrow=length(ans$effects[,2]),ncol=3)
-	row.names(ans1_mat) <- ans$effects[,2]
-	ans1_mat[,1] <- (ans$theta)
-	ans1_mat[,2] <- (ans$se)
-	ans1_mat[,3] <- (ans$tconv)
-	ans1_mat <- rbind(ans1_mat, c(ans$tconv.max))
-	row.names(ans1_mat)[length(row.names(ans1_mat))] <- "Overall maximum convergence ratio:"
-	colnames(ans1_mat) <- c("Estimate", "Standard Error", "Convergence t-ratio")
-	return(ans1_mat)
-	#print(ans1_mat)
-	#write.csv(ans1_mat, filename)
+fanscsv <- function(ans = ans) {
+  ans1_mat <- matrix(NA, nrow = length(ans$effects[, 2]), ncol = 3)
+  row.names(ans1_mat) <- ans$effects[, 2]
+  ans1_mat[, 1] <- (ans$theta)
+  ans1_mat[, 2] <- (ans$se)
+  ans1_mat[, 3] <- (ans$tconv)
+  ans1_mat <- rbind(ans1_mat, c(ans$tconv.max))
+  row.names(ans1_mat)[length(row.names(ans1_mat))] <- "Overall maximum convergence ratio:"
+  colnames(ans1_mat) <- c("Estimate", "Standard Error", "Convergence t-ratio")
+  return(ans1_mat)
+  # print(ans1_mat)
+  # write.csv(ans1_mat, filename)
 }
-
-
-
 
 ```
 
@@ -264,7 +260,7 @@ mydata23 <- sienaDataCreate(fnet,
 
 ---  
 
-# Estimate RSiena models  
+# Estimate RSiena models  {.tabset .tabset-fade} 
 
 ## Model 0 {.tabset .tabset-fade} 
 
@@ -417,7 +413,47 @@ ansM3b <- siena07( myalgorithm, data = mydata, prevAns=ansM3, effects = myeff_m1
 
 ```{r, eval=TRUE}
 load("ansM3.RData")
-ansM3
+#ansM3
+
+res <- round(fanscsv(ansM3)[-25,1:2],5)
+mc <- as.character(round(fanscsv(ansM3)[25,1],3))
+row.names(res) <- c(
+ "rate 1"  ,      
+ "rate 2"   ,     
+ "outdegree"          ,  
+ "reciprocity"         ,           
+ "GWESP"  ,          
+ "indegree - popularity (sqrt)"   ,
+  "outdegree - popularity (sqrt)" , 
+ "outdegree - activity (sqrt)"    ,
+ "rate 1"  ,      
+ "rate 2"   ,     
+ "outdegree"          ,  
+ "reciprocity"         ,           
+ "GWESP"  ,          
+ "indegree - popularity (sqrt)"   ,
+  "outdegree - popularity (sqrt)" , 
+ "outdegree - activity (sqrt)"    ,
+ "rate 1"  ,      
+ "rate 2"   ,     
+ "outdegree"          ,  
+ "reciprocity"         ,           
+ "GWESP"  ,          
+ "indegree - popularity (sqrt)"   ,
+  "outdegree - popularity (sqrt)" , 
+ "outdegree - activity (sqrt)"    
+)
+  
+RR2_gwesp <- kbl(res, booktabs=TRUE, digits=3, caption="GWESP", align = "c") %>%
+  kable_classic(full_width = F, html_font = "Cambria") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(column = 1, width = "3in")   %>%
+  group_rows(index = c("Following" = 8, "Atmention" = 8, "Retweets" = 8)) %>%
+  footnote(general = paste("Overall maximum convergence ratio: ", mc, sep="" ))
+
+
+RR2_gwesp
+
 ```
 
 
@@ -426,7 +462,7 @@ Don't think it will matter much whether we include gwespFF or TranTrip.
 ---  
 
 
-### Model 0 {.active}
+### Model 0 - final {.active}
 
 Finally, we also included sharedPop to reach Model 0
 
@@ -478,7 +514,7 @@ ansM4b
 
 ## Model 1 {.tabset .tabset-fade}
 
-Baseline model (with covariates).  
+Baseline model with controls to test Hypothesis 1.  
 
 ### Relevant party dummies  
 
@@ -574,7 +610,7 @@ levels(keyf$Partij2)[c(4, 10)]
 
 ---  
 
-### Model 1 / Appendix B {.active}
+### Model 1 - final {.active}
 
 
 ```{r, echo=TRUE}
@@ -1335,7 +1371,7 @@ row.names(res) <- c(
 "party leader (alter)"
 )
   
-asmatkable <- kbl(res, booktabs=TRUE, digits=3, caption="Table 4: Model 1", align = "c") %>%
+asmatkable <- kbl(res, booktabs=TRUE, digits=3, caption="Model 1", align = "c") %>%
   kable_classic(full_width = F, html_font = "Cambria") %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
   column_spec(column = 1, width = "3in")   %>%
@@ -1353,75 +1389,10 @@ asmatkable
 
 ---  
 
-### Hypothesis 3 (Model 1)
 
-Test for significance of difference in segregation based on Model 1. 
+## Model 2  {.active}
 
-Hypothesis 3a: Segregation in atmention is larger than in follow. No because...
-
-```{r, echo=TRUE, eval=TRUE, results='hold'}
-load("ansM8c.RData")
-ans <- ansM8c
-p <- ans$pp
-
-## segregation in atmention is larger than in follow
-mat <- matrix(0,1,p)
-mat[1,24] <- -1
-mat[1,11] <- 1
-Wald.RSiena(mat, ans)
-
-dif <- sum(mat * ans$theta)
-se <- sqrt(mat %*% ans$covtheta %*% t(mat))
-
-print(paste("difference is", round(dif,3), "with s.e.", round(se, 3), ", t-ratio", round(dif/se, 3)))
-
-
-```
-
-Hypothesis 3b: Segregation in follow is larger than in retweet. No because...
-
-```{r, echo=TRUE, eval=TRUE, results='hold'}
-ans <- ansM8c
-p <- ans$pp
-
-## segregation in atmention is larger than in follow
-mat <- matrix(0,1,p)
-mat[1,11] <- -1
-mat[1,41] <- 1
-Wald.RSiena(mat, ans)
-
-dif <- sum(mat * ans$theta)
-se <- sqrt(mat %*% ans$covtheta %*% t(mat))
-
-print(paste("difference is", round(dif,3), "with s.e.", round(se, 3), ", t-ratio", round(dif/se, 3)))
-
-```
-
-Segregation in atmention is larger than in retweet. Yes, because...
-
-```{r, echo=TRUE, eval=TRUE, results='hold'}
-ans <- ansM8c
-p <- ans$pp
-
-## segregation in atmention is larger than in follow
-mat <- matrix(0,1,p)
-mat[1,24] <- -1
-mat[1,41] <- 1
-Wald.RSiena(mat, ans)
-
-dif <- sum(mat * ans$theta)
-se <- sqrt(mat %*% ans$covtheta %*% t(mat))
-
-print(paste("difference is", round(dif,3), "with s.e.", round(se, 3), ", t-ratio", round(dif/se, 3)))
-
-```
-
-
----  
-
-## Model 2  
-
-Social inbreeding homophily
+To what extent do we observe social inbreeding homophily and to what extent does this explain the impact of the same-party variable (Hypotheses 2a and 2b) 
 
 ```{r, echo=TRUE}
 myeff <- getEffects( mydata )
@@ -1877,86 +1848,106 @@ save(ansM10d, file=paste("ansM10d",".RData",sep=""))
 
 ```
 
+```{r, echo=FALSE}
+myalgorithm <- sienaAlgorithmCreate( projname = 'RR2', n3 = 3000)
+ansRR2 <- siena07( myalgorithm, data = mydata, prevAns=ansM10c, effects = myeff_m3, useCluster=TRUE, nbrNodes=10, initC=TRUE, batch=TRUE)
+ansRR2
+#save(ansRR2, file=paste("ansRR2",".RData",sep=""))
+```
+
 
 ```{r, eval=TRUE}
-load("ansM10c.RData")
-ansM10c
-#summary(ansM10c)
+load("ansRR2.RData")
+#ansRR2
+
+res <- round(fanscsv(ansRR2)[-63,1:2],5)
+mc <- as.character(round(fanscsv(ansRR2)[63,1],3))
+row.names(res) <- c(
+ "rate 1"  ,      
+ "rate 2"   ,     
+ "outdegree"          ,  
+ "reciprocity"         ,           
+ "transitive triplets"  ,          
+ "shared popularity"     ,         
+ "indegree - popularity (sqrt)"   ,
+  "outdegree - popularity (sqrt)" , 
+ "outdegree - activity (sqrt)"    ,
+ "seating distance (dyad)"         ,               
+ "same party (dyad)"                ,
+ "same ethnic minority status (dyad)" , 
+ "woman (alter)", 
+ "same sex (dyad)",
+ "age (alter)", 
+ "age (ego)",
+ "absolute difference age (dyad)",
+"incumbancy status (alter)"          ,   
+"same incumbancy status (dyad)"       ,       
+"position on election list (ego)"      ,            
+ "rate 1"      ,
+ "rate 2"      ,
+"outdegree"          ,
+ "reciprocity"        ,          
+ "transitive triplets" ,         
+ "shared popularity"    ,        
+ "indegree - popularity (sqrt)" ,
+ "outdegree - popularity (sqrt)",
+"outdegree - activity (sqrt)"  ,
+ "same party (dyad)"            ,      
+"party Liberal Democrats (alter)",                    
+"party GreenLeft (alter)"         ,            
+ "party GreenLeft (ego)"           ,
+"same ethnic minority status (dyad)",
+"same sex (dyad)",
+"absolute difference age (dyad)",
+ "position on election list (alter)",              
+"party leader (alter)"             ,
+ "party leader (ego)"               ,
+ "rate 1"       ,
+ "rate 2"       ,
+"outdegree"           ,
+"reciprocity"          ,         
+"transitive triplets"   ,        
+"shared popularity"      ,       
+"indegree - popularity (sqrt)",  
+"outdegree - popularity (sqrt)", 
+"outdegree - activity (sqrt)"   ,
+"seating distance (dyad)"        ,               
+ "same party (dyad)"              ,     
+ "party Liberal Democrats (ego)"   ,                    
+ "party Freedom Party (ego)"        ,
+"ethnic minority status (ego)", 
+"same ethnic minority status (dyad)", 
+"woman (alter)",
+"women (ego)", 
+"same sex (dyad)", 
+"age (alter)",
+"absolute difference age (dyad)",
+ "incumbancy status (ego)"            ,  
+ "position on election list (alter)"   ,            
+"party leader (alter)"
+)
+  
+SME <- kbl(res, booktabs=TRUE, digits=3, caption="SM E: Model 2", align = "c") %>%
+  kable_classic(full_width = F, html_font = "Cambria") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(column = 1, width = "3in")   %>%
+  row_spec(c(11, 30,50), bold = T, color = "white", background = "#D7261E") %>%
+  group_rows(index = c("Following" = 20, "Atmention" = 19, "Retweets" = 23)) %>%
+  footnote(general = paste("Overall maximum convergence ratio: ", mc, sep="" ))
 
 
-#xtable.sienaFit(ansM10c, file="ansM10c.html", type="html", digits=3)
+SME
+
 ```
   
   
 ---  
 
 
-### Hypothesis 3 (Model 2) 
-
-Hypothesis 3a: Segregation in atmention is larger than in follow. No because...
-
-```{r, echo=TRUE, eval=TRUE, results='hold'}
-load("ansM10c.RData")
-ans <- ansM10c
-p <- ans$pp
-
-## segregation in atmention is larger than in follow
-mat <- matrix(0,1,p)
-mat[1,30] <- -1
-mat[1,11] <- 1
-Wald.RSiena(mat, ans)
-
-dif <- sum(mat * ans$theta)
-se <- sqrt(mat %*% ans$covtheta %*% t(mat))
-
-print(paste("difference is", round(dif,3), "with s.e.", round(se, 3), ", t-ratio", round(dif/se, 3)))
-
-
-```
-
-Hypothesis 3b: Segregation in follow is larger than in retweet. No because...
-
-```{r, echo=TRUE, eval=TRUE, results='hold'}
-ans <- ansM10c
-p <- ans$pp
-
-## segregation in atmention is larger than in follow
-mat <- matrix(0,1,p)
-mat[1,11] <- -1
-mat[1,50] <- 1
-Wald.RSiena(mat, ans)
-
-dif <- sum(mat * ans$theta)
-se <- sqrt(mat %*% ans$covtheta %*% t(mat))
-
-print(paste("difference is", round(dif,3), "with s.e.", round(se, 3), ", t-ratio", round(dif/se, 3)))
-
-```
-
-Segregation in atmention is larger than in retweet. Yes, because...
-
-```{r, echo=TRUE, eval=TRUE, results='hold'}
-ans <- ansM10c
-p <- ans$pp
-
-## segregation in atmention is larger than in follow
-mat <- matrix(0,1,p)
-mat[1,30] <- -1
-mat[1,50] <- 1
-Wald.RSiena(mat, ans)
-
-dif <- sum(mat * ans$theta)
-se <- sqrt(mat %*% ans$covtheta %*% t(mat))
-
-print(paste("difference is", round(dif,3), "with s.e.", round(se, 3), ", t-ratio", round(dif/se, 3)))
-
-```
-
----  
 
 ## Model 3  
 
-Cross-network effects. 
+Cross-network effects. Hypotheses 4. 
 
 Remove the non-significant social inbreeding parameters (t-value < 1): 
 
@@ -2459,74 +2450,11 @@ ansM12
 
 ---  
 
-### Hypothesis 3 (Model 2) 
+## Model 4 {.tabset .tabset-fade}
 
+Here we test Hypothesis 5 on time trends in the impact of the same-party variable. 
 
-Hypothesis 3a: Segregation in atmention is larger than in follow. No/YES because...
-
-```{r, echo=TRUE, eval=TRUE, results='hold'}
-load("ansM12.RData")
-ans <- ansM12
-p <- ans$pp
-
-## segregation in atmention is larger than in follow
-mat <- matrix(0,1,p)
-mat[1,32] <- -1
-mat[1,11] <- 1
-Wald.RSiena(mat, ans)
-
-dif <- sum(mat * ans$theta)
-se <- sqrt(mat %*% ans$covtheta %*% t(mat))
-
-print(paste("difference is", round(dif,3), "with s.e.", round(se, 3), ", t-ratio", round(dif/se, 3)))
-
-
-```
-
-Hypothesis 3b: Segregation in follow is larger than in retweet. No because...
-
-```{r, echo=TRUE, eval=TRUE, results='hold'}
-ans <- ansM12
-p <- ans$pp
-
-## segregation in atmention is larger than in follow
-mat <- matrix(0,1,p)
-mat[1,11] <- -1
-mat[1,52] <- 1
-Wald.RSiena(mat, ans)
-
-dif <- sum(mat * ans$theta)
-se <- sqrt(mat %*% ans$covtheta %*% t(mat))
-
-print(paste("difference is", round(dif,3), "with s.e.", round(se, 3), ", t-ratio", round(dif/se, 3)))
-
-```
-
-Segregation in atmention is larger than in retweet. Yes, because...
-
-```{r, echo=TRUE, eval=TRUE, results='hold'}
-ans <- ansM12
-p <- ans$pp
-
-## segregation in atmention is larger than in follow
-mat <- matrix(0,1,p)
-mat[1,30] <- -1
-mat[1,50] <- 1
-Wald.RSiena(mat, ans)
-
-dif <- sum(mat * ans$theta)
-se <- sqrt(mat %*% ans$covtheta %*% t(mat))
-
-print(paste("difference is", round(dif,3), "with s.e.", round(se, 3), ", t-ratio", round(dif/se, 3)))
-
-```
-
-
----  
-
-## Model 4  {.tabset .tabset-fade}
-
-Time heterogeneity, Based on Model 1
+### sienaTimeTest 
 
 ```{r, echo=TRUE, eval=TRUE}
 load("ansM8c.RData")
@@ -2540,7 +2468,7 @@ plot(tt)
 
 ```
 
-
+### Model 4 - final {.active}
 ```{r, echo=TRUE}
 
 myeff_t <- myeff_m2
@@ -2556,16 +2484,15 @@ ansM8c_t
 save(ansM8c_t, file=paste("ansM8c_t",".RData",sep=""))
 ``` 
 
-```{r, , echo=TRUE, eval=TRUE}
+```{r, echo=TRUE, eval=TRUE}
 
 load("ansM8c_t.RData")	
 #xtable.sienaFit(ansM8c_t, file="ansM8c_t.html", type="html", digits=3)
 
 
 res <- round(fanscsv(ansM8c_t)[c(11,16,26,34,45,53), 1:2],5)
-#res
 
-mc <- as.character(round(fanscsv(ansM8c)[48,1],3))
+mc <- as.character(round(fanscsv(ansM8c_t)[54,1],3))
 
 row.names(res) <- c(
  "same party (dyad)"  ,      
@@ -2576,7 +2503,7 @@ row.names(res) <- c(
  "time*same party"   
 )
   
-asmatkable <- kbl(res, booktabs=TRUE, digits=3, caption="Table 4: Model 4", align = "c") %>%
+M4 <- kbl(res, booktabs=TRUE, digits=3, caption="Model 4", align = "c") %>%
   kable_classic(full_width = F, html_font = "Cambria") %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
   column_spec(column = 1, width = "3in")   %>%
@@ -2585,91 +2512,18 @@ asmatkable <- kbl(res, booktabs=TRUE, digits=3, caption="Table 4: Model 4", alig
   footnote(general = paste("Overall maximum convergence ratio: ", mc, sep="" ))
 
 
-asmatkable
-
-
+M4
 
 
 ```
 
 ---  
 
-### Model 2  
-
-```{r, eval=TRUE}
-load("ansM10c.RData")
-
-tt <- sienaTimeTest(ansM10c,  effects=c(11,30,50))
-
-plot(tt)
-```
-
----  
-
-
-### Model 3
-
-
-```{r, eval=TRUE}
-load("ansM12.RData")
-
-tt <- sienaTimeTest(ansM12,  effects=c(11,32,52))
-
-plot(tt)
-
-```
-
-
----  
-
-### empty model 
-
-
-```{r, echo=TRUE}
-
-myeff <- getEffects( mydata )
-myeff_m0 <- myeff
-
-myeff_m0 <- includeEffects(myeff_m0, sameX, interaction1 = "partij", name="fnet" )
-myeff_m0 <- includeEffects(myeff_m0, sameX, interaction1 = "partij", name="rtnet" )
-myeff_m0 <- includeEffects(myeff_m0, sameX, interaction1 = "partij", name="atmnet" )
-
-#remove reciprocity
-myeff_m0 <- includeEffects(myeff_m0, recip, name="fnet", include = FALSE)
-myeff_m0 <- includeEffects(myeff_m0, recip, name="rtnet", include = FALSE)
-myeff_m0 <- includeEffects(myeff_m0, recip, name="atmnet", include = FALSE)
-myeff_m0
-
-#include the time interactions
-myeff_m0 <- includeTimeDummy(myeff_m0, sameX, interaction1 = "partij", name="fnet", timeDummy="2")
-myeff_m0 <- includeTimeDummy(myeff_m0, sameX, interaction1 = "partij", name="atmnet", timeDummy="2")
-myeff_m0 <- includeTimeDummy(myeff_m0, sameX, interaction1 = "partij", name="rtnet", timeDummy="2")
-myeff_m0
-
-#estimates
-myalgorithm <- sienaAlgorithmCreate( projname = 'M0')
-ansM0 <- siena07( myalgorithm, data = mydata, effects = myeff_m0, useCluster=TRUE, nbrNodes=4, initC=TRUE, batch=TRUE)
-ansM0
-
-save(ansM0, file=paste("ansM0",".RData",sep=""))
-
-```  
-
-```{r, eval=TRUE}
-
-load("ansM0.RData")
-ansM0
-
-```
-
-
----  
-
-## Model RR including ideological distance 
+## Model RR {.tabset .tabset-fade}
 
 An anonymous reviewer suggested to try to disentangle the impact of physical seating distance from ideological distance. We therefore added to the party to which each MP belongs a general left-right position according to the Chapel Hill Survey [@jolly2022chapel]. 
 
-### Load data objects {.tabset .tabset-fade}  
+### Load data objects 
 
 
 Data objects:  
@@ -2706,6 +2560,8 @@ seats <- twitter_20190919[[3]]
 ches$Partij <- ches$party
 
 keyf <- left_join(keyf, ches)
+
+
 
 #deconstruct dataobject
 deps <- mydata$depvars
@@ -2778,10 +2634,8 @@ mydata_RR <- sienaDataCreate(fnet,
 ```
 
 
----  
 
-
-### define effects  
+### Define effects  
 
 ```{r echo=TRUE, eval=TRUE, results='hide'}
 myeff <- getEffects( mydata_RR )
@@ -2964,7 +2818,7 @@ ansRR1 <- siena07( myalgorithmRR, data = mydata_RR, prevAns=ansM8c, effects = my
 #save(ansRR1, file=paste("ansRR1",".RData",sep=""))
 ```
 
-### results  
+### Model RR - final  {.active}
 
 The parameters of interest are in red. 
 
@@ -3029,7 +2883,7 @@ row.names(res) <- c(
  "ideological distance (dyad)"
 )
   
-asmatkable <- kbl(res, booktabs=TRUE, digits=3, caption="Model RR: including ideological distance", align = "c") %>%
+RR1 <- kbl(res, booktabs=TRUE, digits=3, caption="Model RR: including ideological distance", align = "c") %>%
   kable_classic(full_width = F, html_font = "Cambria") %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
   column_spec(column = 1, width = "3in")   %>%
@@ -3038,12 +2892,770 @@ asmatkable <- kbl(res, booktabs=TRUE, digits=3, caption="Model RR: including ide
   footnote(general = paste("Overall maximum convergence ratio: ", mc, sep="" ))
 
 
-asmatkable
-
+RR1
 
 ```
 
 ---  
+
+
+
+---  
+
+
+## Model RR2 {.tabset .tabset-fade}
+
+An anonymous reviewer argued that the last candidate elected from each party election list may posses “a heightened interest in active social network engagement to promote themselves or, conversely, aim to develop an individual discourse to bolster their political careers beyond the current legislative term” and suggested to assess the extent to which the same-party effect (party based similarity preferences) would be different for these specific MPs.  
+
+### Load data objects 
+
+
+Data objects:  
+
+- [key](./data-processed/key moederbestand 20171114.sav): information on all politicians on election list  
+- [twitter](./data-processed/twitter_20190919.RData)  
+    - keyf: information on all 147 MPs with twitter handle  
+    - mydata: RSiena object with all kind of goodies inside  
+    - seats: seating coordinates of HoP (used for plotting)  
+- [CHES](https://www.chesdata.eu/ches-europe): information on party positions see also [@jolly2022chapel]
+
+
+```{r data2, echo=TRUE, eval=TRUE, warning=FALSE, message=FALSE}
+#STAP 1: read in data
+library(haven)
+ches <- read_dta("./data-raw/CHES_means_2017.dta")
+ches <- as.data.frame(ches)
+ches <- ches[ches$country==10,]
+
+
+key <- read.spss('data-processed\\key moederbestand 20171114.sav', use.value.labels=T, to.data.frame=T)
+
+
+load("data-processed\\twitter_20190919.RData")
+#str(twitter_20190919,1)
+keyf <- twitter_20190919[[1]]
+mydata <- twitter_20190919[[2]]
+seats <- twitter_20190919[[3]]
+
+keyf %>% group_by(Partij) %>%
+  summarise(maxlist = max(PlekLijst), #note there are MPs with preference votes. 
+            nseats = n()) -> keyf_temp
+
+#correct for three missing MPs. 
+keyf_temp$nseats[keyf_temp$Partij=="VVD"] <-  keyf_temp$nseats[keyf_temp$Partij=="VVD"] + 1
+keyf_temp$nseats[keyf_temp$Partij=="PVV"] <-  keyf_temp$nseats[keyf_temp$Partij=="PVV"] + 2
+
+keyf <- left_join(keyf, keyf_temp)
+
+keyf$lastlist <- ifelse(keyf$PlekLijst>=keyf$nseats, 1, 0) 
+
+ches$Partij <- ches$party
+
+keyf <- left_join(keyf, ches)
+
+
+
+#deconstruct dataobject
+deps <- mydata$depvars
+covariates <- mydata$cCovars
+codyadcovar <- mydata$dycCovars
+
+fnet <- sienaNet(deps$fnet) 
+atmnet <- sienaNet(deps$atmnet)
+rtnet <- sienaNet(deps$rtnet)
+afstand <- codyadcovar$afstand
+egohandle <- covariates$egohandle
+egoid <- covariates$egoid
+partij <- covariates$partij
+coalitie <- covariates$coalitie
+cda <- covariates$cda
+cu <- covariates$cu
+denk <- covariates$denk
+d66 <- covariates$d66
+fvd <- covariates$fvd
+gl <- covariates$gl
+pvda <- covariates$pvda
+pvdd <- covariates$pvdd
+pvv <- covariates$pvv
+sgp <- covariates$sgp
+sp <- covariates$sp
+vvd <- covariates$vvd
+plus <- covariates$plus
+ethminz <- covariates$ethminz
+vrouw <- covariates$vrouw
+lft <- covariates$lft
+kamerlid2016 <- covariates$kamerlid2016
+kabinet2016 <- covariates$kabinet2016
+pleklijst <- covariates$pleklijst
+pleklijst1 <- covariates$pleklijst1
+#add new variables
+partypos <- coCovar(keyf$lrgen)  
+lastlist <- coCovar(keyf$lastlist)
+nseats <- coCovar(keyf$nseats)
+
+table(coalitie, partij)
+
+#reconstruct dataobject
+mydata_RR2 <- sienaDataCreate(fnet,
+                          atmnet, 
+                          rtnet, 
+                          afstand, 
+                          egohandle, 
+                          egoid, 
+                          partij, 
+                          coalitie, 
+                          cda,
+                          cu,
+                          denk,
+                          d66,
+                          fvd,
+                          gl,
+                          pvda,
+                          pvdd,
+                          pvv,
+                          sgp,
+                          sp,
+                          vvd,
+                          plus, 
+                          ethminz,
+                          vrouw,
+                          lft,
+                          kamerlid2016,
+                          kabinet2016,
+                          pleklijst,
+                          pleklijst1,
+                          partypos, 
+                          lastlist,
+                          nseats)
+
+```
+
+
+
+### Define effects  
+
+#### Interaction 'same party' with 'last on list'. 
+
+```{r echo=TRUE, eval=TRUE, results='hide'}
+myeff <- getEffects( mydata_RR2 )
+myeff_m1 <- myeff
+
+#according to suggestion of rsiena manual
+myeff_m1 <- includeEffects( myeff_m1, inPopSqrt, name="fnet" )
+myeff_m1 <- includeEffects( myeff_m1, inPopSqrt, name="atmnet" )
+myeff_m1 <- includeEffects( myeff_m1, inPopSqrt, name="rtnet" )
+
+myeff_m1 <- includeEffects( myeff_m1, outActSqrt, name="fnet" )
+myeff_m1 <- includeEffects( myeff_m1, outActSqrt, name="atmnet" )
+myeff_m1 <- includeEffects( myeff_m1, outActSqrt, name="rtnet" )
+
+myeff_m1 <- includeEffects( myeff_m1, outPopSqrt, name="fnet" )
+myeff_m1 <- includeEffects( myeff_m1, outPopSqrt, name="atmnet" )
+myeff_m1 <- includeEffects( myeff_m1, outPopSqrt, name="rtnet" )
+
+myeff_m1 <- includeEffects( myeff_m1, transTrip, name="fnet" )
+myeff_m1 <- includeEffects( myeff_m1, transTrip, name="atmnet" )
+myeff_m1 <- includeEffects( myeff_m1, transTrip, name="rtnet" )
+
+myeff_m1 <- includeEffects( myeff_m1, sharedPop, name="fnet" )
+myeff_m1 <- includeEffects( myeff_m1, sharedPop, name="atmnet" )
+myeff_m1 <- includeEffects( myeff_m1, sharedPop, name="rtnet" )
+
+myeff_m2 <- myeff_m1
+
+#"kamerlid2016" "pleklijst"    "pleklijst1"
+
+myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", altX, name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", altX, name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", altX, name="rtnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", egoX, name="fnet" )
+#myeff_m2 <- setEffect( myeff_m2, interaction1="kamerlid2016", egoX, name="fnet", fix=TRUE, initialValue = -3, test=TRUE )
+
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", egoX, name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", egoX, name="rtnet" )
+
+myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", sameX, name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", sameX, name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="kamerlid2016", sameX, name="rtnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", altX, name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", altX, name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", altX, name="rtnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", egoX, name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", egoX, name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst1", egoX, name="rtnet" )
+
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", egoX, name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", egoX, name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", egoX, name="rtnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", altX, name="fnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", altX, name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", altX, name="rtnet" )
+
+#these need to be dropped due to collinearity
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", diffX, name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", diffX, name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, interaction1="pleklijst", diffX, name="rtnet" )
+
+#afstand
+myeff_m2 <- includeEffects( myeff_m2, X, interaction1="afstand", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, X, interaction1="afstand", name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, X, interaction1="afstand", name="rtnet" )
+
+
+
+myeff_m2 <- includeEffects(myeff_m2, sameX, interaction1 = "partij", name="fnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "cda", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "cu", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "denk", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "d66", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "fvd", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "gl", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvda", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvdd", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvv", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "sgp", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "sp", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "vvd", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "plus", name="fnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "cda", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "cu", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "denk", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "d66", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "fvd", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "gl", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvda", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvdd", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvv", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "sgp", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "sp", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "vvd", name="fnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "plus", name="fnet" )
+
+myeff_m2 <- includeEffects(myeff_m2, sameX, interaction1 = "partij", name="atmnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "cda", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "cu", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "denk", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "d66", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "fvd", name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "gl", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvda", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvdd", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvv", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "sgp", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "sp", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "vvd", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "plus", name="atmnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "cda", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "cu", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "denk", name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "d66", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "fvd", name="atmnet" )
+myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "gl", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvda", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvdd", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvv", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "sgp", name="atmnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "sp", name="atmnet" )
+# myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "vvd", name="atmnet" ) #referentie
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "plus", name="atmnet" )
+
+myeff_m2 <- includeEffects(myeff_m2, sameX, interaction1 = "partij", name="rtnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "cda", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "cu", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "denk", name="rtnet" )
+myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "d66", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "fvd", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "gl", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvda", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvdd", name="rtnet" )
+myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "pvv", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "sgp", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "sp", name="rtnet" )
+# myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "vvd", name="rtnet" ) #referentie
+#myeff_m2 <- includeEffects( myeff_m2, egoX, interaction1 = "plus", name="rtnet" )
+
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "cda", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "cu", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "denk", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "d66", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "fvd", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "gl", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvda", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvdd", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "pvv", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "sgp", name="rtnet" )
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "sp", name="rtnet" )
+# myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "vvd", name="rtnet" ) #referentie
+#myeff_m2 <- includeEffects( myeff_m2, altX, interaction1 = "plus", name="rtnet" )
+
+myeff_RR <- myeff_m2
+myeff_RR <- includeEffects(myeff_RR, interaction1="partypos", absDiffX, name="fnet" )
+myeff_RR <- includeEffects(myeff_RR, interaction1="partypos", absDiffX, name="rtnet" )
+
+# Interaction same party with last on list. 
+
+myeff_RR2_I1 <- myeff_RR
+myeff_RR2_I1 <- includeEffects(myeff_RR2_I1, egoX, interaction1=c("lastlist"), name="fnet" )
+myeff_RR2_I1 <- includeInteraction(myeff_RR2_I1, egoX, sameX, interaction1=c("lastlist", "partij"), name="fnet" )
+
+myeff_RR2_I1 <- includeEffects(myeff_RR2_I1, egoX, interaction1=c("lastlist"), name="rtnet" )
+myeff_RR2_I1 <- includeInteraction(myeff_RR2_I1, egoX, sameX, interaction1=c("lastlist", "partij"), name="rtnet" )
+
+myeff_RR2_I1 <- includeEffects(myeff_RR2_I1, egoX, interaction1=c("lastlist"), name="atmnet" )
+myeff_RR2_I1 <- includeInteraction(myeff_RR2_I1, egoX, sameX, interaction1=c("lastlist", "partij"), name="atmnet" )
+
+```
+
+
+```{r echo=TRUE, eval=TRUE}
+myeff_RR2_I1
+```
+
+### estimate model
+
+```{r, echo=TRUE, eval=FALSE}
+myalgorithmRR2 <- sienaAlgorithmCreate( projname = 'RR2')
+
+ansRR2_I1 <- siena07( myalgorithmRR2, data = mydata_RR2, effects = myeff_RR2_I1, useCluster=TRUE, nbrNodes=12, initC=TRUE, batch=TRUE)
+
+save(ansRR2_I1, file=paste("ansRR2_I1",".RData",sep=""))
+```
+
+### Model RR2 - final  {.active}
+
+The parameters of interest are in red. 
+
+Please note, SE are large and that the overall convergence ratio is unsatisfactory. But these results do not provide clear corroborative evidence that the impact of the same-party effect is conditional on whether an MP holds the highest position on the specific election list. 
+
+```{r, echo=TRUE, eval=TRUE}
+load("ansRR2_I1.RData")
+
+
+res <- round(fanscsv(ansRR2_I1)[,1:2],5)
+mcpos <- length(res[,1])
+res <- res[-mcpos,]
+mc <- as.character(round(fanscsv(ansRR2_I1)[mcpos,1],3))
+row.names(res) <- c(
+ "rate 1"  ,      
+ "rate 2"   ,     
+ "outdegree"          ,  
+ "reciprocity"         ,           
+ "transitive triplets"  ,          
+ "shared popularity"     ,         
+ "indegree - popularity"   ,
+  " outdegree - popularity" , 
+ "outdegree - activity"    ,
+ "seating distance (dyad)"         ,               
+ "same party (dyad)"                ,    
+"incumbancy status (alter)"          ,   
+"same incumbancy status (dyad)"       ,       
+"position on election list (ego)"      ,
+"ideological distance (dyad)" ,
+"last on election list",
+"last on election list * same party",
+ "rate 1"      ,
+ "rate 2"      ,
+"outdegree"          ,
+ "reciprocity"        ,          
+ "transitive triplets" ,         
+ "shared popularity"    ,        
+ "indegree - popularity" ,
+ "outdegree - popularity",
+"outdegree - activity "  ,
+ "same party (dyad)"            ,      
+"party Liberal Democrats (alter)",                    
+"party GreenLeft (alter)"         ,            
+ "party GreenLeft (ego)"           ,            
+ "position on election list (alter)",              
+"party leader (alter)"             ,
+ "party leader (ego)"               ,
+"last on election list",
+"last on election list * same party",
+ "rate 1"       ,
+ "rate 2"       ,
+"outdegree"           ,
+"reciprocity"          ,         
+"transitive triplets"   ,        
+"shared popularity"      ,       
+"indegree - popularity ",  
+"outdegree - popularity", 
+"outdegree - activity "   ,
+"seating distance (dyad)"        ,               
+ "same party (dyad)"              ,     
+ "party Liberal Democrats (ego)"   ,                    
+ "party Freedom Party (ego)"        ,               
+ "incumbancy status (alter)"         ,   
+ "incumbancy status (ego)"            ,  
+ "position on election list (alter)"   ,            
+"party leader (alter)", 
+ "ideological distance (dyad)",
+"last on election list",
+"last on election list * same party"
+)
+  
+RR2 <- kbl(res, booktabs=TRUE, digits=3, caption="Model RR2: including 'last on election list * same party'", align = "c") %>%
+  kable_classic(full_width = F, html_font = "Cambria") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(column = 1, width = "3in")   %>%
+  row_spec(c(16,17, 34,35,54,55), bold = T, color = "white", background = "#D7261E") %>%
+  group_rows(index = c("Following" = 17, "Atmention" = 18, "Retweets" = 20)) %>%
+  footnote(general = paste("Overall maximum convergence ratio: ", mc, sep="" ))
+
+
+RR2
+
+```
+
+---  
+
+  
+
+
+
+
+# Hypothesis 3 {.tabset .tabset-fade} 
+
+## Based on Model 1 
+
+Test for significance of the difference in party-based segregation in the three Twitter layers based on Model 1. 
+
+Hypothesis 3a: Segregation in atmention is larger than in follow. No because...
+
+```{r, echo=TRUE, eval=TRUE, results='hold'}
+load("ansM8c.RData")
+ans <- ansM8c
+p <- ans$pp
+
+## segregation in atmention is larger than in follow
+mat <- matrix(0,1,p)
+mat[1,24] <- -1
+mat[1,11] <- 1
+Wald.RSiena(mat, ans)
+
+dif <- sum(mat * ans$theta)
+se <- sqrt(mat %*% ans$covtheta %*% t(mat))
+
+print(paste("difference is", round(dif,3), "with s.e.", round(se, 3), ", t-ratio", round(dif/se, 3)))
+
+
+```
+
+Hypothesis 3b: Segregation in follow is larger than in retweet. No because...
+
+```{r, echo=TRUE, eval=TRUE, results='hold'}
+ans <- ansM8c
+p <- ans$pp
+
+## segregation in atmention is larger than in follow
+mat <- matrix(0,1,p)
+mat[1,11] <- -1
+mat[1,41] <- 1
+Wald.RSiena(mat, ans)
+
+dif <- sum(mat * ans$theta)
+se <- sqrt(mat %*% ans$covtheta %*% t(mat))
+
+print(paste("difference is", round(dif,3), "with s.e.", round(se, 3), ", t-ratio", round(dif/se, 3)))
+
+```
+
+Segregation in atmention is larger than in retweet. Yes, because...
+
+```{r, echo=TRUE, eval=TRUE, results='hold'}
+ans <- ansM8c
+p <- ans$pp
+
+## segregation in atmention is larger than in follow
+mat <- matrix(0,1,p)
+mat[1,24] <- -1
+mat[1,41] <- 1
+Wald.RSiena(mat, ans)
+
+dif <- sum(mat * ans$theta)
+se <- sqrt(mat %*% ans$covtheta %*% t(mat))
+
+print(paste("difference is", round(dif,3), "with s.e.", round(se, 3), ", t-ratio", round(dif/se, 3)))
+
+```
+
+---  
+
+## Based on Model 2 
+
+Hypothesis 3a: Segregation in atmention is larger than in follow. No because...
+
+```{r, echo=TRUE, eval=TRUE, results='hold'}
+load("ansM10c.RData")
+ans <- ansM10c
+p <- ans$pp
+
+## segregation in atmention is larger than in follow
+mat <- matrix(0,1,p)
+mat[1,30] <- -1
+mat[1,11] <- 1
+Wald.RSiena(mat, ans)
+
+dif <- sum(mat * ans$theta)
+se <- sqrt(mat %*% ans$covtheta %*% t(mat))
+
+print(paste("difference is", round(dif,3), "with s.e.", round(se, 3), ", t-ratio", round(dif/se, 3)))
+
+
+```
+
+Hypothesis 3b: Segregation in follow is larger than in retweet. No because...
+
+```{r, echo=TRUE, eval=TRUE, results='hold'}
+ans <- ansM10c
+p <- ans$pp
+
+## segregation in atmention is larger than in follow
+mat <- matrix(0,1,p)
+mat[1,11] <- -1
+mat[1,50] <- 1
+Wald.RSiena(mat, ans)
+
+dif <- sum(mat * ans$theta)
+se <- sqrt(mat %*% ans$covtheta %*% t(mat))
+
+print(paste("difference is", round(dif,3), "with s.e.", round(se, 3), ", t-ratio", round(dif/se, 3)))
+
+```
+
+Segregation in atmention is larger than in retweet. Yes, because...
+
+```{r, echo=TRUE, eval=TRUE, results='hold'}
+ans <- ansM10c
+p <- ans$pp
+
+## segregation in atmention is larger than in follow
+mat <- matrix(0,1,p)
+mat[1,30] <- -1
+mat[1,50] <- 1
+Wald.RSiena(mat, ans)
+
+dif <- sum(mat * ans$theta)
+se <- sqrt(mat %*% ans$covtheta %*% t(mat))
+
+print(paste("difference is", round(dif,3), "with s.e.", round(se, 3), ", t-ratio", round(dif/se, 3)))
+
+```
+
+---  
+
+
+## Based on Model 3 
+
+
+Hypothesis 3a: Segregation in atmention is larger than in follow. No/YES because...
+
+```{r, echo=TRUE, eval=TRUE, results='hold'}
+load("ansM12.RData")
+ans <- ansM12
+p <- ans$pp
+
+## segregation in atmention is larger than in follow
+mat <- matrix(0,1,p)
+mat[1,32] <- -1
+mat[1,11] <- 1
+Wald.RSiena(mat, ans)
+
+dif <- sum(mat * ans$theta)
+se <- sqrt(mat %*% ans$covtheta %*% t(mat))
+
+print(paste("difference is", round(dif,3), "with s.e.", round(se, 3), ", t-ratio", round(dif/se, 3)))
+
+
+```
+
+Hypothesis 3b: Segregation in follow is larger than in retweet. No because...
+
+```{r, echo=TRUE, eval=TRUE, results='hold'}
+ans <- ansM12
+p <- ans$pp
+
+## segregation in atmention is larger than in follow
+mat <- matrix(0,1,p)
+mat[1,11] <- -1
+mat[1,52] <- 1
+Wald.RSiena(mat, ans)
+
+dif <- sum(mat * ans$theta)
+se <- sqrt(mat %*% ans$covtheta %*% t(mat))
+
+print(paste("difference is", round(dif,3), "with s.e.", round(se, 3), ", t-ratio", round(dif/se, 3)))
+
+```
+
+Segregation in atmention is larger than in retweet. Yes, because...
+
+```{r, echo=TRUE, eval=TRUE, results='hold'}
+ans <- ansM12
+p <- ans$pp
+
+## segregation in atmention is larger than in follow
+mat <- matrix(0,1,p)
+mat[1,30] <- -1
+mat[1,50] <- 1
+Wald.RSiena(mat, ans)
+
+dif <- sum(mat * ans$theta)
+se <- sqrt(mat %*% ans$covtheta %*% t(mat))
+
+print(paste("difference is", round(dif,3), "with s.e.", round(se, 3), ", t-ratio", round(dif/se, 3)))
+
+```
+
+
+---  
+
+# Time heterogeneity  in same party effect {.tabset .tabset-fade}
+
+## Empty model 
+
+
+```{r, echo=TRUE}
+
+myeff <- getEffects( mydata )
+myeff_m0 <- myeff
+
+myeff_m0 <- includeEffects(myeff_m0, sameX, interaction1 = "partij", name="fnet" )
+myeff_m0 <- includeEffects(myeff_m0, sameX, interaction1 = "partij", name="rtnet" )
+myeff_m0 <- includeEffects(myeff_m0, sameX, interaction1 = "partij", name="atmnet" )
+
+#remove reciprocity
+myeff_m0 <- includeEffects(myeff_m0, recip, name="fnet", include = FALSE)
+myeff_m0 <- includeEffects(myeff_m0, recip, name="rtnet", include = FALSE)
+myeff_m0 <- includeEffects(myeff_m0, recip, name="atmnet", include = FALSE)
+myeff_m0
+
+#include the time interactions
+myeff_m0 <- includeTimeDummy(myeff_m0, sameX, interaction1 = "partij", name="fnet", timeDummy="2")
+myeff_m0 <- includeTimeDummy(myeff_m0, sameX, interaction1 = "partij", name="atmnet", timeDummy="2")
+myeff_m0 <- includeTimeDummy(myeff_m0, sameX, interaction1 = "partij", name="rtnet", timeDummy="2")
+myeff_m0
+
+#estimates
+myalgorithm <- sienaAlgorithmCreate( projname = 'M0')
+ansM0 <- siena07( myalgorithm, data = mydata, effects = myeff_m0, useCluster=TRUE, nbrNodes=4, initC=TRUE, batch=TRUE)
+ansM0
+
+save(ansM0, file=paste("ansM0",".RData",sep=""))
+
+```  
+
+```{r, eval=TRUE}
+
+load("ansM0.RData")
+ansM0
+
+```
+
+
+## Model 1 {.active}
+
+```{r, echo=TRUE, eval=TRUE}
+load("ansM8c.RData")
+
+
+tt <- sienaTimeTest(ansM8c,  effects=c(11,24,41))
+#tt
+#tt$EffectTest
+#tt$IndividualTest
+plot(tt)
+
+```
+
+
+```{r, echo=TRUE}
+
+myeff_t <- myeff_m2
+
+myeff_t <- includeTimeDummy(myeff_t, sameX, interaction1 = "partij", name="fnet", timeDummy="2")
+myeff_t <- includeTimeDummy(myeff_t, sameX, interaction1 = "partij", name="atmnet", timeDummy="2")
+myeff_t <- includeTimeDummy(myeff_t, sameX, interaction1 = "partij", name="rtnet", timeDummy="2")
+myeff_t
+
+myalgorithm <- sienaAlgorithmCreate( projname = 'M8c_t', nsub=5, n3=5000 )
+ansM8c_t <- siena07( myalgorithm, data = mydata, prevAns=ansM8c, effects = myeff_t, useCluster=TRUE, nbrNodes=10, initC=TRUE, batch=TRUE)
+ansM8c_t 
+save(ansM8c_t, file=paste("ansM8c_t",".RData",sep=""))
+``` 
+
+```{r, echo=TRUE, eval=TRUE}
+
+load("ansM8c_t.RData")	
+#xtable.sienaFit(ansM8c_t, file="ansM8c_t.html", type="html", digits=3)
+
+
+res <- round(fanscsv(ansM8c_t)[c(11,16,26,34,45,53), 1:2],5)
+
+mc <- as.character(round(fanscsv(ansM8c_t)[54,1],3))
+
+row.names(res) <- c(
+ "same party (dyad)"  ,      
+ "time*same party"   ,     
+ "same party (dyad)"  ,      
+ "time*same party"   ,     
+ "same party (dyad)"  ,      
+ "time*same party"   
+)
+  
+M4 <- kbl(res, booktabs=TRUE, digits=3, caption="Model 4", align = "c") %>%
+  kable_classic(full_width = F, html_font = "Cambria") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(column = 1, width = "3in")   %>%
+  #row_spec(c(11, 24,41), bold = T, color = "white", background = "#D7261E") %>%
+  group_rows(index = c("Following" = 2, "Atmention" = 2, "Retweets" = 2)) %>%
+  footnote(general = paste("Overall maximum convergence ratio: ", mc, sep="" ))
+
+
+M4
+
+```
+
+---  
+
+## Model 2  
+
+```{r, eval=TRUE}
+load("ansM10c.RData")
+
+tt <- sienaTimeTest(ansM10c,  effects=c(11,30,50))
+
+plot(tt)
+```
+
+---  
+
+
+## Model 3
+
+
+```{r, eval=TRUE}
+load("ansM12.RData")
+
+tt <- sienaTimeTest(ansM12,  effects=c(11,32,52))
+
+plot(tt)
+
+```
+
+
+---  
+
+
+
+
 
 # References  
 
